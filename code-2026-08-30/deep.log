@@ -1,0 +1,6 @@
+Psi_8 done w=8 (11s)
+Psi_9 done w=9 (32s)
+  b=8: closed form == tops[b]? True  w<=b? True
+  b=9: closed form == tops[b]? True  w<=b? True
+  full recursion b=7->8: True
+  full recursion b=8->9: True

@@ -1,0 +1,5 @@
+  weights w(E_k) = ceil(k/2): {1: 1, 2: 1, 3: 2, 4: 2, 5: 3}
+   b=0:  w(Psi(e_2^b)) = 0   (bound b = 0)   OK   [0s]
+   b=1:  w(Psi(e_2^b)) = 1   (bound b = 1)   OK   [2s]
+   b=2:  w(Psi(e_2^b)) = 2   (bound b = 2)   OK   [13s]
+   b=3:  w(Psi(e_2^b)) = 3   (bound b = 3)   OK   [57s]
