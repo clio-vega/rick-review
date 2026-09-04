@@ -1,0 +1,14 @@
+ratio == F_{-1}/F_0 ? False
+
+CLAIM:  R^(-1)_n = (1/2)d^2_{u3}Xi_n|0 - [deg n-1]([T^n] log(F_{-1}/F_0))
+   n=1: False
+   n=2: False
+   n=3: False
+   n=4: False
+   n=5: False
+   n=6: False
+   n=7: False
+   n=8: False
+   n=9: False
+   n=10: False
+  ==> FAILS

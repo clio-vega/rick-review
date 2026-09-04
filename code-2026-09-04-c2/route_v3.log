@@ -1,0 +1,15 @@
+(A-corrected) F_{-1} as an explicit operator on F_0 : VERIFIED to T^10
+ratio == F_{-1}/F_0 ? True
+
+SHARPENED CLAIM:  R^(-1)_n = (1/2) d^2_{u3} Xi_n|0  -  [deg n-1]([T^n] log(F_{-1}/F_0))
+   n=1: True
+   n=2: True
+   n=3: True
+   n=4: True
+   n=5: True
+   n=6: True
+   n=7: True
+   n=8: True
+   n=9: True
+   n=10: True
+  ==> VERIFIED to T^10

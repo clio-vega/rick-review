@@ -1,0 +1,19 @@
+F_P to T^12: 187.6s
+  (Q1) q^2 = (1-E1T)^2-4E2T^2 : True
+
+ n :  R^(-1)_n (from definition)   vs  Rick's (R)
+  n=0: lhs=0   rhs=0  match=True
+  n=1: lhs=1   rhs=1  match=True
+  n=2: lhs=5*(u1 + u2)/2   rhs=5*(u1 + u2)/2  match=True
+  n=3: lhs=4*u1**2 + 19*u1*u2 + 4*u2**2   rhs=4*u1**2 + 19*u1*u2 + 4*u2**2  match=True
+  n=4: lhs=11*(u1 + u2)*(u1**2 + 10*u1*u2 + u2**2)/2   rhs=11*(u1 + u2)*(u1**2 + 10*u1*u2 + u2**2)/2  match=True
+  n=5: match=True
+  n=6: match=True
+  n=7: match=True
+  n=8: match=True
+  n=9: match=True
+  n=10: match=True
+  n=11: match=True
+  n=12: match=True
+
+MISSING LEMMA (R): HOLDS to n<=12

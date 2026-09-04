@@ -1,0 +1,5 @@
+(P1) log W = (sum_i d_ui) Xi ? True
+
+recursion  [E3^k] logW = (k+1)E2 xi_{k+1} + 3 d_E1 xi_k + 2 E1 d_E2 xi_k
+   recursion  VERIFIED to T^8: True
+   d^2_{u3}Xi|_0 from xi_0,xi_1,xi_2  VERIFIED to T^8: True
