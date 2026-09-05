@@ -1,0 +1,21 @@
+|lam|<=0 done
+|lam|<=1 done
+|lam|<=2 done
+|lam|<=3 done
+|lam|<=4 done
+|lam|<=5 done
+
+=== gcd of entries, by slot carrying the max ===
+  maxslot=1  gcd=t + 1                    count=344
+  maxslot=1  gcd=t*(t + 1)                count=36
+  maxslot=2  gcd=t + 1                    count=380
+  maxslot=3  gcd=t + 1                    count=380
+
+=== thm:wit hook witness <(E-j,1^j)|C_3|empty>, j=f_2, by max slot ===
+  maxslot=1  entry=0                        count=20
+  maxslot=2  entry=-t**2*(t + 1)            count=6
+  maxslot=2  entry=-t**3*(t + 1)            count=8
+  maxslot=2  entry=-t**4*(t + 1)            count=6
+  maxslot=3  entry=t**2*(t + 1)             count=6
+  maxslot=3  entry=t**3*(t + 1)             count=8
+  maxslot=3  entry=t**4*(t + 1)             count=6

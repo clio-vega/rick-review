@@ -1,0 +1,10 @@
+(n,b)=(6,1)  c_n = C(5,2)-C(2,2) = 9
+   computed  E3-free tops: 10*E1 + E2
+   predicted             : 9*E1 - E2
+   -> *** DISAGREE ***
+
+(n,b)=(5,3)  c_n = C(4,2)-C(2,2) = 5
+   computed  E3-free tops: (6*E1 + E2)*(7*E1 + E2)*(8*E1 + E2)
+   predicted             : (5*E1 - E2)*(6*E1 - E2)*(7*E1 - E2)
+   -> *** DISAGREE ***
+
