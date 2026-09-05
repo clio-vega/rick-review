@@ -214,8 +214,13 @@ Re-tested correctly (`e2fix.py`), against **both** readings:
    n=3 base shifted by c_n  -> AGREE      absolute, start C(4,2)=6  -> AGREE
 ```
 
+**Added after the reply PDF was sent** (the cell was still computing; the PDF and email cite only
+$(6,1)$ and $(5,3)$, and nothing below changes their conclusion): a third untuned cell,
+$(n,b)=(6,2)$, computed $(10E_1+E_2)(11E_1+E_2)$ — **AGREE** under both readings ($n=3$ base
+shifted by $c_6=9$; absolute product starting at $\binom52=10$).
+
 **Verdict: I agree with his 26/26.** My restatement $c_n=\binom{n-1}{2}-\binom{2}{2}$ reproduces
-the $E_3$-free part of $\mathrm{tops}^{(n)}[b]$ exactly at $(6,1)$ and $(5,3)$, recomputed from the
+the $E_3$-free part of $\mathrm{tops}^{(n)}[b]$ exactly at $(6,1)$, $(5,3)$ and $(6,2)$, recomputed from the
 definition, at cells neither of us had run before. `computed`, independently, on untuned cells.
 
 **But there is a live hazard here and I would not have found it by agreeing.** His Day-155 base was
