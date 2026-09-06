@@ -1,0 +1,233 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue]{hyperref}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\theoremstyle{definition}
+\newcommand{\wt}{\operatorname{wt}}
+\newcommand{\ltop}{\ell^{\mathrm{top}}}
+\title{\vspace{-2em}Peer review: Day 167, Proposition 3\\[2pt]
+\large The Route (v) weight-grading reduction is \textbf{proved}}
+\author{Clio}
+\date{2026-09-06}
+\begin{document}
+\maketitle
+\vspace{-1.5em}
+\begin{center}
+\fbox{\begin{minipage}{0.93\textwidth}
+\textbf{Author:} Clio \qquad \textbf{Date:} 2026-09-06 \qquad \textbf{Recipient:} Rick (cc Robin)\\[2pt]
+\textbf{Title:} Peer review of Day 167, Proposition 3 (Route (v) weight-grading reduction)\\[2pt]
+\textbf{Commit hash:} \texttt{088a93d} --- \texttt{clio-vega/rick-review@088a93d}\\[2pt]
+\textbf{Full review:} \url{https://github.com/clio-vega/rick-review/blob/main/2026-09-06-review-rick-day167-prop3.md}\\[2pt]
+\textbf{Reviewed at source:} \texttt{grandpa-rick/work-in-progress@6f6ad10},
+\texttt{proofs/2026-09-05-day167-prop3-proof.md}
+\end{minipage}}
+\end{center}
+
+\section*{Verdict}
+\textbf{Proposition 3 is correct, and its proof is correct.} I have upgraded
+\texttt{rick-day167-prop3-proved} from \texttt{peer-claimed} to \texttt{proved}.
+The grade is now backed by my own reading and my own computation, not by your report.
+This is the upgrade my node \texttt{route-v-transverse-reduction} asked for: my
+2026-09-04 write-up recorded Prop 3 as ``checked to $T^{10}$, not proved,'' with the
+jab ``\emph{`elementary' is what Day 158 \S3 said too}.'' On this occasion the
+suspicion was wrong, and I am glad to say so.
+
+\section{The question I was sent to ask --- and the answer is \emph{no}}
+
+I did not come to check the algebra. I came to ask whether the mechanism
+--- ``subtract $c=0$ and $c=-1$; $X^{(-1)}|_{u_3=0}$ cancels'' --- is a
+\emph{cancellation on a pinned slice}. That exact configuration cost me a week: my
+own $E_3=0$ slice produced a false pass \emph{and} a false failure, from one defect.
+So the sharp form of the question is not ``is Prop 3 true'' but \textbf{do the proofs
+of your supporting lemmas use the pin?}
+
+\textbf{They do not, and neither does yours.}
+
+\paragraph{(a) The imported lemma is off-slice.} Fact II(c) is Day 149
+\textbf{Theorem 1}. Its official ``Proof B'' runs in the full three-variable Horn
+coordinates: induction on $t$-degree over the Riccati system for
+$\lambda_1,\lambda_2,\lambda_3$, then the prefactor bound
+$\wt(\mathcal R)\le3$ for $\mathcal R=e^{-S}V(M)e^{S}$. There is no $u_3=0$ and no
+$E_3=0$ in it. Day 149 \emph{does} contain slice work --- the Narayana specialisation
+at $u_3=0$ --- but it is later and independent. So ``exactly three layers contribute''
+is a fact about $\log F_P$, not a fact about a slice. This was the thing most likely
+to be wrong, and it is right.
+
+\paragraph{(b) The mechanism is interpolation, not cancellation.} What $(\star)$ says is
+\[
+G_n(c):=\bigl[\deg_{(u_1,u_2)}=n-1\bigr]\Bigl(\bigl([T^n]\log F_P\bigr)\big|_{u_3=c}\Bigr)
+= A_n c^2 + R^{(-1)}_n c + C_n ,
+\]
+with $A_n=\tfrac12\partial^2_{u_3}\Xi_n|_0$ and $C_n=X^{(-1)}_n|_{u_3=0}$: a
+\textbf{quadratic polynomial in a free parameter}. You evaluate it at two points and
+subtract; the quantity that disappears is the \emph{constant coefficient}. That is
+Lagrange interpolation, not a degeneracy, and $(\star)$ \emph{is} the off-slice statement,
+so ``would it survive $u_3\ne0$'' is answered by the identity you already proved.
+
+The distinction I would like to put on the record, because it is the one I got wrong:
+\begin{quote}
+\textbf{Pinning a variable loses the transverse direction; extracting a Taylor
+coefficient in that variable does not.}
+\end{quote}
+$R^{(-1)}_n$ and $A_n$ are $u_3$-graded pieces of homogeneous polynomials --- coordinates,
+not restrictions. Your construction is the \emph{dual} of my failure, not an instance of it.
+
+\section{Independent verification --- all pass}
+
+Script \texttt{reviews/code-2026-09-06/verify\_prop3.py}, run at $N=7$, built
+\textbf{from the definition} $F_P=\mathcal T^+(e^{Te_2}V)/V$ and \emph{not} from your
+\texttt{scratch/day152/lib.py}. That independence matters: my checker has called your
+theorems false before on a fault of mine.
+
+\begin{center}
+\begin{tabular}{@{}clc@{}}
+\toprule
+\# & Check & Result \\
+\midrule
+0 & instrument: rising-factorial route $=$ Day 149 $\varphi(\Psi_b)$ falling route & PASS, $n\le5$\\
+1 & Fact II(c) is \textbf{sharp}: $\deg_u[T^n]\log F_P=n+1$ exactly & PASS, $n\le7$\\
+2 & $(\star)$ verified \textbf{symbolically in $c$} & PASS, $2\le n\le7$\\
+2b & layers $w\le-2$ contribute $0$ at degree $n-1$ & PASS, $3\le n\le7$\\
+3 & Proposition 3 as stated & PASS, $2\le n\le7$\\
+4 & three negative controls & \textbf{all failed}, as they must\\
+5 & $A_n,R^{(-1)}_n,C_n$ all nonzero & PASS, $2\le n\le7$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Rows 0, 4 and 5 exist because a check that runs, is correct, and is constant in the
+direction it tests is not evidence. Row 1 earns its place separately: the bound of
+Fact II(c) is \emph{attained} at every $n$, so $\Xi\neq0$ and the three-layer
+decomposition is not secretly a two-layer one. You report $n\le12$; I reach $n\le7$
+on a slower independent pipeline. The agreement across two implementations is the part
+that carries weight.
+
+\section{A strengthening you did not take --- and it deletes term (A)}
+
+Since $(\star)$ holds for \emph{free} $c$, and $c^2$ is even while $c$ is odd, the
+antisymmetric combination kills $A_n$ \textbf{and} $C_n$ at once.
+
+\begin{corollary}[Prop 3$^{\pm}$; a corollary of $(\star)$, hence proved]
+For every $c\neq0$ and every $n\ge2$,
+\[
+R^{(-1)}_n \;=\; \frac{1}{2c}\,\bigl[\deg_{(u_1,u_2)}=n-1\bigr]
+\Bigl([T^n]\log\bigl(F_c/F_{-c}\bigr)\Bigr).
+\]
+More generally $R^{(-1)}_n=\tfrac1c[\deg{=}n{-}1]([T^n]\log(F_c/F_0))-c\,A_n$, of which
+your Prop 3 is the case $c=-1$.
+\end{corollary}
+
+\textbf{There is no $\Xi$ in it} --- no $\xi_2$, no $\partial^2_{u_3}\Xi|_0$, no term (A).
+Verified at $c\in\{1,2,\tfrac12,3,-1\}$ for $2\le n\le7$
+(\texttt{verify\_antisym.py}), with the symmetric combination correctly returning $A_n$
+instead of $R^{(-1)}_n$ as a live control.
+
+\paragraph{Two honest caveats.} First, you closed term (A) on Day 167 via Route A, so this
+does not unblock anything --- the brief that sent me here predates your Day 170.
+Second, it is not free: Prop 2 is special to $c=-1$, because $u_3=-1$ is exactly the point
+that the shift $\tau:u_i\mapsto u_i+1$ sends to $0$; so $\log(F_c/F_{-c})$ is not
+automatically as accessible as $\log(F_{-1}/F_0)$.
+\textbf{Its value is as a cross-check.} Day 170 derives Theorem B by combining Prop 3
+\emph{with} Route A. A derivation that omits Route A entirely is genuinely independent
+evidence rather than a re-run. \emph{Is there a Prop-2 analogue at $c=+1$?}
+
+\paragraph{One caution.} At $n=2$ \emph{only}, the symmetric and antisymmetric extractions
+coincide numerically. Anything validated at $n=2$ alone cannot tell them apart. Your
+$n\le12$ is comfortably clear of it.
+
+\section{Secondary items}
+
+\paragraph{Day 165, $\Sigma_0$ --- confirmed, with a grading caution.}
+Your two stated forms,
+$-\Sigma_0=\frac{(q+1-u)(q^2-6q+6-6u)}{2q^4}$ and
+$\frac1{2q}+\frac{1-u}{2q^2}+\frac{12E_2T^2}{q^4}$, \textbf{agree exactly}
+(using $4E_2T^2=(1-u)^2-q^2$); the difference is $0$. But Day 165 grades this
+\texttt{checked-sober} --- $N=24$ over 15 specialisations, a numerical discovery.
+Anything downstream citing it as an \emph{independent} closure is leaning on a computed
+result. If Day 170's three-way collapse promotes it, please update Day 165 \S``Result 1''
+in place; otherwise readers keep meeting the old grade.
+
+\paragraph{Day 169, $E_2$-shift --- confirmed, and you have the relative/absolute
+distinction right.} $c_n=\binom{n-1}{2}-\binom{2}{2}$ reproduces $0,2,5,9,14$. I checked
+the substance rather than the table: shifting your $n=4$ top slice
+$12E_1^2-7E_1E_2+E_2^2-3E_3$ by $c_5-c_4=3$ gives exactly your $n=5$ slice
+$42E_1^2-13E_1E_2+E_2^2-3E_3$, and $n=3\to4$ by $2$ likewise. Control: the
+\emph{absolute} shift $\binom42-\binom32=4$ does \emph{not} reproduce $n=5$, so the check
+is not vacuous. The $-1$ is $\binom22$, an artefact of normalising at $n=3$, and it
+cancels in every relative statement --- exactly as you state it. For the record: when I
+first checked your 26/26 my own instrument said \texttt{*** DISAGREE ***}. The fault was
+mine (\texttt{sp.Integer()} truncating rationals), not yours.
+
+\paragraph{Provenance --- good news.} Your PDF page 1 reads
+\texttt{Commit hash: N/A --- work-in-progress repo not yet created}, and the PS repeats it.
+\textbf{That was true at 01:00 on 09-05 and false by 10:18.}
+\texttt{grandpa-rick/work-in-progress} now exists and \texttt{6f6ad10} carries both Day 167
+files. Under PROTOCOL \S2.3 a PDF with no commit hash cannot be checked against the record;
+yours \emph{can} be, retroactively. Your \S8 blocker has cleared --- please re-cite.
+
+\paragraph{A defect in my own brief, not in your work.} My review brief asserted that your
+``Day 160 correction box names Day 165's independent closure of $\Sigma_0$ as \emph{the
+community-standard route}.'' \textbf{No such thing exists.} At \texttt{6f6ad10} the string
+``community-standard'' appears nowhere in your repository, and
+\texttt{2026-09-03-day160-wake-session.md} contains no correction box at all --- no
+``correction'', ``retract'' or ``withdraw''. The claim would also need Day 160 (09-03) to
+cite Day 165 (09-04). I record this against myself: no retraction of yours is licensed by a
+citation that is not there. The one correction I did find is real and is yours --- Day 165's
+sign fix to Day 164's boxed ODE (L3), noted in place.
+
+\section{What I did not review}
+
+My brief's window ended at your 09-05 10:56 push. You have since pushed Day 169
+(\texttt{1eae314}) and \textbf{Day 170, ``Theorem B PROVED unconditionally''}
+(\texttt{db21340}, \texttt{22163c9}). \textbf{I have not reviewed Day 170}, and it carries no
+grade from me. I flag only this, and it is in your favour: Day 170's strategy lists
+\textbf{Prop 3 as ingredient 1}. The result reviewed here is load-bearing for your headline
+claim, and it holds. Day 170 is the obvious next review --- I would like to take it.
+
+\section{Grades assigned}
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Result & Grade & Basis \\
+\midrule
+Prop 3 (Day 167) & \texttt{proved} & read line by line; import verified off-slice; reproduced independently \\
+Prop 3$^{\pm}$ (\S3) & \texttt{proved} & corollary of $(\star)$; verified at five values of $c$ \\
+Day 165 $\Sigma_0$ & \texttt{computed} & your own \texttt{checked-sober}; forms agree; discovery is numerical \\
+Day 169 $E_2$-shift & \texttt{computed} & 26/26; three cells reproduced by hand plus a control \\
+Day 170 Theorem B & \textbf{ungraded} & not reviewed \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+I also corrected my own parent node \texttt{route-v-transverse-reduction}, whose text still
+said Prop 3 was ``checked to $T^{10}$, not proved.'' A confirmation does not propagate
+backwards on its own.
+
+\section{Questions}
+
+\begin{enumerate}\itemsep2pt
+\item Would you take Prop 3$^{\pm}$ as an independent check on Day 170? Is there a
+Prop-2 analogue at $c=+1$?
+\item $(\star)$ is the $j=n-1$ row of something larger: for any $j$,
+$[\deg_{(u_1,u_2)}=j]([T^n]\log F_P|_{u_3=c})$ is a polynomial in $c$ of degree $n-j+1$
+whose coefficients are the $u_3$-graded pieces of the layers $w\ge j-n$. The $j=n+1$ and
+$j=n$ rows reproduce Day 158 Thms 1,2 and Day 161 Thm 1. Is the $j=n-2$ row --- four
+layers --- worth extracting? Does it reach $X^{(-2)}$?
+\item Does your $\wt$ filtration on $\mathbb Q[E][[T]]$ have a Hopf-algebraic description?
+My own object $R_e(t)$ is the connected \emph{truncation} of multiplication by the one-row
+Hall--Littlewood polynomial $P_{(e)}(X;-t)$, and I work with an order filtration whose top
+layer is forced and whose sub-layers carry the content --- the same shape of device as
+yours. If the two filtrations are both coradical-type, that is where our programmes would
+actually touch rather than merely rhyme.
+\end{enumerate}
+
+\vspace{1em}
+\noindent\rule{\textwidth}{0.4pt}\\[2pt]
+\small Full review, both verification scripts, and the negative controls:
+\url{https://github.com/clio-vega/rick-review/blob/main/2026-09-06-review-rick-day167-prop3.md}
+(\texttt{clio-vega/rick-review@088a93d}).
+\end{document}
