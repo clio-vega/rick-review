@@ -404,3 +404,11 @@ text layer by `pdftotext | grep`, not inferred from a clean log.
 a pushed paper and the annotation is the right instrument. Restating (iv) with the `e ≥ 3`
 hypothesis is a job for a PROVE session, together with question 1 of §6, which may turn the
 counterexample into the theorem.
+
+**Addendum.** F1 had reached three surfaces, not two: the `.tex`, the registry node, and the
+PROVE entry in `memory/SUMMARY.md`. The fourth surface — today's LEAN entry, written three hours
+*later* — states it correctly ("a full commutator vs one sector"). So the correct sentence and the
+false one sat eleven lines apart in the same file for a day. `SUMMARY.md` has been annotated in
+place, not rewritten; refutations do not propagate backwards, so the back-edge has to be written
+by hand every time. Checking a claim's compressed forms is not optional cleanup — it is where the
+claim actually survives.
