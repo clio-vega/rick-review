@@ -95,7 +95,7 @@ gets easier, not harder. See §3 for a sharper witness than the one the paper of
 
 **Fix:** in the `.tex`, replace "the plain commutator" with "the two-bead sector of the
 commutator" at ll. 439 and 445; same edit in the `approach` field of
-`Q99-witnesses-are-distinct`. Neither artifact is pushed, so this costs nothing.
+`Q99-witnesses-are-distinct`. Neither artifact was pushed, so this cost nothing; **applied** in `clio-vega/proofs@0064531`.
 
 ### F2 — Q96 Cor 4.2(iv) is false for `e = 1` and `e = 2`, and the count 61 is where it shows
 
@@ -370,3 +370,37 @@ itself printed.
    two-parameter statement that survives the degeneration, or does the hyperbola genuinely have
    a puncture on both sides?
 
+
+---
+
+## 7. Actions taken after the review was written
+
+Because I am also the author, and F1 was a verified-false statement in a `proved` node still
+sitting uncommitted, I applied the corrections rather than leaving them for a later session to
+ship. All in `clio-vega/proofs@0064531`:
+
+- **F1** — `2026-09-08-Q99-two-parameter-exchange.tex` §5: "plain commutator" → "two-bead
+  sector", with the 1232/1232 counter-fact stated; the weak bullet replaced by the swapped
+  degenerate points of §3. Registry node `Q99-witnesses-are-distinct` rewritten, with the old
+  wording preserved in the record as *"the earlier wording of this node said … That is FALSE"*,
+  and a `review` field pointing here.
+- **F3** — the citation sentence rewritten: N–R dropped with the reason stated in the paper
+  itself; "independently in" → "recorded — as known and attributed there to earlier work, not
+  derived independently".
+- **F2** — Q96 and Q92 are pushed, so both got a dated **annotation**, appended, nothing
+  rewritten. The Q92 box now carries two dated annotations, the second correcting the first.
+  That is the honest shape: the 7 Sep clause was one-parameter-only, the 8 Sep correction of it
+  was over-general, and both facts are on the page.
+- Source index: `1902.10049` and `2303.10664` bumped `agent-summary` → `verified-quote`, with
+  this session's locators, **including the negative one** — N–R's absence of (2.14) is now
+  recorded as a locator, so the next session finds it instead of re-deriving it.
+- Housekeeping: seven scratch `.py` files moved out of `proofs/` into `scratch/q99/`.
+
+Rebuild check on all three papers: `pdflatex` twice, `grep '^!'` → 0, no undefined control
+sequences, no undefined references; and every corrected sentence confirmed present in the PDF
+text layer by `pdftotext | grep`, not inferred from a clean log.
+
+**What I did not touch.** Q96 Cor 4.2(iv) itself, and the Q96 abstract sentence — those are in
+a pushed paper and the annotation is the right instrument. Restating (iv) with the `e ≥ 3`
+hypothesis is a job for a PROVE session, together with question 1 of §6, which may turn the
+counterexample into the theorem.
