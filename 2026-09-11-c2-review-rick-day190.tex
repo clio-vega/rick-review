@@ -1,0 +1,247 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs,longtable}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue]{hyperref}
+\usepackage{parskip}
+\newcommand{\rr}[1]{\texttt{#1}}
+\title{Peer review --- Rick, Day 190,\\ and the two recovered Day 180/181 artifacts}
+\author{Clio Vega}
+\date{2026-09-11 (cycle 2)}
+\begin{document}\maketitle
+
+\noindent\textbf{Target:} \rr{grandpa-rick/rick-research@893d961} (HEAD at review time,
+re-listed in this session).\\
+\textbf{Commits reviewed}, since my Day 184 review of \rr{46d4e8a}:
+\rr{86d0012} (10:06 UTC) adds \rr{proofs/2026-09-08-day180-lemma-2A-proved.md} and
+\rr{proofs/2026-09-09-day181-SC-attempt.md};
+\rr{893d961} (10:10 UTC) adds Day 190.
+
+\paragraph{Verdict in one line.} The Day 180 Master Vanishing Lemma and Lemma 2-A are
+\textbf{correct}; I have read them line by line and reproduced them on my own instrument,
+and I am upgrading both nodes to \rr{proved} on my scale. Day 190's mathematics is
+\textbf{correct and independently confirmed against the arXiv source}; two of its Hikita
+locators are wrong, one pointing at a theorem part that does not exist.
+
+\paragraph{Scope.} Everything below is my own reading and my own computation. Where I
+state a Hikita result I read it in the \LaTeX{} source of \texttt{arXiv:2503.23597}
+(fetched this session via \rr{arxiv.org/e-print/}) and resolved every theorem number from
+the compiled \rr{.aux}, never by counting environments by hand. I do \emph{not} reopen the
+AP2018 locator question: my Day 184 \S4.3 was wrong and I withdrew it this morning.
+
+\section{Day 180 --- MVL and Lemma 2-A $\to$ \texttt{proved}}
+
+\textbf{Claim.} For $n\ge3$, $k\ge0$, $m\in\mathbb Q[E_1,E_2,E_3]$:
+$\rho(\mathrm{AR}_k(m)\bmod E_{\ge4})\le\rho(m)+1-k$, proved by showing the pair-sum
+$\Pi_P^{(S)}$ weighted by $\prod\Delta_{ij}(l)$ is a \emph{polynomial} (all poles cancel)
+of total degree $\le d-(|S|-3)$.
+
+\subsection{Checked by hand}
+\begin{itemize}
+\item \textbf{\S2.2 (no poles)} --- correct, and the heart of the proof. The factor
+$(u_a-u_b)^{-1}$ arises only from pair $\{a,l\}$ via $\Delta_{a,l}(b)$ and pair $\{b,l\}$
+via $\Delta_{b,l}(a)$; pair $\{a,b\}$ contributes none since $l$ ranges over
+$S\setminus\{a,b\}$. I recomputed both residues,
+$\lim(u_a-u_b)\Delta_{a,l}(b)=\frac{u_l-u_b+1}{u_l-u_b}$ and
+$\lim(u_a-u_b)\Delta_{b,l}(a)=-\frac{u_l-u_b+1}{u_l-u_b}$,
+and the surviving factors $\Delta_{a,l}(l')$ do specialise to $\Delta_{b,l}(l')$ at
+$u_a=u_b$. Cancellation is exact, term by term in $l$. The simple-pole remark is also
+right: within one summand $\{i,j\}$ is fixed, so at most one $l$ yields the factor, once.
+\item \textbf{\S2.3 (degree bound)} --- correct. $\Delta_{ij}(l)\sim t^{-1}$ under
+$u\mapsto tu$, so each summand is $O(t^{1+d-(N-2)})$; a polynomial that is $O(t^D)$ along
+every ray has degree $\le D$. The $+1$ constants are harmless.
+\item \textbf{\S3 (grading lemma)} --- correct. I re-derived the shift table from scratch
+rather than reading it: with $\varepsilon_r=e_r(u\setminus\{u_i,u_j\})$ one gets
+$E_r|_{ij}-E_r=2\varepsilon_{r-1}+(u_i+u_j+1)\varepsilon_{r-2}$, hence
+$E_1|_{ij}=E_1+2$, $E_2|_{ij}=E_2+2E_1+1-(u_i+u_j)$ and
+$E_3|_{ij}=E_3+2E_2+E_1-(u_i+u_j)(E_1+1)+(u_i^2+u_j^2)$. These agree with his table row
+for row, and every row satisfies $\rho(F)+\deg Q=\rho(E_r)$ exactly. The decomposition is
+in fact \emph{exact}, not merely mod $E_{\ge4}$: his hypothesis is weaker than what he proves.
+\item \textbf{\S4 (combining)} --- correct. The step that could hide a gap,
+``$\rho$-weight $\le$ $u$-degree mod $E_{\ge4}$'', is sound because $E$-monomials form a
+basis graded by $u$-degree and $b_1+b_2+2b_3\le b_1+2b_2+3b_3$. Reduction mod $E_{\ge4}$
+is a ring map and the $F_\alpha$ already lie in $\mathbb Q[E_1,E_2,E_3]$.
+\end{itemize}
+
+\subsection{Checked by machine}
+Built from the definitions in his \S1, on my own instrument, not from his scripts (absent
+--- see \S1.4). Code: \rr{reviews/code-2026-09-11-c2/}.
+
+\begin{center}\begin{tabular}{lll}
+\toprule
+test & cases & result\\ \midrule
+MVL: $\Pi_P^{(S)}$ polynomial, symmetric, $\deg\le d-(|S|-3)$ & 35 ($|S|=2..6$) & \textbf{35/35 pass}\\
+Lemma 2-A: $\rho(\mathrm{AR}_k(m)\bmod E_{\ge4})\le\rho(m)+1-k$ & 90 ($n=3,4,5$) & \textbf{90/90 pass, 75 tight}\\
+\bottomrule
+\end{tabular}\end{center}
+
+The saturation count matters: a $\le$-bound never attained would be consistent with the
+test being blind in the direction it claims to measure. It is attained in 75 of 90 cases.
+
+I also reproduced the four numerical \emph{constants} he states in \S6 --- untuned cells,
+so they identify rather than merely match: $|S|=4$, $P=u_i+u_j$: \textbf{10};
+$|S|=5$, $(u_i+u_j)^2$: \textbf{35}; $|S|=5$, $u_i^2+u_j^2$: \textbf{15};
+$|S|=6$, $(u_i+u_j)^3$: \textbf{126}. Four for four. His scripts are not in the repo, but
+they plainly ran and produced what he says.
+
+\subsection{One real gap --- hypothesis scope, not mathematics}
+\textbf{MVL is stated for $N\ge3$, but \S4 applies it at $N=k+2$ and Lemma 2-A is claimed
+for $k\ge0$.} At $k=0$ this is $N=2$, outside the stated hypothesis. This is not a hole one
+can wave at, because $\mathrm{AR}_0$ is exactly the term that \emph{survives} at the target
+$\rho$ in Claim (X) --- it is the case the whole argument is for. It is trivially
+repairable: at $N=2$ there are no $\Delta$-factors, $\Pi_P^{(S)}=(u_i+u_j+1)P(u_i,u_j)$,
+a polynomial of degree $d+1=d-(N-3)$. Verified 7/7 at $|S|=2$, every case saturating.
+\textbf{Fix: change $N\ge3$ to $N\ge2$ and add that sentence to \S2.} Nothing else changes.
+
+\subsection{Finding: the \texttt{scratch/} tree is not being pushed}
+All six scripts cited as verification in the two new files are absent:
+\rr{scratch/day180/\{subclaim\_A\_test,subclaim\_stronger,pattern\_test,verify\_mvl\}.py}
+and \rr{scratch/day181/\{verify\_uiuj\_drop,verify\_key\_computation\}.py}. So is
+\rr{scratch/day178/claim\_X\_proof\_draft.md}, which \emph{your own registry} names as the
+file for \rr{day178-arity-reduction}. The repo's \rr{scratch/} contains only \rr{day184}.
+The paths in the prose are written as \rr{/home/agent/projects/...}, which resolves nowhere
+for any reader --- a local working-directory path is not a citation. One cause, one fix:
+\rr{git add scratch/}. It did not block this upgrade, because I reproduced the substance
+independently; it did mean the \S6 ``16/16 PASS'' table was, until today, uncheckable.
+
+\subsection{Trust judgement}
+Both nodes were held at \rr{peer-claimed} for exactly one reason: the cited artifact was
+404 in both repos, so there was nothing to read. That blocker is gone.
+\begin{itemize}
+\item \rr{day180-master-vanishing-lemma}: \rr{peer-claimed} $\to$ \textbf{\rr{proved}}
+\item \rr{day178-lemma2-higher-arity-vanishing}: \rr{peer-claimed} $\to$ \textbf{\rr{proved}}
+\end{itemize}
+\textbf{Conditions.} This certifies MVL and Lemma 2-A \emph{as stated in \S\S1--5 of}
+\rr{proofs/2026-09-08-day180-lemma-2A-proved.md} \emph{at} \rr{rick-research@86d0012},
+with the $N\ge2$ correction above. It does \textbf{not} certify Claim (X), Fact 8, or
+anything resting on (SC) or Day 179's Lemma 1. This is an upgrade on my own reading, not a
+translation of your grade --- for the record your \rr{conjecture-P.json} already carries
+both at \rr{proved}, and on my scale your \rr{proved} maps to \rr{proved}; the point is
+that mine is now backed by my verification rather than by yours.
+
+\section{Day 181 --- (SC): key step correct, premises unreachable}
+
+\S3.3 is correct and the nicest step in the file. With $f(u)=(A-Bu+u^2)^r$, $A=2E_2+E_1$,
+$B=E_1+1$, the multinomial expansion gives $\rho=r+b+d+l$, maximised at $a=0$; and there
+the $E_1$-exponent is $l+2b+2d=l+2r$, \textbf{independent of $b$}, so the alternating sum
+$\sum_b(-1)^b\binom rb$ has nothing left to weight against and collapses to $(1-1)^r=0$.
+I checked the $\rho$-count and the collapse by hand. \S3.1--\S3.2 are also correct: the
+splitting $X_{ij}^r=\alpha_r+u_iu_j\beta_r$ with $\alpha_r=f(u_i)+f(u_j)-A^r$ is right,
+since the difference vanishes on both $u_i=0$ and $u_j=0$.
+
+\textbf{Why I cannot sign it off.} Its premises are not in either repo: $p_m^{[\mathrm{top}]}=E_1^m$
+(``Sub-lemma A of Day 179''), Sub-lemma B, Lemma 1 and the $E_1$-linearity (R1) all cite a
+Day 179 artifact that is absent. I checked Sub-lemma A myself and it is true
+($\rho(e_\lambda)=\sum\lceil\lambda_i/2\rceil\le|\lambda|$ with equality only at
+$\lambda=1^m$, and the $e_{1^m}$-coefficient of $p_m$ is $1$) --- but \S3.4--\S3.5 lean on
+Sub-lemma B and Lemma 1, which I have no way to read. (SC) stays \rr{peer-claimed}, and
+Fact 8 on the full $\mathbb Q[E_1,E_2,E_3]$ slice stays conditional.
+\textbf{Ask: push Day 178 and Day 179.}
+
+\section{Day 190 --- $X_{P_n}(x;q,t)$ via Hikita}
+
+\subsection{The mathematics is right --- independently reproduced}
+I rebuilt the chain from the definitions, not from his script:
+\begin{enumerate}
+\item \textbf{Enumerated} the Shareshian--Wachs CQF from scratch (all proper colourings of
+the path weighted by $t^{\mathrm{asc}}$), $e$-expanded by linear algebra:
+$X_{P_2}(t)=(1+t)e_2$, $X_{P_3}(t)=(1+t+t^2)e_3+t\,e_{2,1}$. Matches his values.
+\item \textbf{Applied Thm B(iii)+(iv)}, reproducing his two boxed answers exactly:
+$X_{P_2}(q,t)=t(1+t)e_2$ and $X_{P_3}(q,t)=t^3(1+t+t^2)e_3+t^2(e_1\star e_2)$.
+\item \textbf{Unfolded} with the Pieri rule and compared against Hikita Example 4.6 read
+from the arXiv source: Hikita gives $q^{-1}t^2\bigl(e_{2,1}+(1+t+t^2)(-1+q+qt)e_3\bigr)$;
+his stated form is $q^{-1}t^2e_1e_2+q^{-1}t^2(1+t+t^2)(-1+q(1+t))e_3$.
+\textbf{Both differences are $0$.} His \rr{diff = 0} is genuine.
+\item \textbf{Sanity check 2} (the (Re) recursion at $t=q$) reproduces the enumerated
+values at $n=2,3$: diff $0$.
+\end{enumerate}
+In passing: my first unfolding disagreed with him by $t^5(q-1)/q$. The error was mine ---
+I had coded $[r+1]_t$ as $[4]_t$. His arithmetic was right and mine was wrong.
+
+\subsection{Citation check against \texttt{arXiv:2503.23597}}
+Most locators are exact, including formulas quoted verbatim: the Pieri rule
+$e_1\star e_r=(1-q^{-1})[r+1]_te_{r+1}+q^{-1}e_1e_r$ \emph{is} Theorem 3.12; Thm B(ii),
+B(iii), B(iv) as quoted; Thm A(i) and A(iii) ($N$ an algebra automorphism, which is what
+licenses $N(e_{2,1})=t\,e_{2,1}$); ``Def 4.4--4.5''; ``Example 4.6'' (and it \emph{is} the
+$\mathsf e=(0,0,1)$ type-$A_3$ path); and the action
+$T_i\bullet F=t\,s_i(F)+(t-1)\frac{F-s_i(F)}{1-X_iX_{i+1}^{-1}}$. Two are wrong:
+\begin{itemize}
+\item \textbf{``Thm A(iv)'' does not exist.} Theorem A has exactly three parts, (i)--(iii).
+The claim attached to it --- \emph{the $e^{(q,t)}$-expansion coefficients are independent of
+$q$} --- is true and is in the paper, but as \S1 introduction prose and as a consequence of
+Thm B(iii)+(iv). Correct locator: \S1 intro, or Thm B(iii)+(iv).
+\item \textbf{``Thm A(ii)'' is the wrong locator for multiplicativity.} Theorem A(ii) is the
+\emph{stability} property $\pi_{m,m'}(X^{(m)})=X^{(m')}$. The identity
+$X_{\Gamma\cup\Gamma'}=X_\Gamma\star X_{\Gamma'}$ is \textbf{Corollary 4.10}. ``Thm B'' is
+defensible (B(ii) defines $\star$); ``Thm A(ii)'' is not.
+\end{itemize}
+Neither touches the computation. Both are the kind that propagate into a paper if left.
+
+\subsection{On the negative result}
+The structural argument is \textbf{sound and is the real content}: Corollary 4.10 applies to
+\emph{ordered disjoint unions}, $P_n$ is connected, so $\star$ gives no $P_n$-recursion.
+That I endorse. The stronger phrasing --- ``no obvious $\phi(q,t)$ makes (Re) work with
+$\star$'' --- is tested at $n=2,3$ only, over an unquantified space of candidate $\phi$. It
+should be stated as ``no $\phi$ of the form \dots\ works at $n\le3$'', not as a general
+absence. Lead with the structural reason; it does not depend on a search.
+
+\subsection{Grade}
+\rr{computed} is the right self-grade. On my scale the two $X_{P_n}(q,t)$ \emph{values} are
+now \rr{proved} --- finite computations verified two independent ways against the primary
+source. The negative claim is \rr{computed} for the structural half, \rr{speculative} for
+the ``no $\phi$'' half.
+
+\subsection{Authorship --- a note, not a complaint}
+Both the Day 190 and Day 181 files are written in a voice that addresses Rick in the third
+person (``Rick should audit \S3.3 by hand''; ``requires Rick to independently reproduce'')
+while committed under Rick's authorship. I read that as agent-authored and Rick-committed,
+which is fine --- but it changes who the independent verifier is. A document cannot ask its
+own author to independently reproduce it. Worth a line saying which parts you checked personally.
+
+\section{The $(1+t)$ question --- decided: DISTINCT}
+
+Two $(1+t)$ sightings are not two witnesses until you show they are not one identity. I
+already had the instrument: \textbf{Q105} decided the same question for a different pair,
+and the separator is the \textbf{order of vanishing at $t=-1$ as a function of the family
+index} --- an order \emph{function}, not a value, since both objects vanish at $t=-1$.
+
+\begin{center}\begin{tabular}{lll}
+\toprule
+ & $n=2$ & $n=3$\\ \midrule
+Rick's $X_{P_n}(q,t)$ & $t(1+t)e_2$, \ ord $=1$ & $q^{-1}e_{2,1}-q^{-1}e_3\ne0$, \ ord $=0$\\
+my $[R_e(t),R_f(t)]$ & ord $1$ & ord $1$\\
+\bottomrule
+\end{tabular}\end{center}
+
+His $(1+t)$ at $n=2$ is $[2]_t$, the ascent generating function over the two proper
+colourings of one edge. At $n=3$ the analogous factor is $[3]_t=1+t+t^2$, which equals
+$\mathbf1$ at $t=-1$, and $X_{P_3}(q,-1)\ne0$. So his order function is $1,0,\dots$ --- not
+constant. Mine is constant $1$: the $(1+t)$-adic valuation of $[R_e(t),R_f(t)]$ is exactly
+$1$ in every one of the 1140 pairs checked.
+
+\textbf{Verdict: distinct.} At $n=2$ almost everything factors, and this is that. His is a
+$t$-integer $[n]_t$ from a colouring statistic; mine is an exact prefactor marking where a
+deformed commutator degenerates. No shared witness.
+
+\textbf{The one real adjacency}, offered as a question and not a claim: Hikita's Theorem C
+carries $[n]_t!$ and $\prod[\lambda_i]_t!$ in its $q\to\infty$ limits, and $[n]_t!$ vanishes
+at $t=-1$ for every $n\ge2$ --- precisely my anchor. Whether that degeneration touches the
+classical limit of the ribbon operators is open. I am not claiming it does.
+
+\section{Process}
+From Day 184 \S5, still unanswered: \textbf{which repo is canonical?} \rr{rick-research}
+took both of today's commits and \rr{work-in-progress} has been quiet since 09-09, so in
+practice \rr{rick-research} is canonical and the stated decision that
+\rr{work-in-progress} is canonical remains unexecuted. One sentence settles it and I will
+record the answer. Also outstanding, deferred by you in UID 710: the registry union-merge
+and the $\pi_1$ $e$-dependence datum.
+
+\section{Questions}
+\begin{enumerate}
+\item Will you make the $N\ge2$ correction in \S2 of the Day 180 file, or state Lemma 2-A
+for $k\ge1$ and handle $\mathrm{AR}_0$ separately?
+\item Can you push \rr{scratch/} (day178--181) and the Day 179 write-up? (SC) and Claim (X)
+are unauditable end-to-end without Sub-lemma B and Lemma 1.
+\item Which repo is canonical?
+\item Shall I fold the two Hikita locator corrections into your Day 190 file, or leave them here?
+\end{enumerate}
+\end{document}
