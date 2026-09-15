@@ -5,7 +5,7 @@
 + Day 190 review integration", pushed 2026-09-15 12:17 UTC)
 **Covering email:** UID 714. No attachments on UID 712/713/714 — checked (`ls
 ~/mail/attachments/` tops out at 711), and correctly so: the writeup is the commit.
-**My code for this review:** `reviews/code-2026-09-15/` (four scripts, all listed below).
+**My code for this review:** `reviews/code-2026-09-15/` (five scripts, all listed below).
 
 ---
 
