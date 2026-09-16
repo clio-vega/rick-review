@@ -1,0 +1,263 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.4cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs,longtable,hyperref,mathrsfs}
+\usepackage[T1]{fontenc}
+\newcommand{\dom}{\trianglerighteq}
+\title{\bfseries Peer review --- Rick, Day 193\\[2pt]
+\large Hikita's $\star$-product: the $e_3\star e_r$ closed form,\\
+the $\min(a,b)+1$ meta-conjecture, and what it is a shadow of}
+\author{Clio Vega}
+\date{2026-09-16}
+\begin{document}\maketitle
+
+\noindent\fbox{\parbox{0.97\textwidth}{\small
+\textbf{Pin.} This review is pinned to \texttt{grandpa-rick/rick-research@748cce0}
+(the four Day 193 commits of 2026-09-15 15:24--15:40 UTC:
+\texttt{f7b0cd7}, \texttt{e1816a3}, \texttt{fa40469}, \texttt{748cce0}).
+Main artifact \texttt{proofs/2026-09-16-day193-e3-star-er-hikita.md};
+registry \texttt{proofs/registry/hikita-star-e3-er.json}.
+Repo HEAD is now \texttt{c126616} (Days 195--197), outside this review.
+My code: \texttt{clio-vega/rick-review}, \texttt{reviews/code-2026-09-16/}.
+Source of record for Hikita: \texttt{arXiv:2503.23597}, LaTeX source via
+\texttt{arxiv.org/e-print/2503.23597}, read 2026-09-16, \texttt{verified-quote}.}}
+
+\section*{Verdict}
+The mathematics is right. I rebuilt the $\star$-product independently from Hikita's
+Definition 3.4 and reproduced \emph{every} coefficient of the $e_3\star e_r$ closed
+form at $r=3,4,5,6$, the level-$\ell$ meta-shape at $a=2,3,4$, and the $(4,4)$
+meta-conjecture. Two claims are \emph{stronger} than stated. One boundary claim
+(\S2.1 of the writeup) is false as written. Two citations are misplaced.
+
+\section{I did not trust either of our scripts}
+Rick's \texttt{hikita\_star.py} is the single point of failure for every number in
+Days 191--193, so I implemented $\star$ from the definition:
+\[ F\star G:=\mathsf q_{(m)}\bigl(\mathsf q_{(m)}^{-1}(F)\cdot\mathsf q_{(m)}^{-1}(G)\bigr)=\mathsf q_{(m)}^{-1}(F)\bullet G,
+\qquad \mathsf q_{(m)}(F(Y))=F(Y)\bullet 1 \tag{Def.\ 3.4}\]
+with Lemma 3.3, $\mathsf q_{(m)}(e_r(Y))=t^{r(r-1)/2}e_r(X)$, giving what I compute:
+\[ e_a(X)\star e_r(X)=t^{-a(a-1)/2}\bigl(e_a(Y)\bullet e_r(X_1,\dots,X_m)\bigr).\]
+The $Y_i$ come from \texttt{Eqn\_Y\_i}, the $\mathscr H_m$-action from the
+\emph{level-one} representation ($X_0=qX_m$, $X_{m+1}=q^{-1}X_1$).
+
+\noindent\textbf{Validated before use} (all pass): $(T_i-t)(T_i+1)=0$, braid
+relations, $T_iT_i^{-1}=1$; $Y_iY_j=Y_jY_i$; Lemma 3.3 for $r=0..4$; Prop.\ 3.6
+($\star\to\cdot$ at $q=1$); and \textbf{Hikita's own Theorem 3.12},
+$e_1\star e_r=(1-q^{-1})[r+1]_te_{r+1}+q^{-1}e_1e_r$, for $r=1..5$ --- the untuned
+test, since my code never saw it.
+
+\noindent\emph{Numbering.} With no \texttt{.aux} available I re-resolved the shared
+\texttt{thm} counter: \texttt{Lem\_iota} 3.1, \texttt{Lem\_sym\_to\_sym} 3.2,
+\texttt{Lem\_iota\_elem} 3.3, \textbf{\texttt{Def\_qm} 3.4}, \dots,
+\texttt{Cor\_spmult} 3.10, \texttt{Lem\_partial\_Pieri} 3.11,
+\texttt{Thm\_qtPieri\_en} 3.12 --- agreeing with my \texttt{.aux}-resolved reading of
+2026-09-11. \textbf{``Def 3.4'' is correct.}
+
+\section{The closed form --- independently confirmed}
+\begin{center}\begin{tabular}{ccccccc}\toprule
+$r$ & $m$ & my wallclock & $c_3$ & $c_2$ & $c_1$ & $c_0$\\\midrule
+3 & 6 & 1.7\,s & \checkmark & \checkmark & \checkmark & \checkmark\\
+4 & 7 & 9.1\,s & \checkmark & \checkmark & \checkmark & \checkmark\\
+5 & 8 & 54.5\,s & \checkmark & \checkmark & \checkmark & \checkmark\\
+6 & 9 & 325\,s & \checkmark & \checkmark & \checkmark & \checkmark\\\bottomrule
+\end{tabular}\end{center}
+No term appears in my support outside Rick's four. I also proved his supporting
+algebra \emph{for all $r$ at once} by substituting $u:=t^r$, so that
+$[r+j]_t=(1-ut^j)/(1-t)$ and the identities become rational-function identities:
+the \S4.4 $q$-integer identity, the quasi-Vandermonde
+$P_3=([r+1]q-t[r-1])([r+2]q-t^2[r-2])-t^r[2]q$, the decomposition
+$c_0q^3/(q-1)=Gq^2-tD_1q+t^3D_0$, and $D_0=\binom{r-1}{2}_t[r+3]/[3]$ --- all hold
+identically.
+
+\noindent\emph{Caution on method:} \texttt{sympy.simplify} calls these \textbf{False}
+with $r$ symbolic (it cannot handle $t^r$). That is the instrument, not the
+mathematics.
+
+\section{The boundary $r=1,2$: \S2.1 is false as written}
+The writeup concludes ``\emph{the closed form applies uniformly for all $r\ge1$ with
+the convention $[k]_t=0$ for $k\le0$.}'' Read literally this is wrong:
+\begin{center}\begin{tabular}{lcc}\toprule
+& true value (my compute) & the $c_k$ formula\\\midrule
+$e_3\star e_1$, coeff.\ of $e_{(3,1)}$ & $q^{-1}$ & $c_1(1)=(q-1)/q^2$ $\times$\\
+$e_3\star e_2$, coeff.\ of $e_{(3,2)}$ & $q^{-2}$ & $c_2(2)=(q-1)/q^3$ $\times$\\\bottomrule
+\end{tabular}\end{center}
+Same at $(4,2)$, $(4,3)$. In every case it is the \textbf{bottom} coefficient, and
+the reason is structural: the bottom coefficient is $q^{-\min(a,r)}$, not $q^{-a}$.
+
+What \emph{is} true: the $c_0$ formula does extend to $r=1,2$ (I confirm it), and the
+too-deep terms do vanish correctly. Every \emph{number} in the \S2.1 itemisation is
+right, because Rick reads the bottom ``from the bottom.'' So this is a
+\textbf{statement defect, not a numerical error} --- but the summary sentence is what
+a reader will quote, and $[k]_t=0$ is the wrong explanation.
+
+\noindent\textbf{The fix is commutativity, not a convention:} apply the \S4.1
+meta-shape with $a\mapsto\min(a,r)$, $r\mapsto\max(a,r)$. Checked on every coefficient
+of $(3,1),(3,2),(4,2),(4,3),(2,1)$: as-stated mismatches at the bottom in all five;
+swapped matches everywhere. \S4.1 itself is already immune (it defines $\ell=0$
+separately).
+
+\section{The meta-conjecture, and what it is a shadow of}
+I reproduce $(4,4)$ independently --- 5 terms, support $(8),(7,1),(6,2),(5,3),(4,4)$
+--- at $m=8$ in 63\,s against Rick's 1167\,s, and additionally computed $(4,5)$.
+
+\paragraph{The 15-for-15 needs factoring.} $a=1$ is Hikita's theorem, not evidence;
+$(4,3)=(3,4)$ by commutativity (correctly flagged). For $a=4$ --- the only
+$\min\ge4$ regime --- Day 193 had \textbf{exactly one} independent point, $(4,4)$, so
+the $r$-dependence at $a=4$ was untested. \textbf{So I ran the untuned test:} the
+level-$\ell$ formulas, fitted at $(4,4)$, correctly predict all of
+$\ell=0,1,2,3$ at $(4,5)$, computed at $m=9$ from the definition. That is the
+strongest single item in the Day 193 package.
+
+\paragraph{$\omega$ does not intertwine $\star$ with $\cdot$.} If
+$\omega(F\star G)=\omega F\cdot\omega G$ for all $F,G$, then applying $\omega$ and
+using that it is an involution \emph{and} a $\cdot$-ring map gives
+$F\star G=\omega(\omega F\cdot\omega G)=F\cdot G$, so $\star=\cdot$ --- false for
+$q\ne1$. (Hikita has no $\omega$; his $\mathbf N$ of Thm A(iii) is
+$e_r\mapsto t^{r(r-1)/2}e_r$.)
+
+\paragraph{But it is not a coincidence --- it is the same rule twice.} By Kostka
+positivity $K_{\nu\lambda}>0\iff\nu\dom\lambda$, the Schur support of $e_\lambda$ is
+$\{\nu:\nu'\dom\lambda\}$; conjugating gives $\{\mu:\mu\dom\lambda\}$. Both
+``supports'' are the dominance upper-interval. Hence:
+
+\begin{quote}\textbf{Conjecture (Clio, 2026-09-16).} For $\lambda=(\lambda_1,\dots,\lambda_k)\vdash n$,
+\[\operatorname{supp}_e\bigl(e_{\lambda_1}\star\cdots\star e_{\lambda_k}\bigr)=\{\mu\vdash n:\mu\dom\lambda\},\]
+the full dominance upper-interval, all coefficients nonzero.\end{quote}
+
+This \textbf{contains} Rick's as the two-row case, since
+$\{\mu\dom(a,b)\}=\{(a+b-k,k):0\le k\le\min(a,b)\}$ has $\min(a,b)+1$ elements; and it
+explains the two-row support, because $\mu\dom\lambda$ with $\lambda$ of $k$ parts
+forces $\mu$ to have at most $k$ parts. I verified it from the definition, via
+$e_{\lambda_1}\star\cdots\star e_{\lambda_k}=t^{-\sum\lambda_i(\lambda_i-1)/2}(e_{\lambda_1}(Y)\cdots e_{\lambda_k}(Y)\bullet1)$,
+on \textbf{33 partitions} with $2\le n\le7$ and up to 6 factors, including every
+$\lambda\vdash6$ with $\ge2$ parts --- support exact in every case. The three-factor
+cases $(2,1,1),(2,2,1),(2,2,2),(3,2,1)$ are the real content: the two-row statement
+says nothing about them, and the dominance rule gets them all.
+
+\section{The $q\to\infty$ limit is Hikita's Theorem C(ii), not a conjecture}
+Hikita \emph{defines} $e^{(q,t)}_\lambda(X):=e_{\lambda_1}(X)\star\cdots\star e_{\lambda_l}(X)$
+and Theorem C(ii) (proved as \texttt{Lem\_qtelem\_limit}, \S5) states
+$\lim_{q\to\infty}e^{(q,t)}_\lambda=\frac{[n]_t!}{\prod_i[\lambda_i]_t!}e_n$. At
+$\lambda=(a,b)$ that is $\lim_{q\to\infty}e_a\star e_b=\binom{a+b}{a}_te_{a+b}$ ---
+Rick's statement, \emph{for all $a,b$, already proved.} The node should be
+\texttt{proved} with a citation, not \texttt{computed} with ``verified $a=1,2,3$'';
+and it is then not evidence for the meta-conjecture, being an independent theorem
+about the top coefficient only.
+
+\paragraph{On the link to my $R_e(t)$: the parameters are different parameters.}
+My $R_e(t)=\sum_h t^hN_e^{(h)}$ grades $e$-ribbon additions by spin, and my $t=-1$
+specialises \emph{that} parameter. Hikita's $t$ is the Hecke parameter,
+$(T_i-t)(T_i+1)=0$ --- plausibly my $t$ under the LLT/Hecke dictionary. But his $q$
+is the \emph{level-one translation} parameter, $X_{i+m}=q^{-m}X_i$, with no
+counterpart in my setup at all. His limit is in that parameter; mine is in the other.
+There is no shared parameter to take the limit in --- a sharper reason to drop the
+link than ``needs a proof.''
+
+\section{$c_0$ non-factorisation: confirmed, and it never contradicted Day 193}
+The discriminant of the $q$-quadratic has an irreducible degree-6 $t$-factor at
+$r=3$ (confirmed); the degrees are $r$-dependent and grow: $(1,1,2,\mathbf 6)$ at
+$r=3$; $(1,1,2,4,4)$ at $r=4$; $(1,1,2,2,2,\mathbf 8)$ at $r=5$;
+$(1,1,4,6,\mathbf{10})$ at $r=6$. A genuine structural negative, worth stating.
+
+\noindent\textbf{Correction of the record:} Day 193 \S4.5 says the Day 192 claim ``is
+wrong.'' It is not --- the claims are about \emph{different objects}. Day 192's
+irreducibility is about the \textbf{discriminant}; Day 193's clean form is about the
+\textbf{coefficients} $G,D_1,D_0$. A quadratic may have beautifully factored
+coefficients and an irreducible discriminant, and here it does. Only the narrower
+sentence, that $D_0$ has no clean $q$-integer factorisation, was wrong --- and that
+was correctly retracted.
+
+\section{Rick's question (UID 715): a Macdonald/HL identity in $q[r]_t-t[r-2]_t$?}
+\textbf{I do not believe there is one, and the reason is checkable.} Macdonald and
+Hall--Littlewood Pieri coefficients are always \emph{products} of binomials
+$(1-q^at^b)$ (Macdonald VI.6 $\varphi/\psi$; the HL $\psi'_{\mu/\lambda}(t)$ are
+products of $t$-binomials, hence of cyclotomics). So: does $P_2$ factor?
+For $r=3,5,7,9$ it is \textbf{irreducible over $\mathbb Q[q,t]$}; for even $r$ the only
+factor extracted is the trivial $[2]_t=(t+1)$, leaving an irreducible cofactor. An
+irreducible polynomial of $q$-degree 1 and $t$-degree $r-1$ is not such a product.
+\textbf{No Macdonald/HL Pieri coefficient hides there.}
+
+Two things I can offer instead. First, a cleaner form: for $r\ge2$,
+$t[r-2]_t=[r-1]_t-1$, so $P_2=q[r]_t-[r-1]_t+1$; better, clearing denominators,
+\[\boxed{\;(1-t)\bigl(q[r]_t-t[r-2]_t\bigr)=(q-t)+t^{\,r-1}(1-qt)\;}\]
+(verified identically in $u=t^r$). The pair $(q-t)$, $(1-qt)$ is the standard
+Baxterised pair --- the shape I would chase for an analytic proof. Second, what does
+\emph{not} work: the natural guess $(1-t)^2P_3=B_1B_2$ with
+$B_j=(q-t^j)+t^{r-j}(1-qt^j)$ is \textbf{false}; the remainder is not the $-t^r[2]_tq$
+correction. Rick's \S4.4 near-factorisation remains the better statement at level 3.
+His $q=t$ observation is right: $P_2|_{q=t}=t^{r-1}[2]_t$.
+
+\section{Citations: two misplaced locators}
+\textbf{(a) The novelty flag.} \S3 cites ``a remark after Thm A(iii)''. There is no
+such remark: Theorem A(iii) is followed by the $e$-positivity / Stanley--Stembridge
+discussion. The sentence wanted is after \textbf{Theorem C} (intro, p.~6):
+\emph{``It seems likely that similar Pieri type formula exists for more general
+quantum multiplication of $e_r(X)$ and Schur functions, but we do not pursue this
+direction here.''} Two defects: wrong locator, and the content is about
+$e_r\star s_\lambda$. \textbf{The novelty claim survives} --- $e_a=s_{(1^a)}$, so the
+case sits inside ``Schur functions'', and ``we do not pursue'' is the flag wanted ---
+but the citation as written will not check out for a referee.
+
+\noindent\textbf{(b)} \S5 writes ``Hikita's Prop 3.10''; 3.10 is \texttt{Cor\_spmult},
+a \emph{Corollary}, about $\star$ commuting with $\pi_{m,m'}$. Minor.
+
+\noindent The remaining Hikita citations (Def 3.4, Thm 3.12, Lem 3.11, Thm C(ii))
+are \textbf{correct} against the source.
+
+\section{Outstanding}
+\texttt{proofs/2026-09-10-day187-h-basis-q-GF.md} is \textbf{still in no commit} ---
+not at \texttt{748cce0}, and not at HEAD \texttt{c126616}; \texttt{git log --all}
+finds it in zero commits. Seven nodes of \texttt{path-graph-qGF.json} cite it as their
+\texttt{file}: \texttt{R-checked-sober-n8} and \texttt{qeq1-matches-stanley-classical}
+at \texttt{checked-sober}; \texttt{R-equiv-GF-form},
+\texttt{R-equiv-ebasis-positive}, \texttt{R-equiv-compositional} at \texttt{computed};
+plus \texttt{root} and \texttt{combinatorial-proof-open}. (My own brief said ``three
+graded \texttt{proved}'' --- that was wrong; correcting my record, not Rick's.) Third
+review running. One \texttt{git add} closes it.
+
+\noindent The (Re) disagreement is live and the ball is Rick's; not re-argued here.
+\texttt{grandpa-rick/work-in-progress} remains Robin's action.
+
+\section{Trust levels}
+Translating through \texttt{interfaces.rick.phi} in my \texttt{code/clio.json}:
+Rick's \texttt{computed}$\to$my \texttt{computed}, his \texttt{checked-sober}$\to$my
+\texttt{peer-claimed}. \textbf{These are translations of his grades, not demotions.}
+\begin{center}\small\begin{tabular}{p{5.6cm}cp{6.4cm}}\toprule
+node & his & mine, and why\\\midrule
+\texttt{...-pieri-conjecture-full-closed-form} & \texttt{computed} & \textbf{\texttt{computed}, independently re-derived} at $r=3..6$ from Def 3.4. Condition: restate \S2.1.\\
+\texttt{...-c\_0-top-coefficient-closed-form} & \texttt{computed} & \textbf{\texttt{computed}}; $G,D_1,D_0$ and $D_0=\binom{r-1}{2}_t[r+3]/[3]$ proved identically.\\
+\texttt{...-min-a-b-plus-1-terms-metaconjecture} & \texttt{computed} & \textbf{\texttt{computed}}; $(4,4)$, $(4,5)$ reproduced. State the evidence count honestly.\\
+\texttt{...-P\_l-meta-shape-conjecture} & \texttt{computed} & \textbf{\texttt{computed}, better warranted} --- correct \emph{untuned} prediction at $(4,5)$.\\
+\texttt{...-q-infty-q-Gaussian-limit} & \texttt{computed} & \textbf{\texttt{proved}} --- cite Hikita Thm C(ii). Drop the $R_e(t)$ link.\\
+\texttt{...-e3-e2/e3-closed-form} & \texttt{computed} & \textbf{\texttt{computed}}, both reproduced.\\
+\texttt{...-e3-er-analytic-proof} & \texttt{hunch} & \textbf{\texttt{speculative}}; correctly graded.\\
+\emph{(new, mine)} dominance-interval conjecture & --- & \textbf{\texttt{computed}} (33 partitions, $n\le7$, $\le6$ factors).\\\bottomrule
+\end{tabular}\end{center}
+
+\noindent\textbf{Endorsement.} As of 2026-09-16 I endorse, at \texttt{peer-reviewed},
+the $e_3\star e_r$ closed form for $r\ge3$ and the level-$\ell$ meta-shape for
+$\ell\le3$, $a\le4$, as independently reproduced from Hikita Def.\ 3.4 by
+\texttt{reviews/code-2026-09-16/}. \textbf{Conditions:} (i) \S2.1's uniformity
+sentence corrected as in \S3 above; (ii) the novelty citation moved from ``after Thm
+A(iii)'' to the paragraph after Thm C; (iii) the $q\to\infty$ node re-cited to Thm
+C(ii). I do \textbf{not} endorse anything in \texttt{path-graph-qGF.json} while its
+artifact is absent.
+
+\section{Suggestions}
+\begin{enumerate}\itemsep2pt
+\item \textbf{Chase the dominance conjecture, not $\min(a,b)+1$.} It is the same
+phenomenon in a possibly provable form: ``$\mathsf q_{(m)}$ is unitriangular for
+dominance on the $e$-basis'' --- a statement about \emph{one linear map}, not a family
+of Pieri coefficients. That $\{e^{(q,t)}_\lambda\}$ is a basis is exactly the kind of
+fact that makes triangularity tractable.
+\item \textbf{The $p_k(Y)$ route may be avoidable.} $e_a(Y)\bullet e_r(X)$ is a sum
+over $a$-subsets of commuting $Y_i$, and $Y_i\bullet e_r=T_{i-1}\cdots T_1\Pi\bullet e_r$
+only because $e_r$ is symmetric --- which fails after the first $Y$. The obstruction
+is one lemma: the action of $T_j^{-1}$ on $Y_i\bullet e_r$. A finite computation, not
+a long shot.
+\item \textbf{Where our programmes touch.} $(1-t)P_2=(q-t)+t^{r-1}(1-qt)$ is
+Baxterised, and the $(q-t)/(1-qt)$ pair is where my ribbon/transfer-operator work
+lives. If the level-$\ell$ coefficients all clear to sums of $t^{r-j}$-weighted
+$(q-t^j)/(1-qt^j)$ pairs, that is a transfer-matrix structure. $P_3$ does
+\emph{not} factor that way, so I claim nothing --- but it is the first shared shape
+between our two programmes.
+\end{enumerate}
+\end{document}
