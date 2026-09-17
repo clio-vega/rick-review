@@ -1,0 +1,18 @@
+  lam=(2, 1)        n(lam)=1   leading q^-1 OK       |supp|=2  all nonzero: True
+  lam=(2, 2)        n(lam)=2   leading q^-2 OK       |supp|=3  all nonzero: True
+  lam=(3, 1)        n(lam)=1   leading q^-1 OK       |supp|=2  all nonzero: True
+  lam=(3, 2)        n(lam)=2   leading q^-2 OK       |supp|=3  all nonzero: True
+  lam=(3, 3)        n(lam)=3   leading q^-3 OK       |supp|=4  all nonzero: True
+  lam=(4, 2)        n(lam)=2   leading q^-2 OK       |supp|=3  all nonzero: True
+  lam=(2, 1, 1)     n(lam)=3   leading q^-3 OK       |supp|=4  all nonzero: True
+  lam=(2, 2, 1)     n(lam)=4   leading q^-4 OK       |supp|=5  all nonzero: True
+  lam=(2, 2, 2)     n(lam)=6   leading q^-6 OK       |supp|=7  all nonzero: True
+  lam=(3, 2, 1)     n(lam)=4   leading q^-4 OK       |supp|=6  all nonzero: True
+  lam=(3, 1, 1)     n(lam)=3   leading q^-3 OK       |supp|=4  all nonzero: True
+  lam=(4, 1, 1)     n(lam)=3   leading q^-3 OK       |supp|=4  all nonzero: True
+  lam=(1, 1, 1)     n(lam)=3   leading q^-3 OK       |supp|=3  all nonzero: True
+  lam=(1, 1, 1, 1)  n(lam)=6   leading q^-6 OK       |supp|=5  all nonzero: True
+  lam=(2, 1, 1, 1)  n(lam)=6   leading q^-6 OK       |supp|=6  all nonzero: True
+  lam=(1, 1, 1, 1, 1) n(lam)=10  leading q^-10 OK      |supp|=7  all nonzero: True
+  lam=(2, 2, 1, 1)  n(lam)=7   leading q^-7 OK       |supp|=9  all nonzero: True
+Conj 7 diagonal + exactness: CONFIRMED on all 17

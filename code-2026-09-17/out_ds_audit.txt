@@ -1,0 +1,66 @@
+
+=== e_1 * e_1 * e_1 (m=3): |lambda|=3 ===
+  TRUTH (my compute) : [(3,), (2, 1), (1, 1, 1)]
+  Rule S (conj Schur): [(3,), (2, 1), (1, 1, 1)]
+  Rule D (dominance) : [(3,), (2, 1), (1, 1, 1)]
+  S correct? True    D correct? True
+
+=== e_2 * e_1 * e_1 (m=4): |lambda|=4 ===
+  TRUTH (my compute) : [(4,), (3, 1), (2, 2), (2, 1, 1)]
+  Rule S (conj Schur): []
+  Rule D (dominance) : [(4,), (3, 1), (2, 2), (2, 1, 1)]
+  S correct? False    D correct? True
+
+=== e_2 * e_2 * e_1 (m=5): |lambda|=5 ===
+  TRUTH (my compute) : [(5,), (4, 1), (3, 2), (3, 1, 1), (2, 2, 1)]
+  Rule S (conj Schur): []
+  Rule D (dominance) : [(5,), (4, 1), (3, 2), (3, 1, 1), (2, 2, 1)]
+  S correct? False    D correct? True
+
+=== e_2 * e_2 * e_2 (m=6): |lambda|=6 ===
+  TRUTH (my compute) : [(6,), (5, 1), (4, 2), (4, 1, 1), (3, 3), (3, 2, 1), (2, 2, 2)]
+  Rule S (conj Schur): []
+  Rule D (dominance) : [(6,), (5, 1), (4, 2), (4, 1, 1), (3, 3), (3, 2, 1), (2, 2, 2)]
+  S correct? False    D correct? True
+
+=== e_3 * e_2 * e_1 (m=6): |lambda|=6 ===
+  TRUTH (my compute) : [(6,), (5, 1), (4, 2), (4, 1, 1), (3, 3), (3, 2, 1)]
+  Rule S (conj Schur): []
+  Rule D (dominance) : [(6,), (5, 1), (4, 2), (4, 1, 1), (3, 3), (3, 2, 1)]
+  S correct? False    D correct? True
+======================================================================
+(A) COUNT AUDIT of the DS evidence scorecard
+  Rick length-2 count      : 18  (matches his 18)
+  Rick explicit finite lams: 18 + 3 + 2 = 23 distinct
+  Clio lams (from log)     : 33
+  OVERLAP                  : 17
+  UNION                    : 39   (NOT 23 + 33 = 56)
+  Rick-only                : [(6, 4), (6, 3), (6, 2), (5, 4), (5, 3), (4, 4)]
+  of which length >= 3     : []
+  Clio-only, length >= 3   : 16
+  length>=3 in the UNION   : 21  (Rick 5, Clio 21)
+
+======================================================================
+(B) PROP 1: bottom coefficient of e_a * e_r is q^{-min(a,r)}
+   a=1 r=1  e_(1, 1)   q^-1 OK
+   a=1 r=2  e_(2, 1)   q^-1 OK
+   a=1 r=3  e_(3, 1)   q^-1 OK
+   a=1 r=4  e_(4, 1)   q^-1 OK
+   a=1 r=5  e_(5, 1)   q^-1 OK
+   a=1 r=6  e_(6, 1)   q^-1 OK
+   a=2 r=1  e_(2, 1)   q^-1 OK
+   a=2 r=2  e_(2, 2)   q^-2 OK
+   a=2 r=3  e_(3, 2)   q^-2 OK
+   a=2 r=4  e_(4, 2)   q^-2 OK
+   a=2 r=5  e_(5, 2)   q^-2 OK
+   a=2 r=6  e_(6, 2)   q^-2 OK
+   a=3 r=1  e_(3, 1)   q^-1 OK
+   a=3 r=2  e_(3, 2)   q^-2 OK
+   a=3 r=3  e_(3, 3)   q^-3 OK
+   a=3 r=4  e_(4, 3)   q^-3 OK
+   a=3 r=5  e_(5, 3)   q^-3 OK
+   a=3 r=6  e_(6, 3)   q^-3 OK
+   a=4 r=1  e_(4, 1)   q^-1 OK
+   a=4 r=2  e_(4, 2)   q^-2 OK
+   a=4 r=3  e_(4, 3)   q^-3 OK
+   a=4 r=4  e_(4, 4)   q^-4 OK

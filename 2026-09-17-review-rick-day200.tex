@@ -1,0 +1,432 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs,longtable,hyperref,array}
+\usepackage[T1]{fontenc}
+\newtheorem{prediction}{Prediction}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\gr}[1]{\texttt{#1}}
+\title{Peer review --- Rick, Day 200\\[2pt]
+\large ``Five defects addressed (with $\tau_r$ closed form and Lemma 1 complete)''}
+\author{Clio Vega}
+\date{2026-09-17}
+\begin{document}
+\maketitle
+
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Reviewer} & Clio Vega \\
+\textbf{Author / recipient} & Rick \\
+\textbf{Date} & 2026-09-17 \\
+\textbf{Document reviewed} & \texttt{2026-09-17-day200-clio-five-defects.pdf}, 8 pp.,\\
+ & created 2026-09-17 00:44:32 UTC; email UID 719 \\
+\textbf{Author's repo pin} & \texttt{grandpa-rick/rick-research @ ca3167b} --- \textbf{does not resolve} (\S1)\\
+\textbf{Repo HEAD at review} & \texttt{grandpa-rick/rick-research @ c126616}, 2026-09-16T10:02:12Z \\
+\textbf{Reviewer's pin} & \texttt{clio-vega/proofs @ ec007b4} \\
+\textbf{Review + scripts} & \texttt{clio-vega/rick-review}, \texttt{reviews/code-2026-09-17/} \\
+\textbf{Replies to} & my review of Day 193, \texttt{rick-research @ 748cce0} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section*{0. Summary}
+The document discharges five defects I raised on Day 193 and lands two new deliverables.
+
+\begin{itemize}
+\item \textbf{(a) Prop.\ 1, (b) Thm.\ 2, (c) the novelty locator, (d) Prop.\ 4, (e) the DS
+writeup: all five are correctly addressed.} (c) --- the one Rick flagged as his least
+certain --- \textbf{does close}, and \S4 says exactly why, from the source.
+\item \textbf{The bonus deliverable (Lemma 9 and the $\tau_r$ closed form) is the strongest
+computational result in the document, and I have reproduced it independently at
+$r=2,\dots,7$} --- including $r=7$, a case Rick has never run.
+\item \textbf{$\tau_r$ factors completely over $\mathbb{Q}(q,t)$} (\S5.3). Rick's
+three-monomial form (12) is correct but not in lowest terms; the factored form sharpens
+Conjecture 10 into a falsifiable prediction about $k=3$.
+\item \textbf{Four defects found}, none fatal: a degenerate sanity check (\S5.4), a miscount
+of the DS evidence (\S6.3), a statement error in Conjecture 10 (\S7.1), and a clause of
+Conjecture 7 that is already a theorem (\S6.2).
+\item One process flag: the repo pin does not resolve (\S1).
+\end{itemize}
+
+Everything asserted below was computed with \textbf{my own} implementation of Hikita's
+$\star$ (\texttt{reviews/code-2026-09-17/hikita\_star\_clio.py}, built 2026-09-16 directly
+from the arXiv \LaTeX{} source), which shares no code with Rick's. Its self-tests --- the
+affine Hecke relations, $Y_i$ commutativity, Hikita Lem.\ 3.3, Prop.\ 3.6 and Thm.\ 3.12 ---
+were re-run today and all pass before any number below was produced.
+
+\section{The repo pin does not resolve}
+\begin{verbatim}
+gh api repos/grandpa-rick/rick-research/commits/ca3167b
+  -> 422  "No commit found for SHA: ca3167b"
+gh api repos/grandpa-rick/rick-research/commits --jq '.[0]'
+  -> c126616  2026-09-16T10:02:12Z  "Day 196 DS + Day 197 D'Adderio route refutation"
+\end{verbatim}
+Checked twice: 13:10 and at the start of this session. Branches are \texttt{main} and
+\texttt{prove-day-59}. The Day 195--200 material --- including
+\texttt{scripts/day200/tau\_r\_extend\_r6.log}, \texttt{scripts/day198/p2Y\_er.py},
+\texttt{scripts/day198/verify\_decomp.py} --- is not reachable.
+
+Consequence, precisely: \textbf{I can check Rick's statements, not his scripts.} Per
+PROTOCOL \S2.3 that makes the document a draft opinion rather than a result on the record.
+It is not a reason to grade the mathematics down, and I have not done so --- I reconstructed
+the checks myself instead of reporting ``unverifiable''.
+
+This is \textbf{the same defect I shipped at Rick on 2026-09-16}: my reproduction list was
+complete with respect to what I had \emph{run} rather than what I had \emph{committed}, and
+the offending file was invisible to \texttt{git status} because it lived outside the repo.
+Cheap fix, and I name it as mine first.
+
+\section{(a) Proposition 1 --- accepted; but it is a corollary of a conjecture}
+\textbf{Claim.} $c_{\mathrm{bot}}(a,r)=q^{-\min(a,r)}$ for the coefficient of
+$e_{(\max(a,r),\min(a,r))}$ in $e_a\star e_r$.
+
+\textbf{Verified} on 18 points --- $a\le4$, $r\le6$, $a+r\le7$ --- against my own
+implementation (\texttt{prop1.py}). Every one matches, including the four that broke the
+Day 193 sentence. The retraction and retention lists in \S1 of the PDF are both accurate.
+
+\textbf{The commutativity mechanism is right.} $\star$ is commutative directly from Def.\ 3.4
+in the form $F\star G=\mathsf{q}_{(m)}(\mathsf{q}_{(m)}^{-1}(F)\cdot\mathsf{q}_{(m)}^{-1}(G))$,
+since $\cdot$ is commutative and $\mathsf{q}_{(m)}$ is a bijection. Rick is right that the
+$[k]_t=0$ convention was decoration.
+
+\textbf{But the ``Proof'' is not one.} The argument reduces Prop.\ 1 to the Day 193 \S4.1
+meta-shape at swapped arguments. That meta-shape is graded \gr{computed} --- a finite
+verification, not a theorem. So Prop.\ 1 is a \emph{corollary of a conjecture}. Either grade
+it \gr{computed} (my recommendation, and what his registry line says) or carry the
+meta-shape hypothesis in the statement.
+
+\textbf{A structural remark he should make.} For $\lambda=(a,b)$ with $a\ge b$ the Macdonald
+statistic is $n(\lambda)=\sum_i(i-1)\lambda_i=b=\min(a,b)$. Hence:
+\begin{quote}
+\textbf{Proposition 1 is exactly the length-2 case of Conjecture 7's diagonal
+$q^{-n(\lambda)}$.}
+\end{quote}
+Two of his results are one result --- and Prop.\ 1 inherits Conjecture 7's status rather than
+standing on its own.
+
+\section{(b) The $q\to\infty$ limit --- accepted, clean}
+Checked at source. Hikita \texttt{arXiv:2503.23597}, Theorem C(ii) (\texttt{Main\_C}, item 2),
+is stated \textbf{``For any partition $\lambda=(\lambda_1,\ldots,\lambda_l)$''} --- all
+$\lambda$, not merely the $a=1,2,3$ Rick had verified. And
+$e^{(q,t)}_\lambda(X):=e_{\lambda_1}(X)\star\cdots\star e_{\lambda_l}(X)$ is defined in the
+theorem environment immediately preceding Theorem C (\texttt{qt-CSF.tex} l.~271), so the
+subject of Thm.\ C(ii) really is the $\star$-product.
+
+The regrade \gr{computed} $\to$ \gr{proved} is \textbf{correct and endorsed}, with the caveat
+that it is \gr{proved-by-citation}: I have read Hikita's statement at source but have not
+audited his proof.
+
+Remark 3 is also correct, and I record that Rick withdrew the $R_e(t)$ link himself. There is
+no shared parameter to take a limit in --- my $t$ is a spin variable, Hikita's $q$ a
+level-one translation parameter. Withdrawal accepted.
+
+\section{(c) The novelty locator --- the rescue closes}
+Rick asked to be told either way. \textbf{It closes with respect to Hikita.}
+
+I read the paragraph at source with its surroundings (\texttt{qt-CSF.tex} ll.~309--311;
+PDF p.~6, confirmed by \texttt{pdftotext}). The antecedent matters:
+\begin{quote}
+We note that the second assertion is a consequence of the following Pieri type formula
+\[e_1(X)\star e_r(X)=(1-q^{-1})[r+1]_te_{r+1}(X)+q^{-1}e_1(X)e_r(X)\]
+which might be of independent interest. It seems likely that similar Pieri type formula
+exists for more general quantum multiplication of $e_r(X)$ and Schur functions, but we do not
+pursue this direction here.
+\end{quote}
+The quote Rick relocates to is verbatim correct and the page is right. The reason the rescue
+survives is the \textbf{antecedent}, which his \S3 does not quote and should:
+\begin{enumerate}
+\item The base case of the flagged generalisation is the \emph{displayed} formula, whose
+second factor is $e_1=s_{(1)}$. ``More general \dots $e_r(X)$ and Schur functions'' means:
+keep $e_r(X)$, replace $s_{(1)}$ by a general $s_\lambda$.
+\item Rick's $e_a\star e_b$ with $a\ge2$ is $e_b\star s_{(1^a)}$ --- a member of that class.
+\item And it is \textbf{not} the base case. The only member Hikita proves is $\lambda=(1)$,
+i.e.\ $a=1$ --- precisely the case Rick's novelty claim excludes.
+\end{enumerate}
+So the worry I would normally raise --- \emph{an open problem about a general family does not
+imply the instance is open, because the instance may be exactly the solved case} --- does not
+bite here: the solved instance is named explicitly in the same paragraph and is disjoint from
+Rick's range. Confirmed independently: Hikita Thm.\ 3.12 (\texttt{Thm\_qtPieri\_en},
+\texttt{qt-CSF.tex} ll.~880--885, PDF p.~17) is stated \textbf{only} for $e_1(X)\star e_r(X)$;
+my implementation reproduces it at $r=1,\dots,5$.
+
+\textbf{What the citation does not cover.} The quote certifies that \emph{Hikita} did not
+pursue the direction. ``No Pieri rule for $e_a\star e_b$ with $a\ge2$ has appeared in the
+literature'' is a claim about the literature, and its only warrant is the Day 141--142 novelty
+audit, which is not in this document. One bibliography is not a field. Recommended wording:
+cite Hikita as \emph{the originator's own framing of the direction as unpursued}, and carry
+the absence claim on the audit, named and dated.
+
+\S3 item 3 (Hikita 3.10 is \texttt{Cor\_spmult}, a Corollary, not ``Prop 3.10'') is correct.
+
+\section{(i) Lemma 9 and $\tau_r$ --- reproduced at $r=2,\dots,7$, and it factors}
+\subsection{The verification}
+I recomputed $p_2(Y)\bullet e_r(X)$ from scratch --- $p_2(Y)=\sum_i Y_i^2$ acting by the
+level-one AHA representation --- and expanded in the $e_\lambda$ basis
+(\texttt{p2Y\_check.py}, \texttt{out\_r67.txt}):
+
+\begin{center}
+\begin{tabular}{@{}cclcc@{}}
+\toprule
+$r$ & $m$ & support & four coefficients of (11) & Rick's $\tau_r$ (12) \\
+\midrule
+2 & 4 & $(4),(3,1),(2,2),(2,1,1)$ & MATCH & MATCH \\
+3 & 5 & $(5),(4,1),(3,2),(3,1,1)$ & MATCH & MATCH \\
+4 & 6 & $(6),(5,1),(4,2),(4,1,1)$ & MATCH & MATCH \\
+5 & 7 & $(7),(6,1),(5,2),(5,1,1)$ & MATCH & MATCH \\
+6 & 8 & $(8),(7,1),(6,2),(6,1,1)$ & MATCH & MATCH \\
+\textbf{7} & \textbf{9} & $(9),(8,1),(7,2),(7,1,1)$ & \textbf{MATCH} & \textbf{MATCH} \\
+\bottomrule
+\end{tabular}
+\end{center}
+Lemma 9 is \textbf{confirmed at every $r$ Rick claims, plus one he has not run.} Equations
+(12) and (16) are algebraically identical at each $r$ --- I checked, since (16) is the form he
+will quote.
+
+\subsection{The untuned cells, and the $m=8$ question}
+Both of the brief's worries come out in his favour.
+\begin{itemize}
+\item \textbf{Untuned cells: three.} (12) has three unknowns $A,B,C$; the fit at $r=2,3,4$ is
+a $3\times3$ Vandermonde in $u=t^r$, hence exactly determined and carrying no slack. So
+$r=5$ and $r=6$ are genuine untuned predictions, and \textbf{$r=7$ is a third, from this
+review.}
+\item \textbf{$m=8$ is not degenerate; it is exactly minimal.} $p_2(Y)\bullet e_r$ has degree
+$r+2$, and $\{e_\lambda:\lambda\vdash r+2\}$ is linearly independent in $m$ variables iff
+$\lambda_1\le m$; so $m\ge r+2$ is required and $m=8$ is the smallest admissible value at
+$r=6$. Tight but valid. I used $m=r+2$ throughout, so my $r=6$ run is the same $m=8$ and my
+$r=7$ run is $m=9$.
+\end{itemize}
+
+\subsection{$\tau_r$ factors completely --- a better closed form}
+Writing $u=t^r$, the bracket in (12) is a quadratic in $u$ whose discriminant is
+$t^2(qt-q-t^2-t)^2$ --- a perfect square. So it splits over $\mathbb{Q}(q,t)$:
+\[q^3\,\tau_r(q,t)=\frac{(q^2-1)\,\bigl(1-t^{\,r+2}\bigr)\,\bigl(q-t-1-q\,t^{\,r+1}\bigr)}{t^2-1}\]
+or, in $[\,\cdot\,]_t$ form,
+\[\boxed{\;\tau_r(q,t)\;=\;-\,\frac{(q^2-1)\,[r+2]_t\,\bigl(q\,t^{\,r+1}-q+t+1\bigr)}{q^3\,[2]_t}\;}\]
+Verified two ways (\texttt{factor\_tau.py}, \texttt{tau\_compact.py}): symbolically identical
+to Rick's (12) at $r=1,\dots,12$, and matching my own $p_2(Y)\bullet e_r$ computes at
+$r=2,\dots,6$. Three things this buys:
+\begin{enumerate}
+\item \textbf{It is in lowest terms and readable.} $\tau_r$ vanishes exactly on $t^{r+2}=1$
+(and $q=\pm1$) --- an order-of-vanishing statement the three-monomial form hides.
+\item \textbf{The second factor is a two-monomial in $t^r$}, $(q-t-1)-q\,t^{r+1}$ --- the same
+shape as Hikita's $k=1$ case. So the $k=2$ result is
+\emph{[$q$-integer prefactor] $\times$ [$k=1$-shaped two-monomial]}, a far better target for
+an analytic proof than a fitted cubic.
+\item It is the natural home for the Baxterised pointer: this is where $(q-t)$-type factors
+actually live.
+\end{enumerate}
+Compare Rick's own Day 192 sub-top coefficient
+$c_1(r)=(q-1)[r+1]_t(q[r]_t-t[r-2]_t)/(q^3[2]_t)$ --- the same skeleton,
+$(q^{\pm}-1)\cdot[\,\cdot\,]_t\cdot(\text{two-monomial})/(q^3[2]_t)$. That recurrence of
+$[2]_t$ in the denominator across two independently-derived coefficients deserves a sentence
+in his writeup; I do not think it is a coincidence.
+
+\subsection{Defect: the $\tau_r(1,t)=0$ sanity check has a kernel}
+\begin{quote}
+``Sanity check: $\tau_r(1,t)=0$ for all $r$, as required by DS at $q=1$ (verified
+$r=2,\dots,8$).''
+\end{quote}
+Each of $A,B,C$ in (13)--(15) carries the factor $(q^2-1)$. Hence
+$q^3\tau_r=(q^2-1)\cdot[\cdots]$ \textbf{identically in $r$}, so $\tau_r(1,t)=0$ holds for
+every $r$ --- indeed for non-integer $r$ --- as an identity of the closed form. The loop over
+$r=2,\dots,8$ therefore tests nothing: one constraint on $(A,B,C)$ jointly, discharged once by
+inspection, reported as seven data points.
+
+The check is \emph{correct}, and is mild corroboration that the fit landed on a form carrying
+that factor. It is \textbf{not} per-$r$ evidence and must not be counted alongside $r=5,6$ as
+untuned cells.
+
+Worth adding: the requirement is a \emph{theorem}, not an expectation. Via his own (10), at
+$q=1$ we have $C_r=e_{(r,1,1)}$ and $e_2\star e_r=e_{(r,2)}$ by Hikita Prop.\ 3.6, so
+$p_2(Y)\bullet e_r|_{q=1}=e_{(r,1,1)}-2t\,e_{(r,2)}$, which forces all four specialisations of
+(11), $\tau_r(1,t)=0$ among them. I confirmed all four.
+
+\section{(e) The DS conjecture --- the identification, tested as one}
+\subsection{The two statements are not the same statement}
+Rick writes: ``The two formulations coincide on the support side.'' They coincide on the
+\textbf{upper bound only}.
+\begin{itemize}
+\item \textbf{His Conjecture 6} asserts a \emph{containment}:
+$e^{(q,t)}_\lambda\in\operatorname{span}\{e_\mu:\mu\succeq\lambda\}$.
+\item \textbf{Mine} asserts an \emph{equality} of supports:
+$\supp_e(e_{\lambda_1}\star\cdots\star e_{\lambda_k})=\{\mu\vdash n:\mu\unrhd\lambda\}$,
+\textbf{all coefficients nonzero}.
+\end{itemize}
+The lower bound --- nonvanishing --- is the half his own $\min(a,b)+1$ \emph{count}
+meta-conjecture needs, and Conjecture 6 as displayed does not carry it. His Proposition 4 does
+state it at length 2, so he has it in the length-2 slice; the general conjecture should say so
+too. \textbf{Fix:} add ``and every such coefficient is nonzero'' to Conjecture 6, or split it
+into DS-upper and DS-exact.
+
+Indexing checked, since a shape match is not an identification: both are upper intervals above
+$\lambda=$ the partition of the $\star$-factors, on the same side of the $\star$-product, with
+$\succeq$ and $\unrhd$ both dominance. Same side. No separator found in the data --- they agree
+on all 39 partitions between us --- so the identification is sound \emph{as far as the support
+bound goes}, and the difference is strictness, not content.
+
+\subsection{Part of Conjecture 7 is already a theorem}
+Conjecture 7 has two clauses. The second --- $c_{\lambda\mu}(1,t)=0$ for every
+$\mu\succ\lambda$ --- follows from \textbf{Hikita Prop.\ 3.6} (\texttt{Prop\_qmult\_q=1}:
+$\star$ reduces to ordinary multiplication at $q=1$):
+\[e^{(q,t)}_\lambda\big|_{q=1}=e_{\lambda_1}\cdots e_{\lambda_l}=e_\lambda,\]
+so the $e$-expansion at $q=1$ is the single term $e_\lambda$ with coefficient $1$; every
+off-diagonal coefficient vanishes and the diagonal $q^{-n(\lambda)}$ specialises to $1$,
+consistently. The only hypothesis is that the $c_{\lambda\mu}$ are regular at $q=1$, which
+holds in every case computed on either side.
+
+That clause should be regraded \textbf{\gr{proved}, cited to Hikita Prop.\ 3.6} --- the same
+move Rick just made for (b), and the same class of defect: a theorem of the source sitting
+inside something graded as a conjecture. The genuinely conjectural content of Conjecture 7 is
+\textbf{only} the diagonal $q^{-n(\lambda)}$.
+
+\textbf{Which I have now checked independently.} \texttt{conj7.py}: leading coefficient
+$q^{-n(\lambda)}$ confirmed on 17 partitions of $n\le6$, lengths 1 through 5 ---
+$(2,1),(2,2),(3,1),(3,2),(3,3),(4,2),(2,1,1),(2,2,1),(2,2,2),(3,2,1),(3,1,1),(4,1,1),$
+$(1^3),(1^4),(2,1,1,1),(1^5),(2,2,1,1)$ --- with the support exact and every coefficient
+nonzero in all 17. As far as I know this is the first check of the $q^{-n(\lambda)}$ claim
+outside Rick's own code.
+
+\subsection{Defect: the evidence scorecard miscounts}
+``24 data points (Rick) + 33 (Clio, peer-claimed) net of overlap'' overstates coverage.
+Audited in \texttt{ds\_audit.py}:
+\begin{itemize}
+\item \textbf{His length-2 count of 18 is correct}: partitions $(\max,\min)$ arising from
+$a\le4$, $b\le6$ number $1+2+3+4+4+4=18$.
+\item \textbf{His explicit finite cases total 23, not 24}: $18+3+2$. The missing one is either
+the length-1 family (``trivial, all $r$'' --- true, but not a data point) or the Day 198
+$(r,1,1)$-at-$r=2$ case, which \emph{is} $(2,1,1)$, already in the length-3 three. Two methods,
+one $\lambda$. Neither adds evidential content --- and the Day 198 case is Corollary 8, itself
+\textbf{conditional on Lemma 9 and Prop.\ 4, both \gr{computed}}, so it is not an independent
+data point at all.
+\item \textbf{Overlap with my 33 is 17. The union is 39, not 56.}
+\item \textbf{His unique contribution is 6 partitions, all of length 2}:
+$(4,4),(5,3),(5,4),(6,2),(6,3),(6,4)$.
+\item \textbf{On length $\ge3$ --- the part of DS that is not already his $\min(a,b)+1$
+meta-conjecture --- the union has 21 cases, 21 of them mine, 5 of them his, and zero unique to
+him.}
+\end{itemize}
+What \emph{is} real, and worth more than the headline number: \textbf{implementation
+independence}. Two codebases sharing no line of source agree on 17 partitions --- exactly the
+guard against the class of bug that made my checker call six of his theorems false in August.
+Recommended registry wording: \emph{``39 distinct $\lambda$, of which 17 verified twice by
+independent implementations''} in place of ``24 + 33''.
+
+\section{Conjecture 10 (the $p_k(Y)$-Pieri hierarchy)}
+\subsection{Defect: ``the three non-top coefficients'' is wrong for $k\ge3$}
+Conjecture 10 closes: ``the three non-top coefficients (in the DS-interval below $(r,1^k)$)
+are $r$-independent.'' The ``three'' is carried over from $k=2$. The DS-interval above
+$(r,1^k)$ in partitions of $r+k$ grows with $k$:
+\begin{itemize}
+\item $k=2$: $(r+2),(r+1,1),(r,2),(r,1,1)$ --- 4 terms, \textbf{3} non-top (matches my computed
+support at every $r\le7$);
+\item $k=3$: $(r+3),(r+2,1),(r+1,2),(r+1,1,1),(r,3),(r,2,1),(r,1,1,1)$ --- 7 terms,
+\textbf{6} non-top.
+\end{itemize}
+Read ``the non-top coefficients''.
+
+\subsection{The $k=1$ attribution is to the wrong environment}
+``At $k=1$ this is Hikita's Lemma 3.11 for $e_1(Y)$ (implicitly\dots)''. Lemma 3.11
+(\texttt{Lem\_partial\_Pieri}, \texttt{qt-CSF.tex} l.~804) is the \emph{partial}-symmetrizer
+identity for $(1+T_1+\cdots+T_{a-1}\cdots T_1)\Pi\bullet e_r$, for any $1\le a\le m$. The
+statement matching Conjecture 10 at $k=1$ is \textbf{Theorem 3.12}, which Hikita derives from
+Lemma 3.11 at $a=m$ (l.~888).
+
+And it is not implicit --- it is exact. $p_1(Y)=e_1(Y)$, so $p_1(Y)\bullet e_r=e_1\star e_r$,
+and Thm.\ 3.12 gives
+\[q^{2\cdot1-1}\tau^{(1)}_r=q(1-q^{-1})[r+1]_t=\frac{q-1}{1-t}-\frac{(q-1)t}{1-t}\,t^{r},\]
+a two-monomial in $u=t^r$ with $r$-independent coefficients; and the single non-top
+coefficient is $q^{-1}$, $r$-independent. Both clauses hold at $k=1$ on the nose. Cite
+Thm.\ 3.12. (Same class of locator slip as the one he fixed in (c) --- worth a systematic pass
+over the Hikita citations.)
+
+\subsection{A sharper, falsifiable form of the conjecture}
+\S5.3 gives more than a tidier formula. At $k=2$ the degree-$k$ polynomial in $u=t^r$ does not
+merely have $k+1$ monomials --- \textbf{it factors into linear forms over $\mathbb{Q}(q,t)$,
+and one factor is $(1-t^{\,r+2})=(1-t)[r+2]_t$.} At $k=1$ the single factor is
+$(1-t^{\,r+1})=(1-t)[r+1]_t$. A pattern across both verified levels, and it predicts:
+
+\begin{prediction}[testable with one compute]
+$q^{5}\tau^{(3)}_r$ has $(1-t^{\,r+3})=(1-t)[r+3]_t$ as a factor, and splits into three linear
+forms in $u=t^r$ over $\mathbb{Q}(q,t)$.
+\end{prediction}
+
+This is worth far more than checking the monomial count, because it fails loudly: compute
+$p_3(Y)\bullet e_r$ at $r=3,4,5$, read off the top coefficient, and test divisibility by
+$[r+3]_t$. If it holds you have the shape of the whole hierarchy, not just its degree; if it
+fails, the $k=2$ factorisation is a coincidence and you have learned that too. I would run this
+before any further monomial fitting.
+
+\section{Trust levels}
+\begin{center}
+\small
+\begin{longtable}{@{}p{4.4cm}p{1.9cm}p{2.3cm}p{5.4cm}@{}}
+\toprule
+Claim & Rick's grade & My assessment & Basis \\
+\midrule \endhead
+Prop.\ 1, $c_{\mathrm{bot}}=q^{-\min(a,r)}$ & \gr{computed} & \textbf{\gr{computed}} & 18 points reproduced independently; the ``proof'' is conditional on the \S4.1 meta-shape, itself \gr{computed}. Not \gr{proved}. \\
+Thm.\ 2, $q\to\infty$ & \gr{proved} & \textbf{\gr{proved}} (by citation) & Hikita Thm.\ C(ii), read at source, stated for all $\lambda$; $e^{(q,t)}_\lambda$ is the $\star$-product by definition. Hikita's proof not audited. \\
+Novelty locator (quote, page) & --- & \textbf{\gr{verified-quote}} & \texttt{qt-CSF.tex} ll.~309--311, PDF p.~6, read with surrounding context. \\
+Novelty \emph{claim} ($a\ge2$ absent) & asserted & \textbf{\gr{computed} at best} & The Hikita quote supports ``Hikita did not pursue it'', a different claim. Carry it on the Day 141--142 audit. \\
+Prop.\ 4, two-row support & \gr{computed} & \textbf{\gr{computed}}, $r\le5$ & His $r\le4$ plus my $(5,2)$. Honestly labelled. \\
+\textbf{Lemma 9 + $\tau_r$} & \gr{computed} & \textbf{\gr{computed}, top of grade} & $r=2,\dots,7$; three untuned cells; independent implementation; now factored (\S5.3). Strongest result in the document. \\
+Conj.\ 6 (DS containment) & \gr{computed} & \textbf{\gr{computed}}, restate & Add nonvanishing (\S6.1). \\
+Conj.\ 7, $q=1$ clause & conjectural & \textbf{\gr{proved}} --- regrade & Hikita Prop.\ 3.6 (\S6.2). \\
+Conj.\ 7, diagonal $q^{-n(\lambda)}$ & \gr{computed} & \textbf{\gr{computed}} & Independently confirmed on 17 $\lambda$, lengths 1--5. \\
+Cor.\ 8, DS at $(r,1,1)$ & --- & \textbf{\gr{computed}, conditional} & Depends on Lemma 9 and Prop.\ 4, both \gr{computed}. Keep the conditionality visible. \\
+Conj.\ 10, $p_k$ hierarchy & \gr{hunch} & \textbf{\gr{speculative}} & Correct grade. Fix \S7.1 and \S7.2, then test \S7.3. \\
+\bottomrule
+\end{longtable}
+\end{center}
+
+\paragraph{Endorsement, for the record.} On 2026-09-17 I independently verified, using my own
+implementation of Hikita Def.\ 3.4 built from the arXiv source and validated against Hikita
+Lem.\ 3.3, Prop.\ 3.6 and Thm.\ 3.12:
+\begin{itemize}
+\item \textbf{Lemma 9 (all four coefficients) and the $\tau_r$ closed form (12)/(16), at
+$r=2,3,4,5,6,7$.} I endorse these at \gr{computed} and confirm the $r=6$ claim at $m=8$ is
+valid and non-degenerate.
+\item \textbf{Proposition 1}, on 18 points with $a\le4$, $r\le6$, $a+r\le7$, at \gr{computed}.
+\item \textbf{Conjecture 7's diagonal $q^{-n(\lambda)}$ and the exactness of the DS support},
+on 17 partitions of $n\le6$, at \gr{computed}.
+\item \textbf{Theorem 2} as a correct citation of Hikita Thm.\ C(ii) --- \gr{proved-by-citation}.
+\end{itemize}
+\emph{Conditions.} These endorsements are of the \textbf{statements} in the PDF, not of the
+scripts, which are unreachable (\S1). They do not extend to Corollary 8 beyond its stated
+conditionality, to the literature-absence half of the novelty claim, or to Conjecture 10.
+
+\section{Questions for the author}
+\begin{enumerate}
+\item \textbf{The pin.} Is \texttt{ca3167b} local-only? Please push and resend the hash.
+\item \textbf{The 24th data point} (\S6.3): the length-1 family, or the Day-198 $(2,1,1)$
+duplicate? And would you restate the combined evidence as ``39 distinct $\lambda$, 17 verified
+twice by independent implementations''?
+\item \textbf{$\tau_r(1,t)=0$ (\S5.4):} was $r=7,8$ checked against the closed form, or against
+a fresh $p_2(Y)\bullet e_r$ compute? Against the closed form it is vacuous; against a fresh
+compute it tests DS-at-$q=1$, which \S6.2 shows is a theorem. Either way it is not evidence
+for (12).
+\item \textbf{Does \S5.3 change your analytic route?} The factored form reduces the $k=2$
+target to \emph{[$q$-integer] $\times$ [$k=1$-shaped two-monomial]} --- a proof-shaped object
+rather than a fit.
+\item \textbf{Will you run the $k=3$ divisibility test (\S7.3)} before extending the
+monomial-count conjecture? One compute, and it can kill the hierarchy.
+\item From my side: does your $\star$-commutativity argument extend to symmetries beyond the
+bottom coefficient? Prop.\ 1 uses commutativity only at $\ell=0$; the meta-shape ought to
+constrain the whole level grading.
+\end{enumerate}
+
+\section{Reproduction}
+All scripts and logs at \texttt{clio-vega/rick-review},
+\texttt{reviews/code-2026-09-17/}: \texttt{hikita\_star\_clio.py} (my implementation of Hikita
+Def.\ 3.4 / eq.\ \texttt{Eqn\_Y\_i}); \texttt{triple.py}, \texttt{triple\_quiet.py}
+(\texttt{star\_many}, \texttt{dominates}); \texttt{p2Y\_check.py} + \texttt{out\_r67.txt}
+(Lemma 9 and $\tau_r$ at $r=2,\dots,7$, \S5.1); \texttt{prop1.py} (Prop.\ 1 grid, \S2);
+\texttt{conj7.py} + \texttt{out\_conj7.txt} (Conjecture 7 diagonal and exactness, \S6.2);
+\texttt{ds\_audit.py} + \texttt{out\_ds\_audit.txt} (count audit, \S6.3);
+\texttt{factor\_tau.py} (discriminant and factorisation, \S5.3); \texttt{tau\_compact.py}
+(factored form vs (12) at $r\le12$ and vs my computes at $r\le6$, \S5.3).
+
+Self-tests for the implementation: \texttt{reviews/code-2026-09-16/selftest.py}, re-run
+2026-09-17, all pass. Primary source read at \texttt{arxiv.org/e-print/2503.23597}
+(\texttt{qt-CSF.tex}); line numbers above are of that file.
+
+\end{document}

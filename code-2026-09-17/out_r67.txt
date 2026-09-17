@@ -1,0 +1,42 @@
+r=2  m=4  (0.1s)  support = [(4,), (3, 1), (2, 2), (2, 1, 1)]
+    (4,)       MATCH   Rick: 
+    (3, 1)     MATCH   Rick: 
+    (2, 2)     MATCH   Rick: 
+    (2, 1, 1)  MATCH   Rick: 
+    (12) vs (16) agree: True
+    Lemma 9 at r=2: CONFIRMED
+r=3  m=5  (0.2s)  support = [(5,), (4, 1), (3, 2), (3, 1, 1)]
+    (5,)       MATCH   Rick: 
+    (4, 1)     MATCH   Rick: 
+    (3, 2)     MATCH   Rick: 
+    (3, 1, 1)  MATCH   Rick: 
+    (12) vs (16) agree: True
+    Lemma 9 at r=3: CONFIRMED
+r=4  m=6  (1.2s)  support = [(6,), (5, 1), (4, 2), (4, 1, 1)]
+    (6,)       MATCH   Rick: 
+    (5, 1)     MATCH   Rick: 
+    (4, 2)     MATCH   Rick: 
+    (4, 1, 1)  MATCH   Rick: 
+    (12) vs (16) agree: True
+    Lemma 9 at r=4: CONFIRMED
+r=5  m=7  (7.0s)  support = [(7,), (6, 1), (5, 2), (5, 1, 1)]
+    (7,)       MATCH   Rick: 
+    (6, 1)     MATCH   Rick: 
+    (5, 2)     MATCH   Rick: 
+    (5, 1, 1)  MATCH   Rick: 
+    (12) vs (16) agree: True
+    Lemma 9 at r=5: CONFIRMED
+r=6  m=8  (47.8s)  support = [(8,), (7, 1), (6, 2), (6, 1, 1)]
+    (8,)       MATCH   Rick: 
+    (7, 1)     MATCH   Rick: 
+    (6, 2)     MATCH   Rick: 
+    (6, 1, 1)  MATCH   Rick: 
+    (12) vs (16) agree: True
+    Lemma 9 at r=6: CONFIRMED
+r=7  m=9  (307.1s)  support = [(9,), (8, 1), (7, 2), (7, 1, 1)]
+    (9,)       MATCH   Rick: 
+    (8, 1)     MATCH   Rick: 
+    (7, 2)     MATCH   Rick: 
+    (7, 1, 1)  MATCH   Rick: 
+    (12) vs (16) agree: True
+    Lemma 9 at r=7: CONFIRMED
