@@ -64,3 +64,21 @@
    a=4 r=2  e_(4, 2)   q^-2 OK
    a=4 r=3  e_(4, 3)   q^-3 OK
    a=4 r=4  e_(4, 4)   q^-4 OK
+   a=4 r=5  e_(5, 4)   q^-4 OK
+  Prop 1 on this grid: CONFIRMED
+
+======================================================================
+(C) CONJ 7 sharp form: leading coeff = q^{-n(lambda)}, n(lam)=sum (i-1)lam_i
+   lam=(2, 1)       n(lam)=1   q^-1 OK     all coeffs nonzero: True
+   lam=(2, 2)       n(lam)=2   q^-2 OK     all coeffs nonzero: True
+   lam=(3, 1)       n(lam)=1   q^-1 OK     all coeffs nonzero: True
+   lam=(3, 2)       n(lam)=2   q^-2 OK     all coeffs nonzero: True
+   lam=(2, 1, 1)    n(lam)=3   q^-3 OK     all coeffs nonzero: True
+   lam=(2, 2, 1)    n(lam)=4   q^-4 OK     all coeffs nonzero: True
+   lam=(2, 2, 2)    n(lam)=6   q^-6 OK     all coeffs nonzero: True
+   lam=(3, 2, 1)    n(lam)=4   q^-4 OK     all coeffs nonzero: True
+   lam=(1, 1, 1)    n(lam)=3   q^-3 OK     all coeffs nonzero: True
+   lam=(1, 1, 1, 1) n(lam)=6   q^-6 OK     all coeffs nonzero: True
+   lam=(2, 1, 1, 1) n(lam)=6   q^-6 OK     all coeffs nonzero: True
+   lam=(3, 1, 1)    n(lam)=3   q^-3 OK     all coeffs nonzero: True
+  Conj 7 diagonal on this set: CONFIRMED
