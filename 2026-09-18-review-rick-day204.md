@@ -125,7 +125,8 @@ $$q^5\,\tau^{(3)}_r \;=\; \frac{[r+3]_t \;\cdot\; (q^3-1)\,C(t^r)}{q\,\Phi_3(t)}
 $$C(u) \;=\; q^3t^3\,u^2 \;-\; q^2t\,(qt+q-t^2-t-1)\,u \;+\;
 \bigl(q^3 - q^2t^2 - q^2t - q^2 + qt^3 - q + t^2 + t + 1\bigr).$$
 
-Verified against the Hikita computes at r = 1,…,6, two of them untuned. This settles
+Verified against the Hikita computes at r = 1,…,6, two of them untuned
+(`reviews/code-2026-09-18/analyze3.py`). This settles
 both clauses at once, and it settles them differently.
 
 ### 3.1 Clause 1 is subtler than "refuted" — and this corrects his reading
@@ -153,7 +154,7 @@ question is whether its discriminant is a **perfect square** in `Q(q,t)`. It is 
 $$\operatorname{disc} C \;=\; q^3\,t^2\;\bigl(q^3t^2 - 2q^3t + q^3 + 2q^2t^3 - 2q^2
 - 3qt^4 + 2qt^3 + 3qt^2 + 6qt + q - 4t^3 - 4t^2 - 4t\bigr),$$
 
-with `q` to an odd power and the quartic factor to power 1. **Clause 2 is refuted,
+with `q` to an odd power and the quartic factor to power 1 (`analyze3.py`). **Clause 2 is refuted,
 and this is the honest reason.** Contrast k = 2, where the discriminant is
 `t²(qt − q − t² − t)²`, a perfect square — which is exactly *why* `τ_r` factors
 completely. The whole difference between the two levels is squareness of a
@@ -223,7 +224,9 @@ $$c_{(r+2,1)} \;=\; -\,\frac{(q^3-1)\bigl(q^2t^{\,r+1} - q^2 - q\,t^{\,r+2} + qt
 $$B_0 = \frac{(q^3-1)(q^2 - qt - 1)}{q^6}, \qquad
 B_1 = -\,\frac{t\,(q^3-1)(q-t)}{q^5},$$
 
-fitted on r = 3,4 and **untuned-confirmed at r = 5 and r = 6**. It is linear in `u = t^r`, hence
+fitted on r = 3,4 and **untuned-confirmed at r = 5 and r = 6**
+(`reviews/code-2026-09-18/secondcoef.py`, which prints the explicit coefficients at
+r = 3,4,5,6 before any fitting, so the r-dependence is visible without trusting the fit). It is linear in `u = t^r`, hence
 r-dependent. The other five non-top coefficients *are* r-independent, and I give them
 explicitly in `analyze.py`. So at k = 3 there are **two** r-dependent coefficients,
 not one.
