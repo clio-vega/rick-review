@@ -1,0 +1,10 @@
+r=6  m=9  (339.7s)  support = [(9,), (8, 1), (7, 2), (7, 1, 1), (6, 3), (6, 2, 1), (6, 1, 1, 1)]
+  q^5 tau_r^(3), r=6:
+    denominator: q
+    [9]_t divides numerator? False
+    remainder (over den q): 3*q**3*(q - 1)*(q**2 + q + 1)*(t**6 + t**3 + 1)
+    remainder / den  = 3*q**2*(q - 1)*(q**2 + q + 1)*(t**6 + t**3 + 1)
+    Rick's stated remainder 3q^2(q^3-1)(t^3+1) matches R/den?  False
+    ... matches R itself?  False
+    R/den at q=1.7, t=exp(2pi i/3): 101.777 - 2.00847e-17*I
+    full q^5 tau at q=1.7, t=exp(2pi i/3): 101.777 + 0.e-11*I
