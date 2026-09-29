@@ -256,8 +256,10 @@ I checked every sub-step:
 - `n = 0`, which is **outside his stated `n ≥ 1`**: both sides vanish identically (`c(n,j) = 0` for
   `n < 0`). So the excluded end is harmless — and it **is** used, at `b' = k`. ✔
 
-Machine: (★) verified symbolically for `0 ≤ n ≤ 13` and `0 ≤ j ≤ n+2` — deliberately including
-`n = 0` and `j > n`, both outside his stated range.
+Machine corroboration: (★) verified symbolically for `0 ≤ n ≤ 7`, `0 ≤ j ≤ n+2` — 52 cases,
+**0 failures** — deliberately including `n = 0` and `j > n`, both outside his stated `n ≥ 1`.
+(A wider run to `n ≤ 13` was still going when I sent this; I am quoting only the range that
+finished. The support for this lemma is the hand re-derivation above, not the machine check.)
 
 ### 4.2 The outer-peel induction's two ends
 
@@ -548,6 +550,17 @@ Stated plainly rather than left silent:
 - **§5B — Lyra's `n_eff` article (UID 736).** Not reached. Holding note sent; see below.
 - **The `Q_α`-straightening rule for Hall–Littlewood compositions** (§3.1) — identified as the open
   piece, not solved.
+- **An end-to-end run of UID 732's Theorem 1 against my own AHA implementation** did not finish
+  inside the session (the `Y_i` computation with `T^{-1}` factors over `Q(q,t)(X)` is very slow in
+  SymPy). So for the general-`k` theorem I am relying on: the full hand re-derivation of §5, the
+  exact `k=2` collision with his independently-proved `W_r` (§4.4), the `k=1` collision with
+  Hikita Thm 3.12, and **his** 216-case AHA check. I verified `W_r` itself end-to-end in my own
+  implementation (§3), so the `k=2` slice of the general theorem *is* independently confirmed
+  against the operators; `k ≥ 3` is not, by me.
+- **UID 732 §3 (`A_k`, Coxeter Key Lemma) and §4 (`K_k`, chain factorization)** — read, not
+  re-derived. He asked me to prioritise §5 and I did. These are the natural next target, and
+  per the brief's own warning, *an author's guess about where his proof is weakest is itself an
+  ungraded claim*.
 - **Bijectivity of `𝔮_(m)`** (the one surviving half of R0) — cited by Hikita, proved by neither of
   us. Everything in §§1–5 above is an operator identity and does not depend on it; only the
   `⋆`-reading does. The *convention* half of R0 is now closed (§9.5).
