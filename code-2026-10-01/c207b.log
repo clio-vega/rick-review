@@ -1,0 +1,28 @@
+=== (C3) Poincare: sum_{w in S_k} prod_{l<l'} a_{w_l w_l'} = [k]_t! ===
+  k=1 OK
+  k=2 OK
+  k=3 OK
+  k=4 OK
+  k=5 OK
+
+=== (A_k) Prop 3: Y_{b1}..Y_{bk}F = t^C(k,2) T_{w(b)} pi^k F ===
+  m=2: 9 (r,k,b) cases
+  m=3: 28 (r,k,b) cases
+  m=4: 75 (r,k,b) cases
+
+=== e_k(Y)F = t^C(k,2) sigma^(k) pi^k F ===
+  m=2: 6 cases
+  m=3: 12 cases
+  m=4: 20 cases
+
+=== (K_k) Prop 4: sigma^(k) G = sum_{|A|=k} G^(A) prodx_A ===
+  m=2: 6 cases
+  m=3: 12 cases
+  m=4: 20 cases
+
+=== (0.1) END-TO-END: t^{-C(k,2)} e_k(Y).F == subset formula ===
+  m=2: 8 cases
+  m=3: 18 cases
+  m=4: 36 cases
+
+==== TOTAL FAILURES: 0 ====

@@ -1,0 +1,27 @@
+=== Day205b Lemma 1 / W_r Lemma 2: sigma_m F = sum_i F^(i) prod_{j!=i} a_ij, F sym in X_2..X_m ===
+  m=2 checked 3 symmetric-in-tail F
+  FAIL L1 m=3 F=x2**2*(x2 + x3)
+  m=3 checked 4 symmetric-in-tail F
+  FAIL L1 m=4 F=x2**2*(x2 + x3 + x4)
+  m=4 checked 5 symmetric-in-tail F
+  FAIL L1 m=5 F=x2**2*(x2 + x3 + x4 + x5)
+  m=5 checked 6 symmetric-in-tail F
+
+=== Day205b Lemma 2 / W_r Lemma 3 (residue): (1-t) sum_i X_i^n prod_{j!=i} a_ij = q_n ===
+  m=2: n=1..4
+  m=3: n=1..5
+  m=4: n=1..6
+
+=== (C2) ordered formula ===
+  m=2 k=1: 4 G
+  m=2 k=2: 3 G
+  m=3 k=1: 5 G
+  m=3 k=2: 5 G
+  m=3 k=3: 4 G
+  m=4 k=1: 6 G
+  m=4 k=2: 6 G
+  m=4 k=3: 6 G
+  m=4 k=4: 5 G
+
+=== FAILURES: 3 ===
+['L1 m=3 F=x2**2*(x2 + x3)', 'L1 m=4 F=x2**2*(x2 + x3 + x4)', 'L1 m=5 F=x2**2*(x2 + x3 + x4 + x5)']

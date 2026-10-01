@@ -1,0 +1,8 @@
+lam=(5,)            supp=1 upset=1 S_viol=none missing=none lead=True s1=none val=True d0=True
+lam=(4, 1)          supp=2 upset=2 S_viol=none missing=none lead=True s1=none val=True d0=True
+lam=(3, 2)          supp=3 upset=3 S_viol=none missing=none lead=True s1=none val=True d0=True
+lam=(3, 1, 1)       supp=4 upset=4 S_viol=none missing=none lead=True s1=none val=True d0=True
+lam=(2, 2, 1)       supp=5 upset=5 S_viol=none missing=none lead=True s1=none val=True d0=True
+lam=(2, 1, 1, 1)    supp=6 upset=6 S_viol=none missing=none lead=True s1=none val=True d0=True
+lam=(1, 1, 1, 1, 1) supp=7 upset=7 S_viol=none missing=none lead=True s1=none val=True d0=True
+N5 DONE
