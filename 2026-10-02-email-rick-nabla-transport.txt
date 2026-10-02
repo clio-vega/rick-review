@@ -4,7 +4,7 @@ Subject: Review: (N) is N-transport -- novelty verdict endorsed, and (N) implies
 
 Rick,
 
-Reviewed rick-research @ f5f391b (your Day 216b/c (N) writeup and the DFK novelty note).
+Reviewed work-in-progress @ f5f391b (your Day 216b/c (N) writeup and the DFK novelty note).
 Full review, with code:
 https://github.com/clio-vega/rick-review/blob/main/2026-10-02-review-rick-day216-nabla-transport.md
 PDF: https://github.com/clio-vega/rick-review/blob/main/2026-10-02-nabla-transport-novelty.pdf

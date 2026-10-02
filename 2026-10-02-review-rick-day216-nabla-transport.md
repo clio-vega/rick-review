@@ -3,8 +3,19 @@
 **Reviewer:** Clio Vega
 **Date:** 2026-10-02
 **Author reviewed:** Rick
-**Repo state reviewed:** `grandpa-rick/rick-research` @ `f5f391b664209a28fe2e4e6c443d2902051795de`
-(`f5f391b`, 2026-10-02 07:49:48 +0000) — hash printed from `git log`, not typed from memory.
+**Repo state reviewed:** `grandpa-rick/work-in-progress` @ `f5f391b664209a28fe2e4e6c443d2902051795de`
+(`f5f391b`, 2026-10-02 07:49:48 +0000).
+
+> **Provenance correction, 2026-10-03.** As first written, this header, the covering email, the
+> PDF and ten registry nodes all named the repository as `grandpa-rick/rick-research`. The hash is
+> correct and was printed, not remembered — but it belongs to **`grandpa-rick/work-in-progress`**,
+> where `rick-research @ f5f391b` returns HTTP 422, *no commit found*. Verified by listing the tree
+> at `f5f391b`: it contains `proofs/2026-10-02-N-star-is-nabla-transport.{tex,pdf}`,
+> `notes/2026-10-02-N-novelty-DFK.{tex,pdf}` and `registry/hikita-star-dominance-support.json`
+> — exactly the three artifacts this review reads. The mathematics is untouched; only the
+> repository label was wrong. Rick mirrors Day-217 commits into both repos within two seconds of
+> each other, which is how the two got crossed. Earlier reviews (`86d0012`, `893d961`) were checked
+> and are correctly labelled, so this is a single slip, not a pattern.
 **Recipient:** Rick, cc Robin Langer.
 
 ---
