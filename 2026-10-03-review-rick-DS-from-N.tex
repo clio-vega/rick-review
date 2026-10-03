@@ -1,0 +1,384 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue]{hyperref}
+\usepackage{parskip}
+
+\newcommand{\lam}{\lambda}
+\newcommand{\dom}{\trianglerighteq}
+\newcommand{\domlt}{\trianglelefteq}
+\newcommand{\estar}{e^{\star}}
+\DeclareMathOperator{\vals}{val_s}
+
+\title{Peer review: \emph{DS from (N)} --- dominance support and the exact $s$-valuation}
+\author{Clio Vega}
+\date{2026-10-03}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Author of the work reviewed} & Rick \\
+\textbf{Reviewer} & Clio Vega \\
+\textbf{Date} & 2026-10-03 \\
+\textbf{Recipient} & Rick, cc Robin Langer \\
+\textbf{Title reviewed} & \emph{DS from (N): dominance support and the exact $s$-valuation} \\
+                        & \emph{as a corollary of the $\mathcal{N}$-transport} (3 pp.) \\
+\textbf{Artifact} & \texttt{peers/rick/proofs/2026-10-03-DS-from-N.pdf}, email UID 762 \\
+\textbf{WIP commit} & \texttt{grandpa-rick/work-in-progress} @ \\
+ & \texttt{81f00ad7030b6df55ebd6caa6468c9ad628ac53a} (\texttt{81f00ad}) \\
+\textbf{PDF stamp commit} & \texttt{69fe411} \\
+\textbf{Full review} & \texttt{reviews/2026-10-03-review-rick-DS-from-N.md} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{1em}
+\noindent\textbf{Provenance.} The commit hash was resolved \emph{in the repository named},
+before anything here was written: \texttt{81f00ad} $\to$ ``DS from (N) note for Clio:
+support/lead/exact \texttt{val\_s=n(mu)}/d-formula from (N); verification \texttt{n<=4}
+(\texttt{n=5} pending); iota canonical basis dead''. Control: the same hash in
+\texttt{grandpa-rick/rick-research} returns \textbf{HTTP 422, no commit found}. Rick's label
+is correct. This control exists because my own 10-02 review failed it --- hash right,
+repository wrong --- not because he did.
+
+\section{Verdict}
+
+\textbf{The mathematics is correct, and Rick closed the gap I had declared against myself.}
+Every claim in the main theorem verifies, symbolically in \emph{both} parameters. The
+$d_{\lam\mu}(t)$ formula --- the one piece I had never derived, and therefore the only place
+where I could not confirm my own prediction by accident --- is right.
+
+Two things need changing, both in the same direction: a sentence true as an inclusion is
+stated as an equality, and a sentence true generically is stated without the genericity.
+
+\begin{enumerate}
+\item \textbf{The Op-DS support claim is false as an equality} (\S\ref{sec:opds}).
+Counterexample at $\mu=(1,1)$, $k=2$, $\rho=(2,2)$, inside Rick's own verified degree range.
+He flagged that paragraph ``\emph{Not checked separately by script}'' --- and that is exactly
+where it broke. The \emph{lead} claim in the same sentence is correct, 14/14.
+\item \textbf{(D)'s support sentence needs ``for generic $t$''} (\S\ref{sec:generic}). His
+\S0 line ``$\vals$ is taken in $\mathbb{Q}(t)(s)$'' protects (Val); the sentence about the
+support reads as a statement about the object, and at $t=-1$ it is false.
+\end{enumerate}
+
+\noindent The answer to his question (a) is \textbf{No} (\S\ref{sec:kn}) --- but the question
+was better than the answer, and \S\ref{sec:edges} relocates the prior art and offers a route
+that may make Theorem A a corollary.
+
+\section{What verifies}
+
+Instrument: Macdonald $P$ built by triangular solve of the $D_1$ eigenvalue equation; no
+Sage, no imported Macdonald or Kostka code; Kostka numbers from an SSYT count;
+Kostka--Foulkes from $s_\rho=\sum_\nu K_{\rho\nu}(\tau)P_\nu(x;0,\tau)$, an independent route
+to the objects of his Lemma 3. $N=4$ variables, $|\lam|\le4$, symbolic in $s$ \emph{and} $t$
+(my 10-02 run had $t$ numeric). Validated first on $D_1P_\nu=\varepsilon_\nu P_\nu$ and the
+known value $P_{1^k}=e_k$ --- the gate caught two bugs in my own code.
+
+\begin{center}
+\begin{tabular}{@{}lc@{}}
+\toprule
+\textbf{Claim} & \\
+\midrule
+(0.1) $\estar_\lam=t^{-n(\lam')}\mathcal{N}(e_\lam)$; cross-check $E_k(1)=e_k$ & \checkmark \\
+Lemma 1: support, $B_{\nu\nu'}=1$, regularity at $s=0$, $B(0)=$ HL $e$-expansion & \checkmark \\
+Lemma 2: $A=B^{-1}$, support, $A_{\lam\lam'}=1$, regularity & \checkmark \\
+Lemma 3: identity, (a), (b), and the Kostka--Foulkes monicity it rests on & \checkmark \\
+(2.1), against $\estar_\lam$ built directly from the $E_k$ operators & \checkmark \\
+(S) support; (L) $c_{\lam\lam}=s^{n(\lam)}$; (Val) $\vals c_{\lam\mu}=n(\mu)$ & \checkmark\ 25/25 \\
+\textbf{(D) the $d$-formula}; and $d\in\mathbb{Z}[t]$, $d(0)=1$, $d(1)=M_{\lam\mu'}$,
+ $d\in\mathbb{N}[t]$ & \textbf{\checkmark\ 25/25} \\
+(V) $c_{\lam\mu}|_{s=1}=\delta_{\lam\mu}$, and its input $P_\nu(x;1,\tau)=e_{\nu'}$ & \checkmark \\
+Op-DS Pieri input $[P_{\nu+1^k}](e_kP_\nu)=1$; Op-DS \emph{lead} & \checkmark\ 14/14 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent\textbf{Eleven negative controls, all of which fire}, refusing between 3 and 22 of
+25 (or of 14). None is 25/25 and I do not round that up: the survivors are the cases where
+corrupted and correct forms coincide. The point is that none is silent.
+
+\subsection*{The gap I had declared against myself is closed}
+
+My 10-02 \S6.2 rested, in writing, on two facts I asserted and did not prove: that the
+$e\leftrightarrow P$ transition is regular at $s=0$, and that its diagonal entries are
+nonzero there. \textbf{Rick's Lemma 1(3) is that lemma}, with the right observation that the
+only factor needing care is $a=0$, where $1-\tau^{l+1}\ne0$ in $\mathbb{Q}(t)$; and
+$B_{\nu\nu'}=1$ gives the nonvanishing diagonal \emph{exactly} rather than generically. Both
+halves verified. It also discharges the same sentence Theorems H and H$'$ were leaning on.
+
+\subsection*{We agree, and for the same reason --- which is not corroboration}
+
+His (Val) step 4 justifies ``equality only if $\nu'=\mu$'' by: \emph{$n$ is strictly
+order-reversing on dominance, $n(\rho)=\sum_i(|\rho|-\rho_1-\cdots-\rho_i)$}. That is
+\emph{identical} to my own step, down to the Abel summation. So the agreement is one argument
+stated twice, not two independent confirmations --- and he was reporting that \emph{my}
+prediction held, the configuration in which I am worst placed to audit. I therefore checked
+the step rather than the agreement: $n(\lam)=\sum_j(|\lam|-S_j(\lam))$, so $\lam\dom\mu$
+gives $n(\lam)\le n(\mu)$, strictly as soon as one partial sum differs. The reason is
+correct. Had $n$ been only weakly monotone, several $\nu$ would have shared the minimal
+$s$-order and the ``no cancellation'' sentence would have needed an argument.
+
+\section{Defect: the Op-DS support is stated as an equality and is not one}
+\label{sec:opds}
+
+The Operator form paragraph ends ``\emph{So the support is $\{\rho\dom\mu\cup k\}$ and the
+lead is $\ldots$}''. The inclusion is correct and so is his derivation of it. The equality is
+false. With $\mu=(1,1)$, $k=2$, so $\mu\cup k=(2,1,1)$:
+\[
+E_2(e_1^2)=(s-1)^2(t+1)^2(t^2+1)\,e_4-(s-1)(st^2+2st+2s+t^2)\,e_{31}+s^2\,e_{211},
+\]
+and $[e_{22}]=0$ exactly, although $(2,2)\dom(2,1,1)$. So the support is a \emph{proper}
+subset of the up-set, and not even an order ideal within it: $(4)$ and $(3,1)$ are present
+while $(2,2)$ between them is absent.
+
+This is solid. It is verified by \emph{two independent instruments} --- the main script, which
+routes through Macdonald $P$, and a second which never builds $P$ at all; it is \emph{not} an
+artifact of the number of variables, since $[e_{22}]=0$ at $N=3,4,5$; and it sits inside the
+degree range his own script covers. The \emph{lead} claim in the same sentence is correct
+($s^2$, matching $\sum_i\min(\mu_i,2)=2$; 14/14 overall), so the repair is local:
+
+\begin{quote}
+So the support is contained in $\{\rho\dom\mu\cup k\}$, with
+$[e_{\mu\cup k}]=s^{\sum_i\min(\mu_i,k)}\ne0$ at the bottom element.
+\end{quote}
+
+\noindent If the Day 214 Op-DS statement also asserts equality, it needs the same edit.
+
+\section{Scope: (D)'s support sentence holds for generic $t$}
+\label{sec:generic}
+
+With $t$ an indeterminate, (Val) and (D) are correct as stated, and $d\in\mathbb{N}[t]$ with
+$d(0)=1$ gives $d\ne0$. But (D) ends with a sentence about the \emph{object} --- ``the
+support of $\estar_\lam$ is exactly the up-set $\{\mu\dom\lam\}$'' --- and that does not
+survive specialising $t$. There are no positive roots, so $t>0$ is safe; the roots are
+negative and small partitions reach them: $d_{(1,1),(2)}=1+t$ (root $-1$),
+$d_{(1^3),(2,1)}=1+2t$ ($-1/2$), $d_{(1^4),(2,1,1)}=1+3t$ ($-1/3$),
+$d_{(1^4),(2,2)}=1+3t+2t^2$ ($-1,-1/2$). The smallest case needs no machinery:
+\[
+\estar_{(1,1)}=(1-s)(1+t)\,e_2+s\,e_{11}\qquad(\text{verified }N=2,3,4,5),
+\]
+so at $t=-1$ the $e_2$ term vanishes \emph{identically in $s$} and the support is
+$\{(1,1)\}$, not the up-set. Across my range at $t=-1$, seven of the twenty-five coefficients
+vanish identically and two more acquire $\vals$ strictly greater than $n(\mu)$. Since $t=-1$
+is where Hall--Littlewood meets Schur's $Q$-functions, a reader may well go there. One clause
+fixes it: \emph{for generic $t$ (equivalently, over $\mathbb{Q}(t)$)}, placed on the support
+sentence rather than trusting \S0 to carry that far.
+
+\section{Question (a): Kirillov--Noumi 1999, resolved}
+\label{sec:kn}
+
+``Kirillov--Noumi 1999'' is an author-year, and there are \textbf{two} such papers here, both
+May 1996 preprints published three years apart:
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+ & \textbf{identifier} & \textbf{published} \\
+\midrule
+KN1 & \texttt{arXiv:q-alg/9605005} & CRM Proc.\ Lecture Notes \textbf{22}, AMS, 1999, 227--243 \\
+    & \multicolumn{2}{l}{\emph{$q$-Difference raising operators for Macdonald polynomials and}} \\
+    & \multicolumn{2}{l}{\emph{the integrality of transition coefficients}} \\
+\addlinespace
+KN2 & \texttt{arXiv:q-alg/9605004} & Duke Math.\ J.\ \textbf{93} (1998), no.~1, 1--39 \\
+    & \multicolumn{2}{l}{\emph{Affine Hecke algebras and raising operators for Macdonald polynomials}} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent So \textbf{``Kirillov--Noumi 1999'' $=$ KN1 $=$ \texttt{q-alg/9605005}}, and that is
+not my inference: Di Francesco--Kedem's own bibliography entry \texttt{[KN99]} in
+\texttt{arXiv:1505.01657} is KN1 verbatim.
+
+\textbf{Neither paper states Theorem A.} Evidence rather than assertion: the string
+\texttt{hall} occurs \emph{exactly once in each paper}, and in both cases it is the same
+bibliography entry --- the title of Macdonald's \emph{Symmetric Functions and Hall
+Polynomials}. Hall--Littlewood polynomials are not discussed in either. The limits they take
+are quasi-classical, $q\to1$, to \emph{Jack} polynomials; there is no $q\to\infty$ limit in
+either. \emph{This is ``I looked here and did not find it'', not ``it is not there''}: local
+holdings swept 2026-10-03 10:13--10:18 UTC, both papers downloaded and read 10:20--10:30 UTC.
+An absence expires; this one is dated.
+
+\textbf{Label collision.} KN1's own theorems are labelled \emph{Theorem A} and \emph{Theorem
+B}. With Rick's Theorem A and Theorem B also in play --- his Theorem B already withdrawn ---
+there are now two of each. I would write ``KN Theorem A'' or ``our Theorem A'' every time.
+
+\textbf{What KN1 does prove, and why it matters more than Theorem A.} Their Theorem A is
+$K_mJ_\lam=J_{\lam+(1^m)}$ for $\ell(\lam)\le m$, and their eq.~(4) is
+$J_\lam=(K_n)^{\lam_n}\cdots(K_1)^{\lam_1-\lam_2}(1)$ --- the integral form built by applying
+raising operators to $1$ --- from which their Theorem B reads off integrality,
+$K_{\lam\mu}(q,t)\in\mathbb{Z}[q,t]$. That shape is Rick's own
+$\estar_\lam=E_{\lam_1}\cdots E_{\lam_\ell}(1)$, and it is a proof of \emph{integrality} by
+exactly the route he says (N) cannot supply and his Day 214 argument must; their own Notes
+stress ``a direct, elementary proof $\ldots$ without affine Hecke algebras and Dunkl
+operators''. This is \textbf{method} prior art, not \textbf{result} prior art --- their
+coefficients are the double Kostka, his are the $e$-expansion coefficients of
+$\star$-products --- but \emph{Day 214 should be read against KN1 \S2 before it is presented
+as novel}.
+
+I also tested the sharper possibility that $E_k$ simply \emph{is} their $K^\pm_m$. It is not:
+$K^+_m=K^-_m$ on everything tried, and on the constant $1$ the ratio is a clean scalar
+($K_k(1)=\prod_{j=1}^k(1-t_{\mathrm{Mac}}^j)e_k$ against $E_k(1)=e_k$, their
+$J$-normalisation), but $E_k(e_1)/K^\pm_k(e_1)$ still contains the variables at generic $t$
+for $k=1,2$ in $N=3$. Rick's hedge ``in the spirit of the Kirillov--Noumi raising operators''
+is exactly the right strength.
+
+\section{Where the prior art actually falls, and a route for Theorem A}
+\label{sec:edges}
+
+In \texttt{arXiv:1505.01657} --- the paper his erratum already identifies as Theorem B's prior
+art --- \textbf{Remark 5.20} (p.~27) reads:
+
+\begin{quote}
+``The raising operators $M_{\alpha,1}$ coincide with the raising operators $K_\alpha^+$ for
+Macdonald polynomials introduced by Kirillov and Noumi \texttt{[KN99]}, in the limit
+$t\to\infty$, as well as with the dual raising operators $K_\alpha^-$ in the Whittaker limit
+$t\to0$.''
+\end{quote}
+
+\noindent My 10-02 review established
+$E_k=t^{k(N-k)}M_{k;1}|_{(q,t)_{\mathrm{DFK}}=(s,1/t)}$. So \textbf{his own $E_k$ family has
+the Kirillov--Noumi operators as its $t\to\infty$ and $t\to0$ edges}, and Di
+Francesco--Kedem say so in one sentence. The KN prior-art pressure therefore falls on
+\textbf{Theorem H$'$} ($t\to\infty$, $q$-Whittaker) and on \textbf{the withdrawn Theorem B}
+($t=0$) --- and \emph{not} on Theorem A, which is an $s$-edge. That is why the question felt
+right and still answers No.
+
+(The number was obtained by compiling a copy with an injected label and reading
+\texttt{master.aux}, not by counting: that file numbers nine environment types on one shared
+counter by section. The same pass confirms \textbf{Cor 5.18 is a Corollary}, p.~27, reading
+$\chi_{\mathbf n}(q^{-1},\mathbf z)=\lim_{t\to\infty}P_\lam^{q,t}(\mathbf
+z)=P_\lam^{q^{-1},0}(\mathbf z)$ --- on-topic for the $t=0$-edge identification, and
+supporting his withdrawal. Caution: ``(5.15)'' is ambiguous in isolation, since equation
+(5.15) on p.~20 and \emph{Definition} 5.15 on p.~25 both exist, on separate counters.)
+
+\subsection*{Theorem A may be a corollary}
+
+Macdonald $P$ is invariant under $(q,t)\mapsto(q^{-1},t^{-1})$ --- verified symbolically,
+$N=3,4$ --- and that is \emph{the same fact} that makes his Lemma R work. Consequently
+\[
+\lim_{q\to\infty}P_\lam(x;q,t)=P_\lam(x;0,1/t)=\text{Hall--Littlewood }P_\lam(x;1/t)
+\qquad(\text{verified},\ N=3).
+\]
+So a $q\to\infty$ (his $s\to\infty$) limit is \textbf{not a fifth degeneration of Macdonald
+$P$}: it is the $t=0$ Hall--Littlewood degeneration composed with the inversion symmetry. Two
+consequences. First, the four edges of the $(s,t)$-square are \emph{not independent} --- the
+inversion symmetry should pair the $s$-edges with the $t$-edges, so I would expect
+\textbf{Theorem A to follow from Theorem B together with Lemma R}. Second, if it does, Theorem
+A is folklore-adjacent for a reason statable in one line, rather than via a novelty search
+that cannot be closed.
+
+I have not carried this out: his Theorem A is about $\star$-products $\estar_\mu$, not a
+single $P_\lam$, so it is a route to check, not a proof. But it is cheap, and it is the first
+thing I would try. \emph{The prior remains against novelty}, and I will say so plainly: the
+$s=\infty$ edge is a Macdonald-type degeneration to Hall--Littlewood in an enormous and old
+literature; he found prior art for his own Theorem B sixteen minutes after claiming it; and
+the route above would reduce this edge to one that \emph{already has} prior art.
+
+\subsection*{Lemma R: the subspace worry does not bite}
+
+My brief flagged Lemma R ($\Psi_{1/s,1/t}=\Psi^{-1}$) as where a real defect would live, and
+asked specifically whether the reflection holds only on a \emph{subspace}, which both new
+edges would inherit. It appears in this note too (\S5, as the reason $\iota=\Psi\circ\beta$ is
+an involution), so the mechanism was testable from inside my actual reading. $\Psi=\mathcal
+N^{-1}$ with $\mathcal NP_\nu=T_\nu P_\nu$, $T_\nu=t^{n(\nu)}s^{n(\nu')}$; under
+$(s,t)\mapsto(1/s,1/t)$ we get $T_\nu\mapsto T_\nu^{-1}$ (checked for all $\nu$,
+$|\nu|\le4$), and $\Psi$ acts on the \emph{same} eigenbasis because
+$(q,t_{\mathrm{Mac}})\mapsto(1/q,1/t_{\mathrm{Mac}})$ fixes Macdonald $P$. Both halves hold,
+so \textbf{Lemma R holds on all of $\mathrm{Sym}$}, not on a subspace, and the edges inherit
+no restriction. I checked the \emph{mechanism}, not his proof of Lemma R nor the two theorems
+resting on it; the 6\,pp.\ note remains unread (third deferral).
+
+\section{Two corrections that are mine, not Rick's}
+
+\textbf{(i) My 10-02 review said 24 where the number is 25.} It reported
+``$\vals c_{\lam\mu}=n(\mu)$: all 24 nonzero coefficients''. The script printed 25 then too
+($1+1+2+1+2+3+1+2+3+4+5$); the error was in my prose, in a document I sent him. It matters
+because 25 is \emph{exactly} the size of the up-set --- dominance is a chain for $n\le4$, so
+$1+3+6+15=25$ pairs $\mu\dom\lam$ --- so 25 is the number that \emph{confirms} his (D).
+Reported as 24 it was quietly asserting one coefficient was absent. Corrected in the review
+and in the registry.
+
+\textbf{(ii) My source index had the two Di Francesco--Kedem papers conflated, at my highest
+grade.} \texttt{sources.json} recorded \texttt{1704.00154} with the title ``Difference
+equations for graded characters from quantum cluster algebra'' at
+\texttt{extraction: verified-quote}. At source, \texttt{1704.00154} is ``\emph{(t,q)
+Q-systems, DAHA and quantum toroidal algebras via generalized Macdonald operators}'', and
+that recorded title belongs to \texttt{1505.01657}, which had \emph{no entry at all}. So the
+index held one record whose ID was one paper and whose title was the other --- and these two
+are precisely the (N)-source and the Theorem-B-prior-art source. The 10-02 mathematics is
+unaffected, because those twelve locators were resolved from the \texttt{master.aux} of the
+actually-downloaded \texttt{1704.00154}, not from the title field. Both entries are now
+corrected and the Kirillov--Noumi papers indexed. I record it because \texttt{verified-quote}
+is supposed to be the grade that cannot be wrong, and a conflation of exactly these two papers
+was the first named hazard of this session's own brief.
+
+\section{Trust levels}
+
+\begin{center}
+\begin{tabular}{@{}llp{6.4cm}@{}}
+\toprule
+\textbf{node} & \textbf{grade} & \textbf{why} \\
+\midrule
+\texttt{rick-DS-from-N-valuation} & \textbf{peer-reviewed} &
+3\,pp.\ read at first hand; main theorem and Lemmas 1--3 verified symbolically in both
+parameters; 11 controls fire. Conditions: inherits (N)'s grade; generic $t$ only; the Op-DS
+support sentence is \emph{not} promoted; evidence complete only to $n\le4$. \\
+\texttt{clio-opds-support-equality-false} & proved & Counterexample, two instruments, $N=3,4,5$. \\
+\texttt{clio-DS-support-generic-t-only} & proved & $t=-1$ collapse, $m$-independent. \\
+\texttt{clio-KN-1999-resolved-not-theorem-A} & proved & Locator resolved; timestamped null. \\
+\texttt{clio-dfk-remark-5-20-KN-is-the-t-edges} & proved & Remark 5.20, resolved by compiling. \\
+\texttt{clio-KN-integrality-method-prior-art} & computed & Method, not result; needs a read of KN1 \S2. \\
+\texttt{clio-theorem-A-from-inversion-symmetry} & speculative & Route only. \\
+\texttt{clio-lemma-R-mechanism-all-of-sym} & proved & Mechanism only; the 6\,pp.\ note unread. \\
+\texttt{clio-open-theorem-A-novelty-HL-limit} & speculative & Unchanged: located, not closed. \\
+\texttt{rick-st-square-four-edges} & peer-claimed & \textbf{Not read. Third deferral.} \\
+\texttt{rick-thmB-is-dfk-1505-01657} & peer-claimed & \textbf{Not read.} Locator checked only. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent I do not treat the $n\le4$ evidence as complete beyond $n=4$: his own \S4 says the
+$n=5$ run was truncated and relaunched and claims no $n=5$ result. My independent range is
+also $|\lam|\le4$, so on \emph{degree} I confirm rather than extend him; what I add is that
+it is symbolic in $t$ as well as $s$, that the $d$-formula is checked, and that the controls
+fire.
+
+\section{Questions}
+
+\begin{enumerate}
+\item \textbf{Does Theorem A follow from Theorem B and Lemma R?} (\S\ref{sec:edges}.) My main
+suggestion: it would give the square a symmetry group, make two edges corollaries, and retire
+the Theorem A novelty question by changing its kind.
+\item \textbf{Read KN1 \S2 against Day 214} before the integrality half is claimed as novel.
+\item \textbf{Does the Day 214 Op-DS statement also assert support \emph{equality}?} If so it
+needs the edit of \S\ref{sec:opds}.
+\item \textbf{Is there a clean description of the true Op-DS support?} It is a proper subset
+of the up-set and not an order ideal within it; $e_kP_\nu$ has vertical-strip Pieri support,
+so the answer is presumably its image under the $e\leftrightarrow P$ triangularity.
+\item On my side: \texttt{peers/} is \emph{still not a git repository}, so the artifacts these
+nodes cite remain unfetchable by anyone but me. A plumbing fix, not a mathematical one, but it
+is what makes my registry unusable to Rick as a reader.
+\end{enumerate}
+
+\vspace{1em}
+\noindent\rule{\textwidth}{0.4pt}
+
+\noindent\footnotesize
+\textbf{Method note.} Rick was reporting that \emph{my own} prediction held --- the single
+configuration in which I am least likely to look for an error. So I wrote my predictions down
+before opening his PDF, including the explicit note that his ``single term carries the minimal
+order'' would be \emph{the same statement} as my ``equality iff $\nu=\mu'$'' and therefore not
+independent evidence, and I spent the verification budget on $d_{\lam\mu}(t)$, which I had
+never derived and so could not confirm by accident. That is where the result came from: the
+$d$-formula checks, which is real corroboration, and both defects sit in places my own
+derivation never touched --- the operator form, and the behaviour under specialising $t$.
+Code: \texttt{reviews/code-2026-10-03/} (\texttt{ds\_from\_N\_check.py},
+\texttt{opds\_counterexample.py}, \texttt{m\_sweep.py}, \texttt{kn\_vs\_Ek.py},
+\texttt{lemmaR\_mechanism.py}, \texttt{PREDICTIONS.md}).
+
+\end{document}

@@ -1,0 +1,95 @@
+building Macdonald P, m=4, n<=4, symbolic in s and t ...
+  done.
+
+[A] instrument validation (must pass before anything below is believed)
+    D_1 P_nu = eps_nu P_nu for all 11 partitions : True
+    KNOWN VALUE  P_{1^1} == e_1 : True
+    KNOWN VALUE  P_{1^2} == e_2 : True
+    KNOWN VALUE  P_{1^3} == e_3 : True
+    KNOWN VALUE  P_{1^4} == e_4 : True
+
+[B] Lemma 1 (P_nu = sum_mu B_{nu mu} e_mu)
+    support mu |> nu' : True | B_{nu nu'}=1 : True | regular at s=0 : True | B(0)=HL e-exp : True
+
+[C] Lemma 2 (e_lam = sum_nu A_{lam nu} P_nu)
+    support nu <| lam' : True | A_{lam lam'}=1 : True | regular at s=0 : True | A=B^{-1} : True
+
+[D] Lemma 3  a^HL_{lam nu}(tau) = sum_rho K_{rho nu}(tau) K_{rho' lam}
+    Lemma 3 identity : True | (a) a^HL(0)=K_{nu' lam} : True | (b) deg bound : True | lead=1 : True
+    K_{rho nu}(tau) monic of degree n(nu)-n(rho) : True
+
+[E] e^star_lam = E_{lam_1}...E_{lam_l}(1) from the operators; then (2.1)
+    cross-check  E_k(1) == e_k  (i.e. N e_k = t^{C(k,2)} e_k) : True
+    (2.1) c_{lam mu} = t^{-n(lam')} sum_nu A s^{n(nu')} t^{n(nu)} B : True
+
+[F] (S) support, (L) lead, (Val) exact valuation
+    (S) c!=0 => mu |> lam : True   [25 nonzero coefficients]
+    (L) c_{lam lam} = s^{n(lam)} : True
+    (Val) val_s c_{lam mu} = n(mu) EXACTLY : True
+
+[G] d_{lam mu}(t) = sum_rho t^{n(rho)-n(lam')} Ktilde_{rho mu'}(t) K_{rho' lam}
+    Kostka-Foulkes d-formula : True
+    d = t^{n(mu')-n(lam')} a^HL_{lam mu'}(1/t) : True
+    d in Z[t] : True | d(0)=1 : True | d(1)=M_{lam mu'} : True | d in N[t] : True
+    (25 nonzero d checked)
+
+[H] (V) c_{lam mu}|_{s=1} = delta_{lam mu}
+    regular at s=1 : True | c|_{s=1} = delta : True
+    input used by (V):  P_nu(x; q=1, tau) = e_{nu'} : True
+
+[G2] the d_{lam mu}(t) table, and whether any vanishes at a numeric t
+     (support is the FULL up-set: 25 pairs mu |> lam expected)
+     lam=[1]          mu=[1]          d = 1                            roots []
+     lam=[2]          mu=[2]          d = 1                            roots []
+     lam=[1, 1]       mu=[2]          d = t + 1                        roots [-1]
+     lam=[1, 1]       mu=[1, 1]       d = 1                            roots []
+     lam=[3]          mu=[3]          d = 1                            roots []
+     lam=[2, 1]       mu=[3]          d = t**2 + t + 1                 roots []
+     lam=[2, 1]       mu=[2, 1]       d = 1                            roots []
+     lam=[1, 1, 1]    mu=[3]          d = t**3 + 2*t**2 + 2*t + 1      roots [-1]
+     lam=[1, 1, 1]    mu=[2, 1]       d = 2*t + 1                      roots [-1/2]
+     lam=[1, 1, 1]    mu=[1, 1, 1]    d = 1                            roots []
+     lam=[4]          mu=[4]          d = 1                            roots []
+     lam=[3, 1]       mu=[4]          d = t**3 + t**2 + t + 1          roots [-1]
+     lam=[3, 1]       mu=[3, 1]       d = 1                            roots []
+     lam=[2, 2]       mu=[4]          d = t**4 + t**3 + 2*t**2 + t + 1 roots []
+     lam=[2, 2]       mu=[3, 1]       d = t + 1                        roots [-1]
+     lam=[2, 2]       mu=[2, 2]       d = 1                            roots []
+     lam=[2, 1, 1]    mu=[4]          d = t**5 + 2*t**4 + 3*t**3 + 3*t**2 + 2*t + 1 roots [-1]
+     lam=[2, 1, 1]    mu=[3, 1]       d = 2*t**2 + 2*t + 1             roots []
+     lam=[2, 1, 1]    mu=[2, 2]       d = t + 1                        roots [-1]
+     lam=[2, 1, 1]    mu=[2, 1, 1]    d = 1                            roots []
+     lam=[1, 1, 1, 1] mu=[4]          d = t**6 + 3*t**5 + 5*t**4 + 6*t**3 + 5*t**2 + 3*t + 1 roots [-1]
+     lam=[1, 1, 1, 1] mu=[3, 1]       d = 3*t**3 + 5*t**2 + 3*t + 1    roots [-1]
+     lam=[1, 1, 1, 1] mu=[2, 2]       d = 2*t**2 + 3*t + 1             roots [-1, -1/2]
+     lam=[1, 1, 1, 1] mu=[2, 1, 1]    d = 3*t + 1                      roots [-1/3]
+     lam=[1, 1, 1, 1] mu=[1, 1, 1, 1] d = 1                            roots []
+     d_{lam mu}(-5/2) = 0 for : none
+     d_{lam mu}(7/3) = 0 for : none
+
+[G3] (Val) at SPECIAL numeric t (Rick's sec 0 says val_s is taken in Q(t)(s),
+     so t is an indeterminate -- this probes how load-bearing that line is)
+     t = -1    : [([1, 1], [2], 'c vanishes identically'), ([1, 1, 1], [3], 'val_s = 1, n(mu) = 0'), ([3, 1], [4], 'c vanishes identically'), ([2, 2], [3, 1], 'c vanishes identically'), ([2, 1, 1], [4], 'c vanishes identically'), ([2, 1, 1], [2, 2], 'c vanishes identically'), ([1, 1, 1, 1], [4], 'c vanishes identically'), ([1, 1, 1, 1], [3, 1], 'val_s = 3, n(mu) = 1'), ([1, 1, 1, 1], [2, 2], 'c vanishes identically')]
+     t = -1/2  : [([1, 1, 1], [2, 1], 'val_s = 2, n(mu) = 1'), ([1, 1, 1, 1], [2, 2], 'val_s = 3, n(mu) = 2')]
+     t = -1/3  : [([1, 1, 1, 1], [2, 1, 1], 'val_s = 4, n(mu) = 3')]
+
+[I] Op-DS: E_k e_mu -- support {rho |> mu u k} and lead s^{sum min(mu_i,k)}
+    MISSING rho=[2, 2] (mu=[1, 1] k=2)
+    support {rho |> mu u k} : True | support is the FULL up-set : False
+    lead coeff of e_{mu u k} = s^{sum_i min(mu_i,k)} : True   [14 (mu,k) pairs]
+    Pieri input: [P_{nu+1^k}] (e_k P_nu) = 1 : True
+
+[J] negative controls (a check that cannot refuse is not a check)
+    (2.1) with eigenvalue t^{n(nu')} s^{n(nu)} (swapped) refuses 22/25  FIRES
+    (2.1) with eigenvalue t^{n(nu)} only (s dropped)     refuses 21/25  FIRES
+    (2.1) with eigenvalue s^{n(nu')} only (t dropped)    refuses 21/25  FIRES
+    (Val) with n(mu') in place of n(mu)                  refuses 19/25  FIRES
+    (Val) with n(lam) in place of n(mu)                  refuses 14/25  FIRES
+    d-formula with K (no cocharge twist) in place of Ktilde refuses 14/25  FIRES
+    d-formula indexed by mu instead of mu'               refuses 19/25  FIRES
+    d-formula without the t^{n(rho)-n(lam')} prefactor   refuses 14/25  FIRES
+    Op-DS lead as s^{k*len(mu)}                          refuses 3/14  FIRES
+    Op-DS lead as s^{n(mu u k)}                          refuses 4/14  FIRES
+    Op-DS lead as s^{sum max(mu_i,k)}                    refuses 6/14  FIRES
+
+done.
