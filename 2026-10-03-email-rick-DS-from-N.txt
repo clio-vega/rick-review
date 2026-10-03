@@ -1,0 +1,59 @@
+To: grandparick20@gmail.com
+Cc: langer.robin@gmail.com
+Subject: DS from (N) reviewed — verified, two edits, and Kirillov–Noumi 1999 resolved (it's q-alg/9605005, and it doesn't state Theorem A)
+
+Rick,
+
+I read the three pages at first hand and the mathematics holds: (2.1), (S), (L), (Val),
+(V), Lemmas 1–3 and the d-formula all verify symbolically in *both* s and t (my 10-02 run
+had t numeric), 25/25 nonzero coefficients at N=4, with eleven negative controls that all
+fire — and your Lemma 1(3) closes exactly the s=0 edge-regularity gap I had declared
+against my own 10-02 derivation, so thank you for that. Two edits: the Op-DS sentence "the
+support is {ρ ⊵ μ∪k}" is true as an inclusion but **false as an equality** — μ=(1,1), k=2
+gives E_2(e_1²) = (s−1)²(t+1)²(t²+1)e_4 − (s−1)(st²+2st+2s+t²)e_{3,1} + s²e_{2,1,1} with
+[e_{2,2}] = 0 although (2,2) ⊵ (2,1,1), checked two independent ways at N=3,4,5 (the lead
+half of that sentence is correct, 14/14; and note this is the one paragraph you flagged as
+unchecked by script); and (D)'s "the support is exactly the up-set" wants "for generic t",
+since e⋆_{(1,1)} = (1−s)(1+t)e_2 + s·e_{1,1} loses its e_2 term at t = −1, where 7 of the
+25 coefficients vanish identically.
+
+On your question (a): **no.** "Kirillov–Noumi 1999" is q-alg/9605005 (CRM Proc. Lecture
+Notes 22, 227–243; its companion is q-alg/9605004, Duke 93 (1998)) — confirmed not by my
+inference but from Di Francesco–Kedem's own [KN99] entry in 1505.01657 — and neither paper
+states Theorem A: "hall" occurs exactly once in each, in a bibliography entry for
+Macdonald's book, and their limits are quasi-classical q→1 to Jack, not q→∞. But the
+question was better than the answer, in two ways. First, DFK **Remark 5.20** (p.27) says
+their M_{α,1} coincides with Kirillov–Noumi's K_α⁺ at t→∞ and with K_α⁻ at t→0 — so by my
+10-02 dictionary your own E_k family has the KN operators as its *t*-edges, which puts the
+prior-art pressure on Theorem H′ and the withdrawn Theorem B, not on Theorem A. Second,
+and more useful: Macdonald P is invariant under (q,t)→(q⁻¹,t⁻¹) — the same fact your
+Lemma R runs on — so lim_{q→∞} P_λ(x;q,t) = P_λ(x;0,1/t) is Hall–Littlewood, i.e. your
+s→∞ edge is not a fifth degeneration but the t=0 edge composed with the inversion
+symmetry. **I would try to derive Theorem A from Theorem B plus Lemma R**; if it works, two
+of your four edges are corollaries, the square has a symmetry group, and the Theorem A
+novelty question retires by changing its kind. Separately and less comfortably: KN1's
+Theorem A + eq. (4) build J_λ by applying raising operators to 1 and read *integrality*
+off the operator form (their Theorem B), advertised as elementary and without affine Hecke
+algebras — the same route as your Day 214 integrality half, on different coefficients, so
+worth reading KN1 §2 before that half is called novel.
+
+Two corrections are mine, not yours. My 10-02 review said "24 nonzero coefficients"; it is
+25, which matters because 25 is exactly the up-set size (1+3+6+15), so reported as 24 I was
+quietly asserting one of your coefficients was absent. And my source index had 1505.01657's
+title filed under 1704.00154's ID at my highest grade, with no entry for 1505.01657 at all
+— the two papers your erratum and the (N) note respectively depend on. The 10-02 locators
+are unaffected (they came from master.aux, not the title field), but both are now fixed.
+
+Grading: rick-DS-from-N-valuation goes to **peer-reviewed**, conditional on inheriting
+(N)'s grade, on generic t, and with the Op-DS support paragraph explicitly not promoted;
+I have not treated your evidence as complete past n=4, since you say the n=5 run was
+truncated. The (s,t)-square is a **third deferral** — not read, recorded as such — though
+Lemma R's *mechanism* I did check, and it holds on all of Sym, so the subspace worry I had
+is absent.
+
+Full review (findings, tables, code):
+https://github.com/clio-vega/rick-review/blob/main/2026-10-03-review-rick-DS-from-N.md
+PDF (7 pp.):
+https://github.com/clio-vega/rick-review/blob/main/2026-10-03-review-rick-DS-from-N.pdf
+
+— Clio
