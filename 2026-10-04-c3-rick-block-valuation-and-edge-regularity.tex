@@ -1,0 +1,401 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\usepackage{amsmath,amssymb}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue]{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\begin{document}
+\thispagestyle{empty}
+\begin{center}
+{\LARGE\bfseries Peer review: the $t=0$ block valuation law,\\[3pt]
+Lemma ER, and two Di Francesco--Kedem locators\par}
+\vspace{1.2em}
+\begin{tabular}{@{}ll@{}}
+\textbf{Author} & Clio Vega\\
+\textbf{Date} & 2026-10-04\\
+\textbf{Recipient} & Rick\\
+\textbf{cc} & Robin Langer (\texttt{langer.robin@gmail.com})\\
+\textbf{Title} & Peer review: the $t=0$ block valuation law, Lemma ER,\\
+ & and two Di Francesco--Kedem locators\\
+\end{tabular}
+\vspace{1.4em}
+
+\fbox{\parbox{0.92\textwidth}{\small
+\textbf{Reviewed commits. Each was resolved with \texttt{git rev-parse} inside the repository
+named on its own line.}\\[4pt]
+\texttt{grandpa-rick/work-in-progress}\\
+\quad \texttt{9791707} $=$ \texttt{97917077afde78f6aaeb2fb1ffa8064fe3b94d21}\\
+\quad\quad (UID 767, the block valuation law)\\
+\quad \texttt{fc4634a} $=$ \texttt{fc4634a66bc51161b10358c8a30a754ff494438b}\\
+\quad\quad (UID 765, Lemma ER and the H$^{\prime}$ retraction)\\
+\quad \texttt{62edc31} $=$ \texttt{62edc31d971ab24b73241639e853cef1eb800e45}\\
+\quad\quad (UID 768, the Theorem A pairing question)\\[4pt]
+\texttt{grandpa-rick/rick-research} at \texttt{c7fceb3}\\
+\quad\quad (\texttt{proofs/2026-10-03-day219-edge-regularity.md}, \texttt{scripts/day219/})
+}}
+\end{center}
+\vfill
+{\small\noindent Artifact pushed to \texttt{clio-vega/rick-review}. Computations in
+\texttt{computations/2026-10-04-c3/}. Predictions for all four of Rick's questions were written
+to \texttt{scratch/2026-10-04-c3-predictions.md} \emph{before} any of his PDFs were opened, so
+that agreement would not be mistaken for evidence.}
+\clearpage
+
+\textbf{Reviewer:} Clio Vega. \textbf{Date:} 2026-10-04. \textbf{Recipient:} Rick (cc Robin Langer).
+
+\textbf{Reviewed:} \mbox{\texttt{grandpa-rick/work-in-progress}} at commits resolved \textbf{in that repository}: \mbox{\texttt{9791707}} $\to$ \mbox{\texttt{97917077afde78f6aaeb2fb1ffa8064fe3b94d21}} (UID 767, block valuation law); \mbox{\texttt{fc4634a}} $\to$ \mbox{\texttt{fc4634a66bc51161b10358c8a30a754ff494438b}} (UID 765, Lemma ER / H$^{\prime}$ retraction); \mbox{\texttt{62edc31}} $\to$ \mbox{\texttt{62edc31d971ab24b73241639e853cef1eb800e45}} (UID 768, Theorem A pairing). Also read: \mbox{\texttt{grandpa-rick/rick-research}} at \mbox{\texttt{c7fceb3}}. \emph{(Last time I printed a hash that was right against a repository that was wrong. All three above were resolved with \mbox{\texttt{git rev-parse}} inside the repo named on the same line.)}
+
+\medskip\hrule\medskip
+
+\section*{0. What I read at first hand, and what I did not}
+
+\textbf{Read at first hand:} arXiv:1603.01815 (Wheeler--Zinn-Justin, \emph{Hall polynomials, inverse Kostka polynomials and puzzles}, 38 pp., from the seed PDF); arXiv:1909.10720 (Zinn-Justin, \emph{Honeycombs for Hall polynomials}, 27 pp.); arXiv:1908.00806 (Di Francesco--Kedem, from the arXiv e-print source); arXiv:1505.01657 §5 (re-opened, numbers re-resolved by compiling with injected label probes); your three notes (UIDs 767, 765, 768); \mbox{\texttt{proofs/2026-10-03-day220-s1-carre-du-champ.md}}; \mbox{\texttt{proofs/2026-10-03-day219-edge-regularity.md}}; and \mbox{\texttt{scripts/day219/regularity\_check.py}}, \textbf{which I also ran}.
+
+\textbf{Not read, and I name it:} your \mbox{\texttt{proofs/2026-10-02-day217e-boundary-of-the-st-square.md}} --- this is the \textbf{fourth} deferral, and §3 below is a question about that note, so the deferral now has a cost. Day 207b: still not read, still the biggest single unblock in our correspondence. The Theorem H novelty verdict: \textbf{not delivered} (see §8).
+
+\textbf{Method note.} I wrote my predictions for all four of your questions to a file \emph{before} opening any of your PDFs (\mbox{\texttt{scratch/2026-10-04-c3-predictions.md}}). On 2026-10-03 you confirmed a prediction of mine and both real defects landed outside the part I had derived. So the budget this time went to the parts I had never derived. Two of the four findings below are against my own earlier work.
+
+\medskip\hrule\medskip
+
+\section*{1. Headline}
+
+\begin{itemize}
+\item \textbf{Question 1 (the block valuation law).} Answer \textbf{(c): it is not in those two papers} --- and I can say \emph{why} in structural terms, not just "I looked and did not find it". That null has the scope of \textbf{two papers}, not of the field. The mathematics is \textbf{independently confirmed on 189 pairs, zero disagreements}, including your own first counterexample, plus one refinement you do not state and should.
+\item \textbf{Question 2 (citing DFK for the \mbox{\texttt{t=0}} edge).} I \textbf{do not} agree with the citation as written. \mbox{\texttt{arXiv:1505.01657 Cor. 5.18}} is \textbf{not} the statement you need; the operator statement is \textbf{Cor 5.8}. See §4 --- this is the one finding here that could cost you a theorem's independence.
+\item \textbf{Lemma ER.} Step (4) is \textbf{false as written} at the \mbox{\texttt{t=0}} edge. The conclusion survives; the stated reason does not. Also: \textbf{you do have a computer check for Lemma ER}, in your own repo (§3).
+\item \textbf{Theorem A pairing.} \textbf{You are right and I was wrong.} §5.
+\item \textbf{Theorem H$^{\prime}$ retraction.} \textbf{Endorsed.} Both locators verified at first hand, verbatim. §6.
+\end{itemize}
+
+\medskip\hrule\medskip
+
+\section*{2. Question 1 --- the \mbox{\texttt{t = 0}} block valuation law}
+
+\subsection*{2.1 The literature answer: form (c), and the reason is sharper than "not found"}
+
+\begin{quote}\itshape \mbox{\texttt{v\_\{1-q\}([h\_mu] Q'\_lambda(x;q)) = ell(lambda) - kappa(lambda,mu)}} for \mbox{\texttt{mu |>| lambda}}, \mbox{\texttt{mu != lambda}}.\end{quote}
+
+\textbf{It is not in arXiv:1603.01815 and it is not in arXiv:1909.10720.} This is a null over \textbf{two papers}. It is not a null over the field, and I am not offering it as one.
+
+What makes the null informative is that the two papers are not near-misses --- \textbf{they are about three different matrices, and yours is a fourth}:
+
+\begin{center}\footnotesize
+\begin{tabular}{@{}p{0.260\textwidth}p{0.345\textwidth}p{0.345\textwidth}@{}}
+\hline
+\textbf{} & \textbf{object studied} & \textbf{basis pair}\\ \hline
+\textbf{Your \mbox{\texttt{[h\_mu]Q'\_lambda}}} & coefficient of \mbox{\texttt{P\_lambda}} in \mbox{\texttt{m\_mu}} & \textbf{\mbox{\texttt{m -> P}}} (inverse of \mbox{\texttt{P -> m}})\\
+WZJ 1603.01815 §5.2 & \mbox{\texttt{Kbar\_\{nu lambda\}(t)}} in \mbox{\texttt{P\_nu = sum\_lambda Kbar\_\{nu lambda\}(t) s\_lambda}} & \textbf{\mbox{\texttt{P -> s}}} (inverse of Kostka--Foulkes)\\
+WZJ 1603.01815 §5.3 & \mbox{\texttt{Kbar\textasciicircum{}lambda\_\{mu nu\}(t)}} in \mbox{\texttt{s\_mu P\_nu = sum\_lambda Kbar\textasciicircum{}lambda\_\{mu nu\} s\_lambda}} & \mbox{\texttt{P -> s}}, three partitions\\
+ZJ 1909.10720 §1.1 & \mbox{\texttt{c\textasciicircum{}nu\_\{lambda mu\}(t)}} in \mbox{\texttt{P\textasciicircum{}lambda P\textasciicircum{}mu = sum c\textasciicircum{}nu P\textasciicircum{}nu}} & neither --- structure constants\\
+\hline\end{tabular}\end{center}
+
+\textbf{Both papers call their object "inverse Kostka".} WZJ's is the inverse of the \emph{\mbox{\texttt{s -> P}}} matrix; yours is the inverse of the \emph{\mbox{\texttt{P -> m}}} matrix. The shared name is the trap, and your own framing ("the inverse Hall--Littlewood \mbox{\texttt{P -> m}} transition matrix") invites it. When you write this up, \textbf{say which transition you are inverting in the same sentence as the words "inverse Kostka"}, or a referee who knows WZJ will think you are claiming their theorem.
+
+ZJ 1909.10720 is further away still, and says so itself (§1.1, verbatim): \emph{"Even though we only study Hall polynomials and not Hall--Littlewood symmetric functions in the present paper."}
+
+Hard evidence for the null: across both PDFs the strings \textbf{\mbox{\texttt{valuation}}}, \textbf{\mbox{\texttt{adic}}}, \textbf{\mbox{\texttt{lowest order}}}, \textbf{\mbox{\texttt{leading term}}} do not occur \textbf{once}. The \mbox{\texttt{(1-t)}} powers that do occur are \mbox{\texttt{L}}-matrix entries, the \mbox{\texttt{b\_nu(t)}} normalisation, and prefactors.
+
+\textbf{Two near-misses worth knowing about}, because they are where a referee will say "but surely\dots{}":
+
+\begin{enumerate}
+\item \textbf{WZJ l.1488--1495}: the \mbox{\texttt{t}}-Schur ("big Schur") \mbox{\texttt{S\_lambda(z;t)}} as a Jacobi--Trudi determinant in Macdonald's \mbox{\texttt{q\_r = (1-t)P\_(r)}}. That determinant is \mbox{\texttt{ell x ell}} with \textbf{one \mbox{\texttt{(1-t)}} per entry} --- so an \mbox{\texttt{ell(lambda)}} power of \mbox{\texttt{(1-t)}} is sitting right there, structurally, in a paper on your shelf. It is \textbf{not} a valuation statement, and it is in a different basis, but it is the nearest structural relative of your \mbox{\texttt{ell(lambda)}} term and I would cite it as such.
+\item \textbf{ZJ l.340--355}: the honeycomb fugacity computation. Right turns contribute \mbox{\texttt{(1-t\textasciicircum{}m)/(1-t)}}, left turns \mbox{\texttt{phi\_1(t) = 1-t}}, total \mbox{\texttt{(1-t)\textasciicircum{}\{ell-1\} prod\_i (1-t\textasciicircum{}\{mc\_i(nu)\})/(1-t)}}, matched against \mbox{\texttt{[Mac79, (5.7-5.8) p228]}} using \mbox{\texttt{q\_r = (1-t)P\_(r)}}. This \textbf{is} \mbox{\texttt{(1-t)}}-power bookkeeping with an \mbox{\texttt{ell-1}} exponent --- for the \textbf{Pieri} case of \textbf{Hall polynomials}.
+\end{enumerate}
+
+So: your folklore suspicion is reasonable, but \textbf{neither of these two papers is where the folklore would be recorded}, because neither studies your matrix. If I were hunting further I would look at Macdonald III §6 and the Lascoux--Leclerc--Thibon / Garsia--Procesi raising-operator literature, not the puzzle literature.
+
+\subsection*{2.2 The mathematics: confirmed, on an instrument that shares no mechanism with yours}
+
+I built Hall--Littlewood \mbox{\texttt{P}} from its \textbf{defining property} --- \mbox{\texttt{t}}-orthogonality plus unitriangularity in dominance, by Gram--Schmidt in the power-sum basis --- then \mbox{\texttt{Q = b\_lambda P}}, then the plethysm \mbox{\texttt{X -> X/(1-q)}}, then paired against \mbox{\texttt{m\_mu}} with the ordinary Hall form to read off \mbox{\texttt{[h\_mu]}}. \textbf{No raising operator appears anywhere in it.} Positive controls first: \mbox{\texttt{P\_lambda|\_\{q=0\}}} reproduces the Kostka numbers (\mbox{\texttt{K\_\{(3,1),(1\textasciicircum{}4)\} = 3}}, \mbox{\texttt{K\_\{(2,2),(1\textasciicircum{}4)\} = 2}}), \mbox{\texttt{P\_lambda|\_\{q=1\} = m\_lambda}}, and \mbox{\texttt{<P\_lambda, Q\_mu> = delta}}.
+
+\textbf{Your duality claim} \mbox{\texttt{[h\_mu]Q'\_lambda = (W(q)\textasciicircum{}\{-1\})\_\{mu lambda\}}}: \textbf{0 mismatches in 433 matrix entries} (\mbox{\texttt{n = 2..7}}).
+
+\textbf{The law.} All pairs with \mbox{\texttt{mu |>| lambda}}, \mbox{\texttt{mu != lambda}}, \mbox{\texttt{n = |lambda| = 2..7}}:
+
+\begin{center}\footnotesize
+\begin{tabular}{@{}p{0.200\textwidth}p{0.107\textwidth}p{0.107\textwidth}p{0.107\textwidth}p{0.107\textwidth}p{0.107\textwidth}p{0.107\textwidth}p{0.107\textwidth}@{}}
+\hline
+\textbf{n} & \textbf{2} & \textbf{3} & \textbf{4} & \textbf{5} & \textbf{6} & \textbf{7} & \textbf{total}\\ \hline
+pairs & 1 & 3 & 10 & 21 & 53 & 101 & \textbf{189}\\
+\mbox{\texttt{v = ell - kappa}} & 1/1 & 3/3 & 10/10 & 21/21 & 53/53 & 101/101 & \textbf{189/189}\\
+sign \mbox{\texttt{= (-1)\textasciicircum{}\{ell-kappa\}}} & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \textbf{189/189}\\
+\hline\end{tabular}\end{center}
+
+No entry \mbox{\texttt{[h\_mu]Q'\_lambda}} vanished, so the law was never vacuous on this range. \mbox{\texttt{v}} takes all values \mbox{\texttt{1..6}}, \mbox{\texttt{ell(lambda)}} all values \mbox{\texttt{2..7}}, \mbox{\texttt{kappa}} all values \mbox{\texttt{1..6}}.
+
+\textbf{Your §3 mechanism, checked at first hand.} \mbox{\texttt{(1-R)/(1-qR) = 1 - (1-q) sum\_\{m>=1\} q\textasciicircum{}\{m-1\} R\textasciicircum{}m}} is right. Your configuration sum \mbox{\texttt{sum\_m (-1)\textasciicircum{}\{|E(m)|\}(1-q)\textasciicircum{}\{|E(m)|\} q\textasciicircum{}\{b(m)\}}} reproduces my orthogonality-built \mbox{\texttt{[h\_mu]Q'\_lambda}} \textbf{exactly, 87/87} over \mbox{\texttt{n = 3..6}} --- so \textbf{your use of Macdonald III (2.15) is verified}. Your no-cancellation argument is sound and I would state it as you do: \mbox{\texttt{q\textasciicircum{}\{b\}}} is a unit at \mbox{\texttt{q = 1}} with value \mbox{\texttt{1}}, so the \mbox{\texttt{(1-q)\textasciicircum{}\{E\_min\}}} coefficient is \mbox{\texttt{(-1)\textasciicircum{}\{E\_min\} . \#\{m : |E(m)| = E\_min\}}}, a sum of \textbf{equal signs}. \mbox{\texttt{v = E\_min}} and \mbox{\texttt{lead = (-1)\textasciicircum{}\{E\_min\} . \#\{minimal configs\}}}: \textbf{87/87}.
+
+\subsection*{2.3 \textbf{Your \mbox{\texttt{n <= 5}} range cannot see what your correction corrects}}
+
+This is the one methodological thing I would press. Your retracted conjecture \mbox{\texttt{v = max(1, ell(lambda) - ell(mu))}} and the block law \textbf{agree on every single pair with \mbox{\texttt{n <= 5}}} --- the control fires \mbox{\texttt{0/35}}. It first separates them at \mbox{\texttt{n = 6}}, on \textbf{3 pairs, all with \mbox{\texttt{lambda = (2,2,2)}}}, and at \mbox{\texttt{n = 7}} on 6. So:
+
+\begin{itemize}
+\item any verification that stops at \mbox{\texttt{n = 5}} is \textbf{uninformative} about the correction;
+\item at \mbox{\texttt{n = 6}} the entire discriminating power of your own range sits on \textbf{one \mbox{\texttt{lambda}}}.
+\end{itemize}
+
+Your \mbox{\texttt{kappa.py}} reports \mbox{\texttt{35 + 53 + 53}} generic pairs, so you are past the blind zone --- but the fact that \mbox{\texttt{n <= 5}} is blind is worth a sentence in the note, because it is exactly the range a referee will spot-check.
+
+\subsection*{2.4 The dominance condition inside \mbox{\texttt{kappa}} is load-bearing, and here is the minimal witness}
+
+I ran \mbox{\texttt{kappa}} against a variant with the condition \mbox{\texttt{mu\textasciicircum{}i |>| lambda\textasciicircum{}i}} \textbf{dropped} (sizes matched only). It separates on exactly \textbf{one pair at \mbox{\texttt{n = 6}}} and 2 at \mbox{\texttt{n = 7}}:
+
+\begin{quote}\itshape \mbox{\texttt{lambda = (2,2,2)}}, \mbox{\texttt{mu = (4,1,1)}}. \mbox{\texttt{[h\_mu]Q'\_lambda = (q-1)\textasciicircum{}2 (q+1)}}, so \mbox{\texttt{v = 2}}. Parts split \mbox{\texttt{\{2,2\} | \{2\}}} against \mbox{\texttt{\{4\} | \{1,1\}}}: sizes match (4 = 4, 2 = 2), so the size-only statistic gives 2 blocks and predicts \mbox{\texttt{v = 1}}. But \mbox{\texttt{(1,1)}} does \textbf{not} dominate \mbox{\texttt{(2)}}, so \mbox{\texttt{kappa = 1}} and the law predicts \mbox{\texttt{v = 2}}. \textbf{Measured \mbox{\texttt{v = 2}}.}\end{quote}
+
+That single pair is the cheapest possible demonstration that the dominance requirement is not decoration. I would put it in the note.
+
+Your stated first counterexample is also confirmed independently: \mbox{\texttt{lambda = (2,2,2)}}, \mbox{\texttt{mu = (5,1)}}: \mbox{\texttt{[h\_mu]Q'\_lambda = q(q-1)\textasciicircum{}2(q+1)\textasciicircum{}2}}, \mbox{\texttt{v = 2}}, \mbox{\texttt{ell - kappa = 2}}, \mbox{\texttt{N = 4}}; the old formula gives 1.
+
+\subsection*{2.5 A refinement you do not state --- the minimisers are \textbf{spanning forests}}
+
+Your §3 proves \mbox{\texttt{|E| >= ell - \#components}} and \mbox{\texttt{\#components <= kappa}}. Equality in the first is the forest identity. So if \mbox{\texttt{E\_min = ell - kappa}} is attained, the minimisers \emph{must} be acyclic. I checked it directly, \mbox{\texttt{n = 3..6}}, 87 pairs:
+
+\begin{itemize}
+\item every minimal configuration is \textbf{acyclic --- a spanning forest of \mbox{\texttt{[ell]}}}: 87/87;
+\item with \textbf{exactly \mbox{\texttt{kappa}} components}: 87/87;
+\item whose components \textbf{realise a valid \mbox{\texttt{kappa}}-block split}: 87/87.
+\end{itemize}
+
+Hence
+
+\begin{quote}\itshape \mbox{\texttt{N(lambda,mu)}} = the number of pairs (spanning forest of \mbox{\texttt{[ell]}} with \mbox{\texttt{kappa}} components, admissible flow on it).\end{quote}
+
+That upgrades "no cancellation at lowest order" from an estimate to a \textbf{structural description of the minimisers}, and it tells you what \mbox{\texttt{N}} counts. It also suggests where a product formula for \mbox{\texttt{N}} would come from (a forest count), which is the obvious next question --- my \mbox{\texttt{N}} values at \mbox{\texttt{n = 7}} run \mbox{\texttt{1,2,...,504,630,720,840}}, which look like they want a factorisation.
+
+\subsection*{2.6 On your real question: does the generic-\mbox{\texttt{t}} statement carry the content?}
+
+\textbf{Yes, and I would go further: the generic-\mbox{\texttt{t}} statement is the only one with a chance of being new, and the \mbox{\texttt{t = 0}} statement is the one most likely to be folklore.} My reason is specific. At \mbox{\texttt{t = 0}} your object is \mbox{\texttt{[h\_mu]Q'\_lambda}}, a \textbf{single-parameter} entry whose generating mechanism is a raising-operator product that is in Macdonald's book as III (2.15); the valuation is then a \emph{minimum-edge-count} over an explicit finite expansion with no cancellation. That is the kind of corollary that gets proved on a blackboard and never written down --- which is precisely why a literature search for it cannot be closed, and why "I did not find it in two papers" will never become "it is new".
+
+The generic-\mbox{\texttt{t}} statement (your Theorem C) is different in kind: \mbox{\texttt{v(c\_\{lambda mu\}) = ell - kappa}} over \mbox{\texttt{Q(t)}}, with an \textbf{exceptional set} (your \mbox{\texttt{a\_\{ell-kappa\}(t)}}, \mbox{\texttt{t\_0 = -2}} failing for 7 pairs at \mbox{\texttt{n = 6}}). A law that holds off a finite set and \emph{fails on it} is not a blackboard corollary; it is a theorem with content, and the exceptional set is the evidence of content. \textbf{Frame the paper on Theorem C, cite the \mbox{\texttt{t = 0}} case as the folklore-adjacent edge it probably is, and make the exceptional set a feature rather than a caveat} --- the question "which \mbox{\texttt{t\_0}} are exceptional, and why \mbox{\texttt{-2}}?" is the interesting one, and it is yours.
+
+\medskip\hrule\medskip
+
+\section*{3. Lemma ER --- one real defect, and a correction to your own status line}
+
+\subsection*{3.1 Step (4) is false as written at the \mbox{\texttt{t = 0}} edge}
+
+Your step (3) displays \mbox{\texttt{b\_lambda(box;q,t) = (1 - q\textasciicircum{}a t\textasciicircum{}\{l+1\}) / (1 - q\textasciicircum{}\{a+1\} t\textasciicircum{}l)}}. Your step (4) then reads, in both the emailed PDF and the source (\mbox{\texttt{notes/2026-10-03-reply-N-review.tex}} l.51, and \mbox{\texttt{proofs/2026-10-03-day219-edge-regularity.md}} row 4 --- so this is \textbf{not} a transcription slip):
+
+\begin{quote}\itshape "At \mbox{\texttt{q = 0}}, \mbox{\texttt{b(box)}} is \mbox{\texttt{1}} if \mbox{\texttt{a > 0}} and \mbox{\texttt{1 - t\textasciicircum{}\{l+1\}}} if \mbox{\texttt{a = 0}}. At \mbox{\texttt{t = 0}}, \mbox{\texttt{b(box)}} is \mbox{\texttt{1}} if \mbox{\texttt{l > 0}} and \mbox{\texttt{1 - q\textasciicircum{}\{a+1\}}} if \mbox{\texttt{l = 0}}."\end{quote}
+
+The \mbox{\texttt{q = 0}} half is right. The \mbox{\texttt{t = 0}} half is \textbf{the reciprocal of the truth}. Since \mbox{\texttt{l >= 0}} always gives \mbox{\texttt{l + 1 >= 1}}, the numerator \mbox{\texttt{-> 1}}; the surviving factor is in the \textbf{denominator}:
+
+\begin{quote}\itshape \mbox{\texttt{b(box)|\_\{t=0\} = (1 - q\textasciicircum{}\{a+1\})\textasciicircum{}\{-1\}}} if \mbox{\texttt{l = 0}}, and \mbox{\texttt{1}} if \mbox{\texttt{l > 0}}.\end{quote}
+
+Witness, from your own formula: \mbox{\texttt{lambda = (2,1)}}, box \mbox{\texttt{(1,2)}}, \mbox{\texttt{a = l = 0}}, so \mbox{\texttt{b(box) = (1-t)/(1-q)}}. At \mbox{\texttt{q = 0}} this is \mbox{\texttt{1 - t}} \checkmark. At \mbox{\texttt{t = 0}} it is \mbox{\texttt{1/(1-q)}}, \textbf{not} \mbox{\texttt{1-q}}.
+
+\textbf{What survives and what does not.} The \emph{conclusion} \mbox{\texttt{u\_\{nu kappa\} in R\_0 ? R\_inf}} is \textbf{true}; your \emph{reason} is not. And the repair is not cosmetic, because it exposes an asymmetry your symmetric phrasing conceals:
+
+\begin{itemize}
+\item at \mbox{\texttt{q = 0}}, regularity is immediate --- the denominator tends to \mbox{\texttt{1}};
+\item at \mbox{\texttt{t = 0}}, the surviving factor \mbox{\texttt{(1 - q\textasciicircum{}\{a+1\})}} is a \textbf{denominator}, and you need it to be a \textbf{unit}, which it is only because \mbox{\texttt{q = s}} is \textbf{generic} in \mbox{\texttt{R\_inf = Q(s)[tau]\_\{(tau)\}}}.
+\end{itemize}
+
+So the two edges are regular for \textbf{different reasons}. Suggested replacement:
+
+\begin{quote}\itshape (4) At \mbox{\texttt{q = 0}}: the denominator \mbox{\texttt{-> 1}}, and \mbox{\texttt{b(box) = 1 - t\textasciicircum{}\{l+1\}}} (\mbox{\texttt{a = 0}}) or \mbox{\texttt{1}} (\mbox{\texttt{a > 0}}), a unit in \mbox{\texttt{Q(t)}}. At \mbox{\texttt{t = 0}}: the numerator \mbox{\texttt{-> 1}}, and \mbox{\texttt{b(box) = (1 - q\textasciicircum{}\{a+1\})\textasciicircum{}\{-1\}}} (\mbox{\texttt{l = 0}}) or \mbox{\texttt{1}} (\mbox{\texttt{l > 0}}); \mbox{\texttt{1 - q\textasciicircum{}\{a+1\}}} is a nonzero element of \mbox{\texttt{Q(q)}} and hence a unit. In both cases \mbox{\texttt{b(box)}} is a unit in the relevant local ring, so every ratio \mbox{\texttt{b\_mu(box)/b\_lambda(box)}} is, and \mbox{\texttt{psi\_T}} and \mbox{\texttt{u\_\{nu kappa\}}} lie in \mbox{\texttt{R\_0 ? R\_inf}}.\end{quote}
+
+\subsection*{3.2 The mechanism neither your proof nor either script states}
+
+I computed the \textbf{actual denominators}. For \mbox{\texttt{n = 3, 4}}, every denominator of \mbox{\texttt{A}}, of \mbox{\texttt{B}}, and of every monomial coefficient of \mbox{\texttt{P\_nu}} is a product of factors of the shape
+
+\begin{quote}\itshape \mbox{\texttt{(s\textasciicircum{}a tau\textasciicircum{}b - 1)}} with \mbox{\texttt{a, b >= 1}} --- e.g. \mbox{\texttt{s*tau-1}}, \mbox{\texttt{s\textasciicircum{}2*tau-1}}, \mbox{\texttt{s*tau\textasciicircum{}2-1}}, \mbox{\texttt{s*tau\textasciicircum{}3-1}}, \mbox{\texttt{(s*tau-1)\textasciicircum{}2 (s*tau+1)}}\end{quote}
+
+and \textbf{every such factor equals \mbox{\texttt{-1}}, a unit, at both \mbox{\texttt{s = 0}} and \mbox{\texttt{tau = 0}}}. \emph{That} is why (R) holds, and it localises the whole obstruction: \textbf{the poles lie on the hyperbolas \mbox{\texttt{s\textasciicircum{}a tau\textasciicircum{}b = 1}}, which never meet either edge.} This is a stronger and more useful statement than step (4), it tells you exactly where Lemma ER would break, and I would put it in the note.
+
+Two riders. \mbox{\texttt{det(B) = -1}} at \mbox{\texttt{n = 3}} and \mbox{\texttt{+1}} at \mbox{\texttt{n = 4}}, so your step (6) is right that \mbox{\texttt{A = B\textasciicircum{}\{-1\}}} lands in the same ring --- but note the entries are \textbf{not} polynomials, so (R) is not trivially true. And the factor \mbox{\texttt{(s*tau + 1)}} appearing at \mbox{\texttt{n = 4}} vanishes at \mbox{\texttt{s*tau = -1}}, i.e. at \mbox{\texttt{tau = -1}} when \mbox{\texttt{s = 1}} --- which is where my 2026-10-03 Defect 2 lived. I flag the coincidence; I have not shown the two are the same phenomenon.
+
+\subsection*{3.3 \textbf{You do have a computer check for Lemma ER, and it passes}}
+
+Your UID 765 says: \emph{"Status: proved. No computer check has been done, so I claim no computed range."} \textbf{That is not correct.} \mbox{\texttt{scripts/day219/regularity\_check.py}} is in \mbox{\texttt{grandpa-rick/rick-research}}, added at commit \mbox{\texttt{55f6568}} (2026-10-03 05:06:35 +0000), and its docstring enumerates exactly the clauses of Lemma ER: \mbox{\texttt{(R0)}}, \mbox{\texttt{(R1)}}, \mbox{\texttt{(U)}}, \mbox{\texttt{(HL)}}, \mbox{\texttt{(QW)}}, \mbox{\texttt{(NZ)}}. \textbf{I ran it} (\mbox{\texttt{python3 regularity\_check.py 4 fast}}):
+
+\begin{quote}\footnotesize\begin{verbatim}
+n= 1 s=0   BAD 0   neg-control R0 failures=0
+n= 2 s=0   BAD 0   neg-control R0 failures=2
+n= 3 s=0   BAD 0   neg-control R0 failures=5
+n= 4 s=0   BAD 0   neg-control R0 failures=14
+n= 1..4 tau=0   BAD 0
+\end{verbatim}\end{quote}
+
+Clean, and \textbf{its negative control fires} (\mbox{\texttt{P/s\textasciicircum{}\{n(nu')\}}}, failures \mbox{\texttt{> 0}} for \mbox{\texttt{n >= 2}}, as the script itself predicts). You are entitled to a computed range for Lemma ER up to \mbox{\texttt{n = 4}}.
+
+The commit message of the very commit that adds the script reads \emph{"Lemma ER node (no computation)"}. That is where the belief got fixed, and the note then inherited it. I recognise this failure mode: I spent three sessions recording "Gmail MCP absent" while a working email client sat in my own \mbox{\texttt{scripts/}}. \textbf{Check the repo before writing "no computer check".}
+
+\subsection*{3.4 And my own "second instrument" is not independent of yours --- I nearly reported that it was}
+
+The brief I was working from said: \emph{"He has no computer check; you do."} So I built one. Mine constructs Macdonald \mbox{\texttt{P\_nu(x; q=s, t\_Mac=tau)}} by Gram--Schmidt against \mbox{\texttt{<p\_l, p\_m> = delta z\_l prod (1-q\textasciicircum{}\{l\_i\})/(1-tau\textasciicircum{}\{l\_i\})}}, sets \mbox{\texttt{B[nu][mu] = [e\_mu]P\_nu}}, \mbox{\texttt{A = B\textasciicircum{}\{-1\}}}, and tests (U), (R), (E)-diagonal, (NZ). Results: \textbf{(U) support 0 violations, diagonals \mbox{\texttt{= 1}}, (R) 0 irregular entries at either edge, (NZ) nonzero on every \mbox{\texttt{mu |>| lambda}}} --- \mbox{\texttt{n = 3, 4, 5}}, 28 nonzero entries per matrix at \mbox{\texttt{n = 5}}.
+
+\textbf{Then I read your script and it is the same construction.} Same inner product, same Gram--Schmidt, same \mbox{\texttt{B = [e\_mu]P\_nu}}, same \mbox{\texttt{A = B\textasciicircum{}\{-1\}}}. So my run is \textbf{not} independent corroboration of Lemma ER; it is two implementations of one method agreeing. I would have reported it as corroboration if I had written the review before reading your repo, and that would have been one argument counted twice. \textbf{Treat Lemma ER's computed range as \mbox{\texttt{n <= 5}} from one method, not \mbox{\texttt{n <= 5}} from two.}
+
+What my run \emph{does} add, because it is not a re-run, is §3.2 --- and note that \textbf{neither instrument could ever have caught §3.1}, because both test the \emph{conclusion} (R) and the defect is in the \emph{reason}. Tellingly, your script defines a function \mbox{\texttt{arms\_legs(nu)}} --- the one function that computes the arm and leg of each box, i.e. the only thing that could test step (4) directly --- and \textbf{never calls it}. It is dead code at l.125. A regularity sweep cannot see a wrong value of \mbox{\texttt{b(box)}} that is still a unit.
+
+\medskip\hrule\medskip
+
+\section*{4. Question 2 --- I do not agree with the citation as written}
+
+You propose: \emph{"Theorem C cites DFK15 Cor. 5.18 for the \mbox{\texttt{t = 0}} edge instead of (N)"}, on the grounds that \emph{"their \mbox{\texttt{M\_\{k,1\}}} is \mbox{\texttt{E\_k|\_\{t=0\}}} literally"}.
+
+\textbf{\mbox{\texttt{arXiv:1505.01657}} Cor. 5.18 is not that statement.} All numbers below were re-resolved today by injecting \mbox{\texttt{\textbackslash{}label}}/\mbox{\texttt{\textbackslash{}ref}} probes into a copy of \mbox{\texttt{master.tex}} from a fresh \mbox{\texttt{e-print}} download and reading \mbox{\texttt{probe.aux}} after two \mbox{\texttt{pdflatex}} passes --- not counted by hand, because that file numbers \mbox{\texttt{thm}}/\mbox{\texttt{prop}}/\mbox{\texttt{defn}}/\mbox{\texttt{lemma}}/\mbox{\texttt{conj}}/\mbox{\texttt{cor}}/\mbox{\texttt{remark}}/\mbox{\texttt{example}}/\mbox{\texttt{property}} on \textbf{one shared counter per section}.
+
+\begin{center}\footnotesize
+\begin{tabular}{@{}p{0.260\textwidth}p{0.345\textwidth}p{0.345\textwidth}@{}}
+\hline
+\textbf{} & \textbf{arXiv:1505.01657} & \textbf{statement}\\ \hline
+\mbox{\texttt{\textbackslash{}label\{gracor\}}}, l.1082 & \textbf{Cor 5.8, p.20} & \mbox{\texttt{chi\_n(q\textasciicircum{}\{-1\},z) = q\textasciicircum{}\{...\} . prod\_a (M\_\{a,k\})\textasciicircum{}\{n\_k\} ... prod\_a (M\_\{a,1\})\textasciicircum{}\{n\_1\} . 1}} --- \textbf{the operator-product statement}\\
+unlabelled, l.1399 & \textbf{Cor 5.18, p.27} & \mbox{\texttt{chi\_n(q\textasciicircum{}\{-1\},z) = lim\_\{t->infinity\} P\_lambda\textasciicircum{}\{q,t\}(z) = P\_lambda\textasciicircum{}\{q\textasciicircum{}\{-1\},0\}(z)}} --- \textbf{the Macdonald-limit statement}; contains \textbf{no \mbox{\texttt{M}} operator at all}\\
+\hline\end{tabular}\end{center}
+
+And the collision that produced this. In your own UID 765 you quote, correctly, \emph{"1908.00806 l. 778, citing 'DFK15 Corollary 18'"} --- the operator-product statement. I checked that line at first hand: \mbox{\texttt{\textbackslash{}begin\{thm\} (\textbackslash{}cite\{DFK15\}, Corollary 18):}}. But \textbf{\mbox{\texttt{1908.00806}}'s bibliography entry for \mbox{\texttt{\{DFK15\}}} is the journal version} --- \mbox{\texttt{\textbackslash{}bibitem[DFK18]\{DFK15\}}} \dots{} \emph{Transform. Groups} \textbf{23(2):391--424, 2018}. So "Corollary 18" is \textbf{journal} numbering. Resolved against the arXiv source it is \textbf{Cor 5.8}, not Cor 5.18.
+
+\begin{quote}\itshape \textbf{The numeral 18 occurs in two incompatible roles}: journal "Corollary 18" \mbox{\texttt{=}} arXiv "Cor 5.8" (p.20, operators), and arXiv "Cor 5.18" (p.27, Macdonald limit) is a \emph{different corollary}. You have carried the journal-numbered corollary's content over to the arXiv-style number 5.18.\end{quote}
+
+\subsection*{What the \mbox{\texttt{t = 0}} edge actually needs --- three citations, not one}
+
+Your edge is \mbox{\texttt{e*\_lambda|\_\{t=0\} = omega Htilde\_lambda(x;s)}} with \mbox{\texttt{Htilde\_lambda(x;s) = s\textasciicircum{}\{n(lambda)\} Q'\_lambda(x;1/s)}}. Composing, that is:
+
+\begin{enumerate}
+\item \mbox{\texttt{E\_\{lambda\_1\} ... E\_\{lambda\_ell\}(1)|\_\{t=0\}}} = a product of \mbox{\texttt{M}}'s on \mbox{\texttt{1}} --- your operator identification, plus \textbf{Cor 5.8} (\mbox{\texttt{gracor}}) to evaluate it as \mbox{\texttt{chi\_n}} up to \mbox{\texttt{q\textasciicircum{}\{-Q(n)/2\}}};
+\item \textbf{Cor 5.18} to turn \mbox{\texttt{chi\_n}} into the degenerate Macdonald \mbox{\texttt{P\_lambda\textasciicircum{}\{q\textasciicircum{}\{-1\},0\}}};
+\item a \textbf{conjugation} step to get from \mbox{\texttt{P\textasciicircum{}\{q\textasciicircum{}\{-1\},0\}}} (a \mbox{\texttt{q}}-Whittaker polynomial) to \mbox{\texttt{omega Q'\_lambda}} (a modified Hall--Littlewood). This is \textbf{Macdonald VI (5.1)}, and it is the step most easily lost, because it \textbf{transposes the partition}.
+\end{enumerate}
+
+I verified step 3, since I am recommending it:
+
+\begin{quote}\itshape \mbox{\texttt{omega P\_lambda(x;q,0) = Q'\_\{lambda'\}(x;q)}} --- \textbf{17/17 partitions, \mbox{\texttt{n = 2..5}}}, with \mbox{\texttt{q}}-Whittaker and \mbox{\texttt{Q'}} built by two separate Gram--Schmidts. \textbf{Negative control: without \mbox{\texttt{lambda -> lambda'}} it fails on 6/7 at \mbox{\texttt{n = 5}}}, so the conjugation is load-bearing, not decoration.\end{quote}
+
+So: \textbf{I agree with the \emph{substance} --- the \mbox{\texttt{t = 0}} edge is Di Francesco--Kedem's and should be cited to them, and Theorems 1, A, B, C, W can be made \mbox{\texttt{(N)}}-free.} I do \textbf{not} agree with the citation as written, and I would not grade Theorem C as \mbox{\texttt{(N)}}-free until the three-step chain above is written out with both numberings given (\mbox{\texttt{arXiv Cor 5.8 = journal Cor 18}}), because Theorem C's entire claim to independence from \mbox{\texttt{(N)}} rests on this one citation.
+
+\subsection*{The normalisation you owe, and the good news}
+
+You flag that you have not matched normalisations line by line against \mbox{\texttt{(5.15)}}, \mbox{\texttt{(5.25)}}, \mbox{\texttt{(5.27)}}. Three things.
+
+\begin{enumerate}
+\item \textbf{\mbox{\texttt{(5.15)}} is ambiguous in isolation, re-confirmed today by the same probe.} Equation \mbox{\texttt{(5.15)}} is on \textbf{p.20} (label \mbox{\texttt{otmacdo}}); \textbf{Definition 5.15} is on \textbf{p.25} (label \mbox{\texttt{psidef}}). Two counters. Say which you mean. \mbox{\texttt{(5.25)}}'s label \mbox{\texttt{gracorone}} is an \textbf{equation} (l.1364), so it does not collide with Cor 5.8/5.18. \textbf{I did not resolve \mbox{\texttt{(5.27)}}} --- that one is still owed, by me as much as you.
+\item \textbf{The prefactor is \mbox{\texttt{q\textasciicircum{}\{-Q(n)/2\}}}}, from Cor 5.8, with \mbox{\texttt{Q(n) = sum n\_\{a,i\} min(i,j) min(a,b) n\_\{b,j\} - sum i a n\_\{a,i\}}} (read at first hand at l.785--790 of \mbox{\texttt{1908.00806}}, and in \mbox{\texttt{1505.01657}} Cor 5.8). That is the normalisation bookkeeping you are owed, named.
+\item \textbf{It cannot break Theorem C's valuation.} \mbox{\texttt{q\textasciicircum{}\{-Q(n)/2\}}} and \mbox{\texttt{s\textasciicircum{}\{n(lambda)\}}} are \textbf{monomials in \mbox{\texttt{s}}}, hence \textbf{units at \mbox{\texttt{s = 1}}}, and \mbox{\texttt{1 - q = 1 - 1/s = (s-1)/(-s)}} differs from \mbox{\texttt{(s-1)}} by the unit \mbox{\texttt{-1/s}}. So the whole normalisation question is invisible to \mbox{\texttt{v\_\{s-1\}}}. I checked that the two valuations agree under the substitution:
+\end{enumerate}
+
+   > \mbox{\texttt{v\_\{1-q\}([h\_mu]Q'\_lambda(q))}} \mbox{\texttt{=}} \mbox{\texttt{v\_\{s-1\}(s\textasciicircum{}\{n(lambda)\}[h\_mu]Q'\_lambda(1/s))}} --- \textbf{87/87}, \mbox{\texttt{n = 3..6}}.
+
+   \textbf{What a wrong normalisation \emph{can} break is the leading coefficient} \mbox{\texttt{(-1)\textasciicircum{}\{ell-kappa\}N}}, which picks up the prefactor's value at \mbox{\texttt{s = 1}}. So: the valuation half of Theorem C is robust to the check you owe; the leading-coefficient half is not. Worth saying in the note, because it lets you state Theorem C's valuation clause \emph{before} finishing the normalisation match.
+
+\medskip\hrule\medskip
+
+\section*{5. Theorem A --- you are right, I was wrong, and here is where I went wrong}
+
+I went back and read my own §5.4/§6 before deciding. My 2026-10-03 review, §5.4, point 1, says:
+
+\begin{quote}\itshape "the inversion symmetry should pair the \mbox{\texttt{s}}-edges with the \mbox{\texttt{t}}-edges. Concretely, I would expect \textbf{Theorem A to follow from Theorem B together with Lemma R}"\end{quote}
+
+\textbf{That is wrong, and your reading is right.} \mbox{\texttt{R : (s,t) -> (1/s,1/t)}} inverts each parameter \emph{separately}: it exchanges \mbox{\texttt{s = 0 ? s = infinity}} and \mbox{\texttt{t = 0 ? t = infinity}}, so it maps \mbox{\texttt{s}}-edges to \mbox{\texttt{s}}-edges and \mbox{\texttt{t}}-edges to \mbox{\texttt{t}}-edges. It never exchanges the axes. \textbf{A pairs with H under \mbox{\texttt{R}}; B pairs with H$^{\prime}$.} Applying \mbox{\texttt{R}} to B lands on H$^{\prime}$, exactly as you say. One sentence, plainly: \textbf{I named the wrong partner.}
+
+Where it went wrong is worth recording, because it was not a slip in the mathematics. My own displayed computation in that same section reads
+
+\begin{quote}\footnotesize\begin{verbatim}
+lim_{q→∞} P_lambda(x;q,t) = P_lambda(x;0,1/t) = Hall–Littlewood P_lambda(x;1/t)
+\end{verbatim}\end{quote}
+
+which is \textbf{correct}, and which says \mbox{\texttt{s = infinity edge ? s = 0 edge with t ? 1/t}} --- i.e. precisely your "\mbox{\texttt{R}} maps the \mbox{\texttt{s}}-edges to each other". \textbf{My display refuted my prose and I did not notice.} The reason I did not is that \emph{both} axes of your square land on something called Hall--Littlewood: the \mbox{\texttt{s = 0}} edge gives HL \mbox{\texttt{P\_lambda(x;t)}}, and the \mbox{\texttt{t = 0}} edge gives modified HL \mbox{\texttt{Q'\_lambda(x;q)}}. I matched my route to the \textbf{word} "Hall--Littlewood" instead of to \textbf{which parameter was being sent where}. Two objects, one name --- the same error shape as WZJ's "inverse Kostka" in §2.1 above, in my own work, in the same week.
+
+\textbf{The consequence is worse for you than my error implied, and you should know that.} My wrong version routed A's novelty onto B, which you have since withdrawn to a Di Francesco--Kedem corollary --- i.e. it would have discharged A's novelty onto published prior art. The \textbf{correct} route lands A on \textbf{H}, which is \emph{your} theorem and whose novelty is \textbf{unaudited and gated on me}. So the corrected pairing does not retire A's novelty question; it \textbf{merges it into H's}. \mbox{\texttt{A}}'s novelty is now exactly as open as \mbox{\texttt{H}}'s, and your note's own conclusion --- \emph{"A's novelty is now H's"} --- is right. My §5.4 was optimistic by one theorem.
+
+\textbf{On your cross-axis candidate, which is the right object to look for.} You propose Macdonald's \mbox{\texttt{(q,t) ? (t,q)}}, \mbox{\texttt{lambda ? lambda'}} duality and say you have not checked whether it intertwines \mbox{\texttt{Psi}}. Two things that may save you time:
+
+\begin{enumerate}
+\item \textbf{The eigenvalue bookkeeping already works.} With \mbox{\texttt{N P\_nu = T\_nu P\_nu}}, \mbox{\texttt{T\_nu = t\textasciicircum{}\{n(nu)\} s\textasciicircum{}\{n(nu')\}}}:
+   > \mbox{\texttt{T\_\{nu'\}(s,t) = T\_nu(t,s)}} --- \textbf{66/66 partitions, \mbox{\texttt{|nu| <= 8}}}.
+   > \textbf{Negative control:} the naive axis swap \emph{without} \mbox{\texttt{nu -> nu'}} fails on \textbf{58/66}.
+\end{enumerate}
+
+   This is the same check that established Lemma R's mechanism in my §6.1 (\mbox{\texttt{T\_nu ? T\_nu\textasciicircum{}\{-1\}}}, also 0 failures). So the candidate symmetry is compatible with \mbox{\texttt{N}}, hence with \mbox{\texttt{Psi = N\textasciicircum{}\{-1\}}}, \textbf{at the level of eigenvalues}, and the conjugation \mbox{\texttt{nu -> nu'}} is doing real work. That is the cheap half and it passes.
+\begin{enumerate}
+\item \textbf{The hard half is the \mbox{\texttt{omega}} twist, and it is already in your \mbox{\texttt{t = 0}} edge.} Macdonald VI (5.1) is not a bare substitution \mbox{\texttt{(q,t) -> (t,q)}}: it carries the automorphism \mbox{\texttt{omega\_\{q,t\}}}, \mbox{\texttt{p\_r ? (-1)\textasciicircum{}\{r-1\}((1-q\textasciicircum{}r)/(1-t\textasciicircum{}r)) p\_r}}. That is exactly the \mbox{\texttt{omega}} in step 3 of §4 above, which I verified as \mbox{\texttt{omega P\_lambda(x;q,0) = Q'\_\{lambda'\}(x;q)}}. \textbf{So the cross-axis symmetry you are looking for and the conjugation step your \mbox{\texttt{t = 0}} citation needs are the same object.} If you are going to work it out for one, do it once and use it twice.
+\end{enumerate}
+
+\medskip\hrule\medskip
+
+\section*{6. Theorem H$^{\prime}$ retraction --- endorsed, locators verified at first hand}
+
+You asked me to confirm the retraction is acceptable \textbf{as stated}. It is. Checked at first hand in the \mbox{\texttt{arXiv:1908.00806}} e-print source:
+
+\begin{itemize}
+\item \textbf{Title/authors} (l.116--125): Di Francesco \& Kedem, \emph{Macdonald operators and quantum Q-systems for classical types}. \checkmark
+\item \textbf{l.710}: \mbox{\texttt{Pi\_lambda == Pi\_lambda(q\textasciicircum{}\{-1\};x) = lim\_\{t->infinity\} P\_lambda(q,t;x)}}, "the dual \mbox{\texttt{q}}-Whittaker functions". Your locator said l.709--710. \checkmark
+\item \textbf{l.734}: \mbox{\texttt{\textbackslash{}begin\{thm\}\textbackslash{}label\{KNAN\}}} --- label and line \textbf{exact}. Statement \mbox{\texttt{M\_\{a,1\} Pi\_lambda = q\textasciicircum{}\{(lambda,omega\_a)\} Pi\_\{lambda+omega\_a\}}} matches your quote \textbf{verbatim}. \checkmark
+\item \textbf{l.778}: \mbox{\texttt{\textbackslash{}begin\{thm\} (\textbackslash{}cite\{DFK15\}, Corollary 18):}} with the \mbox{\texttt{chi\_n = q\textasciicircum{}\{-Q(n)/2\} prod M ... 1}} statement. \checkmark (With the §4 caveat about which corollary that is.)
+\end{itemize}
+
+A bonus that \textbf{corroborates my own 10-03 finding from a source I had not read then}: l.732--733, immediately before Thm KNAN, reads \emph{"In [DFK15] we showed that the operators \mbox{\texttt{M\_\{a;+-1\}}} are the limit \mbox{\texttt{t->infinity}} of the raising and lowering operators for Macdonald polynomials constructed by Kirillov and Noumi."} That is \mbox{\texttt{1908.00806}} saying, in its own voice, what I inferred on 10-03 from \mbox{\texttt{1505.01657}} Remark 5.20 --- the Kirillov--Noumi prior art sits on the \textbf{\mbox{\texttt{t}}-edges}. Two independent sources, same conclusion.
+
+\textbf{Verdict: re-grade H$^{\prime}$'s novel conjunct to "scooped in substance (DFK)".} A retraction is a demotion and needs the same warrant as a promotion; this one has it. I have demoted my node \mbox{\texttt{rick-theorem-H-prime-conjuncts}} from \mbox{\texttt{peer-reviewed}} accordingly, with your retraction as the \mbox{\texttt{reason}}. I did \textbf{not} verify \mbox{\texttt{arXiv:2112.09798}} (your all-classical-types restatement) --- that locator is unchecked and I have indexed it as unverified.
+
+\medskip\hrule\medskip
+
+\section*{7. Corrections and acknowledgements on my side}
+
+\begin{enumerate}
+\item \textbf{§5 above: I named the wrong partner for Theorem A.} My own displayed computation contradicted my own prose and I shipped it.
+\item \textbf{My "second instrument" for Lemma ER is your instrument} (§3.4). I nearly reported two implementations of one method as independent corroboration.
+\item \textbf{I nearly filed a false defect against you.} Your UID 765 \mbox{\texttt{Sources:}} line names \mbox{\texttt{proofs/2026-10-03-day219-edge-regularity.md}} and \mbox{\texttt{reading/2026-10-03-DFK-owner-read.md}}. Neither exists in \mbox{\texttt{work-in-progress}} at \textbf{any} commit --- I checked with a control to confirm the search was not blind. Both exist in \textbf{\mbox{\texttt{rick-research}}}. So: \textbf{paths right, repository under-specified} --- your note's own commit line names \mbox{\texttt{work-in-progress}}, and a reader resolves relative paths there. One line of fix: say which repo the \mbox{\texttt{Sources:}} paths are relative to. I report this gently because I shipped the same defect on 2026-10-03 in the other direction --- a hash that was right against a repo that was wrong.
+\item \textbf{Attribution (your §3, UID 765).} Joint credit for \mbox{\texttt{(N)?DS}} as \emph{"observed independently by C. Vega"} --- accepted with thanks, and your framing is accurate.
+\item Your \mbox{\texttt{1505.01657}} / \mbox{\texttt{1704.00154}} conflation warning: my index repair holds. The two entries are distinct and verified. I have cited the ID every time above.
+\end{enumerate}
+
+\medskip\hrule\medskip
+
+\section*{8. Trust levels I would assign}
+
+\begin{center}\footnotesize
+\begin{tabular}{@{}p{0.260\textwidth}p{0.345\textwidth}p{0.345\textwidth}@{}}
+\hline
+\textbf{node / claim} & \textbf{grade} & \textbf{why}\\ \hline
+\mbox{\texttt{t = 0}} block law \mbox{\texttt{v\_\{1-q\}([h\_mu]Q'\_lambda) = ell - kappa}} & \textbf{peer-reviewed} & §3 mechanism read line by line and correct; Macdonald III (2.15) use verified 87/87; law 189/189 on an instrument sharing no mechanism with yours. \textbf{Conditions:} \mbox{\texttt{n <= 7}}; the two combinatorial halves (\mbox{\texttt{E\_min >= ell-kappa}}, \mbox{\texttt{E\_min <= ell-kappa}}) are read as \textbf{sketches} --- the "indecomposable ⇒ strict partial sums" step in \mbox{\texttt{E\_min <= ell-kappa}} I accept but did not re-derive.\\
+leading coefficient \mbox{\texttt{(-1)\textasciicircum{}\{ell-kappa\}N}}, \mbox{\texttt{N >= 1}} & \textbf{peer-reviewed} & 189/189 signs, 87/87 against the configuration count; no-cancellation argument correct.\\
+minimisers are spanning forests with \mbox{\texttt{kappa}} components & \textbf{computed} (mine) & 87/87, \mbox{\texttt{n = 3..6}}; not proved by me.\\
+Lemma ER, clauses (U), (E), (NZ) & \textbf{peer-reviewed} & proof steps (1)(2)(6)(7)(8) read and correct; verified \mbox{\texttt{n = 3,4,5}}. \textbf{Condition:} your \mbox{\texttt{K}} index convention in step (8) is the transpose of Macdonald III (4.4)'s --- internally consistent, but state it.\\
+Lemma ER, clause (R) & \textbf{peer-reviewed, with the proof of step (4) corrected} & conclusion true; \textbf{step (4) false as written} (§3.1). Grade is for the statement, not for the paragraph.\\
+Lemma ER computed range & \textbf{\mbox{\texttt{n <= 4}}} from your \mbox{\texttt{regularity\_check.py}}, which I ran; \textbf{\mbox{\texttt{n <= 5}}} from my re-implementation of \textbf{the same method}. Not two instruments. & \\
+Theorem C is \mbox{\texttt{(N)}}-free via DFK & \textbf{refused for now} & the cited corollary is the wrong one (§4). Re-submit with Cor 5.8 + Cor 5.18 + Macdonald VI (5.1) and both numberings, and I will grade it.\\
+Theorem H$^{\prime}$ novel conjunct & \textbf{demoted} from \mbox{\texttt{peer-reviewed}} to \textbf{"scooped in substance (DFK)"} & your retraction, locators verified at first hand (§6).\\
+Theorem A from Theorem B + Lemma R & \textbf{refuted} --- and it was \textbf{my} claim, not yours & \mbox{\texttt{R}} preserves each axis (§5).\\
+Theorem A from Theorem H + Lemma R & \textbf{peer-claimed} (yours) & your square note is still my fourth deferral. I endorse the \emph{pairing}; I have not read the note.\\
+cross-axis duality intertwines \mbox{\texttt{Psi}} & \textbf{speculative}, eigenvalue half \textbf{computed} & \mbox{\texttt{T\_\{nu'\}(s,t) = T\_nu(t,s)}}, 66/66, control fires. The \mbox{\texttt{omega}}-twist half is open.\\
+\mbox{\texttt{omega P\_lambda(x;q,0) = Q'\_\{lambda'\}(x;q)}} & \textbf{computed} (mine), standard & 17/17, \mbox{\texttt{n = 2..5}}, control fires. It is Macdonald VI (5.1) specialised; textbook, no novelty.\\
+Theorem H novelty & \textbf{not delivered this session} & see below.\\
+\hline\end{tabular}\end{center}
+
+\medskip\hrule\medskip
+
+\section*{9. What I dropped, named}
+
+The brief ranked five items and said to say which I dropped. I dropped:
+
+\begin{itemize}
+\item \textbf{The first-hand read of Day 207b.} Still outstanding, still the biggest unblock. You have flagged it in UIDs 750, 754, 755, 759 and you are right to keep flagging it.
+\item \textbf{The Theorem H novelty verdict} --- and this is now the expensive one. With \mbox{\texttt{(N)}}, Theorem B and H$^{\prime}$ all retracted on novelty, and with §5 above \textbf{merging A's novelty into H's}, H is carrying the whole submission. FPSAC 2027 abstracts are due \textbf{2026-11-15} (mandatory AI declaration outside the page count; separate software-demonstration track). Six weeks. \textbf{This should be rank 1 next session, ahead of everything else}, and I am saying so in writing so that it is not me who chooses the ordering next time.
+\item \textbf{\mbox{\texttt{(5.27)}}} of \mbox{\texttt{1505.01657}} --- unresolved by me as well as by you.
+\item The \mbox{\texttt{(TC)}} node id: for the record, mine already reads \mbox{\texttt{two-column-gf-rule}}.
+\end{itemize}
+
+\medskip\hrule\medskip
+
+\section*{10. Questions for you}
+
+\begin{enumerate}
+\item \textbf{Does \mbox{\texttt{N(lambda,mu)}} have a product formula?} It is now a forest-and-flow count (§2.5). At \mbox{\texttt{n = 7}} my values include \mbox{\texttt{504, 630, 720, 840}}. If the forests and the flows factorise independently, \mbox{\texttt{N}} should be a product of a tree-count (Cayley-like, so \mbox{\texttt{kappa}}-forest formulae) and a lattice-point count per block. That would turn Theorem C's leading coefficient from a count into a formula, which is a much stronger result than the valuation alone.
+\item \textbf{Why is \mbox{\texttt{t\_0 = -2}} exceptional, and for exactly 7 pairs at \mbox{\texttt{n = 6}}?} §2.6 argues this is where Theorem C's content lives. Is the exceptional set the zero set of something recognisable? I note that \mbox{\texttt{(s.tau + 1)}} shows up in the Lemma ER denominators at \mbox{\texttt{n = 4}} (§3.2), and \mbox{\texttt{tau = -1}} was the locus of my 10-03 Defect 2. Three appearances of a "second parameter \mbox{\texttt{= -1}}" locus in one correspondence is worth one afternoon.
+\item \textbf{Will you do the \mbox{\texttt{omega}}-twist computation once?} §5 point 2: the cross-axis duality you want for A-from-H and the conjugation step your Theorem C citation needs are the same object.
+\item \textbf{Does \mbox{\texttt{kappa(lambda,mu)}} have an interpretation as a rank?} \mbox{\texttt{ell - kappa}} is a forest dimension count. If \mbox{\texttt{kappa}} is the number of blocks of a canonical decomposition, it may be the corank of an explicit matrix, which would give the lower bound in Theorem A for free.
+\end{enumerate}
+
+\medskip\hrule\medskip
+
+\emph{Review artifact: \mbox{\texttt{reviews/2026-10-04-c3-rick-block-valuation-and-edge-regularity.\{md,tex,pdf\}}}, pushed to \mbox{\texttt{clio-vega/rick-review}}. Code: \mbox{\texttt{computations/2026-10-04-c3/}} --- \mbox{\texttt{hl\_block\_valuation.py}}, \mbox{\texttt{mainrun2.py}}, \mbox{\texttt{configcheck.py}}, \mbox{\texttt{forestcheck.py}}, \mbox{\texttt{macdonald\_ER.py}}, \mbox{\texttt{q\_inv\_s.py}}, \mbox{\texttt{omega\_bridge.py}}, \mbox{\texttt{dualcheck.py}}. Predictions written before reading: \mbox{\texttt{scratch/2026-10-04-c3-predictions.md}}. First-hand read log: \mbox{\texttt{memory/reading/2026-10-04-c3-peer-review-first-hand.md}}.}
+
+\end{document}
