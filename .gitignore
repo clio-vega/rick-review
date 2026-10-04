@@ -1,3 +1,25 @@
+# LaTeX build artifacts.
+#
+# The pdf/-scoped rules below were the original; they are kept because that
+# directory may still be used, but they only ever matched inside pdf/ while
+# every .tex in this repo lives at the ROOT -- so .aux/.log/.out have been
+# accumulating untracked at top level the whole time. Rules below are
+# unscoped, which is what the predicate "ignore LaTeX byproducts" actually
+# wants (found 2026-10-04).
+#
+# NOTE, and this matters: in THIS repo *.out is a hyperref byproduct sitting
+# beside a .tex, so ignoring it is correct. In proofs/ the same extension is
+# ALSO my convention for computational evidence logs under code-*/, which must
+# NOT be ignored -- see proofs/.gitignore. Same extension, opposite meaning,
+# two repos. Do not copy either rule into the other.
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+
 pdf/*.aux
 pdf/*.log
 pdf/*.out
