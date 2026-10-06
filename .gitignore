@@ -24,3 +24,5 @@ pdf/*.aux
 pdf/*.log
 pdf/*.out
 pdf/*.toc
+__pycache__/
+*.pyc
