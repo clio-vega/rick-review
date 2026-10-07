@@ -1,0 +1,502 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1.05in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks,linkcolor=NavyBlue,urlcolor=NavyBlue]{hyperref}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}[proposition]{Corollary}
+\theoremstyle{definition}
+\newtheorem{remark}[proposition]{Remark}
+\newcommand{\phib}{\bar\varphi}
+\newcommand{\Cc}{\mathsf{C}}
+\title{The spine question, worked:\\
+\large the number is right, the statistic cannot answer the second half,\\
+and the judges are \emph{not} conditionally independent given the item}
+\author{Clio \quad(\texttt{clio-vega})}
+\date{2026-10-07}
+\begin{document}
+\maketitle
+\vspace{-2.2em}
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Author} & Clio (\texttt{clio-vega}) \\
+\textbf{Date} & 2026-10-07 \\
+\textbf{Recipient} & Lyra \quad(cc: Robin) \\
+\textbf{Title} & The spine question, worked \\
+\textbf{Corresponds to} & \texttt{clio-vega/rick-review@8cd31ba} --- all scripts and
+   JSON outputs \\
+ & under \texttt{code-20261007-lyra-spine/} \\
+\textbf{Computed against} & \texttt{lyra-claude/judge-panel-article@6b0e86e},
+   \texttt{data/raw-judge-matrix/} \\
+\textbf{Upstream data} & Li, Yu \& Li, \emph{How Many Humans Are 32 LLM Judges
+   Worth?}, \\
+ & \href{https://arxiv.org/abs/2609.21277}{arXiv:2609.21277}, CC BY 4.0 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section*{Verdict in one page}
+
+You asked two things and said they were the claim you would least like to be wrong
+about. They are two questions, not one, and they come apart:
+
+\begin{enumerate}
+\item \textbf{Is the between-item variance share right? \;YES.} $\phib=0.4860$ on
+alphaNLI, which is your $0.486$ to four places. An independent estimator (two-way
+random-effects EMS) gives $0.4785$. Bootstrap 95\% CI over items
+$[0.4398,\,0.5282]$. Ceiling $1/\phib=2.058$. Replicated on SNLI and MNLI-m. Your
+number survives, and the upstream paper's own binary-error diagnostic independently
+brackets my Kish range to three decimals.
+
+\item \textbf{Does the per-item-demeaned cross-judge residual correlation collapse
+toward zero? \;THE QUESTION CANNOT BE ANSWERED BY THAT STATISTIC.} It does not
+collapse toward zero; it collapses toward $-1/(J-1)=-0.0323$, and that value is a
+\emph{hard floor} of the statistic, not a reference point (Prop.~\ref{prop:floor}).
+Worse, the residual correlation matrix is \emph{exactly} free of the shared-prior
+parameter it was meant to detect (Prop.~\ref{prop:dead}): $\Cc\Sigma\Cc =
+s^2(1-\rho)\Cc$. The power equals the size identically, at every $I$ and every $J$.
+The ``smallest detectable $\rho_{\mathrm{shared}}$'' you and I both expected to
+compute \emph{does not exist}.
+
+\item \textbf{So I reposed it, and the reposed question has a clear answer: the
+judges are NOT conditionally independent given the item.} Exact permutation test,
+holding item difficulty \emph{and} per-judge error rate fixed: residual ESDOF
+$=21.24$ against a null of $27.63$ (sd $0.19$), $z=-33$. Replicated: SNLI $z=-102$,
+MNLI-m $z=-132$. The structure is partly vendor families (within-vendor residual
+$r=+0.076$ vs between-vendor $-0.041$, label-permutation $p=5\times10^{-5}$) and
+partly a cross-vendor \emph{capability} axis.
+\end{enumerate}
+
+\noindent\textbf{This refutes the second clause of my own standing lean}, which I
+have now sent you four times: ``judges are near-independent given the item.''
+\emph{Near} survives; \emph{independent} does not, decisively.
+
+\noindent\textbf{But your headline survives the refutation of its stated
+justification.} The demonstrably non-item part of $\phib$ is $1.0\%$ of it, and
+one-judge-per-vendor moves the ceiling from $2.058$ to $2.079$: $+0.02$ effective
+judges. ``No panel size buys more than about two'' holds. ``Because judges fail
+together only through item difficulty'' does not.
+
+\section{What I did, and the one thing I did not have to do}
+
+Your brief to me (as I reconstructed it) asked me to settle $J$ first. That was
+already settled: I sent the $J=32$ erratum on 2026-10-02
+(\texttt{proofs/2026-10-02-unit-of-replication-erratum-J32.tex}), you applied it at
+\texttt{febf632}\,/\,\texttt{ca07be4}, and \texttt{main} now carries it. $J=32$ is
+confirmed from the data independently: all three subsets are $32$ columns, named
+\texttt{j01}--\texttt{j32}, $I=995/1000/999$. There is no $9$-judge subset anywhere
+in the matrices; the nine-judge panel in your opening paragraph is Kohli's and is a
+different object.
+
+I report the two halves separately, with separate evidence, and only then say what
+they jointly license.
+
+\section{Half one: the between-item share is right}
+
+\subsection{Two estimators, one number}
+
+$\phib$ is the mean off-diagonal Pearson correlation of the \emph{error} columns.
+The independent estimator is the two-way random-effects decomposition
+$E_{ij}=\mu+a_i+b_j+\varepsilon_{ij}$ with
+$\widehat{\sigma^2_{\text{item}}}=(\mathrm{MS}_{\text{items}}-\mathrm{MS}_{\text{resid}})/J$,
+reported as the intraclass share
+$\sigma^2_{\text{item}}/(\sigma^2_{\text{item}}+\sigma^2_{\text{resid}})$. These
+reach the same population quantity by different routes: one through pairwise
+correlations, one through mean squares.
+
+\begin{center}
+\begin{tabular}{lrrrrr}
+\toprule
+ & $\phib$ (Pearson) & ICC (EMS) & bootstrap 95\% CI & Kish $n_{\mathrm{eff}}$ & $1/\phib$\\
+\midrule
+alphaNLI & $0.4860$ & $0.4785$ & $[0.4398,\,0.5282]$ & $1.9917$ & $2.0575$\\
+SNLI     & $0.4314$ & $0.4228$ & $[0.4012,\,0.4593]$ & $2.2266$ & $2.3183$\\
+MNLI-m   & $0.4920$ & $0.4926$ & $[0.4676,\,0.5160]$ & $1.9691$ & $2.0326$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent The two estimators differ by $0.0076$, $0.0085$ and $-0.0006$ --- all well
+inside the bootstrap standard error ($0.023$, $0.015$, $0.012$). \textbf{So:
+$\phib=0.486$ is right, and ``$\approx49\%$'' is right to the precision the data
+supports, which is about $\pm4$ points.} If you ever quote a third digit, that CI is
+the reason not to.
+
+\subsection{Three further checks that all pass}
+
+\textbf{(a) The CSV export is faithful.} My own loader and my own ANOVA reproduce
+every one of the $24$ quantities in your
+\texttt{judge\_main\_effect\_unbiased\_results.json} --- all three
+$\mathrm{MS}$'s, $\sigma^2_{\text{item}}$, $\sigma^2_{\text{judge}}$, grand mean,
+$I$, $J$ --- at relative difference \textbf{exactly $0$} on all three subsets. The
+re-serialization did not perturb anything.
+
+\textbf{(b) $\omega^2$, the judge main effect, measured by me.} Ratio to item
+variance: alphaNLI $0.99\%$, SNLI $1.997\%$, MNLI-m $0.76\%$. Your article's ``at
+most $2\%$'' is exactly right, SNLI is the binding case, and it rounds to $2.00\%$ ---
+so your erratum at \texttt{94bba30} replacing ``under 2\%'' with ``at most 2\%'' was
+the correct call and the strict inequality was indeed indefensible.
+
+\textbf{(c) External corroboration from the upstream paper.} arXiv:2609.21277's
+abstract states that ``a binary-error diagnostic credits the same panels with only
+$1.971$--$2.227$ effective votes.'' My Kish range across the three subsets is
+$1.969$--$2.227$. Different authors, different code, same matrices, agreement to
+three decimals.
+
+\subsection{One caveat that belongs to half one and is not mine to fix}
+
+``Error'' is defined against ChaosNLI's \texttt{majority\_label}. That gold is itself
+a majority vote of human annotators and so carries its own noise. On an item where
+gold is wrong, \emph{every} judge is scored as erring together. That inflates
+$\tau^2$ --- it enters as an item effect, so it is absorbed into exactly the
+between-item share you are reporting. It does \emph{not} contaminate half two, which
+is computed after the item effect is removed. So: part of the $0.486$ is judges
+agreeing with each other and disagreeing with a noisy label, not judges failing on a
+hard item. The two are indistinguishable in this matrix. Worth a sentence in the
+article; it is a property of the benchmark, not of your analysis.
+
+\section{Half two: the statistic cannot answer the question}
+
+Three results, in increasing order of how much they close off.
+
+\subsection{It does not collapse toward zero --- it sits on its own floor}
+
+\begin{proposition}\label{prop:floor}
+Let $R$ be any $I\times J$ real matrix each of whose rows sums to zero (i.e.\ any
+per-item-demeaned residual matrix), let $G=R^{\top}R$, $d_j=\sqrt{G_{jj}}>0$. Then
+\[
+  \frac{1}{J(J-1)}\sum_{j\ne j'}\frac{G_{jj'}}{d_jd_{j'}}\;\ge\;-\frac{1}{J-1},
+\]
+with equality iff all $d_j$ are equal. Moreover, with the \emph{pooled}
+normalisation $\bar g=\frac1J\sum_jG_{jj}$ in place of $d_jd_{j'}$, the left side
+equals $-\frac{1}{J-1}$ \emph{identically} --- for every such $R$, with no sampling
+error at all.
+\end{proposition}
+
+\begin{proof}
+Row sums zero means $R\mathbf 1=0$, so $\mathbf 1^{\top}G\mathbf 1=\|R\mathbf
+1\|^2=0$, i.e.\ $\sum_{j\ne j'}G_{jj'}=-\sum_jG_{jj}=-J\bar g$. Dividing by
+$J(J-1)\bar g$ gives the pooled identity. For the Pearson form put $u_j=1/d_j$; then
+$\sum_{j\ne j'}G_{jj'}u_ju_{j'}=u^{\top}Gu-\sum_jG_{jj}u_j^2=u^{\top}Gu-J\ge-J$
+since $G\succeq0$. Equality needs $u\in\ker G$, and $\ker G\ni\mathbf 1$ with
+$u\propto\mathbf 1$ iff all $d_j$ coincide.
+\end{proof}
+
+\noindent Numerically: the pooled form reproduces $-1/(J-1)$ to machine precision on
+all three subsets, and over $4000$ random trials (Gaussian and binary,
+heteroscedastic, $J$ from $3$ to $19$) the floor is never violated --- the minimum of
+$(\text{statistic}+1/(J-1))$ is exactly $0$.
+
+So the number to compare against is $-1/31=-0.0323$, not $0$. Measured: alphaNLI
+$-0.0310$, SNLI $-0.0293$, MNLI-m $-0.0302$. \textbf{Reading $-0.031$ as
+``$\approx0$, therefore independent'' mistakes the floor for the origin.} The
+distance from the floor is the AM--GM gap in the per-judge residual variances, and
+nothing else.
+
+\subsection{The shared-prior parameter is exactly invisible}
+
+\begin{proposition}\label{prop:dead}
+Suppose, conditional on item $i$, the error vector has exchangeable covariance
+$\Sigma_i=s_i^2\bigl[(1-\rho)\mathrm{Id}_J+\rho\mathbf 1\mathbf 1^{\top}\bigr]$ for a
+common $\rho$. Let $\Cc=\mathrm{Id}_J-\tfrac1J\mathbf 1\mathbf 1^{\top}$ be the
+per-item demeaning projector. Then
+\[
+  \Cc\,\Sigma_i\,\Cc \;=\; s_i^2\,(1-\rho)\,\Cc .
+\]
+Hence $\rho$ enters the residual covariance \emph{only as a scalar factor}, the
+residual \emph{correlation} matrix is $\tfrac{J}{J-1}\Cc$ regardless of $\rho$, and
+every off-diagonal entry is $-1/(J-1)$ for every admissible $\rho$. In the Gaussian
+case $R^{(\rho)}\overset{d}{=}\sqrt{1-\rho}\,R^{(0)}$, so the sampling distribution
+of \emph{any} scale-invariant functional of the residual correlation matrix is
+\emph{identical} under $\rho=0$ and under any $\rho$.
+\end{proposition}
+
+\begin{proof}
+$\Cc\mathbf 1=0$ and $\Cc^2=\Cc$, so $\Cc\Sigma_i\Cc=s_i^2(1-\rho)\Cc\,\mathrm{Id}\,\Cc
++s_i^2\rho\,(\Cc\mathbf 1)(\Cc\mathbf 1)^{\top}=s_i^2(1-\rho)\Cc$. Mixing over
+items replaces $s_i^2$ by $\mathbb E[s_i^2]$ and preserves proportionality to $\Cc$.
+\end{proof}
+
+\noindent Verified symbolically at $J=3,4,5,9$ ($\Cc\Sigma\Cc-s^2(1-\rho)\Cc$ is the
+zero matrix), with $\partial_\rho(\text{residual correlation})=0$, and numerically
+$-0.25$ at $J=5$ for $\rho\in\{0,0.1,0.3,0.5,0.9,0.99\}$.
+
+\begin{corollary}
+No statistic computed from the per-item-demeaned residual correlation matrix has any
+power against exchangeable conditional dependence --- at any $I$, any $J$. The power
+curve is flat at the size. The requested minimum detectable
+$\rho_{\mathrm{shared}}$ does not exist, and a larger panel does not help.
+\end{corollary}
+
+\noindent The reason is geometric and I think it is the sentence worth keeping: a
+shared prior is a rank-one perturbation \emph{in the $\mathbf 1$ direction}, and
+per-item demeaning is precisely the projector that annihilates $\mathbf 1$. The
+statistic was asked to detect the one thing the transformation in front of it deletes.
+This is the transpose of a defect already in my document: $\omega^2$ is annihilated by
+the per-\emph{column} centring inside Pearson correlation (Thm.~4), so $\hat\varphi$
+reads $0.5001$ across $\omega^2\in\{0,\dots,25\}$. Same projector, other index. Note
+also that Prop.~\ref{prop:dead} holds for $\rho<0$ too, down to the admissible
+$-1/(J-1)$: even conditional \emph{anti}-coordination is invisible.
+
+\subsection{Deeper: for exchangeable judges the two hypotheses are one model}
+
+If judges are exchangeable within an item, each row is an exchangeable binary
+sequence, and a positively correlated exchangeable sequence is (de~Finetti) a
+mixture of i.i.d.\ Bernoulli --- i.e.\ conditionally \emph{independent} given a
+row-level latent. ``Hard item'' and ``shared prior'' are then the same statistical
+model with the latent relabelled; the distinction is causal and semantic, not
+distributional, and \emph{no} statistic on an $I\times J$ matrix recovers it.
+
+\begin{remark}
+The honest limit of this argument: de~Finetti's representation needs infinite
+exchangeability, and finite exchangeable sequences need not be mixtures of i.i.d.
+So strictly, this closes off the extendible part of the alternative. The sliver it
+leaves is non-extendible (negatively correlated) exchangeable structure --- which
+Prop.~\ref{prop:dead} shows is invisible to the residual correlation matrix anyway.
+Between the two results the exchangeable family is fully accounted for, by
+Prop.~\ref{prop:dead} exactly and by de~Finetti up to that caveat.
+\end{remark}
+
+\subsection{And the little information it does carry runs backwards}
+
+The statistic is not literally constant: the AM--GM gap responds to judge
+heteroscedasticity, which real dependence induces. Against an \emph{exact}
+within-row permutation null (\S\ref{sec:repose}), alphaNLI reads $-0.030953$ versus a
+null mean of $-0.031896$ (sd $5.0\times10^{-5}$), $z=+19$, $p\le0.002$; SNLI
+$z=+129$; MNLI-m $z=+324$. The departures are real and utterly negligible in
+magnitude --- the entire dynamic range here is $\sim10^{-3}$ --- but note the
+\emph{sign}: the observed value is \emph{closer to zero} than the null. More
+structure pushes the statistic toward zero. \textbf{So even the residual
+information in this statistic runs opposite to the intended inference: ``nearer
+zero'' is evidence \emph{against} conditional independence, not for it.}
+
+\section{The question reposed, and answered}\label{sec:repose}
+
+\subsection{The right null and the right statistic}
+
+\textbf{Null.} Your hypothesis is ``judge labels carry no information beyond the
+item.'' If so, every within-row permutation of the error matrix is equally likely,
+which gives an \emph{exact} finite-sample null with no model and no fitted difficulty
+distribution. Two versions:
+\begin{itemize}
+\item \textbf{N1}, fixed row sums: tests judge main effect $+$ judge clustering.
+\item \textbf{N2}, fixed row \emph{and} column sums (Strona et al.\ curveball): tests
+clustering \emph{beyond} the main effect. Since row and column sums are the
+sufficient statistics of the additive item-plus-judge (Rasch) model, N2 is its exact
+conditional test. This is the decisive one.
+\end{itemize}
+This null contains both conditional independence \emph{and} exchangeable conditional
+dependence of any strength --- so the test is blind to exactly what
+\S4.3 shows is unidentifiable, and sensitive to exactly what is not. That is the
+coherence I wanted before trusting it.
+
+\textbf{Statistic.} ESDOF (participation ratio) of the residual correlation matrix.
+Its population null value is \emph{exactly} $J-1$: under the null the residual
+correlation matrix is $\tfrac{J}{J-1}\Cc$, whose spectrum is $\tfrac{J}{J-1}$ with
+multiplicity $J-1$ and a single $0$, so
+$(\sum\lambda)^2/\sum\lambda^2=J^2/(J^2/(J-1))=J-1$. It measures \emph{flatness} of
+the residual spectrum, which is what ``no structure beyond the item'' actually means.
+The finite-sample null at $I\approx1000,J=32$ is $27.6$, not $31$ --- which is why the
+permutation null is necessary and the algebra alone would have overstated the effect.
+
+\subsection{Result}
+
+\begin{center}
+\begin{tabular}{lrrrrr}
+\toprule
+ & observed & N2 null mean & N2 null sd & $z$ & $p$\\
+\midrule
+alphaNLI & $21.241$ & $27.633$ & $0.194$ & $-32.96$ & $\le0.001$\\
+SNLI     & $17.407$ & $29.129$ & $0.115$ & $-102.03$ & $\le0.001$\\
+MNLI-m   & $17.751$ & $29.556$ & $0.090$ & $-131.55$ & $\le0.001$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent Two independent nulls agree: curveball gives $27.633$, a latent-normal
+copula calibration at zero effect gives $27.723$. \textbf{The judges are not
+conditionally independent given the item.} This is not marginal and it replicates on
+all three subsets.
+
+\subsection{What the structure is}
+
+\textbf{Vendor families are real.} Grouping the 32 judges into 10 vendors, the mean
+\emph{residual} correlation within vendor is $+0.0761$ against $-0.0409$ between
+vendor, a gap of $+0.1170$; permuting the vendor labels among judges gives
+$p=5\times10^{-5}$. SNLI: $+0.0985/-0.0412$, gap $+0.1397$, $p=5\times10^{-5}$.
+MNLI-m: $+0.0653/-0.0391$, gap $+0.1044$, $p=9\times10^{-4}$.
+
+\textbf{But vendor is not the whole deficit.} A pure vendor-block alternative tuned
+to reproduce the observed gap $+0.117$ predicts ESDOF $\approx26.9$; the data shows
+$21.24$. So most of the deficit is \emph{not} vendor-aligned. The leading residual
+eigenvalue is $4.11$ against a flat null of $1.032$, and its loading correlates
+$+0.78$ with the judge's own error rate (SNLI $+0.64$, MNLI-m $+0.57$).
+\textbf{That looks like a capability axis: weaker judges fail together on the same
+items, beyond what item difficulty predicts.} I flag this as the interpretation I am
+least confident in --- vendor explains $R^2=0.57$ of that same loading, so vendor and
+capability are badly confounded here and I have not separated them.
+
+\textbf{Minimum detectable effect, for the alternative that is detectable.} Against a
+vendor-block alternative, the ESDOF omnibus reaches $80\%$ power at
+$\rho_{\mathrm{blk}}\approx0.25$, i.e.\ an observable within-vendor excess residual
+correlation of $\approx0.134$. The targeted vendor-label test is far more sensitive
+($p=5\times10^{-5}$ at an excess of $0.117$) --- as a targeted test should be. Use
+ESDOF as the omnibus screen and the label-permutation test when you have a candidate
+grouping.
+
+\section{Magnitude: why your headline survives anyway}
+
+The violation is overwhelming statistically and small practically, and both halves
+of that sentence matter.
+
+\begin{center}
+\begin{tabular}{lrrrrr}
+\toprule
+ & $\phib$ & $\phib$ (between-vendor) & vendor part & \% of $\phib$ & ceiling: all $\to$ betw.\\
+\midrule
+alphaNLI & $0.4860$ & $0.4810$ & $0.00497$ & $1.02\%$ & $2.0575\to2.0788$\\
+SNLI     & $0.4314$ & $0.4249$ & $0.00645$ & $1.49\%$ & $2.3183\to2.3534$\\
+MNLI-m   & $0.4920$ & $0.4879$ & $0.00404$ & $0.82\%$ & $2.0326\to2.0494$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent The part of $\phib$ that \emph{provably} is not item difficulty is about
+$1\%$ of it. The remainder splits between genuine item difficulty and exchangeable
+shared prior in a way nothing in this matrix can resolve (\S4.3) --- so $1\%$ is a
+\emph{lower bound} on the non-item share, not an estimate of it.
+
+\textbf{Design consequence, and it reconciles your vendor-diversity rung with your
+ceiling.} A one-judge-per-vendor subpanel removes most of the conditional
+dependence: the relative ESDOF deficit falls from $20.6\%$ to $5.1\%$ on alphaNLI,
+$37.8\%\to12.0\%$ on SNLI, $38.1\%\to12.9\%$ on MNLI-m --- a reduction of roughly
+$70$--$75\%$. And it buys $+0.02$ effective judges. \textbf{Diversify across vendors
+to remove shared conditional blind spots, not to raise $n_{\mathrm{eff}}$.} Those are
+different goods and your article currently runs them together.
+
+Note the shape this review keeps finding, three times: \emph{the conclusion survives
+and the stated justification does not.} $\phib$'s value survives, its
+item attribution does not. The ceiling of about two survives, conditional
+independence does not. ``A different vendor buys $\approx$ nothing'' survives (for
+$n_{\mathrm{eff}}$), ``vendor is a registered null'' does not.
+
+\section{Citation and textual findings}
+
+\textbf{(1) \texttt{\_article.tex} l.75 --- misattributed reference, and a claim my
+data contradicts.} The text reads ``The Frontier Paradox study (arXiv 2609.22512)
+measured error-correlation across judges and found that \emph{cross-provider}
+correlation sits right on top of \emph{within-provider} \ldots{} vendor behaves like a
+\emph{registered null}.'' arXiv:2609.22512 is \emph{Agreement Overstates Evidence:
+Error Dependence in LLM Judge Consensus}, by Hossain, Yousefi \& Lim --- not
+anything titled ``Frontier Paradox.'' Either the ID or the name is wrong; please fix
+whichever. Its abstract's headline figure is an average pairwise error correlation of
+$0.21$ on a ten-judge bank ($\approx3.5$ independent judges); I could not verify the
+``$0.42$--$0.56$ cross-provider'' or ``within-Gemini $\approx0.40$'' figures from the
+abstract, so those may be body numbers --- please give a locator. Separately, the
+\emph{inference} is unsafe on its own terms: it compares a range to a single number
+across two different panels and concludes overlap. A paired test on the panel in your
+own data appendix gives within-vendor $>$ between-vendor, significantly, on all
+three subsets. I would retire ``registered null'' and keep the $n_{\mathrm{eff}}$
+argument, which my numbers support.
+
+\textbf{(2) \texttt{\_article.tex} l.79 --- correct reference, unverified locator.}
+arXiv:2609.29769 is indeed Rao \& Callison-Burch, \emph{JEV vs.\ LLMs as Rubric
+Judges: Cheaper, Faster, and Wrong in the Same Places}, and its abstract does support
+``err alike.'' The specific ``$+45.7$ percentage points over a matched-marginal
+null'' is not in the abstract --- give a section or table number.
+
+\textbf{(3) Your data citation is correct.} arXiv:2609.21277 is \emph{How Many Humans
+Are 32 LLM Judges Worth?} by Li Chao, Yu Yingying \& Li Yunfeng (2026-09-18), CC
+BY 4.0, code at \texttt{github.com/Chao1208/32judges-votes}. Attribution, licence and
+shapes in your README all check out.
+
+\textbf{(4) A trap to avoid if you cite 2609.21277's numbers.} Its abstract reports
+``spectral matching'' $\nu_H=4.242,\,6.459,\,6.499$. Your ESDOF is the participation
+ratio of the error correlation matrix, which I measure as $3.767,\,4.384,\,3.530$.
+These are \emph{different statistics}. The alphaNLI pair ($4.242$ vs my asymptotic
+$1/\phib^2=4.233$) agrees to $0.2\%$ and the other two do not agree at all --- a
+magnitude coincidence on one subset. Do not equate them.
+
+\section{Registry actions}
+
+Against \texttt{proofs/registry/judge-panel-neff.json}:
+
+\begin{itemize}
+\item \texttt{omega2-negligible-on-alphanli}: \textbf{speculative $\to$ computed}.
+Measured by me on byte-identical data, all three subsets, my own pipeline:
+$\omega^2/\tau^2\le2.00\%$.
+\item \texttt{attribution-holds-unconditionally}: \textbf{in-progress $\to$
+dead-end}. It cannot hold unconditionally. The item vs exchangeable-shared-prior
+split is not identified from an $I\times J$ matrix, and the non-exchangeable part is
+demonstrably nonzero. Recorded reason: \emph{the blocking condition was
+misidentified.} I had it as ``conditional on the absence of a judge main effect'';
+the main effect is $<2\%$ and harmless, while non-exchangeable conditional
+dependence is large and was not in the conjecture at all.
+\item \textsc{new} \texttt{demeaned-residual-correlation-is-rho-free}:
+\textbf{proved}. Props.~\ref{prop:floor} and \ref{prop:dead}.
+\item \textsc{new} \texttt{residual-esdof-permutation-test}: \textbf{proved} (null
+value exactly $J-1$) and \textbf{computed} (the three measurements).
+\item \textsc{new} \texttt{judge-dependence-beyond-item-on-chaosnli}:
+\textbf{computed}. ESDOF deficit, vendor gap, capability axis.
+\item \texttt{phibar-is-item-variance-share}: stays \textbf{proved} --- it carries
+(ECI) as a hypothesis --- but \textbf{flagged}: the node's \emph{name} asserts the
+conclusion without the hypothesis, and (ECI) is now known false on this panel. A
+node named after its conclusion is how a hypothesis gets dropped. Rename.
+\item root: stays \textbf{in-progress}, statement revised as above.
+\end{itemize}
+
+\section{What I am least sure about}
+
+Stated plainly, not as a formality.
+
+\begin{enumerate}
+\item \textbf{The capability-axis reading of PC1.} The $+0.78$ correlation with judge
+error rate is solid; calling it ``capability'' is interpretation, and vendor accounts
+for $R^2=0.57$ of the same loading. Vendor and capability are confounded in this
+panel and I did not separate them. This is the weakest claim in the document.
+\item \textbf{Curveball mixing.} I used a single warm chain, $2\times10^4$ burn-in
+and $2\times10^3$ trades between draws. Three things reassure me --- N1 and N2 agree,
+the copula calibration agrees, and the effect is $30$--$130$ sd --- but I ran no
+formal convergence diagnostic. If the chain under-mixed, the null variance is
+understated and the $z$'s are too large; the \emph{sign} and rough size of the
+deficit do not depend on it.
+\item \textbf{The identification argument's reach.} Prop.~\ref{prop:dead} is exact
+and I would defend it anywhere. The stronger ``not identified by any statistic''
+rests on de~Finetti and so on extendibility; see the remark in \S4.3. I believe it
+is right in substance and I have stated its limit.
+\item \textbf{Gold-label noise} (\S2.3) is a real confound for half one that I have
+described but not quantified. Quantifying it needs the human label distributions,
+which are in ChaosNLI but not in the matrices you sent.
+\end{enumerate}
+
+\section{Questions for you}
+
+\begin{enumerate}
+\item Do you want the ESDOF-on-residuals test in the article? It is the honest
+replacement for the demeaned-correlation check, it has a clean null ($J-1$), and it
+gives your ``shared blind spots'' language something it can actually measure. I think
+it is the best thing in this review for your purposes.
+\item Will you take the vendor finding? It cuts against your rung-1 ``registered
+null'' but \emph{supports} the practical advice, with a better reason. It is also the
+one place where my measurement and your cited source disagree, and I would rather
+you adjudicate that than me.
+\item Can you get the per-item human label distributions into the appendix? That
+would let me bound the gold-noise share of $\phib$ and turn \S2.3 from a caveat into
+a number.
+\item Does your \texttt{estimand\_check.py} variant (C) --- the demeaned-error
+$\phib$ --- appear anywhere in the article's numbers? If it does, Prop.~\ref{prop:floor}
+says its value is $-1/(J-1)$ plus heteroscedasticity and it should be removed or
+relabelled rather than reported.
+\end{enumerate}
+
+\vspace{1em}
+\noindent\textit{All computations: \texttt{clio-vega/rick-review@8cd31ba},
+\texttt{code-20261007-lyra-spine/}. Pure Python and NumPy; no SciPy in my container,
+so \texttt{mde2.py} builds its own normal quantile from \texttt{math.erf}. The first
+version of that script reported zero power at every effect size because the
+latent-normal injection was attenuated to nothing by thresholding at a $p\approx0.094$
+tail; the positive control in \texttt{mde2.py} is what caught it, and it is in the
+repository.}
+
+\end{document}
