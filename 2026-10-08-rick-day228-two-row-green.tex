@@ -480,4 +480,61 @@ All scripts are in \texttt{code-20261008/} of this repository:
 \texttt{thm2pt\_a2.py} (the $a=2$ verification),
 \texttt{jingliu.py} (Finding~\ref{f:jl}).
 
+
+\section*{Addendum, same day, 11:15 --- priority correction}
+
+I sent this review at 10:38. Rick had emailed twice that morning, at 08:39 and 08:42, and I had
+not read my inbox before reviewing. Both messages bear directly on what is above, and one of them
+is a better version of my own headline. Correcting the record.
+
+\paragraph{1. The ``classical'' verdict is Rick's, by a shorter and better route.} His note
+\emph{Two-row Green polynomials are Young's rule} (WIP \texttt{0798053}, PDF in \texttt{840d5a0})
+derives the whole two-row $\times$ \emph{arbitrary}-$\rho$ formula in three lines from
+Macdonald III~(7.6$'$) and Young's rule: $K_{(n-j,j),(n-k,k)}(t)=t^{\,k-j}$ because the
+Kostka--Foulkes polynomial is a \emph{monomial} here (one SSYT), then
+$\chi^{(n-j,j)}_\rho=\pi_j-\pi_{j-1}$ by Young's rule, then Abel summation:
+\[
+X^{(n-k,k)}_\rho(t)=\pi_k(\rho)+(t-1)\sum_{j<k}t^{\,k-1-j}\pi_j(\rho),
+\]
+with $\pi_j(\rho)$ the number of $j$-subsets fixed by a permutation of cycle type $\rho$. He
+reached this \emph{before} my review went out, and he reached it from the textbook rather than
+from a 2022 paper. §\ref{sec:morris}'s verdict stands; the credit for it does not belong where I
+put it.
+
+\paragraph{2. His derivation and Jing--Liu's formula are the same formula.} $\pi_j(\rho)$ counts
+sub-multisets of the parts of $\rho$ summing to $j$, so $\sum_j\pi_j(\rho)u^j=\prod_i(1+u^{\rho_i})
+=\prod_{i\ge1}(1+u^i)^{m_i(\rho)}$ --- which is exactly Jing--Liu's $D_t(\rho)$. Verified as
+generating functions for all $\rho\vdash n$, $n\le8$. So $\pi_j=D^{(j)}$ and his Abel-summation
+display \emph{is} their §2 display, term for term: \textbf{0 symbolic mismatches} on all
+$410$ two-row $(\lam,\rho)$ pairs with $n\le9$. The two routes agree because they are one result;
+what his adds is the \emph{reason} --- Young's rule plus the monomiality of two-row
+Kostka--Foulkes.
+
+\paragraph{3. His ask, answered.} He asked whether his formula reproduces my Theorem~C.
+It does: \textbf{0 symbolic mismatches} on all $155$ rows, and likewise against his own Day 228
+three-branch form. I also pushed it past what he tested --- against my independent engine for
+two-row $\lam$ and \emph{arbitrary} $\rho$, $n\le9$: $410$ pairs, $2460$ evaluations,
+\textbf{0 disagreements}. (Script \texttt{code-20261008/young\_rule.py}. Two apparent failures in
+the first run printed \emph{identical} values on both sides --- a \texttt{sympy} comparison
+artifact from \texttt{nsimplify}, not a disagreement; fixed to an exact rational comparison.)
+
+\paragraph{4. Two things above were already his.} The $155=85$ ordered-class reconciliation
+(\S\ref{sec:155}) and the $\lam_1$-independence fibre sizes (\S\ref{sec:fibre}) were both in his
+08:42 message, which also credits my count warning. Mine were arrived at independently and one of
+them is still worth its place --- the fibre invariance in \S\ref{sec:fibre} is read off the
+\emph{engine} rather than off his formula, which his cannot be --- but neither is new, and
+\S\ref{sec:155}'s reconstruction is a confirmation, not a finding.
+
+\paragraph{5. What survives of this review.} The third instrument and its controls; the
+per-branch ablation and the $23$ distinct values (\S\ref{sec:155}); the $Q$-normalisation and the
+four-degree support, which is now orthogonal to his note rather than a comment on it, since his
+follow-up \emph{supersedes} his own cup-diagram paragraph --- the question (Q393) remains real,
+because the four-degree support is a fact about the polynomial either way; the $a=2$ linearity
+strengthening and the \texttt{thm:CT} equation-number discharge; and the grades.
+
+\paragraph{6. The process failure, named.} My brief told me to read his record before searching,
+and listed his open messages as of midnight. I checked the \emph{brief}'s list and not the
+\emph{inbox}, and two hours of his work was sitting there. A brief's account of what a
+collaborator has said is a snapshot with a timestamp, and the timestamp was eleven hours old.
+
 \end{document}
