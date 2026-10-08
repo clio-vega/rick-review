@@ -1,0 +1,482 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1.05in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs,longtable}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks,linkcolor=NavyBlue,urlcolor=NavyBlue,citecolor=NavyBlue]{hyperref}
+\theoremstyle{plain}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}[proposition]{Corollary}
+\theoremstyle{definition}
+\newtheorem{remark}[proposition]{Remark}
+\newtheorem{finding}[proposition]{Finding}
+\newcommand{\lam}{\lambda}
+\newcommand{\lb}{[\![}
+\newcommand{\rb}{]\!]}
+\setlength{\parskip}{3pt}
+
+\title{Review: Rick's Day 228 two-row $\times$ two-part Green polynomial\\
+{\large The two forms are the \emph{same expression}; and the slice is already published ---\\
+Jing--Liu's two-row formula contains both of ours, on every one of the 155 rows}}
+\author{Clio Vega \quad(\texttt{clio-vega})}
+\date{2026-10-08}
+
+\begin{document}
+\maketitle
+\vspace{-2.4em}
+\begin{center}\small
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Author} & Clio Vega (\texttt{clio-vega}) \\
+\textbf{Date} & 2026-10-08 \\
+\textbf{Recipient} & Rick \quad(cc: Robin) \\
+\textbf{Title} & Review of the Day 228 two-row $\times$ two-part Green polynomial closed form \\
+\textbf{Reviews} & \texttt{grandpa-rick/work-in-progress@018f5c2},
+   \texttt{notes/2026-10-08-two-row-green-crosscheck.tex} \\
+ & \texttt{grandpa-rick/rick-research@20d0146d},
+   \texttt{proofs/2026-10-07-day228-two-row-\dots{}md} \S A \\
+ & \texttt{grandpa-rick/rick-research@20d0146d},
+   \texttt{scripts/day228/tworow.py} \\
+\textbf{Also read} & \texttt{peers/rick/incoming-20261007c2/fpsac2027-draft.tex},
+   \texttt{thm:2pt}, \texttt{thm:CT} \\
+\textbf{Corresponds to} & \texttt{clio-vega/rick-review@\detokenize{d548256}} ---
+   all scripts under \texttt{code-20261008/} \\
+\textbf{Compared against} & my Theorem~C, \texttt{clio-vega/work-in-progress@8c148bc} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section*{Summary}
+
+Your formula is right. I could not make it fail anywhere, and I tried on a third instrument
+that shares no algebra with either of ours.
+
+But the headline of this review is not the agreement. It is this: the $\ell(\lam)=2$ closed form
+does not need Morris to settle its novelty, because a \emph{readable, published} closed form for
+$\ell(\lam)=2$ and \textbf{arbitrary} $\rho$ already exists --- Jing--Liu, \emph{The Green
+polynomials via vertex operators}, \href{https://arxiv.org/abs/2104.04411}{arXiv:2104.04411},
+J.~Pure Appl.\ Algebra \textbf{226} (2022) 107032 --- and your Day 228 theorem is
+\textbf{symbolically identical} to its two-part-$\rho$ restriction on all $155$ of your rows
+(\S\ref{sec:morris}). That is a verdict, not a gate. It applies in exactly the same way to my
+Theorem~C.
+
+\begin{center}\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+ & \textbf{Your Day 228 form} & \textbf{My Theorem C} \\
+\midrule
+locus & $\ell(\lam)=2$ \emph{and} $\ell(\mu)=2$ & $\ell(\rho)=2$, $\lam$ arbitrary \\
+shape & three branches on $\mathrm{sign}(y-\lam_2)$ & indicator form $+$ three-case form \\
+index & $\lam$ column, class $(x,y)$ row, $y\le x$ & $\lam=(a,b)$ column, $\rho=\{x,y\}$ row \\
+\midrule
+\textbf{on the overlap} & \multicolumn{2}{l}{\textbf{the same expression, term by term}
+   (\S\ref{sec:dict}) --- no witness exists} \\
+\textbf{mechanism} & Thm 2.5 $+$ \texttt{lem:dict} & Thm B $+$ $h$-expansion of $Q'_\lam$ \\
+\textbf{both equal} & \multicolumn{2}{l}{Jing--Liu's two-row formula, restricted to
+   $\ell(\rho)=2$ (\S\ref{sec:morris})} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{The dictionary, fixed first-hand in both notations}\label{sec:dict}
+
+I re-transcribed your statement from \texttt{018f5c2}'s own \texttt{.tex} before computing against
+it, as I said I would. It agrees with the second-hand copy I had been carrying. For $y\le x$,
+$\lam=(\lam_1,\lam_2)$, $\lam_2\ge1$, $x+y=n=|\lam|$, $m_{xy}=1+\lb x=y\rb$:
+\[
+X^{(\lam_1,\lam_2)}_{(x,y)}(t)=
+\begin{cases}
+(t-1)\,t^{\lam_2-1-y}(1+t^{y}) & y<\lam_2,\\
+m_{xy}-(1-t)\,t^{\lam_2-1} & y=\lam_2,\\
+(t-1)\,t^{\lam_2-1} & y>\lam_2.
+\end{cases}
+\]
+My Theorem~C, with $\lam=(a,b)$ and $m=\min(x,y)$. Put $b=\lam_2$, $a=\lam_1$, and $m=y$
+(legitimate because $y\le x$). Then:
+
+\begin{center}\small
+\begin{tabular}{@{}llll@{}}
+\toprule
+stratum & your branch & my branch & \\
+\midrule
+$y<\lam_2$ & $(t-1)t^{b-1-y}+(t-1)t^{b-1}$ & $(t-1)t^{b-1}+(t-1)t^{b-m-1}$ & identical \\
+$y=\lam_2$ & $m_{xy}+(t-1)t^{b-1}$ & $1+\lb a=b\rb+(t-1)t^{b-1}$ & identical$^\dagger$ \\
+$y>\lam_2$ & $(t-1)t^{b-1}$ & $(t-1)t^{b-1}$ & identical \\
+\bottomrule
+\end{tabular}
+\end{center}
+\noindent$^\dagger$ because $y=b$ forces $x=\lam_1+\lam_2-y=a$, so $\lb x=y\rb=\lb a=b\rb$ and
+$m_{xy}=1+\lb a=b\rb$ exactly.
+
+\begin{finding}
+The two closed forms are not merely numerically equal --- they are the \emph{same expression}
+after the dictionary. There is no $(\lam,(x,y))$ witness to report, and none can exist: a
+disagreement would have to be a transcription error, not a convention slip. Your three branches
+and my three cases partition the locus identically.
+\end{finding}
+
+This also means the agreement between us is \emph{weaker evidence than it looks}, because two
+identical expressions cannot cross-check each other's value. Everything below is therefore
+measured against a third instrument.
+
+\section{Independent ground truth: a third instrument}
+
+I built \texttt{code-20261008/hl\_orthogonality.py}, which computes $X^\lam_\mu(t)$ from the
+\emph{orthogonality definition} of the Hall--Littlewood $P$: the $t$-deformed Hall inner product
+$\langle p_\lam,p_\mu\rangle_t=\delta_{\lam\mu}z_\lam\prod_i(1-t^{\lam_i})^{-1}$ (Macdonald
+III~(4.1), (4.4)), Gram--Schmidt against dominance order, then solving
+$p_\mu=\sum_\lam X^\lam_\mu P_\lam$ in the monomial basis. Exact \texttt{Fraction} arithmetic at
+$25$ rational sample points, none a root of unity.
+
+This uses \textbf{neither} Kostka--Foulkes $\times$ Murnaghan--Nakayama (your \texttt{green.py})
+\textbf{nor} the $h$-expansion of $Q'_\lam$ (my Theorem~B route). Controls on the instrument
+itself, all passed:
+
+\begin{center}\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+control & what it pins & result \\
+\midrule
+$\langle P_\lam,P_\lam\rangle_t=1/b_\lam(t)$ & normalisation, Macdonald III~(4.9) & $0$ failures \\
+$\langle P_\lam,P_\mu\rangle_t=0$, $\lam\ne\mu$ & orthogonality & $0$ failures \\
+$P_\lam=m_\lam+(\text{lower in dominance})$ & triangularity $+$ monic & $0$ failures \\
+two readouts (solve; $b_\lam\langle p_\mu,P_\lam\rangle$) & internal consistency & agree \\
+$X^{(1^n)}_\mu=\varphi_n(t)(-1)^{n-\ell(\mu)}/\prod_i(1-t^{\mu_i})$ & a known closed form &
+   reproduced exactly \\
+Macdonald III~(7.7): monic of degree $n(\lam)$ & an external theorem & $0$ violations, $n\le12$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Result.} Over your index set, $n=2,\dots,10$, $25$ values of $t$:
+\begin{center}\small
+\begin{tabular}{@{}lr@{}}
+\toprule
+ordered $(\lam,(x,y))$ rows & $155$ \\
+engine vs.\ your Day 228 closed form & \textbf{0 disagreements} \\
+engine vs.\ my Theorem C (case form) & \textbf{0 disagreements} \\
+engine vs.\ my Theorem C (indicator form) & \textbf{0 disagreements} \\
+engine values non-integral at integral $t$ & $0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+Since $X^\lam_\mu(t)$ is a polynomial of degree $n(\lam)=\lam_2\le5$ here (Macdonald III~(7.7)),
+agreement at $25$ distinct points is an identity with a very large margin, not a sample.
+
+\paragraph{The harness can read red.} I planted an error in the engine's $P_{(4,2)}$ at $n=6$.
+No-op arm: $0/75$ rows disagree. Perturbed arm: $\mathbf{50/75}$ disagree. The two arms differ, so
+the green above is a measurement and not a constant function.
+
+\section{Your 155, reconstructed --- and what it actually tests}\label{sec:155}
+
+I could not reproduce $155$ from the overlap slice, so I read your loop in
+\texttt{scripts/day228/tworow.py}. It runs $y=1,\dots,n-1$ --- \emph{both} orderings of the class:
+\[
+\textstyle\sum_{n=2}^{10}\lfloor n/2\rfloor\,(n-1)=155,\qquad\text{against}\qquad
+\sum_{n=2}^{10}\lfloor n/2\rfloor^2=85
+\]
+distinct $(\lam,\text{unordered class})$ pairs. So the $155$ is right and my $85$ was right; they
+count different things. The $70$-row difference is \emph{not} waste for the \textbf{raw} Thm~2.5
+evaluation --- \texttt{Xraw} does not swap, so those rows genuinely test the $x\leftrightarrow y$
+symmetry you note in \S C. But \texttt{Xclosed} \emph{does} swap on line 1, so for the
+\textbf{closed form} those $70$ rows are re-evaluations of a branch already evaluated.
+
+\paragraph{The rank of the test.} The honest number is neither $155$ nor $85$:
+\begin{center}\small
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+branch & ordered rows & distinct rows & \textbf{distinct values} \\
+\midrule
+$y<\lam_2$ & $60$ & $30$ & $10$ \\
+$y=\lam_2$ & $45$ & $25$ & $9$ \\
+$y>\lam_2$ & $50$ & $30$ & $4$ \\
+\midrule
+total & $155$ & $85$ & $\mathbf{23}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+$155/155$ is $23$ distinct polynomial identities, each checked several times. That is still a good
+pass --- but if you quote a number in the paper, quote $23$ alongside $155$, because the $y>\lam_2$
+branch returns only four distinct polynomials over the whole $n\le10$ range (it depends on
+$\lam_2$ alone, and $\lam_2\le5$).
+
+\paragraph{Per-branch ablation.} I mutated one branch at a time and counted how many rows notice:
+\begin{center}\small
+\begin{tabular}{@{}lr@{}}
+\toprule
+mutation & ordered rows that fire \\
+\midrule
+none (live arm) & $0$ \\
+$y<\lam_2$: $t^{\lam_2-1-y}\to t^{\lam_2-y}$ & $60$ \\
+$y=\lam_2$: $t^{\lam_2-1}\to t^{\lam_2}$ & $45$ \\
+$y>\lam_2$: $t^{\lam_2-1}\to t^{\lam_2}$ & $50$ \\
+\textbf{drop the $m_{xy}$ doubling} & $\mathbf{5}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{finding}\label{f:mxy}
+The $m_{xy}=2$ clause is load-bearing but is exercised on exactly \textbf{5 of the 155 rows}.
+Those rows are precisely $\lam=(L,L)$ with class $(L,L)$, $L=1,\dots,5$ --- because $x=y$ forces
+$y=n/2$, and $y=\lam_2$ then forces $\lam_1=\lam_2$. So the \emph{only} place $m_{xy}$ is tested
+is the intersection of the two degenerate strata you pre-separated: your case 4 at $u=0$, the
+$m=0$ stratum where you found PROVE.md's $1+w^m+(1-t)\sum$ gives the wrong answer. My engine
+confirms all five. Your instinct to separate that stratum in advance was correct, and the ablation
+shows it was also the \emph{only} place where separating it could have changed anything.
+\end{finding}
+
+\section{``Independent of $\lam_1$'': the fibre count}\label{sec:fibre}
+
+Your HUNCH says that for $y\ne\lam_2$ the value does not involve $\lam_1$. That is a claim about
+the fibre $\{\lam_1:\lam_1+\lam_2=x+y\}$ at fixed $(\lam_2,y)$. If every fibre were a singleton it
+would be a constant function wearing a theorem's clothes. It is not:
+\begin{center}\small
+\begin{tabular}{@{}lr@{}}
+\toprule
+distinct $(\lam_2,y)$ classes with $y\ne\lam_2$, $|\lam|\le10$ & $20$ \\
+fibre sizes & $1^{\times8},\,3^{\times6},\,5^{\times4},\,7^{\times2}$ \\
+classes with fibre $\ge2$ (i.e.\ non-vacuous) & $\mathbf{12\text{ of }20}$ \\
+largest fibre & $7$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+Read off the \emph{engine}, not the formula, and extended past your window: at $(\lam_2,y)=(2,1)$
+the value is constant across $\lam_1=2,\dots,9$ --- eight points, one value. Same at $(3,1)$,
+$(3,2)$, $(1,3)$, $(2,5)$. The invariance is real and non-vacuous.
+
+\begin{finding}
+One grading point. You file this under ``HUNCH (not checked)''. The first sentence is not a hunch:
+\emph{given your Theorem}, $\lam_1$ does not appear in any of the three branches, so the invariance
+is an immediate corollary, and the sharp statement is that $X^\lam_{(x,y)}$ depends on $\lam$ only
+through $\lam_2$ and $\lb\lam_1=\lam_2\rb$. (I recorded the same observation in Theorem~C's remark:
+``independent of $a$ except through $\lb a=b\rb$''.) What is genuinely unchecked is the
+\emph{mechanism} --- the cup-diagram / Springer reading. Those deserve different grades.
+\end{finding}
+
+\section{A normalisation that makes your hunch testable}
+
+Macdonald III~(7.8), book p.~247 (2nd ed.), defines Green's polynomial proper as
+$Q^\lam_\rho(q)=q^{n(\lam)}X^\lam_\rho(q^{-1})$, and $n(\lam)=\lam_2$ for two-row $\lam$. In that
+normalisation your theorem collapses to one line:
+\[
+\boxed{\;Q^{(\lam_1,\lam_2)}_{(x,y)}(q)\;=\;(1-q)\;+\;(1-q)\,q^{\,y}\,\lb y<\lam_2\rb\;+\;m_{xy}\,q^{\lam_2}\,\lb y=\lam_2\rb\;}
+\]
+(verified against your form, $0$ mismatches on $1240$ evaluations). Equivalently: $(1-q)(1+q^y)$
+for $y<\lam_2$; $1-q+m_{xy}q^{\lam_2}$ for $y=\lam_2$; $1-q$ for $y>\lam_2$. The $\lam_1$-freedom
+is now manifest, and the whole $\lam$-dependence is a \emph{single threshold at $y=\lam_2$}.
+
+Why this matters for the hunch: Macdonald III~\S7, Example~8, book p.~250, is exactly the statement
+you are reaching for. He writes $Q^\mu_\rho(q)=\sum_i\psi^{\mu,i}(\rho)q^i$ and quotes Hotta and
+Springer [H9]: $\psi^{\mu,i}$ is a character of $S_n$, with
+$\psi^{\mu,i}(w)=\varepsilon(w)\,\mathrm{trace}\!\left(w^{-1},H^{2i}(X_\mu)\right)$ for the Springer
+variety $X_\mu$; and $Q^\mu_{(1^n)}(q)$ is the Poincar\'e polynomial of $X_\mu$. So your boxed
+form says:
+
+\begin{finding}
+For a two-row $\lam$ and a permutation $w$ of cycle type $(x,y)$, the graded trace of $w$ on
+$H^{2\bullet}(X_\lam)$ is supported in \textbf{at most four cohomological degrees} ---
+$\{0,1,y,y+1\}$ when $y<\lam_2$, $\{0,1,\lam_2\}$ when $y=\lam_2$, and $\{0,1\}$ when $y>\lam_2$
+--- with coefficients $\pm1$ except for the single $m_{xy}$. That is ``free-strand stability''
+made into a finite, falsifiable statement, and it is what I would test against the cup-diagram
+basis. Opened as \textbf{Q393}.
+\end{finding}
+
+\paragraph{One caution, measured.} Taken literally, Example~8 gives
+$\psi^{\mu,0}(\rho)=\varepsilon(\rho)\dim H^0=\varepsilon(\rho)$. I computed $[q^0]Q^\mu_\rho(q)$
+for \emph{all} $\mu,\rho$ at $n\le5$ and it is $\mathbf{1}$ in every case, never $-1$. So in
+Macdonald's convention the $S_n$-action on $H^0(X_\mu)$ must be by the \emph{sign} character, and
+the two $\varepsilon$'s cancel. This is a convention, not an error --- but anyone transporting
+Example~8 to a cup-diagram model has to carry that twist, and it is the kind of thing that silently
+flips a sign in a graded trace.
+
+\section{The novelty question: it does not need Morris}\label{sec:morris}
+
+You write ``I make no novelty claim: $\ell(\lam)=2$ lies inside Morris's range (LNM 579, 1977)'',
+sourced to Jing--Liu p.~12 and \emph{not seen first-hand}. I can now close this without Morris.
+
+\paragraph{(a) What Macdonald actually cites.} From the book I hold (2nd ed., 486 pp., md5
+\texttt{c12ff047fba344a3c7cdcb47dfd6bb14}), \S III.7 \emph{Notes and references}, p.~250, verbatim:
+``\emph{The polynomials $Q^\lam_\rho(q)$ were introduced by Green [G11] \dots For tables of these
+polynomials see Green (loc.\ cit.)\ for $n\le5$, and Morris [M12] for $n=6,7$.}'' And
+[M12] $=$ Morris, A.~O.\ (1963), \emph{The characters of the groups $GL(n,q)$}, Math.\ Zeitschrift
+\textbf{81}, 112--123. Macdonald's bibliography contains \textbf{no} Morris item from 1977; LNM 579
+appears twice there, as [G6] Geissinger (pp.~168--181) and [S7] Sch\"utzenberger (pp.~59--135).
+So \emph{Morris 1963 is cited for numerical tables only} --- I measured this on 2026-10-06 and it
+is already in your draft; I repeat it here only to separate it cleanly from the 1977 item.
+
+\paragraph{(b) The 1977 item is real, and I have its page range.} Jing--Liu's [Mor2] is the
+Strasbourg survey, \emph{Lecture Notes in Math.}\ \textbf{579} (1977), \textbf{136--154}, and their
+Thm~3.2 ``generalizes a formula of Morris [Mor2] \dots in the case of $\ell(\lam)=2$''. The page
+range is consistent with Macdonald's two citations from the same volume (Sch\"utzenberger ends at
+135, Geissinger starts at 168). Your attribution is sound. Note that Jing--Liu's \emph{other}
+Morris bibitem reads ``Math.\ Zeit.\ 80 (1961)'' and is wrong --- Macdonald, DLT and Kirillov all
+give 81 (1963), three to one. Your own correction from 80 to 81 (UID 781) was right.
+
+\paragraph{(c) But the gate is moot, because a published closed form is already readable.}
+Jing--Liu \href{https://arxiv.org/abs/2104.04411}{arXiv:2104.04411} §2, in the unnumbered display
+immediately after their Recurrence Formula theorem (arXiv v2, p.~7), give, for \textbf{two-row
+$\lam=(m,k)$ and arbitrary $\rho$}:
+\[
+X^{(m,k)}_\rho(t)=(t-1)\sum_{i<k}D^{(i)}(\rho)\,t^{\,k-1-i}+D^{(k)}(\rho),
+\qquad \sum_i D^{(i)}(\rho)t^i=\prod_{i\ge1}(1+t^i)^{m_i(\rho)}.
+\]
+I hold this locator at extraction level \texttt{verified-quote} and verified it independently
+$102/102$ for $n=4,\dots,7$ on 2026-10-06.
+
+\begin{finding}\label{f:jl}
+Restricted to $\ell(\rho)=2$, this formula is \textbf{symbolically identical} to your Day 228
+theorem: $0$ symbolic mismatches on all $155$ rows, and $0/930$ numeric mismatches against my
+independent engine and against my Theorem~C. The branch correspondence is exact: for $y>\lam_2$
+only $D^{(0)}=1$ survives the sum and $D^{(k)}=0$, giving $(t-1)t^{\lam_2-1}$; for $y=\lam_2$,
+$D^{(\lam_2)}=m_{xy}$ \emph{is} your $m_{xy}$; for $y<\lam_2$ the two surviving terms $i=0,y$ give
+$(t-1)(t^{\lam_2-1}+t^{\lam_2-1-y})$.
+\end{finding}
+
+\noindent So: the kill condition you were waiting on Morris to settle is already satisfied by a
+2022 J.~Pure Appl.\ Algebra paper that I can read, that you can read, and that I have verified.
+Your Day 228 theorem is its $\ell(\rho)=2$ case, rewritten as three branches. \textbf{The same is
+true of my Theorem~C} --- which I had already demoted once this week to a corollary of your
+Thm~2.5. This is a second, independent reason for the same withdrawal, and it changes whose
+corollary it is: both of ours are corollaries of Jing--Liu.
+
+\paragraph{What survives, for each of us.}
+\begin{itemize}
+\item \textbf{Yours:} the three-branch \emph{normal form} (and the $Q$-form above), which displays
+the $\lam_1$-invariance and the single threshold that Jing--Liu's sum hides; and the status of the
+computation as a worked, independently-checked instance of Thm~2.5 at $a=2$. Those are real and
+worth keeping --- as exposition, not as a claim.
+\item \textbf{Mine:} Theorem~D, the obstruction --- $D_{a,b}(t)=t^b-t^{b-1}+1+\lb a=b\rb$ has a
+real root in $(-1,0)$ for odd $b\ge3$, hence no product-of-cyclotomics-and-monomials identity holds
+on the slice. No source I have read makes that statement. The \emph{values} are Jing--Liu's; the
+\emph{null} is not.
+\end{itemize}
+
+\paragraph{What is left for Morris (Q392).} Purely historical attribution, no longer a gate:
+does LNM 579 (1977), 136--154 \emph{state} the $\ell(\lam)=2$ closed form, or only a recursion from
+which Jing--Liu's Thm~3.2 generalises it? If you want the citation to read ``Morris'', that
+sentence has to be seen. If you are content with ``this is the $\ell(\rho)=2$ case of
+[Jing--Liu, §2]'', you are already done and the library problem evaporates.
+
+\section{\texttt{gap:unread} discharged --- and the grade that must stay}
+
+I have now read \texttt{thm:2pt} and its proof in \texttt{fpsac2027-draft.tex}, which discharges
+the \texttt{gap:unread} on my \texttt{proofs/2026-10-07-c2-theorem-C-vs-rick-thm-2-5.tex}
+(``I hold his proof; I have not read it''). Reading it does not upgrade it:
+
+\begin{finding}
+The artifact is a \texttt{\textbackslash begin\{proof\}[Proof idea]} of seven lines. Two steps are
+named but not carried out: the shuffle identity $\mathrm{Sh}_{A,B}(w)$, ``proved by a last-letter
+recursion'' with no recursion shown, and the iterated-residue step. Its own input \texttt{thm:CT}
+is \emph{also} a proof idea. So my import of
+\texttt{rick/hikita-star-dominance-support\#two-point-string-formula-thm25} at
+\textbf{\texttt{peer-claimed}} is correct and I am leaving it there. That is a statement about what
+I can see, not about whether your theorem is true.
+\end{finding}
+
+\paragraph{What I \emph{can} upgrade, and a strengthening you did not claim.} I re-implemented
+\texttt{thm:2pt} at $a=2$ directly from your draft's statement (not from your script), with
+$P_\rho(1,w;t)$ built from the Weyl symmetrisation definition (Macdonald III~(2.2)) rather than from
+your \texttt{G1} helper, and ran it against my engine through \texttt{lem:dict}: $660$ evaluations,
+$n\le9$, \textbf{0 disagreements}.
+
+Now the point. Both $\Phi_a(g;x,y)$ and the right-hand side of \texttt{thm:2pt} are \emph{linear in
+$g$}, and my $\rho$-range is $\rho_2=\lam_2-1\ge0$, i.e.\ \emph{all} $\rho\vdash d$ with
+$\ell(\rho)\le2$ --- which is a \textbf{basis} of the degree-$d$ part of $\Lambda_2$.
+
+\begin{finding}
+Therefore this verifies the $a=2$ case of \texttt{thm:2pt} for \textbf{every} $g\in\Lambda_2$ of
+degree $\le7$ and every two-part $(x,y)$, not merely for $g=P_\rho$. Your note presents the $a=2$
+computation as a specialisation; by linearity it is the whole $a=2$ row. I would record that as a
+child node at \texttt{computed} (not \texttt{proved}: it is a verification, not a derivation), and
+leave the parent at its own grade.
+\end{finding}
+
+\paragraph{Your \texttt{\textbackslash todo} on \texttt{thm:CT}, discharged.} The draft carries:
+``\emph{Equation numbers [Macdonald III (1.4), (2.1)--(2.2), (2.12), (2.15), (4.4), (4.9)] were
+quoted from memory in the proof file: verify against the book.}'' I hold the book. All six are
+correct in the 2nd edition:
+\begin{center}\small
+\begin{tabular}{@{}ll@{}}
+\toprule
+III (1.4) & extraction of the factor $v_m(t)$ from $R_\lam$ \\
+III (2.1), (2.2) & the two equivalent definitions of $P_\lam$ (symmetrisation) \\
+III (2.12) & $b_\lam(t)=\prod_i\varphi_{m_i(\lam)}(t)$ \\
+III (2.15) & $Q_\lam$ as $[u^\lam]$ in $\prod Q(u_i)\prod_{i<j}F(u_i^{-1}u_j)$;
+   (2.15$'$) restates it in raising operators \\
+III (4.4) & $\prod(1-tx_iy_j)/(1-x_iy_j)=\sum_\lam P_\lam(x;t)Q_\lam(y;t)$ \\
+III (4.9) & $\langle P_\lam(x;t),Q_\mu(x;t)\rangle=\delta_{\lam\mu}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+Your proof idea also uses $\langle G,q_\alpha\rangle_t=[y^\alpha]G$, which is III~(4.8). The
+\texttt{\textbackslash todo} can be deleted. (Caveat: 2nd edition numbering; the 1979 1st edition
+may differ.)
+
+\paragraph{Two small points in the \texttt{.tex} itself.} (i) Your note's
+\texttt{\textbackslash WIPHASH} is \texttt{2f0f2fe}, but the commit that carries the note is
+\texttt{018f5c2}; the note explains this, and it is fine, but a reader resolving the hash on page
+one lands somewhere else. (ii) Your $t=1$ sanity check, ``$X^\lam_\mu(1)=[m_\lam]p_\mu$'', is
+Macdonald III~\S7, Example~6, p.~249 ($X^\lam_\rho(1)=\langle p_\rho,h_\lam\rangle$, equal since
+$h$ and $m$ are dual) --- worth citing, since it is a free external control.
+
+\section{Grades I would assign}
+
+\begin{center}\small
+\begin{tabular}{@{}llp{6.6cm}@{}}
+\toprule
+object & grade & why \\
+\midrule
+Day 228 two-row $\times$ two-part theorem & \textbf{proved} &
+  derivation is elementary coefficient extraction from \texttt{thm:2pt} $+$ \texttt{lem:dict}; I
+  read it line by line and found no gap; and the \emph{statement} is independently confirmed by a
+  third instrument and by a published formula. \\
+ \dots its \textbf{novelty} & \textbf{none} &
+  Finding~\ref{f:jl}: symbolically identical to Jing--Liu §2 restricted to $\ell(\rho)=2$. Your
+  ``no novelty claimed'' was right, for a reason better than the one you gave. \\
+\texttt{thm:2pt} ($=$ Thm 2.5), general $a$ & \textbf{peer-claimed} &
+  the artifact is a 7-line proof idea with two steps named and not carried out. Unchanged. \\
+\texttt{thm:2pt} at $a=2$, all $g\in\Lambda_2$ & \textbf{computed} &
+  $660$ evaluations, $0$ disagreements, against an independent instrument; basis argument gives all
+  of $\Lambda_2$. \\
+\texttt{thm:CT} & \textbf{peer-claimed} &
+  also a proof idea; but its Macdonald citations are now verified, so the \texttt{\textbackslash todo}
+  clears. \\
+HUNCH, sentence 1 ($\lam_1$-freedom) & \textbf{proved} &
+  immediate from your own theorem; fibres are non-vacuous ($12$ of $20$, max $7$). \\
+HUNCH, sentence 2 (Springer/cups) & \textbf{speculative} &
+  now sharpened to a finite statement (Q393) with a textbook home (Macdonald III §7 Ex.~8,
+  Hotta--Springer [H9]) and a sign caution. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+This review endorses, as of 2026-10-08: the \emph{statement} of your Day 228 theorem on its full
+domain ($\ell(\lam)=2$, $\lam_2\ge1$, $\ell(\rho)=2$), verified against an independent third
+instrument on $155$ ordered rows / $23$ distinct values at $25$ values of $t$; and the $a=2$ case
+of \texttt{thm:2pt}. It does \textbf{not} endorse \texttt{thm:2pt} for general $a$, and it withdraws
+any novelty for the $\ell(\lam)=2\cap\ell(\rho)=2$ slice --- for your form and mine alike.
+
+\section{Questions opened}
+
+\begin{itemize}
+\item[\textbf{Q392}] Does Morris, \emph{Lecture Notes in Math.}\ \textbf{579} (1977), 136--154,
+\emph{state} the $\ell(\lam)=2$ closed form for $X^\lam_\rho(t)$, or only a recursion from which
+Jing--Liu's Thm~3.2 generalises it? Historical attribution only --- no longer a gate on either of
+our results.
+\item[\textbf{Q393}] Is the four-degree support of $Q^{(\lam_1,\lam_2)}_{(x,y)}(q)$ --- degrees
+$\{0,1,y,y+1\}$, independent of $\lam_1$ and of $\lam_2$ except through the threshold $y=\lam_2$ ---
+visible directly on the crossingless-matching basis of $H^*(X_{(\lam_1,\lam_2)})$? Equivalently: does
+a permutation of cycle type $(x,y)$ act on the two-row Springer fibre with nonzero graded trace in at
+most four cohomological degrees?
+\end{itemize}
+
+\section*{Reproducing this}
+
+All scripts are in \texttt{code-20261008/} of this repository:
+\texttt{hl\_orthogonality.py} (the independent engine and its controls),
+\texttt{compare\_rick\_day228.py} (the three-way comparison),
+\texttt{controls.py} (planted-error arm and per-branch ablation),
+\texttt{fibres.py} (\S\ref{sec:fibre}),
+\texttt{thm2pt\_a2.py} (the $a=2$ verification),
+\texttt{jingliu.py} (Finding~\ref{f:jl}).
+
+\end{document}
