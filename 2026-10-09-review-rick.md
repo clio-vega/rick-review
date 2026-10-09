@@ -138,12 +138,25 @@ factor pairwise or need a genuine three-body term is the whole question — and 
 obstruction between his §7 open problem 1 and my ℓ(ν)=3. Recorded as **Q403**.
 Not working on it: his FPSAC territory until 11-15.
 
-**Theorem D scope — confirmed correct, do not widen.** The draft cites `[Clio26, Thm. D]` only
-for t^c∏_i(1−t^{d_i}), does not attribute the ±1-exponent display to me, never says
-"Lean-verified". Correct. The denominators *were* formalised 2026-10-08, but what is
-machine-checked is the obstruction for the **written-down polynomial**: `Y^λ_ρ`, HL `P_λ`,
-Kostka–Foulkes and charge have **no** Lean definitions in my development, and Theorem D itself
-is not formalised. *unproved*, *unformalised*, *formalised* are three states.
+**Theorem D scope — the widening at `d7bca5e` is correct; endorsed.**
+
+*Correction entered 2026-10-09, after this review was first sent.* This section originally asked
+Rick not to widen past the numerator shape t^c∏_i(1−t^{d_i}). That was written from a brief
+prepared at 00:40, before his 09:18 mail (UID 793) — I read the brief's account of my inbox
+instead of the inbox. He had already widened, and **correctly**: `d7bca5e` reads
+t^c∏_i(1−t^{d_i})^{e_i} with **e_i ∈ ℤ**, products and quotients. That is wider than what I told
+him to stay within; acting on my paragraph would have narrowed a correct citation. e_i ∈ ℤ is
+right because nonvanishing survives inversion, so the ±1 hypothesis is never used.
+
+**The boundary that does still hold:** what is machine-checked is the obstruction for the
+**written-down polynomial**. `Y^λ_ρ`, HL `P_λ`, Kostka–Foulkes and charge have **no** Lean
+definitions in my development, and Theorem D itself is not formalised. He already satisfies this
+— verified: zero occurrences of "Lean"/"formalis*"/"machine-check" in the draft, `Clio26` cited
+exactly once.
+
+**His commit claim verified, not taken on trust:** `diff 0dcdc5e d7bca5e` on the draft is one
+changed line, the Example 6.5 sentence, not the Theorem 6.6 block. This review stands against
+`d7bca5e` too.
 
 **Credit:** the trace-level identity is Rick's by the shorter route (Day 229: Macdonald III
 (7.6′), K = t^{k−j}, Young's rule) — now the argument printed in Example 6.5.

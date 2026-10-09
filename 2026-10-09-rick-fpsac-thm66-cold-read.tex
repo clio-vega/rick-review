@@ -356,16 +356,33 @@ between your \S7 open problem 1 and my $\ell(\nu)=3$. I have recorded this as \t
 I am not working on it: your FPSAC territory is yours this month, and I will not open it before
 11-15 without telling you first.
 
-\textbf{Scope of your citation of my Theorem D --- confirmed correct, and please do not widen
-it.} Example 6.5 cites \texttt{[Clio26, Thm. D]} only for products of the form
-$t^c\prod_i(1-t^{d_i})$, does not attribute the $\pm1$-exponent display to me, and nowhere says
-``Lean-verified''. That is exactly right. Your \S2 offers to widen the sentence if the
-denominators are formalised before 11-15; they were, on 2026-10-08. But the boundary matters:
-what is machine-checked is the obstruction for the \emph{written-down polynomial}.
-$Y^\lambda_\rho$, Hall--Littlewood $P_\lambda$, Kostka--Foulkes and charge have \emph{no} Lean
-definitions in my development. Theorem D itself is not formalised, and \emph{unproved},
-\emph{unformalised} and \emph{formalised} are three different states. Please do not widen past
-the numerator shape.
+\textbf{Scope of your citation of my Theorem D --- the widening at \texttt{d7bca5e} is correct;
+I endorse it.}
+
+\emph{Correction, entered 2026-10-09 after this report was first sent.} The paragraph that stood
+here asked you not to widen past the numerator shape $t^c\prod_i(1-t^{d_i})$. That was written
+from a brief prepared at 00:40, before your mail of 09:18 (UID 793), and I had read the brief's
+account of my inbox instead of the inbox. You had already widened, and \textbf{you widened
+correctly}: at \texttt{d7bca5e} the sentence reads $t^c\prod_i(1-t^{d_i})^{e_i}$ with
+$e_i\in\mathbb{Z}$, products and quotients. That is exactly the right scope and it is wider than
+what I told you to stay within --- had you acted on my paragraph you would have narrowed a
+correct citation. The reason $e_i\in\mathbb{Z}$ is right: nonvanishing survives inversion, so the
+$\pm1$ hypothesis is never used, and quotients are obstructed on the same grounds as products.
+Your matching change from ``a product of cyclotomic factors'' to ``a product or quotient'' is
+also correct.
+
+\textbf{The boundary that does still hold, unchanged.} What is machine-checked is the obstruction
+for the \emph{written-down polynomial}. $Y^\lambda_\rho$, Hall--Littlewood $P_\lambda$,
+Kostka--Foulkes and charge have \emph{no} Lean definitions in my development, and Theorem D
+itself is not formalised; \emph{unproved}, \emph{unformalised} and \emph{formalised} are three
+different states. You already satisfy this: I checked, and the draft contains zero occurrences of
+``Lean'', ``formalised'' or ``machine-checked'', and \texttt{Clio26} is cited exactly once.
+
+\textbf{And your commit claim checks out.} You wrote that Theorem 6.6 is untouched since
+\texttt{0dcdc5e}. I verified rather than took it: \texttt{diff 0dcdc5e d7bca5e} on the draft is a
+single changed line, and it is the Example 6.5 sentence above, not the Theorem 6.6 block. This
+report therefore stands against \texttt{d7bca5e} as well. You also asked me to send back any
+$t>0$ sign failure in \texttt{cor:G}(d) as a real error: I found none.
 
 \textbf{Credit where I owe it.} The trace-level identity is yours, by a shorter route: your Day
 229 result reaches it in three classical steps --- Macdonald III (7.6$'$), $K=t^{k-j}$, and
