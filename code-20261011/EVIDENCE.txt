@@ -1,0 +1,149 @@
+# Evidence log — 2026-10-11 peer review of Rick (long-version Thm H, Cor 5.2, §9, s2b/s4b)
+# Objects: work-in-progress 7df658b (longversion.tex) / e88603f HEAD; rick-research 4f6d50f+000790b / d6df277 HEAD
+
+=== Engine B validation (P(x;1)=m_lambda, P_(1^k)=e_k) ===
+P(x;1)=m_lambda, all lambda, n<=4: PASS
+
+=== Cor 5.2: engine A (star) vs engine B (HL), + Thm DS + N[t] + d(1) ===
+n=1: 1^2=1 pairs, 1 with d!=0
+   A vs B mismatches            : 0
+   Thm DS valuation/support     : 0 problems
+   d in N[t] violations         : 0
+   d(1)=M_{lam,mu'} violations : 0
+n=2: 2^2=4 pairs, 3 with d!=0
+   A vs B mismatches            : 0
+   Thm DS valuation/support     : 0 problems
+   d in N[t] violations         : 0
+   d(1)=M_{lam,mu'} violations : 0
+n=3: 3^2=9 pairs, 6 with d!=0
+   A vs B mismatches            : 0
+   Thm DS valuation/support     : 0 problems
+   d in N[t] violations         : 0
+   d(1)=M_{lam,mu'} violations : 0
+n=4: 5^2=25 pairs, 15 with d!=0
+   A vs B mismatches            : 0
+   Thm DS valuation/support     : 0 problems
+   d in N[t] violations         : 0
+   d(1)=M_{lam,mu'} violations : 0
+n=5: 7^2=49 pairs, 28 with d!=0
+   A vs B mismatches            : 0
+   Thm DS valuation/support     : 0 problems
+   d in N[t] violations         : 0
+   d(1)=M_{lam,mu'} violations : 0
+TOTAL problems: 0
+
+=== Theorem H(3), eq (ncount), cited Pieri content ===
+(1) e_k P_rho(x;u) = sum_kap psi_{kap/rho}(u) P_kap(x;u)   [Rick's psi, engine-B HL polys]
+    26 ok, 0 bad
+(2) n(kap)-n(rho) = C(k,2) + inv(kap/rho) + sum_v r_v(m_v-r_v)
+    637 ok, 0 bad
+(3) Theorem H(3): L_k bar_b_mu = sum t^inv prod qbin(m_v(kap),r_v) bar_b_nu  [engine A = star product]
+    136 ok, 0 bad
+
+=== Sec 9: two-row Green polynomials ===
+printed piecewise formula (two-part classes, |lam|<=10): 85 ok, 0 bad
+Jing-Liu Thm 2.6 formula (ALL classes,      |lam|<=10): 662 ok, 0 bad
+
+--- diagonal class (x,y)=lam: printed value t^{l2}-t^{l2-1}+m_xy, root in (-1,0)? ---
+  lam=(5, 3): closed form matches   X(-1)= -1  X(0)=1  root in (-1,0): True   in his hypothesis (l1>l2, l2>=3 odd): True
+  lam=(7, 3): closed form matches   X(-1)= -1  X(0)=1  root in (-1,0): True   in his hypothesis (l1>l2, l2>=3 odd): True
+  lam=(6, 5): closed form matches   X(-1)= -1  X(0)=1  root in (-1,0): True   in his hypothesis (l1>l2, l2>=3 odd): True
+  lam=(8, 5): closed form matches   X(-1)= -1  X(0)=1  root in (-1,0): True   in his hypothesis (l1>l2, l2>=3 odd): True
+  lam=(7, 4): closed form matches   X(-1)=  3  X(0)=1  root in (-1,0): False  in his hypothesis (l1>l2, l2>=3 odd): False
+  lam=(8, 4): closed form matches   X(-1)=  3  X(0)=1  root in (-1,0): False  in his hypothesis (l1>l2, l2>=3 odd): False
+  lam=(9, 2): closed form matches   X(-1)=  3  X(0)=1  root in (-1,0): False  in his hypothesis (l1>l2, l2>=3 odd): False
+  lam=(6, 6): closed form matches   X(-1)=  4  X(0)=2  root in (-1,0): False  in his hypothesis (l1>l2, l2>=3 odd): False
+
+=== Owed cross-check table: clio-thmC-two-row-two-part, |lambda|<=8 ===
+character engine (Murnaghan-Nakayama) validation, n<=8: 0 problems (dimension via hook length + full orthogonality)
+K_{nu,lam}(t) = t^{k-j} and 'exactly one SSYT', vs engine B, n<=5: 0 problems
+
+=== clio-thmC-two-row-two-part cross-check, |lambda| <= 8 ===
+   A = my Thm C closed form | C = sum_nu K chi (ground truth) | D = [P_lam]p_rho via HL polys
+   44 (lambda,rho) pairs:  A==C in 44,  A==D in 44,  all three agree in 44
+
+   lambda      rho       Y^lambda_rho(t)  (columns A, C, D all equal)
+   (1, 1)     (1, 1)    +1 +t
+   (2, 1)     (2, 1)    +t
+   (3, 1)     (3, 1)    +t
+   (3, 1)     (2, 2)    -1 +t
+   (2, 2)     (3, 1)    -1 +t^2
+   (2, 2)     (2, 2)    +2 -t +t^2
+   (4, 1)     (4, 1)    +t
+   (4, 1)     (3, 2)    -1 +t
+   (3, 2)     (4, 1)    -1 +t^2
+   (3, 2)     (3, 2)    +1 -t +t^2
+   (5, 1)     (5, 1)    +t
+   (5, 1)     (4, 2)    -1 +t
+   (5, 1)     (3, 3)    -1 +t
+   (4, 2)     (5, 1)    -1 +t^2
+   (4, 2)     (4, 2)    +1 -t +t^2
+   (4, 2)     (3, 3)    -t +t^2
+   (3, 3)     (5, 1)    -t +t^3
+   (3, 3)     (4, 2)    -1 +t -t^2 +t^3
+   (3, 3)     (3, 3)    +2 -t^2 +t^3
+   (6, 1)     (6, 1)    +t
+   (6, 1)     (5, 2)    -1 +t
+   (6, 1)     (4, 3)    -1 +t
+   (5, 2)     (6, 1)    -1 +t^2
+   (5, 2)     (5, 2)    +1 -t +t^2
+   (5, 2)     (4, 3)    -t +t^2
+   (4, 3)     (6, 1)    -t +t^3
+   (4, 3)     (5, 2)    -1 +t -t^2 +t^3
+   (4, 3)     (4, 3)    +1 -t^2 +t^3
+   (7, 1)     (7, 1)    +t
+   (7, 1)     (6, 2)    -1 +t
+   (7, 1)     (5, 3)    -1 +t
+   (7, 1)     (4, 4)    -1 +t
+   (6, 2)     (7, 1)    -1 +t^2
+   (6, 2)     (6, 2)    +1 -t +t^2
+   (6, 2)     (5, 3)    -t +t^2
+   (6, 2)     (4, 4)    -t +t^2
+   (5, 3)     (7, 1)    -t +t^3
+   (5, 3)     (6, 2)    -1 +t -t^2 +t^3
+   (5, 3)     (5, 3)    +1 -t^2 +t^3
+   (5, 3)     (4, 4)    -t^2 +t^3
+   (4, 4)     (7, 1)    -t^2 +t^4
+   (4, 4)     (6, 2)    -t +t^2 -t^3 +t^4
+   (4, 4)     (5, 3)    -1 +t -t^3 +t^4
+   (4, 4)     (4, 4)    +2 -t^3 +t^4
+
+=== Negative controls on the Cor 5.2 test (7 arms, n=2..5) ===
+control                                  n=2  n=3  n=4  n=5
+BASELINE (A vs B)                          0    0    0    0
+C1 B uses P_mu not P_mu'                   4    6   18   36
+C2 B drops t-prefactor                     1    3   10   21
+C3 B uses P(x;t) not P(x;1/t)              1    3   10   21
+C4 B prefactor n(mu)-n(lam)                1    3   10   21
+C5 A extracts [s^n(mu')]                   3    4   12   24
+C6 A: s on complement of A                 2    4   12   26
+C7 A: operators in REVERSED order          0    0    0    0
+
+--- rank of operator-order controls: do ALL orderings of lam agree? ---
+  n=4: max # distinct results over all orderings of the parts of lam = 1  (1 => order is a SYMMETRY)
+  n=5: max # distinct results over all orderings of the parts of lam = 1  (1 => order is a SYMMETRY)
+=== Rick's s4b Omega-reversal control, stratified by a (my instrumentation of HIS code) ===
+[FAIL] Thm6.2 NEG: expand Omega in z_j/z_i instead: 44 ok, 249 bad ['a=2 p() F=p(2,)', 'a=2 p() F=p(1, 1)', 'a=2 p(1,) F=p(3,)', 'a=2 p(1,) F=p(2, 1)', 'a=2 p(1,) F=p(1, 1, 1)', 'a=2 e(1,) F=p(3,)', 'a=2 e(1,) F=p(2, 1)', 'a=2 e(1,) F=p(1, 1, 1)'] (expected FAIL for a>=2)
+
+--- stratification of the Omega-reversal control by a (a = #variables, Omega has C(a,2) pairs) ---
+  rev=False a=1  C(a,2)=0  ok= 44 bad=  0
+  rev=False a=2  C(a,2)=1  ok= 90 bad=  0
+  rev=False a=3  C(a,2)=3  ok=159 bad=  0
+  rev=True  a=1  C(a,2)=0  ok= 44 bad=  0
+  rev=True  a=2  C(a,2)=1  ok=  0 bad= 90
+  rev=True  a=3  C(a,2)=3  ok=  0 bad=159
+
+=== Rick's s2b (-1)^p sign control, stratified by parity of m ===
+[FAIL] Thm3.7 NEG: weights without (-1)^p (should FAIL for odd m): 58 ok, 87 bad ['', '', '', '', '', '', '', ''] (expected FAIL)
+
+--- s2b Thm3.7 sign control, stratified by m = l(lam)-l(mu) mod 2 ---
+  m even: ok= 58 bad=  0   (Lead==0 in 0 of them)
+  m odd : ok=  0 bad= 87   (Lead==0 in 0 of them)
+
+=== F1: committed s4.py vs its own logged s4_n8 section ===
+[PASS] T_a g stable in N (n vs n+1 variables): 3 ok, 0 bad 
+[PASS] Thm6.6 proof identity <G,p_xp_y> = (-1)^n (m_xy[e_xe_y]G + lin G): 16 ok, 0 bad 
+[PASS] Thm6.2 phi_a <T_a g,F>_t = CT[Z g(z) F(1/z) Omega], Omega expanded in z_i/z_j (i<j): 293 ok, 0 bad 
+[FAIL] Thm6.2 NEG: expand Omega in z_j/z_i instead: 44 ok, 249 bad ['a=2 p() F=p(2,)', 'a=2 p() F=p(1, 1)', 'a=2 p(1,) F=p(3,)', 'a=2 p(1,) F=p(2, 1)', 'a=2 p(1,) F=p(1, 1, 1)', 'a=2 e(1,) F=p(3,)', 'a=2 e(1,) F=p(2, 1)', 'a=2 e(1,) F=p(1, 1, 1)'] (expected FAIL for a>=2)
+[PASS] Thm6.3 two-point formula vs <T_a g, p_x p_y> (Hall), g=p,e,P: 518 ok, 0 bad 
+[FAIL] Thm6.3 NEG: use <.,.>_t instead of Hall pairing: 0 ok, 518 bad ['', '', '', '', '', '', '', ''] (expected FAIL)
