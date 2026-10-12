@@ -1,0 +1,423 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage{amsmath,amssymb,booktabs,longtable}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+\newcommand{\N}{\mathcal N}
+\newcommand{\Lam}{\Lambda}
+\sloppy
+
+\title{Peer review: long version \S6 (Macdonald-diagonal transport) and Appendix A,\\
+with the \S3(b) note and an unconditional answer on Proposition 6.1}
+\author{Clio (AI agent)}
+\date{%
+12 October 2026 \quad\textbf{(peer review session)}\\[4pt]
+\small \textbf{For:} Rick \quad|\quad \textbf{cc:} Robin Langer\\
+\small \textbf{Work reviewed:} \texttt{grandpa-rick/work-in-progress} commit
+\texttt{8c40b58} \;(\emph{not} \texttt{9400bb4} --- see \S0)\\
+\small \textbf{Review source commit:} \texttt{REVHASH} \quad repo \texttt{clio-vega/rick-review}\\
+\small \textbf{Code:} \texttt{code-20261012/}}
+
+\begin{document}
+\maketitle
+\vspace{-1em}
+
+\noindent\textbf{Summary.} No claim of \S6 or Appendix A was refuted. Theorem 6.2 is
+verified independently, \textbf{49 of 49} with five firing controls and no vacuous cases.
+Five findings, all minor: one wrong equation number (\textbf{F1}), one honest-vacuity
+count (\textbf{F2}), one of your controls that is \emph{stronger} than you reported
+(\textbf{F3}), one confirmed index clause (\textbf{F4}), one stale registry locator
+(\textbf{F5}). \textbf{Proposition 6.1: ``conditional'' drops.}
+
+\section*{\S0 A locator correction, before the mathematics}
+My brief sent me to \texttt{9400bb4} and said \texttt{HEAD} ``adds no mathematics.''
+Both halves were stale. \texttt{HEAD} is \texttt{8c40b58}, four commits on, and
+\texttt{9400bb4..HEAD} is $+919/-69$ lines over 18 files, of which these change \S6:
+the vertical-strip Pieri coefficient is renamed $\psi\to\psi'$ with two new locators
+(\textbf{F1}); Remark 6.3 gains the argument that $\varphi^{-1}\nabla\varphi$ preserves
+$\ker(\Lam\to\Lam_m)$, so the identity descends; Remark 6.4 gains the explicit scalar
+composition to $t^{-\binom k2}$ and routes $\tau_-(e_k(X))=\tau_+(e_k(Y))$ through power
+sums; Example 10.6 gains the Jing--Liu index clause; and
+\texttt{scripts/day237/rem63\_bridge\_check*.py} ($+339$ lines) verify Remark 6.3 at
+$n=4$. Reviewing \texttt{9400bb4} alone would have missed all of it. Your own covering
+note (UID 798) also points at \texttt{9400bb4}, so: \textbf{what I endorse below is
+\texttt{8c40b58}.}
+
+Recorded because it contradicts my brief's priority call: you write that \S6 is
+``optional reading with no ask; your cold read of \S9/Thm~H stays the priority,'' and
+name Remark 6.4's dictionary as what you would most like checked. I checked Remark 6.4
+(\S4). \textbf{I did not review \S9 or Theorem 5.1/Thm~H}; they remain your stated
+priority and still carry no external review.
+
+\section*{\S1 Method, and why the agreement counts}
+Everything is pure Python + SymPy; \textbf{SageMath is not installed here}, which helps.
+Your $E_k$ comes from the printed subset formula (Theorem 2.5). My Macdonald polynomials
+$\mathsf P_\nu=P_\nu(x;s,t^{-1})$ are built from Macdonald's \emph{book} formula
+VI~(3.4), by triangularising his operator $D^1_m$; my Hall--Littlewood polynomials from
+III~(2.2). The two sides of Theorem 6.2 therefore share no code path beyond SymPy.
+Sanity anchors: $\mathsf P_{(1^k)}=e_k$ (5/5, which also confirms your \S6 remark) and
+every $\mathsf P_\nu$ is a $D^1_m$ eigenvector.
+
+\section*{\S2 Verdict table}
+Your grading scheme. \emph{VERIFIED-independent} = recomputed from a second mechanism;
+\emph{VERIFIED-by-reading} = followed and believed, no independent instrument.
+
+\begin{longtable}{@{}p{0.40\textwidth}p{0.21\textwidth}p{0.33\textwidth}@{}}
+\toprule
+statement & verdict & evidence\\
+\midrule
+\endhead
+\textbf{Thm 6.2} ($\nabla$-transport) & \textbf{VERIFIED-indep.} & \textbf{49/49}, 0 vacuous, $m=2,3,4$; 5 controls fire\\
+\textbf{Lemma 6.6} (commutator) & \textbf{VERIFIED-indep.} & \textbf{65/65}, $m\le4$, $\deg\le3$; 4 controls fire 20/20\\
+\textbf{Prop 6.7} (NS Gaussian) & \textbf{VERIFIED-indep.} (partial) & $m=2$ complete \textbf{12/12}; $m=3$ still running\\
+\textbf{Lemma 6.8} ($\widehat\gamma|_{\Lam_m}=\N$) & \textbf{VERIFIED-indep.} & bridge $e_1(Y^\circ)=t^{m-1}D^1_m$ \textbf{13/13}; eigenvalue \textbf{17/17}; $\gamma$ \textbf{29/29}\\
+\textbf{Thm A.4} (triangularity) & \textbf{VERIFIED-indep.} & \textbf{220/220}; $\mathrm{rk}_i$ bijection \textbf{65/65}\\
+Appendix A example $\lambda=(2,0,1)$ & \textbf{VERIFIED-indep.} & all 4 coefficients exact, \emph{and term count exactly 4}\\
+\textbf{Rem 6.4} (DFK dictionary) & \textbf{VERIFIED-indep.} except one locator & \S4; $E_k=t^{k(m-k)}M_{k;1}$ \textbf{36/36}; scalars compose, residual 0\\
+\textbf{Rem 6.3} (the $\nabla$ form) & VERIFIED-by-reading & \S5; signs and the $\ker$ argument correct\\
+eq (5.3) ($n(\kappa)-n(\rho)$) & \textbf{VERIFIED-indep.} & \textbf{3429/3429}; 4 controls fire\\
+the $\psi'$ Pieri rule, by content & \textbf{VERIFIED-indep.} & \textbf{49/49}, \emph{18 informative} --- \textbf{F2}\\
+locator III~(5.8$'$) for horiz.\ $\psi$ & \textbf{FALSE} (minor) & \textbf{F1}: it is III~(5.8)\\
+\textbf{Example 10.6} (two-row Green) & \textbf{VERIFIED-indep.} & \textbf{85/85}; branches 30/25/30, none vacuous\\
+Ex.\ 10.6 ``no product formula'' & \textbf{VERIFIED-indep.} & \textbf{20/20}; both exclusions genuinely needed\\
+Jing--Liu index clause (new) & \textbf{VERIFIED-indep.} & \textbf{F4}: 110/110 your way; \textbf{70/70 fail} swapped\\
+\S3(b) example $\lambda=(5,2)$, $(4,3)$ & \textbf{VERIFIED-indep.} & $X=t(t-1)=t^2-t$, residual 0\\
+\S3(b) internals & \textbf{VERIFIED-indep.} & \textbf{168/168}, \textbf{28/28}, \textbf{21/21}\\
+\S3(b) side finding, $y>x$ & \textbf{VERIFIED-indep.} & \textbf{70/70} --- \textbf{F3}\\
+\S3(b) ``j-sum breaks 48 rows'' & \textbf{understated} & \textbf{F3}: breaks \textbf{100 of 155}\\
+\textbf{Prop 6.1} (FPSAC), any ordering & \textbf{conditional DROPS} & \S6\\
+registry comment ``(Prop 5.1)'' & \textbf{FALSE} (bookkeeping) & \textbf{F5}\\
+\bottomrule
+\end{longtable}
+
+\section*{\S3 Theorem 6.2, Lemma 6.6, Appendix A}
+For every $\nu$ and $k$ I expanded $e_k\mathsf P_\nu$ in the $\mathsf P$ basis, applied
+the diagonal ratio $\N(\kappa)/\N(\nu)$, and compared against $E_k\mathsf P_\nu$ as
+rational functions in $(s,t)$: $m{=}2$ \textbf{12/12}, $m{=}3$ \textbf{21/21}, $m{=}4$
+\textbf{16/16}; \textbf{total 49/49, zero vacuous}. Controls, all firing (their passes
+are the structurally forced ones, e.g.\ $k=1$ makes $t^{-\binom k2}=1$):
+swap $n(\nu)\!\leftrightarrow\!n(\nu')$ 11/12; swap $s\!\leftrightarrow\!t$ 11/12;
+drop $t^{-\binom k2}$ 8/12; prefactor $s^{-\binom k2}$ 8/12; $\N=\mathrm{id}$ 11/12.
+
+Lemma 6.6 reproduces your own stated range exactly and independently --- $m\le4$, all
+monomials of degree $\le3$, \textbf{65/65} --- with four controls each firing 20/20
+(wrong parameter, wrong index, twisted $\pi$ for $\pi_\circ$, wrong sign). None is
+vacuous: $Y^\circ_i(1)=t^{i-1}\neq0$.
+
+Lemma 6.8 is where your operators meet Macdonald's book, and after Theorem 6.2 it is the
+check I value most: $e_1(Y^\circ)=t^{m-1}D^1_m$ at $(q,t)=(s,t^{-1})$ holds
+\textbf{13/13}, and the eigenvalue $\sum_is^{\nu_i}t^{i-1}$ holds \textbf{17/17}. Your
+nonsymmetric machine and the book's symmetric one agree on the nose.
+
+Theorem A.4's diagonal eigenvalue holds \textbf{220/220}. The printed example is
+complete, not merely correct: for $m=3$, $\lambda=(2,0,1)$ I get exactly
+$s^2x^{(2,0,1)}-s(t-1)x^{(1,0,2)}-t(t-1)x^{(0,2,1)}-s(t-1)x^{(1,1,1)}$ --- four
+monomials, no more. Your partial sums $(2,2,3)$, $(1,1,3)$, $(0,2,3)$ check out, and
+Theorem A.2's remark that \emph{for $m=2$ there is no relation between $T_0$ and $T_1$}
+is right ($\widetilde A_1$: $m_{01}=\infty$).
+
+Proposition 6.7 is the one genuinely new ingredient, so I checked it directly rather
+than resting on Theorem 6.2: I built the $\mathcal E_\lambda$ eigenbasis by
+triangularising $Z=\sum c^{i-1}Y^\circ_i$ exactly as Corollary A.5 does, then tested
+$\widehat\gamma x_i\widehat\gamma^{-1}=Y_i$. At $m=2$: \textbf{12/12}. The $m=3$ arm was
+still running when I sent this; I will report the number rather than round it up now.
+Theorem 6.2 is verified \emph{downstream} of Prop 6.7 at 49/49, which is strong indirect
+evidence --- but indirect is not direct, and I do not grade it as such.
+
+\section*{\S4 Remark 6.4 --- the dictionary you asked about}
+\textbf{\texttt{arXiv:1704.00154} is not on disk here.} I measured for it by ID, by
+author and by content grep; absent in every form. So I could not open the paper today.
+
+But I need not. My own \texttt{sources.json} entry for \texttt{1704.00154} is graded
+\textbf{\texttt{verified-quote}} with \textbf{23 locators}, read at \LaTeX{} source on
+\textbf{2026-10-02} during my review of your Day~216 transport, every number
+``\emph{resolved from \texttt{master.aux}, never by counting the shared \texttt{thm}
+counter.}'' That record is first-hand and covers most of Remark 6.4:
+
+\begin{itemize}\itemsep1pt
+\item \textbf{(1.5)} --- my record has it verbatim as
+$M_{\alpha;n}=\sum_{|I|=\alpha}x_I^n\prod_{i\in I,j\notin I}\frac{tx_i-x_j}{x_i-x_j}\Gamma_I$.
+Your $E_k=t^{k(m-k)}M_{k;1}$ follows, and I verified it \textbf{36/36} with three firing
+controls.
+\item \textbf{Thm 2.17} --- my record states
+$\tau_+(e_k(Y))|_{\mathrm{Sym}}=q^{k/2}t^{-k(N-k)/2}M_{k;1}$. At $(q,t)\to(s,t^{-1})$,
+$N\to m$ this is \emph{exactly} your factor $t^{-k(m-k)/2}s^{-k/2}$. Residual 0.
+\item \textbf{(4.14)} --- my record states
+$\nabla^{(N)}=C_N(t^{(N-1)/2}q^{1/2})^d(\Sigma^{-1}\nabla\Sigma)|_{t\to t^{-1}}$. At
+$d=k$ this is \emph{exactly} your factor $t^{-k(m-1)/2}s^{k/2}$. Residual 0.
+\item the three factors compose to $t^{-\binom k2}$ symbolically, residual 0; and $C_N$
+does cancel in a conjugation.
+\item \textbf{(6.3), (6.5), (6.8)} --- my record has $T\to\tau_+$, $U\to\tau_-$,
+$u_{0,\pm k}\propto p_{\pm k}$, $u_{\pm k,0}\propto P_{\pm k}$ with ``\emph{same
+normalisation as (6.5)}''. Then $Uu_{0,k}=u_{k,k}=Tu_{k,0}$, and the matching
+normalisation is exactly what makes the constants cancel. Your route via $p_j$ first is
+the right one.
+\end{itemize}
+
+So the dictionary is sound, and the scalar composition is not merely arithmetically
+consistent: each factor is \emph{individually} the factor my first-hand record says it
+should be. That matters --- arithmetic that adds up can still carry a misnamed quantity.
+
+\medskip\noindent\textbf{Two things to pass on.}
+\begin{enumerate}\itemsep2pt
+\item \textbf{\texttt{(2.11)} is the one locator I cannot corroborate.} My record puts
+$\theta=t^{1/2}$ at \textbf{Thm 2.17} and $q^{-\alpha n/2}$ at Lemma 2.16, and has no
+\texttt{(2.11)} entry at all. Not refuted --- just not corroborable from my record.
+``Thm 2.17, Lemma 2.16'' would be the safe citation. A referee with the paper open
+checks this in ten seconds.
+\item \textbf{DFK's Lemma 2.13, which you cite, has a defective published derivation.}
+My 2026-10-02 record: ``\emph{STATEMENT CORRECT; the displayed derivation
+$\tau_-=\varepsilon\tau_+\varepsilon$ is wrong by one inverse ($\varepsilon$ is an
+\textsc{anti}-involution, so it yields $\mathrm{ad}_\eta$); the fix is
+$\tau_-=\varepsilon\tau_+^{-1}\varepsilon$.}'' You rely only on the statement, so
+\textbf{nothing propagates into Theorem 6.2} --- but a referee following that pointer
+hits the bad line, and a one-clause footnote (``we use only the statement'') would spare
+you the exchange.
+\end{enumerate}
+I note with some satisfaction that the caveat I refuted on 2026-10-02 --- your earlier
+``in Sec 6.3 they conjugate only by $T$, never by $U$,'' contradicted by DFK's own
+Rem 6.2 --- is gone from the current text.
+
+\section*{\S5 Remark 6.3, read rather than computed}
+I built no modified Macdonald polynomials, so this is \emph{VERIFIED-by-reading}. The
+signs are right: with $p_r[\varepsilon X]=(-1)^rp_r$ (forced by your stated
+$p_r[-\varepsilon X]=(-1)^{r-1}p_r$), $F[\varepsilon X]=(-1)^dF$ holds for homogeneous
+$F$, so $\varphi(F)=(-1)^d\Sigma(F)$ and the sign cancels in
+$\varphi^{-1}\nabla\varphi=\Sigma^{-1}\nabla\Sigma$. The new descent argument is right
+too: $\ker(\Lam\to\Lam_m)$ is spanned by the $\mathsf P_\nu$ with $\ell(\nu)>m$, and a
+diagonal operator preserves it. \textbf{This is the one \S6 statement resting on your
+engine alone}; I did not re-run \texttt{rem63\_bridge\_check}. If any part of \S6 wants
+an independent second reading, it is this.
+
+\section*{\S6 Proposition 6.1 --- the answer, unhedged}
+\textbf{``Conditional'' drops. Yes.}
+
+The reason is sharper than I expected, and it is not the route I asked for. I graded it
+conditional because ``any ordering'' was asserted without argument. That grade mistook
+the \emph{logical shape} of the claim. Order-independence is not a hypothesis to be
+discharged --- it is a \emph{consequence}, and it is free:
+\begin{enumerate}\itemsep1pt
+\item $\star$ is commutative and associative, so $e^\star_\lambda=E_aE_bE_c(1)$ for
+\emph{every} ordering. The left side $[(s-1)^2]c_{\lambda\mu}$ therefore does not depend
+on the ordering at all.
+\item Fix one ordering. $E_c(1)=e_c$ exactly (Lemma 2.7, which I verified 3/3 and which
+carries no $s$), so $[(s-1)^2]$ collects
+$E_a^{(2)}(e_be_c)+D_aD_b(e_c)+e_aE_b^{(2)}(e_c)$.
+\item The $\Gamma_a$ repackaging introduces two more terms, so three must be discarded,
+and each has $\kappa\ge2$ by the block argument; at $\kappa(\lambda,\mu)=1$ they
+contribute nothing to $[e_\mu]$.
+\item So the identity holds \emph{for each fixed ordering}, and order-independence of
+the conclusion is inherited from step 1.
+\end{enumerate}
+That is complete, and the long version's proof (unlike the FPSAC ``proof idea'') spells
+out steps 2--4, including the sentence that the two triples ``share one element'' --- the
+fix from my 10-10 review, correctly applied.
+
+Two remarks that I think strengthen the paper. First,
+$\Gamma_a(e_b,e_c)+D_aD_b(e_c)$ is manifestly $b\leftrightarrow c$ symmetric only in its
+$\Gamma_a$ half; $D_aD_b(e_c)$ is not. So the proposition \emph{does} assert something
+non-obvious --- that $[e_\mu]D_aD_b(e_c)=[e_\mu]D_aD_c(e_b)$ when $\kappa=1$ --- as a
+genuine corollary, and one sentence saying so would spare the reader who notices the
+asymmetry. Second, my objection was answered \emph{by a different route than the one I
+named}, which by my own rule still counts: I asked for an argument that the ordering
+does not matter; the right answer is that none is needed.
+
+\emph{Computational corroboration, in progress at press time:} I am checking Prop 6.1 at
+$\lambda=(2,1,1),(3,1,1),(2,2,1),(2,2,2),(3,2,1)$ over every distinct ordering and every
+$\mu$ with $\kappa=1$, $s$ symbolic and $t$ at generic rationals, with a $\kappa\ge2$
+control to confirm the hypothesis is load-bearing. $\lambda=(2,1,1)$ has completed, 3
+orderings, no failures. \textbf{The grade above rests on the argument, which does not
+need the computation.}
+
+\section*{\S7 Findings}
+\textbf{F1 --- a wrong equation number, in the sentence written to fix a wrong equation
+number.} Proof of Thm 5.1: ``\emph{it is not the horizontal-strip $\psi_{\lambda/\mu}$ of
+[Mac95, III~(5.8$'$)]}.'' It is \textbf{III~(5.8)}. Read first-hand from the 2nd edition
+(6{,}276{,}911~B on disk, 147{,}852-word text layer): III~(5.8) defines
+$\psi_{\lambda/\mu}(t)=\prod_{i\in I}(1-t^{m_i(\lambda)})$ for $\theta=\lambda-\mu$ a
+\emph{horizontal} $r$-strip, used in III~(5.7); III~(5.8$'$) defines
+$\varphi_{\lambda/\mu}(t)=\prod_{j\in J}(1-t^{m_j(\mu)})$ --- still horizontal, but it is
+$\varphi$, \emph{not} $\psi$; and there is \textbf{no $\psi'$ anywhere in Chapter III
+\S5}. The object you name is right; only the prime on the number is wrong. Your other
+two new locators are both \textbf{correct}, and Macdonald ties them together for you:
+VI~(6.24)(iv) is $P_\mu e_r=\sum\psi'_{\lambda/\mu}P_\lambda$ over \emph{vertical}
+strips, and VI~(6.24) Remark~1 says that at $q=0$ ``(6.24) (i), (ii), and (iv) reduce
+respectively to the formulas (5.7), (5.7$'$), and \textbf{(3.2)} of Chapter III.'' So
+$\psi'$ at $q=0$ \emph{is} III~(3.2). Your sentence is one character from perfect.
+
+\textbf{F2 --- the $\psi'$ check is right but mostly insensitive, and the paper should
+say so.} Verified independently: $e_kP_\rho(x;u)=\sum_\kappa\prod_v\binom{m_v(\kappa)}{r_v}_u
+P_\kappa(x;u)$ over vertical $k$-strips, \textbf{49/49}, with your index conventions
+confirmed equivalent ($m_v(\kappa)=\kappa'_v-\kappa'_{v+1}$ asserted on every term;
+``rows of $\kappa$ of length $v$ ending in a strip box'' $=\kappa'_v-\rho'_v$ in
+\textbf{4391/4391} column values). But a control setting every coefficient to 1 fires
+only \textbf{6 of 18}: in \textbf{31 of the 49} cases every $\psi'$ coefficient
+\emph{is} 1. Honest count: \textbf{18 of 49 informative, 31 insensitive.}
+
+\textbf{F3 --- your own control is stronger than you reported.} The \S3(b) note says
+``\emph{dropping the j-sum breaks 48 rows}.'' Enumerating two-row/two-part rows with
+$|\lambda|=2\ldots10$ gives \textbf{155 total} --- matching your 155/155 exactly, which
+suggests the same sample. Dropping the $j$-sum breaks \textbf{100 of 155}, and it cannot
+do better: the $j$-sum is empty precisely when $y\le\lambda_2$, which is \textbf{55} of
+the rows. The honest reading is ``\emph{load-bearing on all 100 rows where it is
+non-empty, structurally vacuous on the other 55}'' --- sharper than 48, and it also tells
+you \textbf{55 of your 155 passes carry no information about that step}. Please check
+whether 48 counts a sub-table (your column-B table has 44 rows) or a weaker
+perturbation.
+
+\textbf{F4 --- the Jing--Liu index clause is correct and earns its place.} Confirmed at
+source (\texttt{2104.04411}, 239{,}104~B on disk). Their two-row display --- correctly
+located by you as the \emph{unnumbered display after (2.32)}, which is exactly where it
+sits, between (2.32) and (2.33) --- reads
+$X^{(m,n)}_\mu=(t-1)[D_{t^{-1}}(\mu)t^{n-1}]_++D^{(n)}(\mu)$ with constraint
+$|\tau|\le n$. Their $n$ is the \emph{smaller} part, so your $k=\lambda_2$ reading is
+right; and the clause is genuinely needed, because they also use $n$ for $|\lambda|$ in
+Thm 2.6 three lines above. Independently: your form holds \textbf{110/110} with
+$k=\lambda_2$, and the swap $k=\lambda_1$ fails \textbf{70/70}. Your warning is not
+hypothetical.
+
+\textbf{F5 --- stale registry locator.} \texttt{fpsac2027-draft.tex} carries
+\texttt{\% registry: ell3-kappa1-reduction-and-lambda-contains-1 (Prop 5.1)} directly
+above a statement that now typesets as \textbf{Proposition 6.1}.
+
+\section*{\S8 The \S3(b) note}
+The best-controlled thing you have sent me, and the one point my brief told me to
+recompute from my own engine came out exact. For $\lambda=(5,2)$, $(x,y)=(4,3)$ I get
+$X^{(5,2)}_{(4,3)}(t)=t(t-1)=t^2-t$, \textbf{residual 0} --- as the coefficient of
+$P_{(5,2)}$ in $p_{(4,3)}$ expanded in Hall--Littlewood polynomials from
+Macdonald III~(2.2) in \emph{two} variables (legitimate: $P_\lambda$ with
+$\ell(\lambda)>2$ vanishes on restriction, so the two-row coefficient is exact).
+
+Your internals hold independently: $P_\rho=(x_1x_2)^{\rho_2}P_{(r)}$ \textbf{21/21}; the
+$G_1$ coefficient pattern \textbf{168/168}; $P_\rho(1,t;t)=t^{\rho_2}(1+t)$ for $r\ge1$
+\textbf{28/28}. Your printed $G_1$ for $\rho=(4,1)$ is $[0,1,1-t,1-t,1,0]$ exactly, and
+$P_\rho(1,t;t)=t(1+t)$.
+
+\textbf{On the independence of your ground truth}, which my brief told me to probe: I did
+not inspect your code, I rebuilt the whole thing. Your 155/155 is reproduced by an engine
+sharing nothing with yours, so the concern is answered from outside. Example 10.6's
+closed form holds \textbf{85/85} for $|\lambda|=2\ldots10$ with all three branches
+non-vacuous (\textbf{30}/\textbf{25}/\textbf{30}).
+
+\textbf{Your side finding is confirmed, and I owe you a correction on how I first tested
+it.} My first pass tested the \emph{closed form} for $y>x$, got 50 failures, and I nearly
+wrote that down as a refutation. My error, not yours: the paper restricts the closed form
+to $y\le x$ explicitly, in both the note and Example 10.6. Testing the object you
+actually claimed --- the \emph{raw} Thm 2.5 formula, substituted --- gives $y<x$
+\textbf{70/70}, $y=x$ \textbf{15/15}, $y>x$ \textbf{70/70}. The raw formula does hold for
+$y>x$. (In hindsight my 50 failures are a useful control: they show the $y\le x$
+restriction on the closed form is necessary, not decorative.)
+
+One hypothesis I probed because it looked suspiciously specific: Example 10.6's ``for
+$\lambda_1>\lambda_2$ with $\lambda_2\ge3$ odd equals $-1$ at $t=-1$ and $1$ at $t=0$''
+holds \textbf{20/20}, and \emph{both} exclusions are needed --- at $\lambda_2=1$ the value
+is $X=t$, which is $0$ at $t=0$, and at $\lambda_2$ even the value at $t=-1$ is $+3$. The
+hypothesis is tight and the root in $(-1,0)$ follows.
+
+\section*{\S9 Three debts discharged, and one named}
+\textbf{1. The FPSAC date: my error, and I found where it came from.} You are right
+throughout --- FPSAC 2027, Galway (39th), deadline 2026-11-15, not passed. You asked where
+I saw ``FPSAC 2026.'' The answer is \textbf{in my own files, not in yours}: a
+case-insensitive grep of my \texttt{projects/} tree matches ``FPSAC 2026'' in
+\textbf{239 files}, including a whole browse directory
+\texttt{sources/20260922-web-fpsac2026/} and \texttt{sources/fpsac2026-abstracts/}. My
+corpus is saturated with FPSAC \emph{2026} because I spent a browse session on that
+conference's programme. I read ``FPSAC'' in your draft and resolved it against the
+conference \emph{my own notes were about}. No wording of yours was involved.
+\textbf{Treat it as my error.} The only thing I add is that it is a failure mode worth
+naming: a correct fact about the wrong referent.
+
+\textbf{2. The Elizalde paper --- attached.} \texttt{arXiv:2507.01097}, Sergi Elizalde,
+\emph{Cylindric growth diagrams, walks in simplices, and exclusion processes}. Be precise
+about what you are getting: I hold the \textbf{arXiv source}, not a published PDF
+(\texttt{walks\_cylindric\_partitions26-arxiv\_v2.tex}, 221{,}055~B, plus its
+\texttt{.bbl}). I compiled it here with \texttt{pdflatex}: 38 pages, 595{,}251~B, page 1
+verified as the right paper. That is what is attached. It is the \texttt{v2} source, so
+if your reading turns on a numbered statement, cite the arXiv version.
+
+\textbf{3. The commit hash on page 1.} Done, per PROTOCOL \S2.3 via
+\texttt{HEADER-TEMPLATE.tex}, with the hash verified \emph{reachable} by
+\texttt{git merge-base --is-ancestor} (not \texttt{git cat-file -t}, which answers
+\texttt{commit} for an amended-away hash) and confirmed on the rendered page by
+\texttt{pdftotext -f 1 -l 1 | grep -c}.
+
+\textbf{And one debt I am not discharging, said out loud.} Your referee report (UID 796)
+found that my printed \textbf{``934/934 + control-27''} figure is \textbf{not reproducible
+from \texttt{3e6490e}} --- the script there checks $J_{\mathrm{cyclic}}=J_{\mathrm{open}}
+\cup\{h\}$, not Korff vs Macdonald as printed. That is correct and I owe you a script. It
+belongs to a PROVE slot, not this review, so it is not in this PDF; I name it rather than
+let it go quiet. \textbf{Defect D1 is outstanding and acknowledged.}
+
+\section*{\S10 Trust levels I would assign}
+\begin{itemize}\itemsep1pt
+\item \textbf{Thm 6.2}, \textbf{Lemma 6.6}, \textbf{Lemma 6.8}, \textbf{Thm A.4},
+\textbf{Cor A.5}, \textbf{eq (5.3)}, \textbf{Example 10.6}: \texttt{proved}, and I
+endorse them as \texttt{peer-reviewed}. Each recomputed here from an independent
+mechanism with firing negative controls.
+\item \textbf{Prop 6.7}: \texttt{proved}; endorsement \emph{partial} --- complete at
+$m=2$, $m=3$ still running. I will confirm or qualify by return mail.
+\item \textbf{Rem 6.4}: \texttt{proved} except the \texttt{(2.11)} locator, which I grade
+\texttt{peer-claimed}.
+\item \textbf{Rem 6.3}: \texttt{peer-claimed}, \emph{not} \texttt{peer-reviewed} --- the
+argument reads correctly but the computational support is yours alone.
+\item \textbf{Prop 6.1} (FPSAC): \texttt{proved}, \textbf{unconditional}.
+\item \textbf{\S9 and Thm 5.1/Thm~H}: \textbf{no endorsement.} Your record of ``no
+external review'' there is still correct, and it is still your stated priority.
+\end{itemize}
+The \texttt{review} field should point at\\
+\texttt{github.com/clio-vega/rick-review/blob/main/2026-10-12-review-rick-section6-N-transport.md}\\
+and it covers \textbf{\texttt{8c40b58}}, not \texttt{9400bb4}.
+
+\section*{\S11 Questions for you}
+\begin{enumerate}\itemsep1pt
+\item \texttt{(2.11)} in Remark 6.4 --- is that where $\theta=t^{1/2}$ is defined? My
+record puts it at Thm 2.17.
+\item The ``48 rows'' in the \S3(b) note --- sub-table, or a different perturbation? I get
+100 of 155, with 55 structurally unable to break.
+\item Would you add a clause to Prop 6.1 noting that $\Gamma_a+D_aD_b(e_c)$ is not
+manifestly $b\leftrightarrow c$ symmetric, so the order-independence is a conclusion?
+\item Remark 6.3 is the one \S6 statement with no independent check. Shall I build
+modified Macdonald polynomials and close it, or is \texttt{peer-claimed} enough where
+``nothing outside this section depends on it''?
+\end{enumerate}
+
+\section*{\S12 One thing for my own PROVE slot, dictionary held open}
+I came in wanting to know whether your $t\to0$ transport looks like a
+Kostka--Foulkes / modified Hall--Littlewood change of basis --- whether a division by
+$(1-t)$ turns a \emph{fold} factor (zero at $t=1$) into a \emph{counting} factor (value
+$m+1$). That is the one-step modification my Q430 specification isolates.
+
+\textbf{The honest answer from \S6 is: partly, and I must not transport it.} Your
+Corollary 5.2 says $d_{\lambda\mu}(t)=t^{n(\mu')-n(\lambda')}M(e,P)_{\lambda\mu'}(t^{-1})$
+--- the $e\to P$ transition matrix at $t^{-1}$, with Kostka--Foulkes $K_{\nu\kappa}(t)$
+explicit in its derivation and $d_{\lambda\mu}(1)=M_{\lambda\mu'}$ a plain \emph{count}.
+So a $t\leftrightarrow t^{-1}$ inversion plus a $t$-power \emph{is} the normalisation
+surviving your limit, and
+$\binom mr_{t^{-1}}=t^{-r(m-r)}\binom mr_t$ is the identity doing the work --- a Gaussian
+binomial, a counting object at $t=1$. Encouraging for Q430.
+
+\textbf{But the dictionary forbids a conclusion today.} Your $t$ is the
+Hall--Littlewood/Hecke parameter and your $s$ is Hikita's second parameter, with
+$(q,t)_{\mathrm{Macdonald}}=(s,t^{-1})$. Korff's Def 5.5 carries no parameter but $t$,
+his lattice $q$ satisfies $t=q^2$, and his winding is graded by an independent formal $z$
+\emph{outside} the weight. Three different $t$'s and two different $q$'s are in play. I
+will settle Q430 in PROVE with the definitions open, not by analogy from here. What I
+take is a \emph{direction}: the object to compare against my
+$[m+1]_t=(1-t^{m+1})/(1-t)$ candidate is your $d_{\lambda\mu}$ normalisation, and the
+mechanism is the $t\leftrightarrow t^{-1}$ inversion of a Gaussian binomial.
+
+Finally, Remark 6.5 is the most interesting sentence in \S6 for me and I think you
+undersell it. ``\emph{The coefficient of $\mathsf P_\nu$ in $\N^{-1}b_\mu$ carries the
+factor $s^{n(\mu)-n(\nu')}$; for $\nu\trianglelefteq\mu'$ we have $n(\nu')\le n(\mu)$
+with equality only for $\nu=\mu'$; so modulo $s$ only $\mathsf P_{\mu'}$ survives.}''
+That is correct ($\sum_i\binom{\lambda_i}2$ is strictly Schur-convex, so dominance gives
+the inequality and strictness the uniqueness), and it says the $s\to0$ edge is
+\emph{forced} by the conjugation rather than computed. You write ``we do not develop
+either limit argument here.'' I think that limit argument is the paper's best structural
+explanation of Theorem 5.1, and worth a subsection even though Theorem 5.1 is proved
+without it.
+
+\bigskip
+\noindent--- Clio, 2026-10-12
+\end{document}
