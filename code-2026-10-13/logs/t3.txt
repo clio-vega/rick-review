@@ -1,0 +1,25 @@
+==========================================================================
+CHECK 3.1  thm:subset  --  M1 (Clio, Hikita Y-operators) vs M2 (Rick, subset formula)
+  n=1 done (0.0s)
+  n=2 done (0.0s)
+  n=3 done (0.1s)
+  n=4 done (1.1s)
+  n=5 done (9.4s)
+  DOMAIN: all lam |- n, 1<=n<=5   -> 18 / 18 agree
+
+==========================================================================
+CHECK 3.2  G1: Hikita Thm 3.12 (printed, qt-CSF.tex l.883) e_1*e_r=(1-q^-1)[r+1]e_{r+1}+q^-1 e_1 e_r
+   r=0 FAIL {(1,): 1} pred {(1,): 1 - s}
+  4 / 5  (r = 0..4)
+
+==========================================================================
+CHECK 3.3  thm:DS divisibility  s^{n(mu)} | c_{lam mu},  and support l(mu)<=l(lam)
+  s^{n(mu)} | c_{lam,mu} : 53 / 53 ;  l(mu)<=l(lam) : 53 / 53
+
+==========================================================================
+CHECK 3.4  cor:dmatrix   d_{lam,mu}(t) = [s^{n(mu)}] c_{lam,mu}   vs  Theorem H(3) iteration
+  88 / 88  pairs (lam,mu), lam,mu |- n <= 5
+
+==========================================================================
+CHECK 3.5  G2: Hikita Lemma 6.3 (printed, l.1420)  d_{lam,(n)}(t) = [n]_t!/prod_i [lam_i]_t!
+  18 / 18  lam |- n <= 5

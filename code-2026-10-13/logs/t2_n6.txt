@@ -1,0 +1,23 @@
+========================================================================
+CONTROL C1: Gram-Schmidt HL norms  <P_l,P_l>_u = 1/b_l(u)   [Macdonald III (4.9)]
+  n=1: 1/1 partitions   (N=1 variables)
+  n=2: 2/2 partitions   (N=2 variables)
+  n=3: 3/3 partitions   (N=3 variables)
+  n=4: 5/5 partitions   (N=4 variables)
+  n=5: 7/7 partitions   (N=5 variables)
+  n=6: 11/11 partitions   (N=6 variables)
+
+========================================================================
+MECHANISMS (a) H(3)-iteration  (b) e->P Gram-Schmidt  (c) K.Ktilde(charge)  (d) 0-1 at t=1
+  n=1 done  (0.0s, 1 pairs so far)
+  n=2 done  (0.0s, 5 pairs so far)
+  n=3 done  (0.1s, 14 pairs so far)
+  n=4 done  (0.8s, 39 pairs so far)
+  n=5 done  (7.5s, 88 pairs so far)
+  n=6 done  (108.5s, 209 pairs so far)
+
+DOMAIN: all (lam,mu) with lam,mu |- n, 1 <= n <= 6  ==  209 ordered pairs
+(a) == (b)  e->P Gram-Schmidt          : 209 / 209
+(a) == (c)  K . Ktilde via charge      : 209 / 209
+(a)(1) == (d) 0-1 matrix count         : 209 / 209
+d_{lam,mu} in N[t] (positivity)        : 209 / 209

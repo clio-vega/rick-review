@@ -1,0 +1,17 @@
+EXTENSION of checks 3.1 and 3.4 to n=6, plus thm:DS's d(0)=1 and support claims
+   lam=(6,) done (1.5s)
+   lam=(5, 1) done (3.5s)
+   lam=(4, 2) done (6.5s)
+   lam=(4, 1, 1) done (10.3s)
+   lam=(3, 3) done (14.6s)
+   lam=(3, 2, 1) done (21.9s)
+   lam=(3, 1, 1, 1) done (32.6s)
+   lam=(2, 2, 2) done (42.0s)
+   lam=(2, 2, 1, 1) done (55.8s)
+   lam=(2, 1, 1, 1, 1) done (77.4s)
+   lam=(1, 1, 1, 1, 1, 1) done (101.0s)
+
+3.1  M1(Hikita Y-ops) == M2(subset formula), lam |- 6 : 11 / 11
+3.4  [s^{n(mu)}]c_{lam,mu} == H(3)-iteration        : 121 / 121
+thm:DS support = dominance up-set of lam           : 121 / 121
+thm:DS  d_{lam,mu}(0) = 1 for mu >= lam            : 64 / 64

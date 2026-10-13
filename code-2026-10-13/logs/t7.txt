@@ -1,0 +1,5 @@
+CHECK 7.1  M(e,P)_{lam,kappa}(t) (Gram-Schmidt, u=t) == sum_nu K_{nu,lam} K_{nu',kappa}(t)
+  88 / 88 (lam,kappa) pairs, n <= 5
+
+CHECK 7.2  rem:H's d = t^{n(mu')-n(lam')} M(e,P)_{lam,mu'}(1/t)  ==  cor:dmatrix's d
+  88 / 88

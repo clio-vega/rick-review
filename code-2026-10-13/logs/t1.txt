@@ -1,0 +1,14 @@
+DOMAIN: all kappa |- n for 1 <= n <= 11; all vertical strips kappa/rho.
+eq:ncount with inv read in KAPPA : 1772 / 1772
+strip-parametrisation cross-check (independent predicate) mismatches: 0
+
+CONTROL, inv read in RHO (the wrong Macdonald convention):
+  strips where the two readings COINCIDE (test is blind here): 887
+  strips where they DIFFER (asymmetric witnesses)            : 885
+  of those, eq:ncount FAILS under the rho-reading            : 885 / 885
+
+smallest asymmetric witnesses (kappa, rho, r, lhs, rhs_kappa, rhs_rho):
+    ((2, 1), (1,), {1: 1, 2: 1}, 1, 1, 0)
+    ((3, 1), (2,), {1: 1, 3: 1}, 1, 1, 0)
+    ((2, 1, 1), (1, 1), {1: 1, 2: 1}, 2, 2, 1)
+    ((2, 1, 1), (1,), {1: 2, 2: 1}, 3, 3, 1)

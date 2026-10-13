@@ -1,0 +1,23 @@
+==========================================================================
+CHECK 4.1  Theorem H(1): E_k b_mu in  sum_nu Q[s,t] b_nu,  b_mu = s^{n(mu)} e_mu
+  equivalently  s^{n(nu)-n(mu)} | [e_nu] E_k e_mu  whenever n(nu) > n(mu).
+  173 / 173  (nu,mu,k) triples;  of these 66 have n(nu)>n(mu), where the claim BITES
+
+==========================================================================
+CHECK 4.2  Theorem H(2):  phi o L_k = t^{-C(k,2)} e_k . phi,  phi(bbar_mu)=t^{-n(mu')}P_{mu'}(x;1/t)
+  P built by Gram-Schmidt (Test 2 mechanism b); e_k . P expanded back in the P-basis.
+  39 / 39  (mu,k) pairs with |mu|+k <= 6
+
+==========================================================================
+CONTROL C3: L_k commute  (d_{lam,mu} independent of the order of the parts of lam)
+  30 / 30 orderings
+
+==========================================================================
+CONTROL C4: corrupt the H(3) weight (w -> w + t); agreement with mechanism (c) MUST break
+  corrupted weight disagrees on 52 / 87 pairs  (a control that does not fire is not a control)
+
+==========================================================================
+CONTROL C5: t -> 1/t applied BEFORE vs AFTER the e->P expansion
+  (b) builds P in u=1/t then multiplies by t^{n(mu')-n(lam')};
+  C5 rebuilds P in u=t, expands, and substitutes t->1/t afterwards.
+  88 / 88 pairs agree
