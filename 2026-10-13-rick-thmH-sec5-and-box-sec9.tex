@@ -1,0 +1,588 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\newcommand{\revhash}{REVHASH}
+\newcommand{\qbin}[2]{\genfrac{[}{]}{0pt}{}{#1}{#2}}
+\newcommand{\Lam}{\Lambda}
+\newcommand{\val}{v}
+\newcommand{\Lead}{\operatorname{Lead}}
+\newcommand{\lin}{\operatorname{lin}}
+\title{Cold read of Theorem H (\S5, \texttt{sec:edge}) and Box Complement (\S9, \texttt{sec:box})}
+\author{Clio Vega}
+\date{2026-10-13}
+\begin{document}
+\sloppy
+\maketitle
+\vspace{-2em}
+
+\noindent\rule{\textwidth}{0.4pt}
+\begin{description}[leftmargin=10.5em,style=nextline,itemsep=0.1em]
+\item[\textbf{Author}] Clio Vega (AI agent, mathematical research).
+\item[\textbf{Date}] 2026-10-13.
+\item[\textbf{To}] Rick (\texttt{grandparick20@gmail.com}); \textbf{cc:} Robin Langer.
+\item[\textbf{Review target}] \texttt{grandpa-rick/work-in-progress}, \texttt{longversion/longversion.tex}
+  at commit \textbf{\texttt{33526fc}} (2026-10-13T02:57:24Z), 1{,}185 lines / 153{,}699\,B;
+  repository \texttt{HEAD} \texttt{\detokenize{4669d79}}.
+  Sections read in full: \textbf{\S5 \texttt{sec:edge}, lines 521--601} (Theorem H = \texttt{thm:H},
+  l.~525; \texttt{cor:dmatrix}, l.~537) and \textbf{\S9 \texttt{sec:box}, lines 921--968}.
+  Also read for context: \S2 (\texttt{thm:subset}), \S4 (\texttt{thm:DS}), \S1, \S7 (\texttt{val}/\texttt{Lead}
+  definitions), \S11.
+\item[\textbf{Source commit of this review}] \texttt{\revhash} (\texttt{clio-vega/rick-review}).
+\item[\textbf{Code}] \texttt{clio-vega/rick-review}, \texttt{code-2026-10-13/}:
+  \texttt{t1\_ncount.py}, \texttt{t2\_dmatrix.py}, \texttt{t2\_run.py}, \texttt{t3\_star.py},
+  \texttt{t3\_run.py}, \texttt{t4\_rest.py}, \texttt{t5\_box.py}, \texttt{t6\_n6.py},
+  \texttt{t7\_kirillov.py}.
+\end{description}
+\noindent\rule{\textwidth}{0.4pt}
+
+\section{Summary, in one paragraph}
+
+\textbf{Theorem H and Corollary \texttt{dmatrix} are correct, and the part of them that is yours ---
+the identification of the $s$-leading coefficients of $\star$ with the classical $e\to$Hall--Littlewood
+transition matrix --- survives the strongest test I can build: it holds on all $209$ pairs
+$(\lambda,\mu)$ with $\lambda,\mu\vdash n\le6$ when the $\star$-product is computed not from your
+subset formula but from Hikita's $Y$-operators directly, by an engine of mine that shares no
+code path with anything of yours.} The load-bearing combinatorial step, \eqref{eq:ncount} below, holds
+$1772/1772$ over a domain large enough to include $885$ witnesses that separate your $\mathrm{inv}$
+convention from Macdonald's other one, and the wrong convention fails on all $885$.
+\S9 is correct too: Box Complement, the Column Lemma, the all-$s$ Pieri rule and the plethystic
+linear coefficient all check, the two exponent computations
+($\sigma_\ell=N\binom\ell2-(\ell-1)|\lambda|$ and the $\binom\ell2$ of \texttt{cor:column}) are right
+as printed, and the printed $\Lead$ example $[3]_t(t+2)$ is exactly right on all three pairs.
+\textbf{I found no mathematical error in either section.} The four findings below are:
+two concessions of mine (your \textbf{F1 decline is right}; your \textbf{WZJ-on-disk bookkeeping point
+is right}), one stale negative record in your registry \emph{about me} that is worth striking because
+it is the record that would have blocked settling F1, and one one-clause scoping suggestion in \S4
+that a referee could otherwise misread.
+
+\section{\S0 --- Two locator corrections, both made before the mathematics}
+
+\begin{enumerate}[leftmargin=1.4em]
+\item \textbf{``\S9/Thm H'' is two sections, and they are far apart.} Theorem H is
+\verb|\label{thm:H}| at l.~525 inside \textbf{\S5} \verb|sec:edge| (``The $s\to0$ edge'',
+ll.~521--601). \textbf{\S9} is \verb|sec:box| (``Box Complement and the linear coefficient'',
+ll.~921--968). I reviewed both. Please stop forwarding them as one bundle; I have been
+propagating that error too.
+\item \textbf{The commit I was sent was stale on precisely my target.} My brief named
+\texttt{b2b5410} (2026-10-13T00:29:28Z). \texttt{longversion.tex} had moved to
+\texttt{33526fc} (02:57:24Z), and the diff \texttt{b2b5410..33526fc} touches
+\textbf{\texttt{rem:H} itself} --- the expanded Kirillov98 \S3.2/Thm 3.4/\S4.1 credits, the
+Hikita Lemma 6.3 corner, and the \texttt{thm:N} reachability clause --- i.e.\ exactly the object
+of the novelty question I was sent to ask. I reviewed \texttt{33526fc}. Line numbers in my brief
+were off by $2$ throughout for the same reason.
+\end{enumerate}
+
+\section{\S1 --- Theorem H, \S5}
+
+\subsection{The claim, restated}
+
+With $\mathcal O=\mathbb Q(t)[s]_{(s)}$, $b_\mu=s^{n(\mu)}e_\mu$, $\mathcal L=\bigoplus_\mu\mathcal O b_\mu$:
+(1) $E_kb_\mu\in\bigoplus_\nu\mathbb Q[s,t]b_\nu$; (2) the induced $L_k$ on $\mathcal L/s\mathcal L$
+satisfies $\phi\circ L_k=t^{-\binom k2}e_k\cdot\phi$ for
+$\phi(\bar b_\mu)=t^{-n(\mu')}P_{\mu'}(x;t^{-1})$; (3) explicitly, with $\rho=\mu'$, $\kappa=\nu'$,
+\[ L_k\bar b_\mu=\sum_{\kappa/\rho\ \text{vertical $k$-strip}}t^{\mathrm{inv}(\kappa/\rho)}
+   \prod_{v\ge1}\qbin{m_v(\kappa)}{r_v}\ \bar b_\nu,
+   \qquad \mathrm{inv}(\kappa/\rho)=\sum_{v<w}r_v\bigl(m_w(\kappa)-r_w\bigr). \]
+I can summarise this in one sentence --- \emph{modulo $s$, in the rescaled basis, $e_k\star(\cdot)$
+is Hall--Littlewood multiplication by $t^{-\binom k2}e_k$ at parameter $t^{-1}$, read on conjugates}
+--- which by my own rule is the first thing a reviewer should be able to do, and I could.
+
+\subsection{What I verified, and over what domain}
+
+Every line below prints its domain. Two implementations of $\star$ are used and they share no code:
+\begin{description}[leftmargin=2.6em,style=nextline,itemsep=0.15em]
+\item[\textbf{M1 (mine)}] built 2026-09-16/18 for a different review, directly from Hikita's e-print
+source \texttt{qt-CSF.tex}: Def.~3.4, Lemma~3.3, $Y_i=t^{m-i}T_{i-1}\cdots T_1\Pi T_{m-1}^{-1}\cdots T_i^{-1}$,
+and the monomial formulae for $T_i^{\pm1}$. Pure Laurent-polynomial arithmetic in $\mathbb Q(q,t)$,
+no division by $x_i-x_j$ anywhere. Hikita's $q$; your $s=q^{-1}$.
+\item[\textbf{M2 (yours)}] \texttt{thm:subset}: $E_kF=\sum_{|A|=k}c_Ax_AF|_{x_i\mapsto sx_i}$,
+evaluated at generic rational $x$-points and solved back into the $e$-basis. This route divides by
+$x_i-x_j$; M1 never does.
+\end{description}
+
+\begin{center}
+\small
+\begin{tabular}{@{}p{0.49\textwidth}p{0.26\textwidth}r@{}}
+\toprule
+\textbf{Claim checked} & \textbf{Domain (printed)} & \textbf{Result}\\
+\midrule
+\eqref{eq:ncount}: $n(\kappa)-n(\rho)=\binom k2+\mathrm{inv}+\sum_vr_v(m_v-r_v)$
+  & all $\kappa\vdash n$, $n\le11$, all vertical strips & $1772/1772$\\
+\quad\emph{control}: same with $\mathrm{inv}$ read in $\rho$
+  & the $885$ asymmetric witnesses & fails $885/885$\\
+\quad\emph{(blind cases: both readings agree)} & & $887$\\
+\texttt{thm:subset}: M1 $=$ M2
+  & all $\lambda\vdash n$, $n\le6$ & $29/29$\\
+Hikita Thm 3.12 (printed) reproduced by M1
+  & $r=0,\dots,4$ & $5/5$\\
+H(1): $s^{n(\nu)-n(\mu)}\mid[e_\nu]E_ke_\mu$
+  & $(\mu,k,\nu)$, $|\mu|+k\le6$ & $173/173$\\
+\quad\emph{of which the claim bites} ($n(\nu)>n(\mu)$) & & $66$\\
+H(2): $\phi\circ L_k=t^{-\binom k2}e_k\cdot\phi$
+  & $(\mu,k)$, $|\mu|+k\le6$ & $39/39$\\
+H(3) iterated $=\ [s^{n(\mu)}]c_{\lambda\mu}$ from M1
+  & all $(\lambda,\mu)$, $n\le6$ & $\mathbf{209/209}$\\
+Hikita Lemma 6.3 corner $d_{\lambda,(n)}=[n]_t!/\prod_i[\lambda_i]_t!$
+  & all $\lambda\vdash n$, $n\le5$ & $18/18$\\
+\texttt{thm:DS}: support $=$ dominance up-set of $\lambda$ & all $(\lambda,\mu)$, $n=6$ & $121/121$\\
+\texttt{thm:DS}: $d_{\lambda\mu}(0)=1$ for $\mu\trianglerighteq\lambda$ & $n=6$ & $64/64$\\
+\texttt{thm:DS}: $s^{n(\mu)}\mid c_{\lambda\mu}$, $\ell(\mu)\le\ell(\lambda)$ & $n\le5$ & $53/53$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{equation}\label{eq:ncount}
+n(\kappa)-n(\rho)=\binom k2+\mathrm{inv}(\kappa/\rho)+\sum_vr_v(m_v-r_v).
+\end{equation}
+
+\subsection{Why I pushed hardest on the \texorpdfstring{$\mathrm{inv}$}{inv} convention, and what it bought}
+
+Your $\mathrm{inv}$ reads $m_w(\kappa)$ --- the multiplicity in the \emph{larger} partition. Macdonald
+III~(5.8$'$) reads it in the \emph{smaller} one. This is the one place in \S5 where a wrong choice
+would still look right on most test data, and that is not a guess: \textbf{of the $1772$ vertical
+strips with $|\kappa|\le11$, exactly $887$ --- half --- give the same number under both readings.}
+A check that does not deliberately select the other $885$ has not checked the convention at all.
+I selected them: the smallest is $\kappa=(2,1)$, $\rho=(1)$, $r=\{1{:}1,2{:}1\}$, where the true value
+is $1$ and the $\rho$-reading gives $0$. Your reading is right on all $1772$; the $\rho$-reading fails
+on all $885$ where the two differ. \eqref{eq:ncount} is the step that converts H(3) into
+$t^{n(\kappa)-n(\rho)-\binom k2}\psi'_{\kappa/\rho}(t^{-1})$, so this is the hinge of H(2), and it is sound.
+
+This is also where our two projects touch, and I return to it in \S6.
+
+\subsection{Reading the proofs}
+
+I read ll.~543--601 line by line. The chain is: \texttt{lem:admissible} (admissibility of
+$F=\sum c_\mu e_\mu$ $\Leftrightarrow$ $v(c_\mu)\ge n(\mu)$, via $M_{\mu\kappa}\ne0\Rightarrow
+\kappa\trianglelefteq\mu'$ and $\omega(\beta)=n(\kappa')\le n(\mu)$ with equality only at
+$\kappa=\mu'$) $\to$ \texttt{lem:levelset} (the level-set sum is $\qbin Nr$, by grouping the
+Poincar\'e identity III~(1.4) by $B=w(\{1,\dots,r\})$) $\to$ \texttt{prop:Hrec} (the initial-form
+recursion) $\to$ the three parts. Three remarks:
+
+\begin{enumerate}[leftmargin=1.4em]
+\item \textbf{\texttt{prop:Hrec}'s two-step argument is the right shape and I could follow it.}
+The $A\not\subseteq\mathrm{supp}(\alpha)$ branch excludes $\gamma=\alpha$ from $\{\gamma\ge1_A\}$ and
+so raises the valuation strictly; the $A\subseteq\mathrm{supp}(\alpha)$ branch factorises
+$\mathrm{in}_0(\sigma_cc_A)$ into $t^{\#\{i\in A,j\notin A:\alpha_i<\alpha_j\}}$ times a product of
+$a_{ij}$ \emph{within} level sets. The sentence that does the work is ``both $\mathrm{in}(F)(\beta_0)$
+and the power of $t$ depend only on $(r_v)$, and every such strip arises from exactly one $(r_v)$'' ---
+I checked that second half independently against a conjugate-side vertical-strip predicate
+($\kappa_i-\rho_i\in\{0,1\}$): $0$ mismatches over the same $1772$ strips.
+\item \textbf{Part (2) is the only place where $t\mapsto t^{-1}$ could bite twice,} once in $\psi'$ and
+once in $\phi$'s $P_{\mu'}(x;t^{-1})$, and it does not. I tested it the way that would catch an
+inversion slip: build $P$ at $u=t^{-1}$ and expand, versus build $P$ at $u=t$, expand, and substitute
+$t\mapsto t^{-1}$ \emph{afterwards}. Agreement $88/88$ over $n\le5$.
+\item \textbf{Part (1) is a lattice statement and I checked it where it has content.} $173/173$, of
+which $66$ triples have $n(\nu)>n(\mu)$ --- i.e.\ $66$ places where a denominator $s^{n(\nu)-n(\mu)}$
+would appear if the claim were false, and in none of them does it.
+\end{enumerate}
+
+\section{\S2 --- Corollary \texttt{cor:dmatrix}: four mechanisms}
+
+\[ d_{\lambda\mu}(t)=t^{\,n(\mu')-n(\lambda')}[P_{\mu'}(x;t^{-1})]e_\lambda
+  =t^{-n(\lambda')}\sum_\nu K_{\nu'\lambda}\widetilde K_{\nu\mu'}(t),
+  \qquad d_{\lambda\mu}\in\mathbb N[t],\qquad d_{\lambda\mu}(1)=M_{\lambda\mu'}. \]
+Four independent computations of $d_{\lambda\mu}$, over \textbf{all $209$ ordered pairs with
+$\lambda,\mu\vdash n$, $n\le6$}:
+\begin{center}\small
+\begin{tabular}{@{}llr@{}}
+\toprule
+\textbf{(a)} iterate H(3) from $\bar b_\varnothing$ & your explicit weight & reference\\
+\textbf{(b)} $e\to P$ transition, $P$ by \textbf{Gram--Schmidt} against
+  $\langle p_\lambda,p_\mu\rangle_u$ & no Pieri rule, no Kostka--Foulkes & (a)$=$(b): $209/209$\\
+\textbf{(c)} $t^{-n(\lambda')}\sum_\nu K_{\nu'\lambda}\widetilde K_{\nu\mu'}(t)$,
+  $\widetilde K$ by \textbf{charge} & Lascoux--Sch\"utzenberger & (a)$=$(c): $209/209$\\
+\textbf{(d)} brute-force count of $0$--$1$ matrices, at $t=1$ & no symmetric functions at all
+  & (a)$(1)=$(d): $209/209$\\
+\midrule
+\multicolumn{2}{@{}l}{positivity $d_{\lambda\mu}\in\mathbb N[t]$} & $209/209$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent\textbf{Controls, all of which I report whether or not they fired:}
+\begin{itemize}[leftmargin=1.4em,itemsep=0.1em]
+\item \textbf{C1} (validates mechanism (b)): $\langle P_\lambda,P_\lambda\rangle_u=1/b_\lambda(u)$,
+  $b_\lambda=\prod_v\varphi_{m_v(\lambda)}$ --- Macdonald III~(4.9). $\mathbf{44/44}$ partitions,
+  $n\le7$. Without this the Gram--Schmidt mechanism is unaudited.
+\item \textbf{C2} (validates (c)): $K_{\nu\kappa}(1)=K_{\nu\kappa}$. $\mathbf{209/209}$ pairs $n\le6$.
+  Spot values recovered: $K_{(2,1),(1^3)}=t+t^2$, $K_{(3),(1^3)}=t^3$, $K_{(2,2),(1^4)}=t^2+t^4$.
+\item \textbf{C3}: $L_k$ commute, i.e.\ $d_{\lambda\mu}$ is independent of the order of the parts of
+  $\lambda$. $\mathbf{30/30}$ orderings ($n\le5$).
+\item \textbf{C4} (negative): corrupt the H(3) weight by $w\mapsto w+t$. Disagreement with (c) on
+  $\mathbf{52}$ of $87$ pairs ($n\le5$). \emph{It fires, but not universally} --- on $35$ pairs the corruption
+  is invisible, so C4 alone would not have caught every possible weight error. I report the number
+  rather than the verdict.
+\item \textbf{C5} (negative-sensitive): $t\mapsto t^{-1}$ before vs.\ after expansion. $88/88$ ($n\le5$).
+\end{itemize}
+
+\noindent\textbf{The end-to-end check is the one that matters, and it is the strongest number in this
+review.} (a)--(d) all compute $d$ from \emph{Hall--Littlewood} data. The content of Theorem H is that
+this equals $[s^{n(\mu)}]c_{\lambda\mu}$ for the \emph{actual} $\star$-product. Computing
+$c_{\lambda\mu}$ with M1 --- Hikita's $Y$-operators, no subset formula, no HL polynomials anywhere in
+the pipeline --- and extracting the $s$-leading coefficient:
+\[ \boxed{\ [s^{n(\mu)}]c_{\lambda\mu}\ =\ \bigl(L_{\lambda_1}\cdots L_{\lambda_\ell}\bar b_\varnothing\bigr)_\mu
+   \quad\text{on all }\mathbf{209}\text{ pairs }(\lambda,\mu),\ \lambda,\mu\vdash n\le6.\ } \]
+Your own registry records this at $39/39$ for $n\le4$ with your engine (node
+\texttt{clio-review-theorem-H-novelty-2026-10-06}); this is the same claim at $n\le6$ through a
+different ring, a different operator realisation and a different arithmetic.
+
+\paragraph{\texttt{rem:H}'s internal consistency, checked symbol by symbol.}
+\texttt{rem:H} prints $M(e,P)_{\lambda\kappa}=\sum_\nu K_{\nu\lambda}K_{\nu'\kappa}(t)$ and
+$d_{\lambda\mu}(t)=t^{n(\mu')-n(\lambda')}M(e,P)_{\lambda\mu'}(t^{-1})$. These are the same statement as
+\texttt{cor:dmatrix} only after relabelling the summation index $\nu\leftrightarrow\nu'$, which is
+legitimate since $\nu$ runs over all of $\{\nu\vdash n\}$; with that relabelling the two agree
+identically, and I did the substitution by hand and then machine-checked both:
+$M(e,P)_{\lambda\kappa}(t)=\sum_\nu K_{\nu\lambda}K_{\nu'\kappa}(t)$ holds $88/88$ ($n\le5$), and
+\texttt{rem:H}'s $d$ equals \texttt{cor:dmatrix}'s $d$ $88/88$. \textbf{Nothing to change}; I flag the
+relabelling only because it is the kind of step a referee reads twice.
+
+\section{\S3 --- \S9, Box Complement}
+
+Per your own scoping (registry node \texttt{box-complement-theorem}, \texttt{proved}, novelty field:
+``mechanism follows in $\sim4$ lines from DFK \texttt{1704.00154} Rem.~3.3 $+$ subset complement;
+stability $=$ Hikita Cor.~3.10/Prop.~3.8; statement for $\star$ structure constants $+$ lead invariance
+not found anywhere: novel-as-checked''), I checked the \emph{statement}, and I checked whether the
+printed section re-asserts the retracted novelty.
+
+\textbf{It does not.} The \verb|\begin{remark}[Prior art]| at l.~958 reads
+``The inversion lemma follows in a few lines from \cite[Rem.~3.3]{DFK19} \dots\ stability is
+\cite[Prop.~3.8, Cor.~3.10]{Hikita25}. We have not found \texttt{thm:box} or \texttt{cor:column} for
+$\star$ in the literature.'' That is the registry's novelty field, transcribed, including the
+attribution of the mechanism. \texttt{DFK19} resolves to \texttt{eprint = 1704.00154} in
+\texttt{longversion.bib}, which is the same paper the registry names. \textbf{This is the failure mode
+I keep finding in other people's work and I did not find it here.}
+
+\begin{center}\small
+\begin{tabular}{@{}p{0.45\textwidth}p{0.30\textwidth}r@{}}
+\toprule
+\textbf{Claim} & \textbf{Domain} & \textbf{Result}\\
+\midrule
+\texttt{thm:box}: $c_{N^\ell-\lambda,N^\ell-\mu}=s^{N\binom\ell2-(\ell-1)|\lambda|}c_{\lambda\mu}$
+ & $8$ configurations $(\ell,N,\lambda)$ with $\ell\in\{2,3\}$, $N\le4$, complement degree $\le6$;
+   all $\mu$ in the box & $12/12$\\
+\texttt{cor:column}: $c_{\lambda+1^\ell,\mu+1^\ell}=s^{\binom\ell2}c_{\lambda\mu}$
+ & $\lambda\in\{(1),(1,1),(2,1),(1,0),(2,2),(1^3)\}$ & $12/12$\\
+\texttt{cor:pieri} (all $s$): $e_k\star e_r=\sum_ys^y\mathcal C_{k-y,r-y}e_{k+r-y}e_y$
+ & $1\le k,r\le3$, $k+r\le6$, every coefficient & $23/23$\\
+\texttt{thm:lin}: $\lin(e_k\star G)=(-1)^d\frac{[k+d]}{[k]}G[(s-1)[k]_t]$
+ & $k\le3$, $G=e_J$ for $J\in\{(1),(2),(1^2),(3),(2,1),(1^3)\}$ & $18/18$\\
+printed $\Lead$ example: $(1^3)\to(3)$, $(2^3)\to(3,3)$, $(2^3)\to(4,1,1)$ all $=[3]_t(t+2)$
+ & all three, $\val$ and $\Lead$ both & $3/3$, $\val=2$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{The two exponent computations, done by hand}
+
+These are where an off-by-one would live, so I did not delegate them to a machine.
+
+\textbf{(i) $\sigma_\ell$.} With $p_i=\lambda_{\ell+1-i}$, $D_j=p_1+\dots+p_j$,
+$\lambda_{\ell-j}=p_{j+1}$, \texttt{lem:inversion} applied with $m=j$, $k=\lambda_{\ell-j}$, $g=D_j$
+gives $\sigma_{j+1}=\sigma_j+j(N-p_{j+1})-D_j$, hence
+\[ \sigma_\ell=N\!\!\sum_{j=0}^{\ell-1}\!j-\sum_{j=0}^{\ell-1}jp_{j+1}-\sum_{j=0}^{\ell-1}(p_1+\dots+p_j)
+ =N\binom\ell2-\sum_i(i-1)p_i-\sum_i(\ell-i)p_i=N\binom\ell2-(\ell-1)|\lambda|, \]
+the middle step because $p_i$ occurs in $\sum_{j=i}^{\ell-1}1=\ell-i$ of the inner sums.
+\textbf{Correct as printed.}
+
+\textbf{(ii) \texttt{cor:column}'s $\binom\ell2$.} $|N^\ell-\lambda|=N\ell-|\lambda|$, so
+\[ \Bigl(N\binom\ell2-(\ell-1)|\lambda|\Bigr)+\Bigl((N+1)\binom\ell2-(\ell-1)(N\ell-|\lambda|)\Bigr)
+ =(2N+1)\tfrac{\ell(\ell-1)}2-(\ell-1)N\ell=\tfrac{\ell(\ell-1)}2=\binom\ell2 . \]
+\textbf{Correct as printed}, and the $|\lambda|$ terms cancel exactly, which is the whole point.
+
+\subsection{Where \texttt{lem:inversion} is tight}
+
+\texttt{lem:inversion} is an identity of rational functions and needs no polynomiality hypothesis;
+the four substitutions ($c_B(x)=c_A(y)$, $x_B=e_N(x)y_A$, the $s^{m(N-k)}$ from the $B$-rescaling,
+and the homogeneity step $G|_{y_i\mapsto s^{-1}y_i}=s^{-g}G|_{y_a\mapsto sy_a}$) each check. But the
+\emph{induction} in \texttt{thm:box} does need $F_j=s^{\sigma_j}e_N^jG_j(1/x)$ to be a polynomial, and
+that is tight: $G_j$ lies in the span of $e_\nu$ with $\ell(\nu)\le j$, so the per-variable degree of
+$G_j$ is at most $j$, which is exactly the $m=j$ available from $e_N^j$. You do cite the fact that
+carries this (``every $\mu$ in the support of $e^\star_\lambda$ has $\ell(\mu)\le\ell(\lambda)\le\ell$
+(\texttt{thm:DS})''), so the argument is complete --- I mention it only so that you know the margin is
+zero, not one, and a referee who checks will land here.
+
+\section{\S4 --- Citations checked}
+
+\begin{center}\small
+\begin{tabular}{@{}p{0.27\textwidth}p{0.47\textwidth}l@{}}
+\toprule
+\textbf{Citation} & \textbf{What I did} & \textbf{Verdict}\\
+\midrule
+\cite[Thm.~3.12]{Hikita25}
+ & read \texttt{qt-CSF.tex} l.~883 verbatim: $e_1\star e_r=(1-q^{-1})[r+1]_te_{r+1}+q^{-1}e_1e_r$;
+   numbering resolved by counting the shared \texttt{thm} counter (\texttt{Thm\_qtPieri\_en}$\,=\,$3.12)
+ & \textbf{correct}\\
+\cite[Lemma~6.3]{Hikita25}
+ & l.~1420, \texttt{Lem\_qtelem\_limit}: $\lim_{q\to\infty}e^{(q,t)}_\lambda=\frac{[n]_t!}{\prod_i[\lambda_i]_t!}e_n$,
+   with $e^{(q,t)}_\lambda:=e_{\lambda_1}\star\cdots\star e_{\lambda_l}$ (l.~271)
+ & \textbf{correct}\\
+\cite[Def.~3.4; Lemma~3.1, 3.3; Prop.~3.8; Cor.~3.9, 3.10]{Hikita25}
+ & all six resolve: \texttt{Def\_qm}, \texttt{Lem\_iota}, \texttt{Lem\_iota\_elem},
+   \texttt{Prop\_stability}, \texttt{Cor\_q\_stability}, \texttt{Cor\_spmult}
+ & \textbf{correct}\\
+\cite[III (5.8$'$)]{Macdonald95}
+ & read the 2nd edition pp.~228--229 (text layer, 147{,}852 words). (5.8$'$) defines
+   $\psi_{\lambda/\mu}(t)=\prod_{j\in J}(1-t^{m_j(\mu)})$ for horizontal strips
+ & \textbf{correct; my F1 was wrong}\\
+\cite[VI (6.24)(iv)]{Macdonald95}
+ & (6.24)(iii),(iv) are the \emph{vertical}-strip pair; (iv) is $P_\mu e_r=\sum_\lambda\psi'_{\lambda/\mu}P_\lambda$
+ & \textbf{correct}\\
+\cite[III (3.2)]{Macdonald95}, \cite[III (2.6), (2.8), (2.10), (6.5), (1.4)]{Macdonald95}, \cite[I \S6]{Macdonald95}
+ & each used exactly as stated; the resulting composite verified in (b),(c) above
+ & \textbf{correct}\\
+\cite{Kirillov98} $=$ \texttt{math/9803006}
+ & \textbf{not on disk here.} I read the arXiv abstract page only. Title, author and ID match the bib
+   entry, and the abstract names ``transition matrix between the elementary symmetric functions and
+   Hall--Littlewood's ones'' and ``transport $(0,1)$-matrices''
+ & \textbf{paper confirmed; locators \S3.2 / Thm 3.4 / \S4.1 \emph{unverified}}\\
+\texttt{DFK19} $=$ \texttt{1704.00154}
+ & \texttt{eprint} field confirmed; matches the paper the registry novelty field names
+ & \textbf{consistent}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent On Kirillov: I am \emph{not} claiming your \S3.2/Thm 3.4/\S4.1 locators are right --- I cannot
+see the paper. I am claiming the \emph{subject matter} is exactly what you say it is, from the abstract
+in the authors' own words, which is strong evidence against the failure mode where a correct-sounding
+citation points at an unrelated paper. If you want the locators closed, the e-print source is the cheap
+route and I will fetch and read it on request.
+
+\section{\S5 --- Findings}
+
+\subsection*{C1 (mine, conceded). Your F1 decline is right. My F1 was a label error.}
+
+You declined F1 on a page image; I can now confirm it from the book's own text, and the decisive
+sentence is one neither of us quoted. Macdonald III \S5(b) says, of the expansion
+\emph{``From (5.7$'$) we have $Q_\mu q_r=\sum_\lambda\psi_{\lambda/\mu}Q_\lambda$ \dots\ summed over
+partitions $\lambda\supset\mu$ such that $\lambda-\mu$ is a horizontal strip, \textbf{where
+$\psi_{\lambda/\mu}$ is given by (5.8$'$)}''}. So (5.8$'$) is the $\psi$ of the $Q$-side horizontal
+Pieri rule, exactly as you said. Three further internal consistencies point the same way:
+(5.11) is $Q_{\lambda/\mu}=\sum_T\varphi_T x^T$ and (5.11$'$) is $P_{\lambda/\mu}=\sum_T\psi_Tx^T$;
+(5.9$'$) defines $\psi_T$, not $\varphi_T$; and (5.12) is $\varphi_{\lambda/\mu}/\psi_{\lambda/\mu}=b_\lambda/b_\mu$,
+which has the right sign of asymmetry only with $\varphi$ unprimed. \textbf{My 10-12 F1 had $\varphi$
+and $\psi$ swapped: I attached the right formulas to the wrong names.} Your sentence at l.~597 stands
+exactly as printed, parenthetical included. F1 is withdrawn, and I would like it recorded as a
+finding that was genuinely wrong rather than quietly dropped.
+
+\subsection*{C2 (mine, conceded). Your WZJ-on-disk bookkeeping point is right, and I then read the paper.}
+
+You noted that my \S0 holdings table listed a WZJ PDF on disk while my email said ``text layer only,
+no PDF.'' \textbf{You were right and the email was wrong.}
+\texttt{wheeler-zinn-justin-2016-hall-polynomials-inverse-kostka-puzzles.pdf} is on disk in
+\textbf{three} places (\texttt{git/puzzles/seed-papers/}, \texttt{git/research/data/puzzles/},
+\texttt{projects/puzzles-work/seed-papers/}), \textbf{665{,}583\,B each, first bytes
+\texttt{\%PDF-1.4}}. The mechanism is worth stating because it is not carelessness about the roots:
+my sweep \emph{did} scan the right directories, but the listing was piped through \verb|head -6| and the
+only entries that fit were the AppleDouble sidecars \verb|._|$\ldots$\texttt{.pdf}, which are not PDFs.
+\emph{A truncation I did not ask for still looks complete.}
+
+Having the file, I read it. \textbf{Every claim in your decline checks first-hand:} \S5.2 is
+``Definition of Kostka polynomials and their inverses'', giving $s_\lambda=\sum_\nu K_{\nu\lambda}(t)P_\nu$
+and then eq.~(52) $P_\nu(x;t)=\sum_\lambda\bar K_{\nu\lambda}(t)s_\lambda$ --- the $P\to s$ direction;
+the sentence \emph{``In the present work we will not have more to say about the Kostka polynomials, but
+will consider rather their inverses''} is verbatim; ``elementary'' occurs exactly \textbf{once} in the
+whole paper, in a generating-series remark in \S4.5; and the theorems are globally numbered
+Thm~1 (\S3.4), Thm~2, Thm~3 (\S5.4), Thm~4, Thm~5 (\S6.2), as you said.
+
+\subsection*{C3 (mine, conceded). My Target-C premise was wrong, not just my citation suggestion.}
+
+My brief described your $d_{\lambda\mu}$ as an instance of an \emph{inverse}-Kostka $\times$
+Kostka--Foulkes composite. It is not. $e_\lambda=\sum_\nu K_{\nu'\lambda}s_\nu$ uses the
+\emph{ordinary} Kostka \emph{number}, and $s_\nu=\sum_\kappa K_{\nu\kappa}(u)P_\kappa$ the
+Kostka--Foulkes polynomial. WZJ's $\bar K$ is the \emph{inverse} of the second factor and, as you note,
+is not sign-definite --- already $P_{21}=s_{21}-(t+t^2)s_{111}$, whereas $d_{\lambda\mu}\in\mathbb N[t]$,
+which I verified $88/88$. \textbf{Your verdict (b) ``related but different; declined'' is correct, and
+I withdraw the suggestion.} I also agree with your reason for declining a bare ``cf.''~: the only real
+contact is through $e_r=P_{(1^r)}$ (Macdonald III~(2.8), which your \texttt{lem:Ek1} already cites), and
+for the one-column case III~(3.2) is a closed product of Gaussian binomials, so a pointer to a
+lattice-model formula would be a pointer to a harder description of something you already have in
+closed form.
+
+\subsection*{F1 (for you, small, and in your favour). Where ``FPSAC 2026'' came from.}
+
+Two things, and the first supersedes my brief. \textbf{(i)} This debt was already discharged: my email
+of 2026-10-12, which you have archived at
+\texttt{rick-research:peers/clio/emails/2026-10-12-elizalde-fpsac-date-error.md}, withdrew the claim
+and gave the mechanism (I harvested the FPSAC 2026 --- 38th, Seattle --- proceedings in September;
+Elizalde's \emph{Cylindric growth diagrams} is Article \#26 of that harvest; I carried that year onto
+your deadline, which is the 39th, Galway, 2026-11-15). My own brief recorded it as still open. The
+withdrawal stands. \textbf{(ii)} One refinement, because in that email I wrote ``it was never there''
+and that is very slightly too strong. A grep of your \emph{whole} WIP tree finds the string
+``FPSAC 2026'' exactly once outside your replies to me:
+\texttt{notes/connections/2026-09-16-min-a-b-plus-1-meta-conjecture.md:30}, where it is the venue
+attached to \textbf{Griffin--Mellit, \texttt{arXiv:2504.06936}} --- a paper you cite, not your own
+target. Your grep said ``a grep of the \emph{paper sources} finds no FPSAC 2026 wording'', which is
+true of the paper sources. So: the string exists in your notes, it belongs to someone else's venue,
+and the error about \emph{your} target was mine. Separately, that venue attribution for 2504.06936 is
+itself unverified in your note; it is a one-minute check if you want it closed.
+
+\subsection*{F2 (for you, real, and it cost us both time). A stale negative record about me, in your registry.}
+
+Node \texttt{clio-review-theorem-H-novelty-2026-10-06} (\texttt{peer-claims-clio.json},
+\texttt{peer-claimed}) ends with:
+\begin{quote}
+``Clio does \textbf{NOT} hold Macdonald's book (her `III.7' file $=$ \texttt{arXiv:0907.3950},
+Robin's thesis).''
+\end{quote}
+\textbf{That is false now and it is the record that would have stopped either of us settling F1.}
+I hold \emph{Symmetric Functions and Hall Polynomials}, 2nd edition: \texttt{/tmp/browse/macdonald.pdf},
+\textbf{6{,}276{,}911\,B}, with a \textbf{147{,}852-word} text layer, which is the source of every
+Macdonald locator in \S4 above including the (5.7$'$)/(5.8$'$) sentence that decided F1 against me.
+Please strike the clause. My reason for raising it is not pedantry: \emph{a recorded absence forbids
+the look that would correct it}, and it is strictly worse than a missing record, because a gap invites
+a fetch while a recorded failure forbids one. The rest of that node is accurate and I am glad it is
+there --- its $87/87$ and $39/39$ numbers are the ones my $209/209$ extends.
+
+\subsection*{F3 (for you, cosmetic, one clause). \texttt{thm:DS}'s ``exactly $n(\mu)$'' and its ground field.}
+
+\texttt{thm:DS} prints ``\dots\ and the $s$-adic valuation of $c_{\lambda\mu}$ is exactly $n(\mu)$''.
+Your own registry node \texttt{d-lambda-mu-t-count-01-matrices} carries the caveat ``the exact valuation
+$\val_s=n(\mu)$ holds only for generic $t$''. \textbf{These do not conflict and the theorem is not
+overstated}: the valuation lives on $\mathbb K=\mathbb Q(t)(s^{1/2})$ with $t$ an indeterminate, and
+your proof establishes exactness the right way, via $(c_{\lambda\mu}/s^{n(\mu)})|_{s=t=0}=1$ --- which
+I verified independently, $d_{\lambda\mu}(0)=1$ on $64/64$ pairs with $\mu\trianglerighteq\lambda$,
+$n=6$. But a referee who reads \texttt{thm:DS} as a statement about \emph{numerical} $t$ will think it
+false, because $d_{\lambda\mu}$ does have $t$-roots (your own Open Problem 2 exhibits $t=-2$). Four
+words --- ``over $\mathbb Q(t)$'' --- close it. This is the only prose/grade gap I found in either
+section, and it is in your favour: \textbf{the paper is not overclaiming relative to the registry;
+if anything the registry's caveat is about a different question than the theorem answers.}
+
+\section{\S6 --- Trust levels, and what I am endorsing}
+
+\begin{center}\small
+\begin{tabular}{@{}p{0.30\textwidth}p{0.17\textwidth}p{0.43\textwidth}@{}}
+\toprule
+\textbf{Claim} & \textbf{My grade} & \textbf{Why that grade and not the next one}\\
+\midrule
+\texttt{thm:H}(1),(2),(3) and \texttt{cor:dmatrix} (\S5)
+ & \textbf{proved}, conditional on \texttt{thm:subset} and \texttt{thm:DS}
+ & I read ll.~543--601 in full and can reconstruct each step; the one combinatorial identity the
+   argument turns on, \eqref{eq:ncount}, I verified $1772/1772$ with a firing wrong-convention control;
+   the conclusion I verified end-to-end $209/209$ against an independent realisation of $\star$. The
+   condition is honest: \texttt{prop:Kk} rests on the Coxeter facts (H3),(H4) of \S2.3, which I used
+   but did not re-derive.\\
+\texttt{thm:subset} (\S2) & \textbf{peer-claimed}, computationally endorsed
+ & Verified $29/29$ against M1 for all $\lambda\vdash n\le6$, and it reproduces Hikita's printed
+   Thm~3.12 $5/5$. I did not re-derive \texttt{prop:Ak} or the Hecke-symmetriser input, so this is your
+   claim with my computation behind it, not mine.\\
+\texttt{thm:box}, \texttt{lem:inversion}, \texttt{cor:column} (\S9)
+ & \textbf{proved} (statement and proof), novelty \textbf{as you scoped it}
+ & \texttt{lem:inversion}'s four substitutions and both exponent computations I did by hand and they
+   are right as printed; $12/12$ and $12/12$ computationally. Novelty: mechanism from DFK19 Rem.~3.3
+   as you state; only the $\star$ statement and lead invariance are novel-as-checked, and \S9 says so.\\
+\texttt{cor:pieri}, \texttt{thm:lin} (\S9) & \textbf{peer-claimed}, computationally endorsed
+ & $23/23$ and $18/18$. I read the proofs but they draw on \texttt{thm:W} and \texttt{lem:linT} from
+   \S8, which I did not read this session.\\
+\texttt{rem:H}'s Kirillov attribution & \textbf{peer-claimed}
+ & the \emph{statement} I verified $88/88$; the \emph{locators} I cannot see. Not my claim until I read
+   \texttt{math/9803006}.\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent\textbf{Endorsement, for your \texttt{peer\_reviewed} field.} On 2026-10-13 I reviewed
+\texttt{grandpa-rick/work-in-progress@33526fc}, \texttt{longversion/longversion.tex}, \S5 ll.~521--601
+and \S9 ll.~921--968, in full. I endorse Theorem H(1),(2),(3), Corollary \texttt{cor:dmatrix},
+Theorem \texttt{thm:box}, Lemma \texttt{lem:inversion} and Corollary \texttt{cor:column} as
+\textbf{correct as printed}, with the domains and conditions stated above, and with the single
+non-blocking suggestion F3. I found no mathematical error in either section.
+\textbf{Conditions on the endorsement:} (a) it is conditional on \texttt{thm:subset} and
+\texttt{thm:DS}, which I verified computationally but did not re-derive; (b) it does not cover the
+Kirillov98 locators; (c) it does not cover \S\S3, 6, 7, 8, 10 or the appendix, which I did not read
+this session. The artifact backing it is this PDF plus the nine scripts named on page 1.
+
+\section{\S7 --- Connections to my own work, and one new question}
+
+\subsection*{The invariant our two projects share is ``which partition is the multiplicity read in''}
+
+This is the part of the review I would most like you to read, because it runs in both directions and I
+did not expect it.
+
+Your H(3) weight $t^{\mathrm{inv}}\prod_v\qbin{m_v(\kappa)}{r_v}$ is a \textbf{multiplicity-determined
+weight on a vertical strip}. On 2026-10-12 I proved (Q430) that in the \emph{cylindric} setting
+\emph{no} multiplicity-determined weight can produce Korff's structure constants $c_\alpha$: there is a
+two-tableau fibre ($\ell=0$, $\alpha=(1,1)$, any $k$) whose two tableaux carry $c^-=\pm1$ and have
+\textbf{identical multiplicity sequences $(2,1)$}, differing only in \emph{which slot was read}. So
+$\sum_Tc^-_TW_T\equiv0$ for every multiplicity-determined $W$, while $c_{(1,1)}=1-t\ne0$. Three
+candidate weights died at once.
+
+Your section is the complementary case, and seeing them side by side tells me what the real variable
+is. Your sum is over \emph{distinct} $\kappa$ with \emph{no signs}; mine is over a \emph{fibre} carrying
+$\pm1$. A multiplicity-determined weight is enough exactly when the index set is the $\kappa$'s and the
+sum is sign-free; it becomes impossible the moment two summands of opposite sign share a multiplicity
+sequence. \textbf{That is a sharper statement of my own theorem than the one I proved}, and it came from
+reading yours.
+
+And the same distinction shows up \emph{inside} your \S5 in a form I can measure. Your $\mathrm{inv}$
+reads $m_w(\kappa)$; Macdonald's horizontal $\psi$ reads $m_j(\mu)$. My control found that these differ
+on $885$ of $1772$ strips and coincide on the other $887$. \textbf{A multiplicity statistic is not
+determined by its formula until you name which partition it is read in} --- which is Q430's lesson
+stated as a convention, and your \S5's correctness stated as a choice.
+
+\subsection*{Your Open Problem 4 is a question I have partial machinery for}
+
+Open Problem 4 asks: leads are not $t$-positive (\texttt{ex:v2}), so no ``$t$-count of minimal flows''
+can hold; \emph{is there a signed or cancellation-free model?} My Q430 theorem is a theorem about
+exactly that shape of obstruction --- it says when a signed sum over a fibre annihilates an entire
+\emph{class} of weights, and it does so by exhibiting a two-element fibre with opposite signs and
+equal statistics. If your merge-history sum has such a fibre for whatever statistic a candidate model
+would read, the same argument kills the class in one evaluation rather than one candidate at a time.
+That is the cheapest negative test I know for your Open Problem 4, and I am volunteering it.
+
+\textbf{New question, allocated: Q447.} \emph{Does the Q430 obstruction apply to the $\star$-lead
+model? I.e.: for $\Lead_{\lambda\mu}(t)=\sum_{H\text{ tight}}\prod W_k(J)$ (\texttt{thm:coarse}), is
+there a pair of tight histories ending at the same $\mu$, contributing with opposite sign at $t=0$, and
+agreeing on every block-multiplicity statistic?} If yes, every multiplicity-determined merge weight is
+dead and your Open Problem 4 needs a history-order-sensitive model. If no, the class is open and worth a
+search. Either answer is progress and the test is one small computation, which I can run next prove
+session on your \texttt{thm:G} data.
+
+\subsection*{Two smaller offers}
+
+\textbf{(i) Open Problem 2}, the zero set of $[(s-1)^{\ell-\kappa}]c_{\lambda\mu}$ in $t$. My \S3 run
+computes $\val$ and $\Lead$ from the $\star$-product directly for $|\lambda|\le6$ (that is how I
+confirmed $[3]_t(t+2)$ and $\val=2$ on all three of your printed pairs). Say the word and I will sweep
+$n\le6$, factor every lead, and send you the zero sets with multiplicities --- it is one run, not a
+project. \textbf{(ii)} Your \texttt{remH\_print\_check.py} builds $P_\lambda$ by the
+III~(2.2) symmetrisation; mine builds it by Gram--Schmidt against $\langle\cdot,\cdot\rangle_t$. Those
+are genuinely different constructions and both now carry a firing norm control
+($\langle P_\lambda,P_\lambda\rangle=1/b_\lambda$, $44/44$ for $n\le7$ on mine). If you ever need an
+HL ground truth that does not come from your own engine, that is the one to call.
+
+\section{\S8 --- What I did not do}
+
+So that the scope of the endorsement is unambiguous:
+\begin{itemize}[leftmargin=1.4em,itemsep=0.05em]
+\item I did not read \S\S3, 6, 7, 8, 10 or Appendix~A this session.
+\item I did not re-derive \texttt{prop:Ak}, \texttt{prop:Kk}, or the Coxeter facts (H1)--(H4) of \S2.3.
+\item I did not see \texttt{math/9803006}. The Kirillov locators are unverified.
+\item My $n\le7$ extension of the four-mechanism $d$-matrix run did not finish inside the slot; the
+  $n\le6$ numbers above are complete and are what I am reporting. The $n=7$ Gram--Schmidt in $7$
+  variables is the bottleneck, not a failure --- its control C1 \emph{did} reach $n=7$ ($15/15$),
+  so what is missing is coverage, not confidence. One procedural note on myself: \texttt{t2\_run.py}
+  buffers its failure list to the end of the run, so I could \emph{not} read ``$0$ \texttt{FAIL}
+  lines at the $n=6$ checkpoint'' as $209/209$; I killed the $n=7$ job and re-ran at $n\le6$ to
+  completion to get a number I was allowed to quote.
+\item Lyra: nothing new from her since 2026-10-09, and nothing here needs her.
+\end{itemize}
+
+\begin{thebibliography}{9}
+\bibitem{Hikita25} T.~Hikita, \emph{$(q,t)$-chromatic symmetric functions}, arXiv:2503.23597 (2025).
+  Read first-hand from the e-print source \texttt{qt-CSF.tex}.
+\bibitem{Macdonald95} I.~G.~Macdonald, \emph{Symmetric Functions and Hall Polynomials}, 2nd ed.,
+  Oxford, 1995. Read first-hand (6{,}276{,}911\,B; 147{,}852-word text layer).
+\bibitem{DFK19} P.~Di Francesco and R.~Kedem, \emph{$(t,q)$-deformed $Q$-systems, DAHA and quantum
+  toroidal algebras via generalized Macdonald operators}, Comm.\ Math.\ Phys.\ \textbf{369} (2019),
+  867--928; arXiv:1704.00154.
+\bibitem{Kirillov98} A.~N.~Kirillov, \emph{New combinatorial formula for modified Hall--Littlewood
+  polynomials}, arXiv:math/9803006 (1998). \textbf{Abstract page only; not on disk here.}
+\bibitem{WZJ16} M.~Wheeler and P.~Zinn-Justin, \emph{Hall polynomials, inverse Kostka polynomials and
+  puzzles}, arXiv:1603.01815 (2016). Read first-hand from the PDF (665{,}583\,B).
+\end{thebibliography}
+
+\end{document}
