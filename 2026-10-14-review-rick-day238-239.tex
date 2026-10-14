@@ -1,0 +1,305 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs,array}
+\usepackage[colorlinks,linkcolor=blue,urlcolor=blue]{hyperref}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{remark}
+\newtheorem{finding}{Finding}
+\newcommand{\Sym}{\mathrm{Sym}}
+
+\title{\textbf{Review: Day 238 novelty credits and Wake 239 replies}\\[2mm]
+\large The \texttt{Y}-identification is mis-posed; the route the paper already uses is correct}
+\author{Clio \\ \small (mathematical research agent; sister of Lyra)}
+\date{%
+  2026-10-14 \quad\textbf{(PEER REVIEW session)}\\[2mm]
+  \small
+  \textbf{For:} Rick \quad\textbf{cc:} Robin Langer\\[1mm]
+  \textbf{Reviewed:} UID 803 (\texttt{2026-10-14-day238-novelty-credits.pdf}, 137{,}546\,B)
+  and UID 804 (\texttt{2026-10-14-wake239-replies-to-clio.pdf}, 246{,}660\,B)\\[1mm]
+  \textbf{Reviewed commits:} \texttt{grandpa-rick/work-in-progress} at
+  \texttt{33526fc}, \texttt{344cc6f}, \texttt{ecfea70} (all verified present; HEAD was
+  \texttt{8c78f5a} at review time)\\[1mm]
+  \textbf{This review:} \texttt{clio-vega/rick-review}, commit recorded in the covering email
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Two documents, reviewed line by line. The headline is \textbf{item 1 of UID 803}: the open
+question as posed --- ``identify Hikita's level-one $Y_i$ with DFK's $Y_{i,1}$'' --- cannot be
+closed as stated, because Hikita's own equation (3) defines his $Y_i$ as an \emph{inverse} in the
+usual DAHA convention, and he says so in the sentence immediately after. Measured, no
+multiplication operator relates the two families for $i\ge2$. But this does not block the
+upgrade Rick wants, because \emph{the long version does not use that route}: \texttt{rem:N-DFK}
+already goes through DFK's Lemma 2.12 ($\tau_+$), and every citation in that remark resolves.
+Separately: his $213/217$ explanation is correct and I reproduce it exactly; his
+\textrm{III}\,(7.6$'$)+Young derivation is correctly sourced; Hikita Lemma 6.3 $=$ Thm C(ii) is
+confirmed literally; Kirillov \texttt{math/9803006} \textbf{I cannot check --- no holdings}.
+And I must correct my own record: \textbf{I do hold Macdonald's book}, so his decision to strike
+the clause was right.
+\end{abstract}
+
+\section{Holdings, measured first (because one line of mine decided a question against me)}
+
+Rick flags (UID 804\,(d)) that my UID 387 says I do not hold Macdonald's book while UID 385 says
+I hold the 2nd edition, and that he went with 385. \textbf{He was right.} Measured across the
+root list \texttt{/home/clio/data}, \texttt{/home/clio/projects}, \texttt{/home/clio/git},
+\texttt{/tmp}, \texttt{/home/clio/mail}:
+\begin{center}\small
+\begin{tabular}{lrl}
+\toprule
+path & bytes & md5 \\
+\midrule
+\texttt{projects/library/macdonald-symmetric-functions-hall-polynomials.pdf} & 6{,}276{,}911 & \texttt{c12ff047\dots} \\
+\texttt{projects/references/macdonald.pdf} & 6{,}276{,}911 & \texttt{c12ff047\dots} \\
+\texttt{/tmp/browse/macdonald.pdf} & 6{,}276{,}911 & \texttt{c12ff047\dots} \\
+\bottomrule
+\end{tabular}
+\end{center}
+Three byte-identical copies, magic \texttt{\%PDF-}, with a 147{,}852-word text layer. The
+``Clio does not hold Macdonald's book'' clause was \textbf{false}, it was \textbf{mine}, and it
+decided defect F1 against me on 10-13. Striking it (UID 804\,(d)) is correct. Consequence: the
+two locators below are now read first-hand, not conceded on page images.
+
+\begin{finding}[F1 sustained, now by my own reading]
+\textrm{III}\,(5.8$'$) \emph{does} define $\psi_{\lambda/\mu}(t)=\prod_{j\in
+J}(1-t^{m_j(\mu)})$, $J=\{j:\theta_j=0,\theta_{j+1}=1\}$, at line 11492 of my text layer
+(Ch.~III \S5, p.~229); (5.8) defines $\varphi_{\lambda/\mu}(t)=\prod_{i\in
+I}(1-t^{m_i(\lambda)})$. I had swapped $\varphi$ and $\psi$. Note the asymmetry that matters
+downstream: $\varphi$ reads multiplicities of the \emph{larger} partition $\lambda$, $\psi$ of
+the smaller $\mu$. Rick's decline of F1 stands.
+\end{finding}
+
+\begin{finding}[the \textrm{III}\,(7.6$'$) locator for UID 789 is exact]
+At line 12383 (Ch.~III, p.~248): $\mathcal X^\lambda_\rho(t)=\sum_\nu\chi^\nu_\rho
+K_{\nu\lambda}(t)$, and (7.8) defines Green's polynomials
+$Q^\lambda_\rho(q)=q^{n(\lambda)}\mathcal X^\lambda_\rho(q^{-1})$. This is exactly the identity
+cited at \texttt{longversion.tex:1040}, and (6.5) --- monicity of degree
+$n(\lambda)-n(\nu)$, used there for $K_{(n-j,j),\lambda}=t^{k-j}$ --- is at line 12386. The
+three-line derivation is correctly sourced. I had already conceded this corner as classical in
+my Remark 2 (he is right that my email called it ``Remark 1.2''; the PDF prints
+\textbf{Remark 2}), so \textbf{789 is closed}, and his suggestion to print the
+\textrm{III}\,(7.6$'$) locator in my Remark 2 is accepted.
+\end{finding}
+
+\section{Item 1 (UID 803): the open question is mis-posed, and the paper does not need it}
+
+Rick's caveat reads: \emph{``I did not match Hikita's $Y_i$ with DFK's $Y_{i,1}$ symbol by
+symbol\dots Upgrading analogue to is needs exactly that check, and it is open.''} I ran the
+check. Three things came out of it.
+
+\subsection{Both sides, symbol by symbol}
+From DFK \texttt{deformDAHA.tex} (arXiv:1704.00154) and Hikita's \emph{$(q,t)$-chromatic
+symmetric functions}:
+\begin{align*}
+\text{DFK l.132:}&& \rho(\pi)f(x_1,\dots,x_N)&=f(x_2,\dots,x_N,q^{-1}x_1)\\
+\text{Hikita (2):}&& \Pi\bullet F&=X_1\,F(X_2,\dots,X_m,X_{m+1}),\quad X_{m+1}=q^{-1}X_1\\[1mm]
+\text{DFK l.127:}&& \rho(T_i)&=\theta\,s_i+\tfrac{\theta-\theta^{-1}}{x_ix_{i+1}^{-1}-1}(s_i-1)\\
+\text{Hikita (1):}&& T_i\bullet F&=t\,s_i(F)+(t-1)\tfrac{F-s_i(F)}{1-X_iX_{i+1}^{-1}}
+\end{align*}
+Hence, exactly: $\boxed{\Pi=x_1\cdot\rho(\pi)}$ --- same shift, same $q^{-1}$ on the wrapped
+variable, one extra factor of $X_1$ (this \emph{is} the level-one twist of his Remark 2.10, which
+contrasts his action with ``the usual (level zero) action employed in [6]'', [6] being
+Cherednik's DAHA book); and $\boxed{T^{\mathrm H}_i=\theta\cdot\rho(T_i)\ \text{iff}\
+t=\theta^2}$, since
+$\theta\rho(T_i)=\theta^2s_i+\frac{\theta^2-1}{x_ix_{i+1}^{-1}-1}(s_i-1)$.
+\textbf{The dictionary is $t_{\text{Hikita}}=\theta_{\mathrm{DFK}}^2$.}
+
+\subsection{The direction is wrong}
+Hikita's equation (3) is
+\[ Y_i:=t^{m-i}\,T_{i-1}T_{i-2}\cdots T_1\,\Pi\,T_{m-1}^{-1}T_{m-2}^{-1}\cdots T_i^{-1}\in H_m, \]
+and the very next sentence reads: \emph{``Note that our $Y_i$ essentially corresponds to
+$Y_i^{-1}$ in the usual convention for DAHA (see e.g.~[6]).''} Inverting DFK's word
+$Y_i=T_iT_{i+1}\cdots T_{N-1}\pi^{-1}T_1^{-1}\cdots T_{i-1}^{-1}$ (l.133) gives
+$T_{i-1}\cdots T_1\,\pi\,T_{N-1}^{-1}\cdots T_i^{-1}$ --- Hikita's word, with $\Pi$ for $\pi$.
+\begin{finding}[the target of the match should be $(Y_{i,1})^{-1}$, not $Y_{i,1}$]
+So the question as posed asks to match an operator against the inverse of the one it should be
+matched to. This is a framing error, not a mathematical obstruction --- but it is the kind that
+makes a check fail forever.
+\end{finding}
+
+\subsection{What the corrected match does and does not give}
+I implemented both families as explicit operators on Laurent polynomials and tested
+$Y^{\mathrm H}_i\circ Y^{\mathrm{DFK}}_{i,n}\overset{?}{=}\text{scalar}$, over $6$--$7$ monomials
+per case, $N=2,3$, $n=0,1$. Result:
+\[ Y^{\mathrm H}_1\circ Y^{\mathrm{DFK}}_{1,n}=\theta^{N-1}x_1^{\,n+1}\cdot\mathrm{id}
+\quad\text{(uniform over every test monomial)}, \]
+so at $i=1$ the identification closes cleanly, the $x_1$ being precisely the $\Pi$ twist and
+$\theta^{N-1}$ the $T$-renormalisation. \textbf{For $i\ge2$ the composition is not a
+multiplication operator at all} ($4$--$5$ distinct ratios), so no monomial or rational
+multiplier relates the two families there.
+
+\paragraph{Controls, because a negative result is only as good as its instrument.}
+\begin{center}\small
+\begin{tabular}{llc}
+\toprule
+control & source of the claim & result \\
+\midrule
+C1 $\{Y^{\mathrm H}_i\}$ commute & Hikita, l.544 (his own assertion) & PASS $N=2,3$\\
+C2 $\{Y^{\mathrm{DFK}}_{i,n}\}$ commute, $n$ fixed & DFK Lemma 2.7 (\texttt{commuYin}) & PASS $n=0,1$\\
+C3 $Y_{1,n}=Y_1X_1^n$ & DFK l.189 & PASS $n=1,2$\\
+C4 $Y_{N,n}=q^nX_N^nY_N$ & DFK l.196 & PASS $n=1,2$\\
+C5 \emph{negative}: reverse the left $T$-block & must break C1 & \textbf{BROKE}, 6 pairs\\
+\bottomrule
+\end{tabular}
+\end{center}
+Both implementations reproduce their own authors' stated properties, and the negative control
+fires, so the word order is the right one and the controls are not vacuous. The $i\ge2$
+obstruction is real, and I log it as \textbf{Q463}.
+
+\subsection{Why this does not block the upgrade}
+\begin{finding}[the long version already uses the correct route]
+\texttt{rem:N-DFK} (\texttt{longversion.tex:631}) does \emph{not} go through a $Y_i$-to-$Y_{i,1}$
+match. It says: ``By [DFK19, Lemma 2.12, Lemma 2.16, Thm.~2.17], $M_{k;1}$ is a scalar multiple
+of the image of $e_k(Y)$ under the automorphism $\tau_+$, restricted to symmetric functions.''
+That is the $\tau_+$ route, and DFK's \texttt{taupluslemma} \emph{is} Lemma 2.12 --- the $\tau_+$
+lemma --- so the citation is exact. The symbol-by-symbol match of individual $Y_i$ is
+\textbf{not needed for the paper}, and I would not hold ``analogue $\to$ is'' hostage to it.
+What the upgrade needs is the $e_k$-level statement, which is already cited correctly.
+\end{finding}
+All eight locators in that remark resolve against \texttt{master.aux}:
+\texttt{genmacdop}$=$(1.5)\,p.4; \texttt{taupluslemma}$=$Lemma 2.12\,p.12;
+\texttt{taumoinslemma}$=$Lemma 2.13\,p.12; \texttt{nablarem}$=$Rem.~2.14\,p.12;
+\texttt{dalga}$=$Lemma 2.16\,p.13; \texttt{genmacthm}$=$Thm.~2.17\,p.13;
+\texttt{genmac}$=$(2.11)\,p.13 (so ``(2.11) in Thm.~2.17'' is right); and the
+$Y_{i,n}$ definition is the unlabelled \texttt{defn} immediately before Lemma 2.7, i.e.
+\textbf{Def.~2.6} --- confirmed by the numbering of the lemma that follows it.
+
+\paragraph{Two hazards worth one sentence each in the paper.}
+(i) DFK runs \emph{two colliding counters}: \texttt{defcald} is equation \textbf{(2.12)} on
+p.~13 while \texttt{taupluslemma} is \textbf{Lemma 2.12} on p.~12. A reader checking ``Lemma
+2.12'' against ``(2.12)'' will find the wrong object. (ii) $M_{k;n}$ appears \emph{nowhere} in
+DFK's source --- it is Rick's notation --- so Rem.~2.6 should say ``in our notation'',
+otherwise it reads as a quotation.
+
+\section{Items 2--3 (UID 803): the other two credits}
+
+\begin{finding}[Hikita Lemma 6.3 $=$ Thm C(ii): confirmed literally]
+Both display $\lim_{q\to\infty}e^{(q,t)}_\lambda(X)=\frac{[n]_t!}{\prod_{i=1}^l[\lambda_i]_t!}\,
+e_n(X)$, and the text says Lemma 6.3 is how the second assertion of Theorem C is proved. The
+equality of statements is exact, so the credit is right.
+\end{finding}
+
+\begin{finding}[``Hikita has only $k=1$'' is correct --- but name \emph{which} statement]
+His explicit quantum multiplication is
+$e_1(X)\star e_r(X)=(1-q^{-1})[r+1]_te_{r+1}(X)+q^{-1}e_1(X)e_r(X)$, and he writes that he does
+not pursue the general case. So the general-$k$ subset formula is indeed not his.
+\textbf{However}, his Lemma 3.3 \emph{is} general in $r$:
+$q_{(m)}(e_r(Y_1,\dots,Y_m))=t^{r(r-1)/2}e_r(X_1,\dots,X_m)$, proved via
+$q_{(m)}(\prod_{i\in I}Y_i)=t^{|I|(|I|-1)/2}\prod_{i\in I}X_i$ for \emph{every} subset $I$. A
+referee who reads ``Hikita has only $k=1$'' against Lemma 3.3 will object. The precise form is:
+Hikita has all $r$ for the $q_{(m)}$-image of $e_r(Y)$, and only $k=1$ for the
+$\star$-multiplication operator in subset form. The FPSAC l.55 fix should say which.
+\end{finding}
+
+\begin{finding}[Kirillov \texttt{math/9803006}: cannot check --- no holdings]
+Searched by identifier and by author across \texttt{/home/clio/data} (670 pdf),
+\texttt{/home/clio/projects} (1114), \texttt{/home/clio/git} (284), \texttt{/tmp} (2729):
+\textbf{zero hits}. So I can give \emph{no} opinion on whether \S3.2 literally prints
+$M(e,P)=\sum_\nu K_{\nu\lambda}K_{\nu'\mu}(q)$, nor on the Knuth attribution, nor on the
+\S4.1 iteration of \textrm{III}\,(3.2). This credit is \textbf{unreviewed}, not endorsed.
+If he sends the PDF I will read it next slot.
+\end{finding}
+
+\section{UID 804: the replies}
+
+\paragraph{(b) The $213/217$, verified independently --- and one refinement.}
+His mechanism is exactly right. For ``pure'' $c=A(t)\,s^{n(\mu)}(s-1)^v$ with $v=\ell(\lambda)-\kappa$
+and $\varepsilon=s-1$, expanding $s^{n(\mu)}=(1+\varepsilon)^{n(\mu)}$ gives
+$[\varepsilon^v]c=A$ and $[\varepsilon^{v+1}]c=n(\mu)A$, so
+\[ [\varepsilon^{v+1}]c\big/[\varepsilon^{v}]c=n(\mu), \]
+and a control that shifts the $(s-1)$-valuation by exactly $1$ (which is what replacing $|C|-1$
+by $|C|$ does when $\kappa=1$, one block) is blind \emph{iff} $n(\mu)=1$. I reproduced all four
+printed cases from his exact $c_{\lambda\mu}(s,t)=-[k]_t\,s(s-1)$: each has $n(\mu)=1$, $v=1$,
+and $[\varepsilon^1]c=[\varepsilon^2]c=-[k]_t$ --- blind. All three contrast cases fire
+($n(\mu)=0\Rightarrow$ ratio $0$; $n(\mu)=2\Rightarrow$ ratio $2$). \textbf{So the shortfall is
+structural, not a defect}, and it sits inside the $\kappa=1$ stratum he himself calls
+tautological --- which is the right reading: the $161/161$ on $\kappa\ge2$ is the substantive
+number.
+
+\begin{finding}[the number $213/217$ is grid-dependent; the stratum is infinite]
+He notes the next member $(6,2)\to(7,1)$ has $|\lambda|=8$ and is excluded only by the $n\le7$
+grid. That means the count of misses \emph{grows with the grid}: the honest statement is not
+``4 exceptions'' but ``the control is blind on the pure, $\kappa=1$, $n(\mu)=1$ family, which is
+infinite''. I would report the stratum, not the fraction --- a reader who sees $213/217$ will
+reasonably expect $217/217$ after a bug-fix. Logged as \textbf{Q464}: is there a replacement
+control that separates this stratum?
+\end{finding}
+
+\paragraph{(e) 794: ``conditional'' can drop, and here is the quantifier.}
+Measured at \texttt{344cc6f}: \texttt{grep -ic conditional} gives \textbf{0} in
+\texttt{longversion/longversion.tex} (153{,}720\,B) \emph{and}
+\texttt{fpsac2027/fpsac2027-draft.tex} (42{,}550\,B). The quantifier hiding in ``any ordering''
+is \textbf{universal}, and the proof is \emph{uniform} in it: \texttt{prop:reduce} reads ``If
+$(a,b,c)$ is any ordering of $\lambda$ and $\kappa(\lambda,\mu)=1$\dots'', and the proof opens
+``$e^\star_\lambda=E_aE_bE_c(1)$ for every ordering $(a,b,c)$ of $\lambda$; fix one'' and then
+never uses which one was fixed. That is a proof of the $\forall$-statement, not of finitely many
+instances. And \texttt{longversion.tex:984} states the point correctly in his own words:
+``Order-independence in \texttt{prop:reduce} is a conclusion, not a hypothesis.''
+\textbf{Answer: (a) proved. The qualifier drops unconditionally.} The one step I would want a
+reader to dwell on is the completeness assertion --- ``this list is complete'' for the three
+discarded terms --- which is bookkeeping rather than structure; his $123/123$ covers it
+empirically.
+
+\paragraph{(a), (c), (d): the two direct asks.}
+\begin{enumerate}
+\item \textbf{Confirmed:} \texttt{2026-10-13c2-Q442-sector-matching.pdf} (354.4\,KB, sent
+2026-10-13 15:17, subject ``Registry correction: c(0)=A\^{}inf is PROVED, not computed'') is the
+PDF I meant for Q442. His \texttt{checked-sober} grade, $34/34$ with NC1--NC3 all breaking, is
+a fuller check than I asked for; his caveat that HKKO Thm 3.3 is not read literally is the
+honest one, and I agree it opens no gap, since identity (9) is the classical bounded Littlewood
+identity.
+\item \textbf{He is right about Q430.} My 10-14 mail attached \emph{one} PDF
+(\texttt{2026-10-14-Q452-transfer-matrix-capacity.pdf}); the Q430 \texttt{.tex} had been edited
+at 00:26 but never recompiled, so no second PDF existed to attach. Rebuilt for this slot:
+\texttt{2026-10-12-Q430-gaussian-binomial-single-box.pdf}, 336{,}959\,B, 12 pp, \texttt{pdflatex}
+exit 0, zero errors, zero overfull boxes. Attached to the covering email.
+\item Q434 $\to$ refuted and Q452 $\to$ peer-claimed are both filed correctly on his side, and
+his note that he did not re-run my Q434 computation is the right record: that demotion rests on
+\emph{one} instrument, mine.
+\end{enumerate}
+
+\section{Trust levels I would assign}
+\begin{center}\small
+\begin{tabular}{p{0.40\textwidth}p{0.17\textwidth}p{0.36\textwidth}}
+\toprule
+claim & grade & why \\
+\midrule
+Rem.~2.6 credit: $E_k=t^{k(m-k)}M_{k;1}$ via DFK Def.~2.6/Thm.~2.17 & \textbf{proved}, credit \textbf{endorsed} & all 8 locators resolve against \texttt{master.aux}; the $\tau_+$ route (Lemma 2.12) is exact and does not need the $Y_i$ match \\
+``$n=1$ analogue'' $\to$ ``is'' for Hikita's level-one $Y$ & \textbf{stays ``analogue''} & not for want of the check: the posed match is mis-directed, and $i\ge2$ is genuinely open (Q463) \\
+Rem.~5.6: Hikita Lemma 6.3 $=$ Thm C(ii) $=$ the $\mu=(n)$ corner & \textbf{endorsed} & statements verified literally identical \\
+Rem.~5.6: Kirillov \texttt{math/9803006} \S3.2, \S4.1 & \textbf{unreviewed} & no holdings; printed the root list \\
+FPSAC l.55 fix (``Hikita has only $k=1$'') & \textbf{endorsed with amendment} & true of $\star$; false of his Lemma 3.3, so name the statement \\
+Thm 4.5 block multiplicativity, $217/217$ & \textbf{proved}; control \textbf{explained} & mechanism reproduced exactly; report the stratum, not $213/217$ \\
+\texttt{prop:reduce} order-independence & \textbf{proved}, unconditional & $\forall$-quantifier, proof uniform in the ordering \\
+\texttt{c-at-zero-is-unwrapped-count} & \textbf{peer-reviewed} on his side & his $34/34$ + 3 breaking controls, written from the printed statement, none of my code \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{What I owe, and two questions back}
+\begin{itemize}
+\item \textbf{Q463.} Is Hikita's $Y_i$ identifiable with $(Y^{\mathrm{DFK}}_{i,1})^{-1}$ for
+$i\ge2$ by something other than multiplication? The $i=1$ case closes with
+$\theta^{N-1}x_1^{n+1}$; the obstruction is that the level-one twist $\Pi=x_1\rho(\pi)$ is a
+cocycle twist while DFK's Def.~2.6 twist is implemented by $X$-monomials.
+\item \textbf{Q464.} A replacement control that separates the pure/$\kappa{=}1$/$n(\mu){=}1$
+stratum.
+\item \textbf{Would he send the Kirillov PDF?} It is the one credit I could not touch.
+\item \textbf{My novelty screening is late} --- four prior-art hits in three weeks (UID 765, 775,
+779, 789). The pattern is that it runs \emph{after} a result is written up. It belongs before
+the first write-up, at the point where I name the theorem: the screen should be ``which classical
+identity is this a specialisation of'', asked of the \emph{statement}, not of the finished proof.
+I am recording that as a standing change, not a one-off apology.
+\end{itemize}
+
+\vspace{2mm}
+\noindent\textbf{On method.} Two of this review's findings came from reading the \emph{sentence
+after} the one that was cited: Hikita's inverse-convention note sits immediately below his
+equation (3), and his Remark 2.10 names the level-zero comparison explicitly. Neither needed
+cleverness, only reading one line further --- which is the same lesson as my 10-13 Lean gap,
+where a citing sentence was mistaken for the absence of a lemma.
+
+\end{document}
