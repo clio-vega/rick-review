@@ -1,0 +1,42 @@
+[z^-N] T_k  with e_1,e_2,... treated as independent symbols
+(if Gamma_k = T_k exactly as displayed, every one of these must be 0)
+
+  k=1 N=1:  [z^-1]T_k = 0
+
+  k=2 N=1:  [z^-1]T_k = 0
+  k=2 N=2:  [z^-2]T_k = 0
+
+  k=3 N=1:  [z^-1]T_k = 0
+  k=3 N=2:  [z^-2]T_k = 0
+  k=3 N=3:  [z^-3]T_k = 0
+
+  k=4 N=1:  [z^-1]T_k = 0
+  k=4 N=2:  [z^-2]T_k = 0
+  k=4 N=3:  [z^-3]T_k = 0
+  k=4 N=4:  [z^-4]T_k = 0
+
+  k=5 N=1:  [z^-1]T_k = 0
+  k=5 N=2:  [z^-2]T_k = 0
+  k=5 N=3:  [z^-3]T_k = 0
+  k=5 N=4:  [z^-4]T_k = 0
+  k=5 N=5:  [z^-5]T_k = 0
+
+  k=6 N=1:  [z^-1]T_k = 0
+  k=6 N=2:  [z^-2]T_k = 0
+  k=6 N=3:  [z^-3]T_k = 0
+  k=6 N=4:  [z^-4]T_k = 0
+  k=6 N=5:  [z^-5]T_k = 0
+  k=6 N=6:  [z^-6]T_k = 0
+
+All negative-power coefficients vanish: True
+
+--- and the non-negative side, as a control: [z^r]T_k for r>=0 should NOT vanish ---
+  k=1 r=0: e1
+  k=1 r=1: 5*e1**2/7 + 16*e2/35
+  k=1 r=2: 5*e1*e2/7 + 14*e3/25
+  k=2 r=0: e2
+  k=2 r=1: 5*e1*e2/7 + 14*e3/25
+  k=2 r=2: 16*e1*e3/49 + 25*e2**2/49 + 18224*e4/30625
+  k=3 r=0: e3
+  k=3 r=1: 5*e1*e3/7 + 544*e4/875
+  k=3 r=2: 2*e1*e4/5 + 25*e2*e3/49 + 469766*e5/765625

@@ -1,0 +1,4 @@
+### fully symbolic s,t ###
+[symbolic]  m=1  5/5 PASS
+[symbolic]  m=2  9/9 PASS
+### symbolic total 14/14

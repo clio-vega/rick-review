@@ -1,0 +1,43 @@
+F_n(t^-n)  at 8 exact rational (s,t) points,  n = 0..16
+  n | (s,t)=(2,3) | (s,t)=(-3,5) | (s,t)=(5/7,3/5) | all 8 zero?
+  0 | 1               | 1               | 1               | *** NO ***
+  1 | 0               | 0               | 0               | YES
+  2 | 0               | 0               | 0               | YES
+  3 | 0               | 0               | 0               | YES
+  4 | 0               | 0               | 0               | YES
+  5 | 0               | 0               | 0               | YES
+  6 | 0               | 0               | 0               | YES
+  7 | 0               | 0               | 0               | YES
+  8 | 0               | 0               | 0               | YES
+  9 | 0               | 0               | 0               | YES
+ 10 | 0               | 0               | 0               | YES
+ 11 | 0               | 0               | 0               | YES
+ 12 | 0               | 0               | 0               | YES
+ 13 | 0               | 0               | 0               | YES
+ 14 | 0               | 0               | 0               | YES
+ 15 | 0               | 0               | 0               | YES
+ 16 | 0               | 0               | 0               | YES
+
+VERDICT: F_n(t^-n) = 0 for all n=0..16 at all 8 points: False
+
+CONTROL -- F_n must NOT vanish at a nearby non-special point t^-(n+1):
+  n=0: F_n(t^-(n+1)) = 1   
+  n=1: F_n(t^-(n+1)) = 1/3   
+  n=2: F_n(t^-(n+1)) = 17/81   
+  n=3: F_n(t^-(n+1)) = 2689/19683   
+  n=4: F_n(t^-(n+1)) = 3888653/43046721   
+  n=5: F_n(t^-(n+1)) = 50887389061/847288609443   
+  n=6: F_n(t^-(n+1)) = 6004209088502237/150094635296999121   
+
+CONTROL -- is F_n identically zero as a polynomial? print all coeffs c(n,j), n=3:
+   ['85/416', '-175/32', '-41/32', '-189/416']
+
+--- k=1 calibration against Hikita Thm 3.12:  F_1(t^r) =?= (1-s)[r+1]_t ---
+  (s,t)=(2,3): r=0..7 -> match
+  (s,t)=(-3,5): r=0..7 -> match
+  (s,t)=(5/7,3/5): r=0..7 -> match
+  (s,t)=(1/3,-1/2): r=0..7 -> match
+  (s,t)=(11/4,7/9): r=0..7 -> match
+  (s,t)=(-2/5,13/3): r=0..7 -> match
+  (s,t)=(9/2,-4/7): r=0..7 -> match
+  (s,t)=(1/11,6/5): r=0..7 -> match

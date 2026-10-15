@@ -1,0 +1,13 @@
+(A) LEMMA 7 (star) -- exact rational arithmetic, n=1..30, j=0..n+1, 8 points
+    4200/4200 verified   failures=0
+
+    LESION 1 -- drop t^n on the second sum:
+      fails 440/520  -> NON-VACUOUS
+    LESION 2 -- alpha_{j-1} -> alpha_j inside c(n,j):
+      fails 520/520  -> NON-VACUOUS
+    LESION 3 -- sign of the s t^{n-j} alpha_{j-1} term:
+      fails 440/520  -> NON-VACUOUS
+
+(A') F_n(t^-n)=0 -- same 8 points, n=1..30
+    240/240 vanish; nonvanishing=0
+    control: F_n(t^-(n+1)) nonzero for n=1..10 at all 8 points: True
