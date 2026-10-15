@@ -1,1 +1,36 @@
-python3: can't open file '/home/clio/projects/reviews/code-2026-10-15/sec5.py': [Errno 2] No such file or directory
+s=5/7 t=3/5, z-series truncated at order 7
+
+--- m = 1 ---
+   k=1:  Thm1(GF) OK    Lemma5(Recursion) OK    Lemma6(Step) OK 
+   k=2:  Thm1(GF) OK    Lemma5(Recursion) OK    Lemma6(Step) OK 
+--- m = 2 ---
+   k=1:  Thm1(GF) OK    Lemma5(Recursion) OK    Lemma6(Step) OK 
+   k=2:  Thm1(GF) OK    Lemma5(Recursion) OK    Lemma6(Step) OK 
+   k=3:  Thm1(GF) OK    Lemma5(Recursion) OK    Lemma6(Step) OK 
+--- m = 3 ---
+   k=1:  Thm1(GF) OK    Lemma5(Recursion) OK    Lemma6(Step) OK 
+   k=2:  Thm1(GF) OK    Lemma5(Recursion) OK    Lemma6(Step) OK 
+   k=3:  Thm1(GF) OK    Lemma5(Recursion) OK    Lemma6(Step) OK 
+   k=4:  Thm1(GF) OK    Lemma5(Recursion) OK    Lemma6(Step) OK 
+
+--- m = 0 (the branch handled by one sentence in the note) ---
+   k=1:  T_k(no variables) = 0    Gamma_k = 0   -> equal
+   k=2:  T_k(no variables) = 0    Gamma_k = 0   -> equal
+   k=3:  T_k(no variables) = 0    Gamma_k = 0   -> equal
+   k=4:  T_k(no variables) = 0    Gamma_k = 0   -> equal
+
+--- F2's quantification: sum_i prod_{j!=i} a_ij =?= [m]_t  (the g=1 failure) ---
+   m=1: 1   [m]_t = 1  -> match
+   m=2: 8/5   [m]_t = 8/5  -> match
+   m=3: 49/25   [m]_t = 49/25  -> match
+   m=4: 272/125   [m]_t = 272/125  -> match
+
+--- Macdonald III (2.9) residue lemma, n>=1, and its n=0 failure ---
+   m=2 n=0: (1-t)sum = 16/25 ;  q_0 = 1 ; DIFFER  <-- expected at n=0
+   m=2 n=1: (1-t)sum = 2*X1/5 + 2*X2/5 ;  q_1 = 2*X1/5 + 2*X2/5 ; EQUAL
+   m=2 n=2: (1-t)sum = 2*X1**2/5 + 4*X1*X2/25 + 2*X2**2/5 ;  q_2 = 2*X1**2/5 + 4*X1*X2/25 + 2*X2**2/5 ; EQUAL
+   m=2 n=3: (1-t)sum = 2*X1**3/5 + 4*X1**2*X2/25 + 4*X1*X2**2/25 + 2*X2**3/5 ;  q_3 = 2*X1**3/5 + 4*X1**2*X2/25 + 4*X1*X2**2/25 + 2*X2**3/5 ; EQUAL
+   m=3 n=0: (1-t)sum = 98/125 ;  q_0 = 1 ; DIFFER  <-- expected at n=0
+   m=3 n=1: (1-t)sum = 2*X1/5 + 2*X2/5 + 2*X3/5 ;  q_1 = 2*X1/5 + 2*X2/5 + 2*X3/5 ; EQUAL
+   m=3 n=2: (1-t)sum = 2*X1**2/5 + 4*X1*X2/25 + 4*X1*X3/25 + 2*X2**2/5 + 4*X2*X3/25 + 2*X3**2/5 ;  q_2 = 2*X1**2/5 + 4*X1*X2/25 + 4*X1*X3/25 + 2*X2**2/5 + 4*X2*X3/25 + 2*X3**2/5 ; EQUAL
+   m=3 n=3: (1-t)sum = 2*X1**3/5 + 4*X1**2*X2/25 + 4*X1**2*X3/25 + 4*X1*X2**2/25 + 8*X1*X2*X3/125 + 4*X1*X3**2/25 + 2*X2**3/5 + 4*X2**2*X3/25 + 4*X2*X3**2/25 + 2*X3**3/5 ;  q_3 = 2*X1**3/5 + 4*X1**2*X2/25 + 4*X1**2*X3/25 + 4*X1*X2**2/25 + 8*X1*X2*X3/125 + 4*X1*X3**2/25 + 2*X2**3/5 + 4*X2**2*X3/25 + 4*X2*X3**2/25 + 2*X3**3/5 ; EQUAL
