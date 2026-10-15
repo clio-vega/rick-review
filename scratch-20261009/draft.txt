@@ -1,0 +1,638 @@
+Séminaire Lotharingien de Combinatoire XX (2027)         Proceedings of the 39th Conference on Formal Power
+Article #YY, 14 pp.                                            Series and Algebraic Combinatorics (Galway)
+
+
+The (s − 1)-adic valuation of Hikita’s ⋆-product: a
+ block law, cumulant leads, and a box symmetry
+                                         Rick (AI agent)* 1
+
+     1 [TODO: affiliation / contact]
+
+
+
+     Abstract. Hikita introduced a two-parameter deformation ⋆ of the product of sym-
+     metric functions. Writing eλ1 ⋆ · · · ⋆ eλℓ = ∑µ cλµ (s, t) eµ , we show that the (s − 1)-adic
+     valuation of cλµ is ℓ(λ) − κ (λ, µ), where κ is the maximal number of blocks into which
+     λ and µ split compatibly. Leading coefficients factor over block decompositions into
+     connected pieces. For a full merge the connected piece is a connected-graph cumulant
+     with edge weights tλi λ j − 1. It interpolates between partition-lattice Möbius values at
+     t = 0 and weighted Cayley counts at t = 1, and a gauge-invariant ratio distinguishes
+     it from Dołega’s
+                 ˛     column cumulants for t ̸= 0. The coefficients are invariant, up to a
+     power of s, under complementation in a box. All second-order leading coefficients are
+     given in closed form, via a residue formula for Green polynomials at two-part classes.
+     Keywords: Hikita star product, Hall–Littlewood functions, elementary symmetric
+     functions, cumulants, valuations
+
+
+1    Introduction
+Hikita [9] defined a commutative, associative product ⋆ on symmetric functions over
+Q(q, t) by transporting the ordinary product through the level-one polynomial repre-
+sentation of the affine Hecke algebra; we always say Hikita’s ⋆. We write s := q−1 . At
+s = 1, ⋆ is the ordinary product, and at s = 0 (after rescaling) it degenerates to a Hall–
+Littlewood product (Remark 2.3). Di Francesco and Kedem [4, §8.3] observed that the
+associated t-deformed graded characters lose Schur positivity at generic t, and positivity
+of ⋆-structure constants fails in every natural basis we tried. Positivity is lost, but structure
+is not. This abstract shows that the structure survives in the (s − 1)-adic filtration.
+    We expand the structure constants of eλ⋆ := eλ1 ⋆ · · · ⋆ eλℓ = ∑µ cλµ (s, t) eµ around
+s = 1. The point of departure is Hikita’s formula for ek ⋆ (·) as a sum over k-subsets
+(Proposition 2.1). In it, s enters only through an Euler operator, so the (s − 1) p Taylor
+piece of ek ⋆ (·) is a differential operator of order p, which can glue at most p existing
+blocks of parts to a new part. This gives a lower bound on the valuation; exactness is
+   * [TODO: Robin: authorship, presenter and affiliation are your decision (asks sent 2026-10-05, no reply
+yet). The mathematics in this draft was produced by an AI agent; see the AI declaration.]
+2                                                                                     Rick (AI agent)
+
+
+settled at t = 0, where eλ⋆ is a modified Hall–Littlewood function and no cancellation
+occurs. Main results:
+
+    • Block valuation law (Theorem 3.4): vs−1 (cλµ ) = ℓ(λ) − κ (λ, µ) for all µ ⊵ λ, µ ̸= λ,
+      where κ is the maximal number of compatible blocks. The first-order term is a
+      symmetric biderivation with an explicit matrix (Theorem 3.2 and Proposition 3.3).
+
+    • Merge weights and full-merge leads (Theorems 3.8 and 4.1): the leading coeffi-
+                                 n
+      cient for µ = (n) is 1−t λi ∑ H connected ∏ij∈ H (tλi λ j − 1). The graph identity is due
+                          ∏ i (1− t )
+             ˛ [5]; the identification with ⋆ is ours.
+      to Dołega
+
+    • Block multiplicativity (Theorems 4.4 and 4.5): every leading coefficient is a sum
+      over block decompositions of products of connected leading coefficients (exp of
+      connected).
+                                                                   ℓ
+    • Box Complement (Theorem 5.1): c N ℓ −λ, N ℓ −µ = s N (2)−(ℓ−1)|λ| cλµ , together with a
+      Column Lemma.
+
+    • Second order (Theorem 6.6 and Corollary 6.7): every leading coefficient at valua-
+      tion 2 is in closed form, via a constant-term formula and two-part Green polyno-
+      mials [7, 2, 13].
+
+At valuation 1 the leads are governed by pairing with pn , evaluated by a principal spe-
+cialisation, i.e. one t-string 1, t, . . . , tk−1 (Lemma 3.9); at valuation 2 by pairing with p x py ,
+where the poles of a constant-term integral fall into two interacting t-strings (Theo-
+rem 6.3). The full-merge lead is a cumulant: up to a prefactor it is the connected part
+                            k
+of the character ek 7→ t(2) . This places ⋆ next to the Macdonald cumulants of Dołega       ˛ [5]
+and Haglund–Tewari [8]. Their objects and ours share the graph half (Theorem 4.1 and
+the remark after it), but a gauge-invariant ratio separates ⋆ from Dołega’s     ˛     ⊕-cumulants
+away from t = 0.
+    Proofs are sketched here; full proofs will appear in a longer version.
+
+
+2    Background: Hikita’s product and Hall–Littlewood no-
+     tation
+Notation. Λ = Q(s, t)[e1 , e2 , . . . ]; I = (e1 , e2 , . . . ) is the augmentation ideal, so I b =
+span{eµ : ℓ(µ) ≥ b}. For G homogeneous of degree n, line G := [en ] G. [m] = [m]t =
+(1 − tm )/(1 − t), φm = ∏im=1 (1 − ti ), n(λ) = ∑i (i − 1)λi , ⊵ is dominance. Pλ ( x; t),
+Qλ = bλ Pλ , Q′λ are the Hall–Littlewood functions of [13, Ch. III], with the Hall pairing
+⟨·, ·⟩ and the HL pairing ⟨ pλ , pµ ⟩t = δλµ zλ ∏i (1 − tλi )−1 .
+Valuations of Hikita’s ⋆-product                                                                    3
+
+
+Hikita’s product. F ⋆ G := q(q−1 F · q−1 G ), where q is the level-one polynomial repre-
+sentation map F (Y ) 7→ F (Y ) • 1 of the affine Hecke algebra of GLm . By [9, Lemma 3.1,
+Cor. 3.9], q is a Q(q, t)-linear isomorphism, compatible with m → m − 1, so ⋆ is well
+defined and restricts to Λ [9, Def. 3.4, Lemma 3.2, Cor. 3.10]. All structure constants
+below lie in Q[s, t] (Theorem 2.2); specialisations in s are specialisations of these. We use
+s = q−1 ; then Hikita’s Pieri rule [9, Thm. 3.12] reads e1 ⋆ er = (1 − s)[r + 1]er+1 + s e1 er .
+
+Proposition 2.1 (Subset formula). For F ∈ Λ and every N, in Λ N = Q(s, t)[ x1 , . . . , x N ]SN
+
+                                                                       xi − tx j
+    ek ⋆ F = Ek F :=    ∑ c A X A F(X Ac , sX A ),   cA =       ∏      x i − x j
+                                                                                 ,   X A = ∏ xi .
+                       | A|=k                               i ∈ A, j/
+                                                                    ∈A                     i∈ A
+
+                                                            k
+Proof idea. By [9, Def. 3.4, Lemma 3.3], ek ⋆ F = t−(2) ek (Y ) • F, where Y1 , . . . , YN are
+the Cherednik operators. Order each monomial of ek (Y ) by increasing index, and put
+πF = x1 F ( x2 , . . . , x N , sx1 ). A Coxeter length count on minimal coset representatives of
+                                       k
+Sk × S N −k gives ek (Y ) F = t(2) ∑| D|=k TwD π k F. For G symmetric in the first k and the
+last N − k variables, the chain factorisation of this coset sum and the Poincaré identity
+                  xi −tx j 
+∑w∈Sk w ∏i< j xi − x j = [k]t ! give ∑ D TwD G = ∑| A|=k c A G ( A) , where G ( A) places the head
+variables on A.
+
+     Write eλ⋆ := Eλ1 · · · Eλℓ (1) = ∑µ cλµ (s, t) eµ . The variable s enters only through
+F ( X Ac , sX A ) = s∆ A F, ∆ A = ∑i∈ A xi ∂i ; Taylor expansion at s = 1 gives
+
+                                                                          ∆A
+                                                                          
+                         Ek = ∑ (s − 1) Ek ,
+                                          p ( p)
+                                                       Ek = ∑ c A X A
+                                                         ( p)
+                                                                                ,       (2.1)
+                               p ≥0                           | A|=k
+                                                                           p
+
+      ( p)                                                              (0)               ( p)
+and Ek is a differential operator of order ≤ p on Λ N , with Ek               = ek · and Ek (1) = 0
+for p ≥ 1.
+
+Theorem 2.2 (Dominance support; the s = 0 valuation). eλ⋆ = sn(λ) eλ + ∑µ▷λ cλµ eµ with
+cλµ ∈ Q[s, t] and cλµ |s=1 = 0. Moreover cλµ ̸= 0 for every µ ⊵ λ, and the s-adic valuation
+of cλµ is exactly n(µ). At t = 0 the s-leading coefficients [sn(µ) ]cλµ are all 1: in the basis
+bµ = sn(µ) eµ , eλ⋆ at s = t = 0 is the zeta function of dominance order.
+
+Proof idea. A termwise degree count on the subset formula: for symmetric P let δj ( P) be
+the maximal total degree in j variables; Ek raises δj by at most min(k, j), and δj ( P) ≤
+∑i min(ρi , j) for all j characterises span{eν : ν ⊵ ρ} [13, I (1.11), (6.6)].
+Remark 2.3 (The s → 0 edge; no novelty claim for the matrix). Since s = q−1 , the edge
+s → 0 is Hikita’s q → ∞, where the unrescaled product degenerates [9, Lemma 6.3]. In
+the basis bµ , ek ⋆ (·) preserves µ Q[s, t] bµ , and modulo s it is conjugate, via bµ 7→
+                                 L
+4                                                                                                    Rick (AI agent)
+
+      ′                                                      k
+t−n(µ ) Pµ′ ( x; t−1 ), to multiplication by t−(2) ek . Consequently the leading coefficients
+dλµ (t) := [sn(µ) ] cλµ of Theorem 2.2 are the known e →HL transition matrix of [12, §3.2]:
+writing eλ = ∑κ M (e, P)λκ Pκ ( x; t),
+                                                         ′       ′
+                                        dλµ (t) = t n(µ )−n(λ ) M (e, P)λµ′ (t−1 ).
+
+Their positivity and dλµ (1) = #{0-1 matrices with row sums λ, column sums µ′ } are
+therefore classical [12, §3.2]; what is new is only the identification of this matrix with
+the s-leading coefficients of ⋆.
+
+
+3     The block valuation law at s = 1
+Definition 3.1. For λ, µ ⊢ n, κ (λ, µ) is the largest r such that λ = λ1 ⊔ · · · ⊔ λr and
+µ = µ1 ⊔ · · · ⊔ µr as multisets of parts, with every block nonempty and µi ⊵ λi (so
+|µi | = |λi |); κ = −∞ if µ ̸⊵ λ. µ is a coarsening of λ if κ (λ, µ) = ℓ(µ). v denotes the
+(s − 1)-adic valuation.
+                                                                             (1)
+Theorem 3.2 (First order is a biderivation). Let Dk := Ek                          and B( f , g) := ∂s ( f ⋆ g)|s=1 .
+Then Dk is a derivation of Λ N , and
+                                             ∂ f ∂g
+                 B( f , g) = ∑ Mkl                   ,       Mkl := Dk (el ) = B(ek , el ) = Mlk .
+                                  k,l
+                                             ∂ek ∂el
+
+So B is a symmetric biderivation, the carré du champ of L = 12 ∑ Mkl ∂2 /∂ek ∂el .
+
+Proof idea. (∆1A ) = ∆ A is a derivation and left multiplication by c A X A preserves this.
+Write f = ∑ρ aρ (s)eρ⋆ , differentiate f ⋆ g = ∑ρ aρ (s) Eρ g at s = 1, and use Dk (1) = 0.
+Symmetry of M is commutativity of ⋆ [9].
+                                                                                      (1 − t a+b )(t ab − 1)
+Proposition 3.3 (The matrix M). For k ≥ r ≥ 0, with L( a, b) :=                                              ,
+                                                                                        (1 − t a )(1 − tb )
+                                                                     r
+                            Mkr = B(ek , er ) = r ek er + ∑ L(k − r + j, j) ek+ j er− j .
+                                                                 j =1
+
+Consequently [(s − 1)1 ]eλ⋆ = ∑i< j Mλi λ j eλ\{λi ,λ j } .
+
+Proof idea. Differentiate Corollary 5.5 (whose proof does not use Proposition 3.3) at s = 1.
+Since π a (b)|s=1 = δb0 , only y = r survives at s = 1, and its derivative is r ek er . For
+                                                                            m
+y = r − j, j ≥ 1, put a = k − r + j. Then ∂s π a ( j)|s=1 = [u j ] ∑m<a 1+ututm = (−1) j−1 [ a]t j , so
+                  [ a+ j]
+∂s Ca,j |s=1 = − [a] [ a]t j = L( a, j). The second statement follows from Theorem 3.2, since
+Dk (1) = 0.
+Valuations of Hikita’s ⋆-product                                                                                   5
+
+
+Theorem 3.4 (Block valuation law). For all λ, µ ⊢ n and all t, v(cλµ ) ≥ ℓ(λ) − κ (λ, µ). For
+µ ⊵ λ, µ ̸= λ, equality holds over Q(t) and at t = 0:
+
+                                          v(cλµ ) = ℓ(λ) − κ (λ, µ).
+
+At t = 0 the leading coefficient is (−1)ℓ−κ N (λ, µ) with N (λ, µ) ≥ 1 a count of minimal
+raising-operator configurations.
+
+Proof idea. Lower bound (subset formula only): by polarization, an order-p operator glues
+at most p existing “blocks” to the new part, so the (s − 1)m coefficient is a sum of
+products over ≥ ℓ − m blocks, each of type λC by the degree count of Theorem 2.2.
+                           e λ ( x; s) = sn(λ) Q′ ( x; s−1 ), and Macdonald’s raising operators
+Equality: at t = 0, ωeλ⋆ = H                    λ
+                        1− R
+Q′λ ( x; u) = ∏i< j 1−uRij hλ [13, III (2.15′ ) with §5 Ex. 7(a)] give Rijk the coefficient (u −
+                               ij
+1)uk−1 = −(s − 1)s−k at u = s−1 . So every transfer edge costs exactly one (s − 1) with
+sign −1, so nothing cancels; the minimum edge count is ℓ − κ (components ≤ κ; a path
+tree on each indecomposable block). Specialise t = 0 → generic.
+
+Remark 3.5 (Input at t = 0). The t = 0 edge eµ⋆ |t=0 = sn(µ) Pµ′ ( x; 1/s, 0) = ω H  e µ ( x; s) is
+not ours: it is assembled from [3] eq. (5.15) (with Mk,1 = Ek |t=0 ), Cor. 5.8 in its level-one
+form (5.25), Cor. 5.18 (eq. (5.27)) (numbering of arXiv:1505.01657v2), and [13, VI (5.1),
+(4.14)(iv)]. In particular Theorem 3.4 does not depend on Cherednik’s nonsymmetric
+theory.
+Remark 3.6 (Novelty). We have not found the block law stated anywhere. Its t = 0 case is
+classical in substance: the raising-operator formula follows from [2, eq. (11)] and Jacobi–
+Trudi, after which the valuation count above is a short exercise. What is new is the lower
+bound for all t (from the subset formula alone), the exactness over Q(t), and the merge
+weights below.
+
+Theorem 3.7 (Coarsenings: merge-history expansion). Let µ ̸= λ be a coarsening of λ and
+m = ℓ(λ) − ℓ(µ). Then v(cλµ ) = m, and Leadλµ (t) := [(s − 1)m ]cλµ equals
+
+  Leadλµ (t) =                      ∑               ∏          Wk ( J ),   Leadλµ (0) = (−1)m #{ H } ̸= 0,
+                   tight histories H ending at µ merges in H
+
+where a (tight) history processes λℓ , . . . , λ1 , each part k either opening a block of size k or merging
+p ≥ 1 existing blocks of sizes J = ( j1 , . . . , j p ) into one block of size k + | J | via the order-p piece
+ ( p)                                                                                  ( p)
+Ek , it ends at µ if the final block sizes are µ, and Wk ( J ) := line [· · · [ Ek , e j1 ], . . . , e j p ](1).
+
+Proof idea. Pass to gr I Λ: non-tight terms land in I ℓ−m+1 ; tight steps are multilinear
+derivations, so only linear parts gi ≡ γi eni mod I 2 matter. At t = 0, a roots-of-unity
+evaluation, Weyl orthogonality and Murnaghan–Nakayama give Wk ( J )|t=0 = (−1) p .
+6                                                                                                Rick (AI agent)
+
+
+Theorem 3.8 (Merge weights). With n = k + | J | and p = | J |,
+                                                          [n]t
+                                                          [k ]t ∏
+                                      Wk ( J ) = (−1) p              [k ]t j .
+                                                                j∈ J
+
+Consequently (−1)m Leadλµ (t) > 0 for coarsenings and every real t > 0.
+Proof idea. Wk ( J ) = (−1)d− p line Tk ( p J ), d = | J |, with Tk as in Lemma 3.9. The parabolic
+                                                                                 [n]
+factorisation Tk Pρ = Pρ+1k [13, III (2.2)] and line Pλ = (−1)n−k [k] Pλ−1k (1, t, . . . , tk−1 ) (from
+[13, III.7 Ex. 2, III.2 Ex. 1]) give the “discrete HL measure = principal specialisation”
+                            [n]
+identity line Tk f = (−1)d [k] f (1, t, . . . , tk−1 ) (Lemma 3.9); apply it to f = p J .
+Lemma 3.9. Let Tk f := ∑| A|=k c A X A f ( X A ) for f ∈ Λk . For f homogeneous of degree d and
+n = k + d:
+                                                  [n]t
+                        line Tk ( f ) = (−1)d           f (1, t, . . . , tk−1 ).
+                                                  [k ]t
+Remark 3.10 (Novelty). Lemma 3.9 is a short corollary of [13, III.7 Ex. 2, III (2.2)] and is
+probably known.
+
+
+4    Leading coefficients: graph cumulants and blocks
+Theorem 4.1 (Full-merge lead). For λ ⊢ n with ℓ = ℓ(λ) ≥ 2,
+                            1 − tn
+                                                                                 ∑       ∏ t λi λ j − 1 .
+                                                                                                       
+       Leadλ,(n) (t) =                   K λ ( t ),   Kλ ( t ) : =
+                         ∏ i (1 − t λi )                              H connected on [ℓ] ij∈ H
+
+Kλ is the connected part (joint cumulant) of te2 (λ) = ∏i< j (1 + (tλi λ j − 1)).
+Proof idea. (1) Tight histories ending in one block are increasing trees on [ℓ] (parent = the
+merging part). (2) With Nv the λ-mass of the subtree at v, Theorem 3.8 telescopes along
+                  n
+the tree to 1−t λi ∏v→c (tλv Nc − 1). (3) Tree–graph identity: ∑incr. trees ∏v→c (∏ j∈Tc xvj −
+             ∏ (1− t )
+1) = ∑conn. H ∏e∈ H ( xe − 1) for generic x, by the minimum-vertex/component decompo-
+sition; specialise xij = tλi λ j .
+Corollary 4.2. (a) λ = 1n : Lead = (−1)n−1 [n]t In (t) with In the tree inversion enumerator
+[14]. (b) t = 0: Lead = (−1)ℓ−1 (ℓ − 1)!. (c) t → 1: Lead → (−1)ℓ−1 nℓ−1 (weighted Cayley).
+(d) sgn Lead = (−1)ℓ−1 for all t > 0.
+Proof. At t = 0 every edge weight is −1 and ∑ H conn. (−1)| H | = (−1)ℓ−1 (ℓ − 1)!. As t → 1,
+with ε = t − 1, only spanning trees contribute to the εℓ−1 term of Kλ , and ∑ T ∏ij∈T λi λ j =
+(∏i λi ) nℓ−2 (weighted Cayley); the prefactor is (−nε)/((−ε)ℓ ∏ λi ) · (1 + O(ε)). (d) is
+the case µ = (n), m = ℓ − 1, of the sign statement in Theorem 3.8: each merge contributes
+(−1) p times a positive quantity, ∑ p = m along every history, and histories exist.
+Valuations of Hikita’s ⋆-product                                                                 7
+
+
+Remark 4.3 (Prior art — graph half). The tree, connected-graph and cumulant forms of
+Kλ are a special case of Dołega ˛ [5, Prop. 2.1 and (11), Lemma 2.3] (Kλ = (t − 1)ℓ−1 T (1, t)
+for the Tutte polynomial of the multigraph with λi λ j edges between i and j), cf. also
+[6, 14]; step (3) is a Penrose-type tree–graph identity [16]. Ours: the identification of
+the ⋆-lead with prefactor·Kλ (Theorems 3.7, 3.8 and 4.1) and Theorems 4.4 and 4.5.
+Haglund–Tewari’s single-row cumulant [8, Def. 7.1, Thm. 7.3] (their q is our t) is the
+same graph half: since ⟨ H    e (m) , em ⟩ = q(m2 ) , their cumulant κ (λ) (we write Cλ ) satisfies
+                 ′
+⟨Cλ , en ⟩ = tn(λ ) (t − 1)1−ℓ Kλ (t). Separator. Full-merge leads L(λ) of any such theory
+are only defined up to the gauge L(λ) 7→ L(λ) aℓ(λ) g(|λ|) ∏i f (λi ) (rescaling generators,
+degree-wise normalisation, rescaling the expansion parameter). The first gauge invariant
+appears at n = 4: J := L(14 ) L(2, 2)/L(2, 1, 1)2 (the exponents of a, g(4), f (1) and f (2) all
+                                              (t2 +1)(t3 +3t2 +6t+6)
+cancel). For ⋆, Theorem 4.1 gives J = (t+1)(t2 +t+2)2 , and Haglund–Tewari’s ⟨Cλ , en ⟩
+gives the same value. Dołega’s   ˛    ⊕-cumulant of columns (lowest (q − 1)-coefficient of
+[ gn ] Hλ′ , gk = H1k ) gives, by computation, J ≡ 3/2 = J⋆ (0), whereas J⋆ (1) = 1, the Cay-
+       e          e
+ley value. So up to gauge Dołega’s  ˛   ⊕ is t-independent and agrees with ⋆ only at t = 0,
+where the leads are partition-lattice Möbius values (Corollary 4.2(b)), while Haglund–
+Tewari’s is the same graph object without ⋆.
+Theorem 4.4 (Coarsening leads factor). For µ a coarsening of λ,
+                                   Leadλµ = ∑ ∏ LeadλB ,(|λB |) ,
+                                               π   B∈π
+summed over set partitions π of the positions [ℓ] whose sorted block sums equal µ (singletons
+contribute 1). There is no interleaving factor.
+Proof idea. Increasing forests = set partition × increasing tree per block, and the tele-
+scoped weight is local to each tree.
+Theorem 4.5 (Block multiplicativity). Let κ = κ (λ, µ) ≥ 1, ℓ = ℓ(λ), m = ℓ − κ. Then
+                      [(s − 1)m ] cλµ = ∑       ∑        ∏ [(s − 1)|C|−1 ] cλC ,νC ,
+                                          π   ( νC )C ∈π C ∈ π
+
+where π runs over set partitions of [ℓ] into exactly κ blocks and (νC ) over tuples with C νC = µ
+                                                                                       F
+
+and νC ⊵ λC ; every factor then has κ (λC , νC ) = 1. With Theorem 3.4 this is Leadλµ .
+Proof idea. Expand by polarization into histories; non-tight histories produce > κ com-
+patible blocks and vanish by maximality of κ; tight histories factor block by block and
+interleave uniquely. Uses commutativity of ⋆ [9] only to pass from compositions to
+partitions.
+Remark 4.6. Theorem 4.4 is the case where each νC is a single part. The factorisation has
+the shape of a Mayer (cluster) expansion, i.e. moment–cumulant inversion of the graph
+identity in Theorem 4.1; the ⋆-specific content is that the connected leads are those of
+Theorem 4.1, with no interleaving correction.
+8                                                                                                          Rick (AI agent)
+
+
+5     Box Complement and the linear coefficient
+Theorem 5.1 (Box Complement). Let λ, µ have at most ℓ parts (padded with zeros) and all
+parts ≤ N; put N ℓ − λ := ( N − λℓ , . . . , N − λ1 ). Then
+                                                                   ℓ
+                                   c N ℓ −λ, N ℓ −µ (s, t) = s N (2)−(ℓ−1)|λ| cλµ (s, t).
+Proof idea. Stability of the subset formula for every N (also N < degree), and an inversion
+lemma in N variables: for F = em   N G (1/x ) with G of degree g,
+
+                                      EN −k F = sm( N −k)− g em +1
+                                                              N ( Ek G )(1/x )
+
+(substitute y = 1/x, B = Ac ). Iterate, and compare coefficients using the identity
+e N −r ( x ) = e N ( x ) er (1/x ) and Theorem 2.2 (support has ≤ ℓ parts).
+                                                                                               ℓ
+Corollary 5.2 (Column Lemma; lead invariance). cλ+1ℓ , µ+1ℓ = s(2) cλµ . Hence v and Lead
+are invariant under (λ, µ) 7→ (λ + 1ℓ , µ + 1ℓ ) and (λ, µ) 7→ ( N ℓ − λ, N ℓ − µ); e.g. (2, 2, 2) →
+(3, 3) and (2, 2, 2) → (4, 1, 1) have the lead [3]t (t + 2) of (1, 1, 1) → (3).
+Remark 5.3 (Prior art). The inversion lemma follows in a few lines from [4, Rem. 3.3]
+(SΓ I S = Γ− 1            −1
+           I under x 7 → x ) plus subset complement; stability is [9, Prop. 3.8, Cor. 3.10].
+We have not found Theorem 5.1 or Corollary 5.2 for ⋆ in the literature.
+Theorem 5.4 (Plethystic linear coefficient). For G homogeneous of degree d: line (ek ⋆ G ) =
+(−1)d [k[+k]d]t G [(s − 1)[k]t ], where G 7→ G [(s − 1)[k]t ] is the ring map pr 7→ (sr − 1)[k]tr .
+            t
+
+                                                   min(k,r ) y
+Corollary 5.5 (Pieri rule, all s). ek ⋆ er = ∑y=0           s Ck−y,r−y ek+r−y ey with Ca,0 = C0,b = 1,
+            [ a + b ]                        a − 1       m
+Ca,b = (−1)b [a] π a (b), π a ( j) = [u j ] ∏m=0 11++sut
+                                                      utm .
+
+Proof idea. Support by Theorem 2.2; strip y columns by Corollary 5.2 (valid for compo-
+sitions) to reduce to line Ek−y (er−y ); evaluate by Theorem 5.4, which itself is Lemma 3.9
+applied to the generating function Ek (∏i E(ui )) = ∏i E(ui ) Tk (∏i ∏ a∈ A 11++su i xa
+                                                                                u x a ).                    i
+
+Remark 5.6. Corollary 5.5 was first obtained by a different route, a k-fold kernel compu-
+tation; Hikita’s [9, Thm. 3.12] is the case k = 1. Explicit rules for ek ⋆ eλ with λ of two or
+ℓ columns will appear in the long version.
+
+
+6     Second order: every valuation-2 lead
+By Theorem 4.5, valuation-2 leads reduce to connected leads with ℓ(λ) = 3, κ = 1; by
+Corollary 5.2 to two-part µ. With Ta as in Lemma 3.9, put
+
+                                                                                 ∑
+                     (2)                  (2)               (2)
+ Γ a ( e b , e c ) : = Ea ( e b e c ) − e b Ea ( e c ) − e c Ea ( e b ) =                   (−1)r+q eb−r ec−q Ta ( pr pq ).
+                                                                            1≤r ≤b, 1≤q≤c
+Valuations of Hikita’s ⋆-product                                                                               9
+
+
+Proposition 6.1. If ( a, b, c) is any ordering of λ and κ (λ, µ) = 1, then [(s − 1)2 ]cλµ =
+[ e µ ] Γ a ( e b , e c ) + D a Db ( e c ) .
+                                          
+
+Theorem 6.2 (Constant-term adjoint formula). For g ∈ Λ a , F ∈ Λ: φ a (t) ⟨ Ta g, F ⟩t =
+                                                                                            z j − zi
+CT Z g(z) F (z1−1 , . . . , z−
+                             a ) Ω ( z ) , where Z = z1 · · · z a and Ω ( z ) = ∏1≤i < j≤ a z j −tzi , expanded
+                               1
+                                       
+
+in zi /z j (i < j).
+
+Proof idea. Ta g restricted to a variables is Zg and lies in span{ Pµ : ℓ(µ) = a}. Evaluate
+⟨ G, qα ⟩t = [yα ] G via Cauchy [13, III (4.2), (4.4), (4.8)–(4.9)], write ⟨ G, Qλ ⟩t as a constant
+term by the raising-operator formula [13, III (2.15′ )], and symmetrise Ω = ∆θ with
+∑w w(θ ) = v a (t) [13, III (1.4)]; Qλ (z−1 ) is evaluated by [13, III (2.1), (2.11)–(2.12)]. This is
+Jing’s vertex-operator calculus [10] with the vertex operators hidden.
+
+Theorem 6.3 (Two-point formula). Let g ∈ Λ a be homogeneous of degree d, n = a + d,
+x, y ≥ 1, x + y = n, and Φ a ( g; x, y) := ⟨ Ta g, p x py ⟩. For 1 ≤ A ≤ a − 1 put B = a − A and
+G A (w) = ∑k G A,k wk := g(1, t, . . . , t A−1 , w, wt, . . . , wt B−1 ). Then
+                                                (
+                                                    a −1      h  G A,y− B
+  Φ a ( g; x, y) = (−1) a (1 − t x )(1 − ty )       ∑ t− AB(1 − t A )(1 − t B )
+                                             A =1
+                                    1                                      i
+                                  1 − t a m∑
+                                                  − Am     Bm
+                                +             ( t      − t    ) G A,y− B−m
+                                           ≥1
+                                                                                                           )
+                                                                             g(1, t, . . . , t a−1 ) a−1
+                                                                         −
+                                                                                   1 − ta          ∑ t− jy .
+                                                                                                   j =0
+
+Proof idea. Insert S(u) = ∑i 1/(uzi − 1) into Theorem 6.2 and take iterated residues:
+every variable lands on a t-string 1/u, t/u, . . . or 1/v, t/v, . . . . A string of length A with
+base q has weight (−1) A−1 φ A−1 q A , and two strings interact through the shuffle identity
+
+                             A + B − AB (1 − w)(1 − t B− A w)
+                                 
+              Sh A,B (w) =            t                              ,     w = u/v,
+                               A    t     (1 − t− A w)(1 − t B w)
+proved by a last-letter recursion. Take Taylor coefficients at w = 0.
+Remark 6.4 (Relation to Green polynomials). Write pµ = ∑λ Xµλ (t) Pλ ( x; t). For g = Pρ
+and λ = ρ + 1a one has Φ a ( Pρ ; x, y) = (1 − t x )(1 − ty ) X(λx,y) (t)/bλ (t), so Theorem 6.3
+evaluates Green polynomials at two-part classes; the two t-strings are the Frobenius or-
+bits of a maximal torus of type ( x, y) [7]. Theorem 6.2 is Jing’s constant-term expression
+for the matrix element ⟨ Qλ , pµ ⟩ [10], cf. [11, (2.17), (2.20)]. Jing and Liu [11, Thm. 2.7]
+expand the same matrix element as a nested sum valid for all µ, extracting one vari-
+able at a time; at two-part µ that sum does not close up, since its inner sums run over
+classes of arbitrary length. Their closed forms [11, Thm. 2.10, (2.37)–(2.40)] restrict the
+10                                                                                                   Rick (AI agent)
+
+
+Hall–Littlewood index λ, not the class µ; their Murnaghan–Nakayama rule [11, Thm. 3.2]
+generalises a formula of Morris [15]1 , its case ℓ(λ) = 2. We evaluate by residues instead,
+and at ℓ(µ) = 2 the poles organise into two t-strings. The formula is explicit, with no
+sum over classes, and linear in the two-string specialisation G A of g; for general ρ, G A is
+itself a finite (branching) sum, so Theorem 6.3 is not a product formula.
+Example 6.5 (Two rows). For a = 2, only A = B = 1 occurs, and G1 (w) = Pρ (1, w; t) =
+     (1−tw)−wr (w−t)
+w ρ2     1− w       with r = ρ1 − ρ2 ≥ 1 (G1 = wρ2 if r = 0). Substituting into Theorem 6.3
+gives, for λ = (λ1 , λ2 ), y ≤ x, and m xy = 2 if x = y, 1 otherwise,
+
+                                                  λ2 −1− y (1 + t y ), y < λ ,
+                                     
+                                      ( t − 1) t
+                                                                           2
+                         (λ1 ,λ2 )                             − 1
+                      X( x,y) (t) = m xy − (1 − t) t       λ 2     ,   y = λ2 ,
+                                     
+                                     
+                                       ( t − 1) t 2 ,
+                                                  λ  − 1               y > λ2 ,
+
+in agreement with a Kostka–Foulkes computation for |λ| ≤ 10. This is not new: for
+λ = (n − k, k ) and every class ρ, Jing and Liu [11, §2, display after (2.32)] give Xρλ =
+πk + (t − 1) ∑ j<k tk−1− j π j , with π j the number of j-subsets fixed by ρ (their D ( j) (ρ)). A
+short proof: Xρλ = ∑ν χνρ Kνλ (t) [13, III (7.6′ )], where K(n− j,j),λ = tk− j (one tableau, and
+                                                                          (n− j,j)
+K is monic of degree n(λ) − n(ν) [13, III (6.5)]) and χρ         = π j − π j−1 by Young’s
+                                                          − 1
+rule. On the diagonal class ( x, y) = λ it gives t 2 − t 2 + m xy , which for λ1 > λ2 with
+                                                  λ     λ
+
+λ2 ≥ 3 odd equals −1 at t = −1 and 1 at t = 0. A root in (−1, 0) rules out a product
+of cyclotomic factors and powers of t, and Green polynomials at two-part classes admit
+no product formula even for two rows; for products of the form tc ∏i (1 − tdi ) this was
+observed independently in [1, Thm. D].
+Theorem 6.6 (Closed ℓ = 3, κ = 1 leads). Let λ = ( a, b, c) be any ordering of a length-3
+partition, µ = ( x, y) with κ (λ, µ) = 1, n = x + y, m xy as in Example 6.5. Put
+
+                                                                   [ a + r + q]
+                       Ξ a (r, q) := line Ta ( pr pq ) = (−1)r+q                [ a ] tr [ a ] t q
+                                                                        [ a]
+and Ua (b, c; x, y) := (−1)n Φ a ( pb pc ; x, y) − Ξ a (b, c) /m xy . Then
+                                                             
+
+
+  [(s − 1)2 ] cλµ = (−1)b+c Ua (b, c; x, y) +              ∑             (−1)r+c Ξ a (r, c)
+                                                         1≤r < b
+                                                  {b−r, a+r +c}={ x,y}
+
+                                           +           ∑             (−1)b+q Ξ a (b, q) + [ex ey ] Da ( Mbc ),
+                                                      1≤ q < c
+                                               {c−q, a+b+q}={ x,y}
+
+with Da the derivation Da (e j ) = Maj of Proposition 3.3.
+   1 We have not seen [15] first-hand; its scope is as described in [11, p. 12, before Thm. 3.2].
+Valuations of Hikita’s ⋆-product                                                                11
+
+
+Proof idea. Proposition 6.1; in the expansion of Γ a only terms with r = b or q = c survive
+[ex ey ]; single-e parts come from Lemma 3.9, and ⟨ G, p x py ⟩ = (−1)n (m xy [ex ey ] G + line G )
+converts Theorem 6.3 into Ua .
+
+Corollary 6.7. Every lead at valuation 2 (κ = ℓ − 2, any ℓ) has a closed formula: by Theorem 4.5
+it is a sum of products of pair leads (Proposition 3.3) and ℓ = 3, κ = 1 leads (Theorem 4.1,
+Corollary 5.2, Theorem 6.6).
+
+Example 6.8. (3, 3, 3) → (7, 2): Lead = 2t13 + 3t12 + 3t11 + 6t10 + 6t9 + 6t8 + 9t7 + 6t6 +
+3t5 + 9t4 + 6t3 + 3t + 4 (agrees with direct computation). Leads are not positive in general:
+(4, 4, 2) → (7, 3) has Lead = (t + 1)(t2 + 1)(2t8 + t7 + t6 + 3t4 + t3 + t2 − t + 2).
+
+Computer checks. All statements in this section were checked against an independent
+implementation of Hikita’s subset formula: Theorem 6.6 on 16 pairs with n ≤ 12 (both
+examples among them) and on 27 pairs in all 3 orderings with n ≤ 10; Theorem 6.3 in
+229 cases (a ≤ 5); and the Green-polynomial dictionary symbolically for |λ| ≤ 8 and
+numerically for |λ| ≤ 9.
+
+
+7     Open problems
+    1. Valuation ≥ 3. Connected leads with ℓ ≥ 4, κ = 1. Hierarchy: v = 1 ↔ pn ↔
+       one t-string (Lemma 3.9); v = 2 ↔ p x py ↔ two strings (Theorem 6.3). Does the
+       three-string shuffle sum factor pairwise?
+
+    2. Zero set at generic t. At t = −2 seven pairs with n = 6 have v > ℓ − κ; for
+       coarsenings this is cancellation between histories, e.g. Lead(1,1,1),(3) = [3]t (2 + t).
+       Describe the zero set of [(s − 1)ℓ−κ ]cλµ in t.
+
+    3. Counting. A formula for N (λ, µ) in Theorem 3.4; for ℓ(λ) = 3 and µ = (n − 1, 1)
+       with κ = 1 we observe Leadλµ (1) = 2n2 − 6n + 3, independent of λ (n ≤ 10;
+       computed only).
+
+    4. Positivity. Leads are not t-positive (Example 6.8), so no “t-count of minimal flows”
+       can hold. Is there a signed or cancellation-free model?
+
+    5. Cumulant link. Is there a Macdonald-cumulant construction whose leads are the
+                                                    k
+       ⋆-leads for all t, i.e. cumulants of ek 7→ t(2) ?
+
+
+Acknowledgements
+[TODO: Robin; Clio (peer agent) for reviews; per Robin.]
+12                                                                                    Rick (AI agent)
+
+
+References
+ [1]   Clio (AI agent). “Two-part Green polynomials”. Manuscript. 2026.
+ [2]   J. Désarménien, B. Leclerc, and J.-Y. Thibon. “Hall–Littlewood functions and Kostka–
+       Foulkes polynomials in representation theory”. Sém. Lothar. Combin. 32 (1994). Art. B32c,
+       38 pp.
+ [3]   P. Di Francesco and R. Kedem. “Difference equations for graded characters from quantum
+       cluster algebra”. Transform. Groups 23.2 (2018), pp. 391–424. arXiv:1505.01657.
+ [4]   P. Di Francesco and R. Kedem. “(t, q)-deformed Q-systems, DAHA and quantum toroidal
+       algebras via generalized Macdonald operators”. Comm. Math. Phys. 369.3 (2019), pp. 867–
+       928. doi. arXiv:1704.00154.
+ [5]   M. Dołega.
+              ˛     “Macdonald cumulants, G-inversion polynomials and G-parking functions”.
+       European J. Combin. 75 (2019), pp. 172–194. doi. arXiv:1707.02656.
+ [6]   I. M. Gessel and B. E. Sagan. “The Tutte polynomial of a graph, depth-first search, and
+       simplicial complex partitions”. Electron. J. Combin. 3.2 (1996). Research Paper 9.
+ [7]   J. A. Green. “The characters of the finite general linear groups”. Trans. Amer. Math. Soc. 80
+       (1955), pp. 402–447.
+ [8]   J. Haglund and V. Tewari. “Theta operators at t = 1, Macdonald cumulants, and LLT
+       positivity”. 2026. arXiv:2609.29957.
+ [9]   T. Hikita. “(q, t)-Chromatic Symmetric Functions”. 2025. arXiv:2503.23597.
+[10]   N. Jing. “Vertex operators and Hall–Littlewood symmetric functions”. Adv. Math. 87 (1991),
+       pp. 226–248.
+[11]   N. Jing and N. Liu. “The Green polynomials via vertex operators”. 2021. arXiv:2104.04411.
+[12]   A. N. Kirillov. “New combinatorial formula for modified Hall–Littlewood polynomials”.
+       1998. arXiv:math/9803006.
+[13]   I. G. Macdonald. Symmetric Functions and Hall Polynomials. 2nd ed. Oxford University
+       Press, 1995.
+[14]   C. L. Mallows and J. Riordan. “The inversion enumerator for labeled trees”. Bull. Amer.
+       Math. Soc. 74 (1968), pp. 92–94.
+[15]   A. O. Morris. “A survey on Hall–Littlewood functions and their applications to representa-
+       tion theory”. Combinatoire et représentation du groupe symétrique (Strasbourg, 1976). Vol. 579.
+       Lecture Notes in Math. Springer, 1977, pp. 136–154. doi.
+[16]   O. Penrose. “Convergence of fugacity expansions for classical systems”. Statistical Mechan-
+       ics: Foundations and Applications. Ed. by T. A. Bak. New York–Amsterdam: W. A. Benjamin,
+       1967, pp. 101–109.
+Valuations of Hikita’s ⋆-product                                                      13
+
+
+AI declaration
+[TODO: Robin: edit wording and fill in your role below. Mandatory, uncapped, not
+counted toward the 12 pages.]
+    The mathematics in this extended abstract was produced by an AI agent. “Rick” is
+an autonomous AI research agent built on Anthropic’s Claude models (Claude Opus 5.5
+in the final sessions; earlier sessions ran on earlier Claude versions [TODO: Robin: con-
+firm the list]). It works in a sandbox with Python/SymPy, LATEX, and arXiv/Semantic
+Scholar search, and keeps a written log of every session. Rick chose the questions, ran
+the computer experiments, conjectured the statements, found and wrote the proofs, did
+the literature and novelty searches, and drafted this text.
+
+   • Statements and proofs. Every result not attributed to a reference was conjectured
+     and proved by the agent: the dominance support, the biderivation and the matrix
+     M, the block valuation law, the merge-history expansion and merge weights, the
+     full-merge, coarsening and block-multiplicative lead formulas, the Box Comple-
+     ment theorem and Column Lemma, the plethystic linear coefficient and Pieri rule,
+     the constant-term and two-point formulas, and the valuation-2 leads. Each proof
+     was written in full in the agent’s notes; the merge weights and the second-order
+     results (Section 6) were in addition re-derived from scratch in a later session. The
+     proofs sketched here are condensed from those notes.
+
+   • Computer verification. All theorems were checked in small cases by the agent’s
+     own Python and SymPy code against a direct implementation of Hikita’s subset
+     formula. Sub-agents (further instances of the same model) were used for some
+     computations and for drafting parts of the LATEX; their outputs were checked by
+     the agent.
+
+   • Review by a second AI agent. A separate AI research agent (“Clio”, also Claude-
+     based, run independently) reviewed some inputs, but not all: the subset-formula
+     inputs; the s → 0 identification and the location of the matrix d in the literature
+     (Remark 2.3); the structure of the two proofs of Theorem 3.8 (they share one lemma,
+     so they are not independent); an independent check of the dominance support
+     for n ≤ 7; and a numerical cross-check of the Green-polynomial dictionary after
+     Theorem 6.3. The block valuation law, Theorems 4.1, 4.4, 4.5 and 5.1, Theorems 6.2,
+     6.3 and 6.6 have not been reviewed by another agent.
+
+   • Literature. Prior-art searches were done by the agent and its sub-agents. Wherever
+     a result or mechanism turned out to be known, it is cited and not claimed (e.g.
+     Remark 2.3, the remarks after Theorems 4.1 and 5.1). Textbook equation numbers
+     in [13] were checked against the book.
+14                                                                         Rick (AI agent)
+
+
+     • Human role. [TODO: Robin: describe your role (e.g. supervision, submission, any
+       human verification). As of this draft no proof has been fully checked by a human.]
+

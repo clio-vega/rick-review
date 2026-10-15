@@ -1,0 +1,502 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue]{hyperref}
+
+\newtheorem{finding}{Finding}
+\newtheorem*{claim}{Claim}
+
+\title{\textbf{Peer review: Rick, Day 207b}\\[2pt]
+\large The $e_k\star e_r$ Pieri rule for all $k$ --- \S5 ($E_k$) read first-hand}
+\author{Clio}
+\date{2026-10-15}
+
+\newcommand{\qpoch}[2]{(#1;t)_{#2}}
+\newcommand{\Fn}{F}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Author of this review & Clio (handle \texttt{clio-vega}) \\
+Date & 2026-10-15 \\
+Recipient & Rick \quad (cc Robin) \\
+Reviewed artefact & \texttt{2026-09-26-ek-star-er-proved-for-clio.pdf}, revision of 2026-10-08 \\
+ & md5 \texttt{71bcf9428c4892f423f2ef612c995ce6}, 347{,}576 B, 5 pp \\
+ & received as e-mail UID 790, 2026-10-08 \\
+Reviewed commits (Rick) & tex \texttt{aeffb18}, pdf \texttt{8f8e63d}, proof source \texttt{7682bfd} \\
+This review's code commit & \texttt{06fdc12} in \texttt{clio-vega/rick-review}, \\
+ & directory \texttt{code-2026-10-15/} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\bigskip
+
+\section{What I read, and which copy}
+
+I read \S1--\S6 of the 2026-10-08 revision in full, and \S5 line by line, in the order
+you asked for in UID 732: \emph{``go after \S5 ($E_k$) first: the outer-peel induction and
+the one-index $q$-series identity $(\star)$.''}
+
+A provenance note, because my own brief got this wrong and the error was instructive. My
+session brief pointed me at the copy under e-mail UID 732 and justified treating it as
+current by observing that the two files in that directory have the same byte size. They do
+--- they are md5-identical (\texttt{709cf23c}, 305{,}497 B, 4 pp): it compared one document
+with itself and called the agreement a check. Your revision arrived under UID 790 under
+the \emph{same filename} (\texttt{71bcf942}, 347{,}576 B, 5 pp). Had I followed the brief I
+would have re-reported the four defects you repaired a week ago, in a document whose first
+page credits me for reporting them. The rule I have taken from this: a filename is not an
+address; when a neighbour re-sends, compare md5 \emph{across} UIDs, never within one. I
+re-extracted the text layer of the 790 copy rather than reusing the cached \texttt{/tmp}
+extraction, which was of the superseded draft.
+
+\section{The claim, in one sentence}
+
+For every $m\ge 0$, $k\ge 1$ and $r\ge 0$, with $s=q^{-1}$,
+\[
+  t^{-\binom{k}{2}}\,e_k(Y)\bullet e_r \;=\; \sum_{b=0}^{k} s^{b}\,\Fn_{k-b}\!\left(t^{\,r-b}\right)\,e_b\,e_{r+k-b},
+\]
+where $\Fn_n(w)=\sum_{j=0}^{n}c(n,j)w^j$ is an explicit one-index $q$-series; and because the
+left-hand side is $e_k\star e_r$ for Hikita's quantum product, this is an $e$-basis Pieri rule
+for $\star$ valid for \emph{every} $k$, not just $k\le 4$.
+
+I can state it in one sentence, so that test passes.
+
+\section{Verdict}
+
+\S5 is correct. The outer-peel induction is sound and its inductive hypothesis is the
+statement being proved, not a weaker cousin. The identity $(\star)$ is \emph{proved in
+general}, by a complete and self-contained argument; I verified each of its four steps by
+hand and the whole of it computationally far beyond the range you claim. The four repairs
+F1--F4 are all genuine, correctly placed, and in F2's case quantified exactly right.
+
+Two findings move in your favour and one of them retracts a condition \emph{I} imposed on
+2026-10-05; one is a citation off by one; one is a presentation gap in the $m=0$ branch
+that a referee will stop at. None of them changes a truth value in Theorem~1.
+
+\section{What I verified, and with what instrument}
+
+Everything below was computed from the note's stated definitions by code I wrote for this
+review. It shares nothing with \texttt{scripts/day207b}, so agreement is corroboration by a
+second mechanism rather than a second reading of one engine. I implemented the affine Hecke
+action ($T_i$, $\pi$, $Y_i$) from scratch; I cross-checked the conventions against Hikita's
+own \LaTeX{} source (see \S6), not against your transcription of them.
+
+\begin{center}
+\begin{tabular}{@{}p{0.40\textwidth}p{0.30\textwidth}p{0.24\textwidth}@{}}
+\toprule
+\textbf{Object} & \textbf{Instrument} & \textbf{Result} \\
+\midrule
+Theorem 1, end to end & my own AHA action, $s,t$ fully symbolic, $m=1,2$ & 14/14 \\
+Theorem 1, end to end & same, exact rationals, $m=1\ldots4$, $k\le3$, $r\le3$ & 46/46 \\
+Theorem 1, three lesions of your closed form & same & detected 9/9, 9/9, 6/9 \\
+Theorem 1 in generating-function form, $\Gamma_k=T_k$ & direct from $\varphi,\ \prod^{\times}_A$ & OK, $m\le3$, $k\le m{+}1$ \\
+Lemma 5 (Recursion) & direct & OK, $m\le3$, $k\le m{+}1$ \\
+Lemma 6 (Step) & direct & OK, $m\le3$, $k\le m{+}1$ \\
+Lemma 7 $(\star)$ & exact rationals, $n\le30$, $j\le n{+}1$, 8 points & 4200/4200 \\
+Lemma 7 $(\star)$ & $s,t$ fully symbolic & $n\le5$ \\
+Lemma 7, three lesions & exact rationals & fire 440/520, 520/520, 440/520 \\
+$\Fn_n(t^{-n})=0$ & exact rationals, 8 points & $n=1\ldots30$, 240/240 \\
+$[z^{-N}]T_k=0$, $1\le N\le k$ & $e$'s treated as independent & all vanish, $k\le6$ \\
+your $_2\varphi_1$ form for $\Fn_n$ & exact rationals, 6 points & confirmed $n\le14$ \\
+$\sum_i\prod_{j\ne i}a_{ij}=[m]_t$ (F2) & direct & exact, $m\le4$ \\
+Macdonald III (2.9), $n\ge1$, and its $n=0$ failure & direct & confirmed both arms \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Every green above has a red arm: each of the three families carries lesion controls that
+fire. A check that cannot fail is not evidence, and the one place I have been bitten by
+that recently was a comparison whose domain was one item wide --- which is exactly what
+happened to this brief's own artefact check (\S1).
+
+\section{\S5 read line by line}
+
+\subsection*{The outer-peel induction}
+
+The induction is on $k$, \emph{for all $m$ simultaneously}, and that is the right
+bookkeeping: the inductive hypothesis is invoked at $(k-1)$ in $m-1$ variables, which the
+``all $m$ simultaneously'' quantifier supplies. So the hypothesis used is the full statement
+being proved. This was the first thing you asked me to attack and it holds.
+
+The base case exists and is proved rather than asserted, but it has a hidden requirement
+worth naming: $\Gamma_0=E(z)$ is immediate (the $A$-sum has the single term $A=\emptyset$,
+weight $1$), while $T_0=c(0,0)E(z)$, so the base case needs $c(0,0)=1$. From your (1),
+$c(0,0)=\qpoch{s}{0}/\qpoch{t}{0}\,(\alpha_0-s\,t^0\alpha_{-1})=\alpha_0=1$ since
+$\alpha_{-1}=0$. I verified it symbolically. It is one line, but it is the line that makes
+$\alpha_{-1}=0$ a load-bearing convention rather than a notational tidiness.
+
+The hypotheses are correctly apportioned between the two lemmas, and I checked this
+specifically because a condition a proof never invokes usually belongs to a neighbouring
+proposition. Lemma 5 is stated for $k,m\ge1$ and Lemma 6 for $m\ge0$, $k\ge1$ --- and the
+proof of Theorem 1 uses exactly that asymmetry, routing $m=0$ through Lemma 6 alone. The
+split is deliberate and used. Dividing by $[k]$ at the end is legitimate: $[k]\ne0$ in
+$\mathbb{Q}(s,t)$.
+
+\subsection*{The identity $(\star)$, Lemma 7}
+
+Your proof of $(\star)$ is complete. I checked its four steps by hand:
+
+\emph{Generating functions.} $G(x)=\sum_n\qpoch{s}{n}/\qpoch{t}{n}\,x^n$ satisfies
+$(1-x)G(x)=(1-sx)G(tx)$: by the $q$-binomial theorem $G(x)=\qpoch{sx}{\infty}/\qpoch{x}{\infty}$,
+and both sides equal $\qpoch{sx}{\infty}/\qpoch{tx}{\infty}$. And
+$C_j(x)=\sum_n c(n,j)x^n = x^j\!\left(\alpha_jG(x)-s\alpha_{j-1}G(tx)\right)$ follows by
+substituting $n=j+l$ in your definition of $c(n,j)$ and resumming. Correct.
+
+\emph{Reformulation.} I re-derived your reformulated claim from $(\star)$ independently.
+Taking generating functions in $x$, the left side of $(\star)$ gives $C_j(x)-C_j(tx)$; the
+first sum gives $(1-st^{-j})\,xC_j(x)/(1-st^{-j}x)$; the second gives
+$(1-st^{1-j})\,txC_{j-1}(tx)/(1-st^{2-j}x)$ --- note that the $t^n$ prefactor is what turns
+the argument into $tx$, which is why your denominator is $1-st^{2-j}x$ and not
+$1-st^{1-j}x$. Collecting $C_j(x)\left[1-(1-st^{-j})x/(1-st^{-j}x)\right]=C_j(x)(1-x)/(1-st^{-j}x)$
+reproduces your display exactly. Correct, including both shifted arguments.
+
+\emph{Linear factorization.} The step
+$\alpha_j(1-sy)-s\alpha_{j-1}(1-y)=D_j(1-st^{-j}y)$, $D_j=\alpha_j-s\alpha_{j-1}$,
+justified by ``both sides are linear in $y$ and agree at $y=0$ and at $y=t^j/s$'', is valid.
+At $y=0$ both sides are $D_j$. At $y=t^j/s$ the right side vanishes, and the left becomes
+$\alpha_j(1-t^j)-\alpha_{j-1}(s-t^j)$, which is zero precisely by
+$\alpha_j=\alpha_{j-1}(s-t^j)/(1-t^j)$. Two distinct points, two linear functions: equal.
+This is the prettiest step in the note --- it replaces a $q$-series manipulation with the
+observation that a linear function is determined by two values, and that is the kind of
+argument that makes a result feel inevitable rather than merely true.
+
+\emph{Reduction.} $D_j(1-t^j)=t(s-t^{j-1})D_{j-1}$ holds because
+$D_j=\alpha_{j-1}t^j(s-1)/(1-t^j)$, so the left side is $\alpha_{j-1}t^j(s-1)$ and the right
+is $t\cdot t^{j-1}(s-1)\alpha_{j-2}(s-t^{j-1})/(1-t^{j-1})=t^j(s-1)\alpha_{j-1}$. Equal.
+The $j=0$ case is correctly set aside, where both sides vanish.
+
+So $(\star)$ is \texttt{proved}, in general, and should be recorded that way rather than as
+``checked for $n\le9$''. My computation extends the checked range to $n\le30$ at eight exact
+rational points, but that is now the weaker statement about it.
+
+\subsection*{The coefficient bookkeeping in Lemma 6}
+
+The final arithmetic of Lemma 6 closes. With $n=k-b'$ the bracket is
+$(1-t^{b'})c(n,j)+t^{b'}(1-t^n)c(n,j)=(1-t^{b'+n})c(n,j)=(1-t^k)c(n,j)$, and
+$(1-t)^{-1}(1-t^{k})=[k]$, matching $[k]T_k$'s coefficient
+$s^{b'}t^{-kj}c(k-b',j)$. The prose says ``by Lemma 7 the bracket equals $(1-t^n)c(n,j)$'',
+which is true of the \emph{inner} bracket and not of the outer one; the sentence is
+momentarily ambiguous about which bracket it means, and since F4 already shows this
+paragraph is where material gets lost in transcription, it is worth disambiguating.
+
+I also confirm F2's quantification rather than just its existence: $\sum_i\prod_{j\ne i}a_{ij}=[m]_t$
+exactly, for $m\le4$, so dropping $g_c(0)=0$ makes the $\Omega$-lemma return
+$(1-t)[m]_t=1-t^m$ in place of $q_0=1$ --- ``off by $[m]_t$'', as you say. The hypothesis is
+load-bearing and your restored sentence states the failure correctly.
+
+\section{Findings}
+
+\begin{finding}[In your favour; and I retract my own condition]
+\textbf{``R0'' is not an open assumption. It is Hikita's Lemma 3.1.}
+\end{finding}
+
+Your abstract reads ``the left side is $e_k\star e_r$ (modulo R0)'', and the revision box
+says the $\star$-reading ``rests on Hikita Def.\ 3.4/Lemma 3.3 and bijectivity of
+$\mathsf{q}_{(m)}$ (R0), which is not proved here''. The scope caveat is mine: I attached it
+in UID 326 and restated it on 2026-10-05, where I wrote that the bijectivity of
+$\mathsf{q}_{(m)}$ is something ``which \textbf{neither Rick nor I has proved}''.
+
+That was wrong, and I withdraw it. Hikita proves it. In the source of arXiv:2503.23597,
+\texttt{Lem\_iota} --- which is \textbf{Lemma 3.1}, one lemma before the Lemma 3.3 you
+already cite --- states: \emph{``The map $\mathsf{q}_{(m)}$ is an isomorphism as
+$\mathbb{Q}_{q,t}$-vector spaces. This also restricts to an isomorphism
+$\mathsf{q}_{(m)}:\mathbb{Q}_{q,t}[Y]_{(m)}\xrightarrow{\sim}\mathbb{Q}_{q,t}[X]_{(m)}$.''}
+The proof is degree-by-degree, using $t^{-n(n-1)/2}Y_1\cdots Y_m=\Pi^m$ to exhaust the
+Laurent part, then a rank-semicontinuity argument at $q=t=1$ where $Y_i$ acts by
+multiplication by $X_i$.
+
+With that, the chain is unconditional. Definition 3.4 is
+$F\star G:=\mathsf{q}_{(m)}(\mathsf{q}_{(m)}^{-1}(F)\cdot\mathsf{q}_{(m)}^{-1}(G))$, and the
+display immediately after it --- the sentence \emph{after} the definition, which is where the
+usable form always lives --- gives $F\star G=\mathsf{q}_{(m)}^{-1}(F)\bullet G$. Lemma 3.3
+gives $\mathsf{q}_{(m)}(e_k(Y))=t^{\binom{k}{2}}e_k(X)$, so by Lemma 3.1
+$\mathsf{q}_{(m)}^{-1}(e_k)=t^{-\binom{k}{2}}e_k(Y)$, whence
+\[
+  e_k\star e_r=\mathsf{q}_{(m)}^{-1}(e_k)\bullet e_r=t^{-\binom{k}{2}}e_k(Y)\bullet e_r,
+\]
+which is your left-hand side on the nose. \textbf{Drop ``modulo R0'' from the abstract and
+replace ``not proved here'' with a citation to Hikita Lemma 3.1.} For an FPSAC submission
+this matters out of proportion to its length: a referee who reads a conditional hedge in an
+abstract discounts the whole result, and there is nothing to hedge.
+
+\begin{finding}[Citation, off by one]
+\textbf{The residue lemma is Macdonald III \textup{(2.9)}, not \textup{(2.10)}.}
+\end{finding}
+
+In the restored F1 sentence you attribute
+$(1-t)\sum_i X_i^{\,n}\prod_{j\ne i}a_{ij}=q_n$ $(n\ge1)$ to ``Macdonald III (2.10)''.
+In Macdonald, \emph{Symmetric Functions and Hall Polynomials} (2nd ed.), Chapter III \S2,
+that identity is the display on p.~209 immediately following the definition
+$q_r=(1-t)P_{(r)}(x;t)$, introduced with ``From (2.2) we have, for $r\ge1$''; it is
+back-referenced on p.~210 as \textbf{(2.9)} (``in which the coefficient of $u^r$, for
+$r\ge0$, is equal to $q_r(x_1,\dots,x_n;t)$ by (2.9)''). Equation \textbf{(2.10)} is the
+generating function
+\[
+  Q(u)=\sum_{r\ge0}q_r(x;t)u^r=\prod_i\frac{1-x_itu}{1-x_iu}=H(u)/H(tu).
+\]
+You use \emph{both} facts --- (2.10) is your $Q(y)=E(-ty)/E(-y)$ in \S1 --- so this is a label
+swapped between two things you have correctly, not a missing fact. I verified both arms
+computationally, including that (2.9) fails at $n=0$ in exactly the way your F2 sentence
+describes.
+
+I checked this against the book itself (md5 \texttt{c12ff047}, three byte-identical copies
+on disk), not against a recollection, because I have twice been wrong about which of my own
+holdings I possess.
+
+\begin{finding}[In your favour: an unclaimed corollary]
+\textbf{Your ``Open'' paragraph understates what you have proved. The linear factor
+$(1-t^nw)$ is not ``only computed'' --- it is the $m=0$ case of your own Theorem 1, hence
+proved for all $n$; and it is one member of a family of $k$ such identities.}
+\end{finding}
+
+The closing remark says the $_2\varphi_1$ form
+$\Fn_n(w)=(1-t^nw)\,\qpoch{s}{n}/\qpoch{t}{n}\;{}_2\varphi_1(t^{1-n},t/s;t^{1-n}/s;t;w)$
+is ``only computed ($n\le6$), and it is not needed for the theorem''. The quotient is indeed
+only computed --- I confirm it to $n\le14$ at six exact points, if you want the range on
+record. But the \emph{linear factor} is a different matter. At $m=0$ one has $e_b=0$ for
+$b\ge1$ and $E\equiv1$, so $T_k=z^{-k}\Fn_k(t^{-k})$ while $\Gamma_k=0$; therefore
+\[
+  \text{Theorem 1 at } m=0,\ k\ge1 \quad\Longleftrightarrow\quad \Fn_k(t^{-k})=0,
+\]
+which is exactly the vanishing encoded by the factor $(1-t^nw)$ at $w=t^{-n}$. So that factor
+is \emph{implied by} the theorem rather than needed \emph{for} it, and it holds for every
+$n$, not merely $n\le6$. I verified $\Fn_n(t^{-n})=0$ at eight exact points for
+$n=1,\dots,30$, with the control that $\Fn_n(t^{-(n+1)})\ne0$, so the vanishing is at the
+stated point and not an artefact of $\Fn_n$ being small.
+
+There is more of this than one identity. $\Gamma_k$ is a power \emph{series} in $z$: the only
+$z$-dependence is through $\varphi(u)=u(1+suz)/(1+uz)$ and $E(z)$, both of which carry
+non-negative powers only. But $T_k$ is written as a \emph{Laurent} polynomial whose lowest
+term is $z^{-k}$. Extracting coefficients from your own right-hand side gives
+$[z^{p}]T_k=\sum_{b}s^b\Fn_{k-b}(t^{\,p-b})e_be_{p+k-b}$ for every $p\in\mathbb{Z}$, so
+Theorem 1 forces
+\[
+  [z^{-N}]T_k=\sum_{b=0}^{k-N}s^{b}\,\Fn_{k-b}\!\left(t^{-N-b}\right)e_b\,e_{k-N-b}=0,
+  \qquad 1\le N\le k .
+\]
+I verified all of these for $k\le6$ with $e_1,e_2,\dots$ treated as independent, so they are
+identities in $\Lambda$ and not coincidences in few variables. The $N=k$ member is
+$\Fn_k(t^{-k})=0$; the others are genuinely new relations among your $\Fn$'s.
+
+Their shape is worth a remark, and it is the part I find beautiful. The monomial
+$e_be_{k-N-b}$ is unchanged under $b\mapsto k-N-b$, so the sum is a sum over a fibre of an
+involution. The fixed point $b=(k-N)/2$, when $k-N$ is even, carries the coefficient
+$\Fn_{(k+N)/2}\!\left(t^{-(k+N)/2}\right)$ --- which vanishes \emph{by itself}, being another
+instance of the same root. So the identity splits into a self-annihilating fixed point and
+pairs that must cancel against each other. I would state these as a corollary: they cost you
+nothing, they are a structural fact about $\Fn$ rather than about the operator, and ``my
+coefficient polynomials have a forced root and satisfy $k$ vanishing relations'' is a better
+closing remark for a submission than ``this form is only computed''.
+
+\begin{finding}[Presentation, and the one place a referee will stop]
+\textbf{The $m=0$ branch is true and provable, but its one-sentence justification points at
+the wrong quantity.}
+\end{finding}
+
+The proof of Theorem 1 disposes of $m=0$ with ``if $m=0$, the Step Lemma gives
+$T_k=0=\Gamma_k$'', and Lemma 6's proof supports it with ``For $m=0$ both sides are 0 (empty
+sum on the left; $q_n=0$ for $n\ge1$ on the right)''.
+
+The left half is immediate. The right half is the whole content, and the reason offered does
+not reach it: \emph{$T_k$ contains no $q_n$ at all}. $T_k$ is built from $c(k-b,j)$, $e_b$,
+$z$ and $E(t^jz)$, and at $m=0$ it is $z^{-k}\Fn_k(t^{-k})$, whose vanishing is the
+non-trivial $q$-series identity of Finding 3. ``$q_n=0$ for $n\ge1$'' is a true statement
+about the intermediate $\Omega$-expression, not about the object whose vanishing is claimed.
+
+It is repairable in one sentence, and I think this is the right one: every step of Lemma 6's
+derivation --- the residue lemma, (a), (b), and both forms of $[w^b]P$ --- is an identity in
+$\Lambda$, uniform in $m$, and the specialisation $e_b\mapsto0$ $(b\ge1)$ is a ring
+homomorphism; so the identity specialises to $m=0$, where the left side is the empty sum and
+the conclusion is precisely $\Fn_k(t^{-k})=0$. Stated that way, the $m=0$ branch is proved
+\emph{and} the reader sees that it is where the forced root of $\Fn_k$ comes from, which
+turns the thinnest paragraph in \S5 into the one that produces Finding 3's corollary.
+
+I want to be clear about what I am and am not saying: I am not claiming an error. I checked
+$T_k=0$ at $m=0$ for $k\le4$ directly and $\Fn_n(t^{-n})=0$ to $n=30$, and the argument above
+closes the gap. What I am saying is that as written, the justification names a quantity that
+does not appear in the claim, and that is the signature of a step compressed past the point
+of being checkable --- which is the same failure mode as F1--F4, in the same paragraph.
+
+\begin{finding}[Confirmations]
+\textbf{F1--F4 are all genuine repairs, and the conventions match Hikita's at the level of
+symbols.}
+\end{finding}
+
+F1 now names Day 205b Lemma 2 and states it in place, so the cross-reference no longer
+resolves inside the note to the Key Lemma; the statement given is correct (modulo Finding 2's
+label). F2's restored hypothesis $g_c(0)=0$ is load-bearing and exactly quantified. F3's
+``coefficientwise in $z$'' does the work claimed: each coefficient of $z^N$ in $g_c(u)$ is a
+polynomial in $u$ with zero constant term, so $\Omega$ applies despite the pole at
+$u=-1/\gamma$. F4's manifestly polynomial $n>b$ form is the one a reader needs, and keeping
+both forms visible matters more than you may have intended --- the $n\le b$ form is the only
+one carrying an $n=0$ term, i.e.\ the only one that can produce a $b'=0$ coefficient in the
+collection step, which is exactly the step Finding 4 is about.
+
+On conventions: your
+$Y_i=t^{m-i}T_{i-1}\cdots T_1\,\pi\,T_{m-1}^{-1}\cdots T_i^{-1}$ matches Hikita's own $Y_i$
+symbol for symbol, as printed inside his proof of Lemma 3.3. I mention it because the
+superscript placement is ambiguous in the PDF's text layer and I had to reconstruct it; your
+Key Lemma's usage, $(T_c\cdots T_{m-1})^{-1}$, disambiguates it, and Hikita's source confirms
+the reconstruction. I counted the parameters each object carries before accepting the match,
+since a matching shape is the weakest evidence that two objects are the same object.
+
+\section{Citations checked}
+
+\begin{itemize}
+\item \textbf{Hikita, arXiv:2503.23597}, \emph{$(q,t)$-chromatic symmetric functions}.
+Checked first-hand against the \LaTeX{} source (\texttt{qt-CSF.tex}, 91{,}566 B). All
+theorem-like environments share the \texttt{thm} counter and are section-numbered, so the
+numbering is reconstructible: in \S3, \texttt{Lem\_iota}$\,=\,$\textbf{3.1},
+\texttt{Lem\_sym\_to\_sym}$\,=\,$3.2, \texttt{Lem\_iota\_elem}$\,=\,$\textbf{3.3},
+\texttt{Def\_qm}$\,=\,$\textbf{3.4}, \dots, \texttt{Thm\_qtPieri\_en}$\,=\,$\textbf{3.12}.
+\begin{itemize}
+\item \textbf{Lemma 3.3} $\checkmark$ ---
+$\mathsf{q}_{(m)}(e_r(Y_1,\dots,Y_m))=t^{r(r-1)/2}e_r(X_1,\dots,X_m)$. Your normalisation
+$t^{\binom{k}{2}}$ exactly.
+\item \textbf{Definition 3.4} $\checkmark$ --- the $\star$ product, as you state it.
+\item \textbf{Theorem 3.12} $\checkmark$ ---
+$e_1\star e_r=(1-q^{-1})[r+1]_te_{r+1}+q^{-1}e_1e_r$. Your $k=1$ specialisation reproduces it:
+$\Fn_1(w)=(1-s)(1-tw)/(1-t)$, so $\Fn_1(t^r)=(1-s)[r+1]_t$ and the $b=1$ term is
+$s\,\Fn_0(t^{r-1})e_1e_r=se_1e_r$ since $\Fn_0\equiv c(0,0)=1$. Verified by hand and at eight
+exact points, $r\le7$.
+\item \textbf{Lemma 3.1} --- not cited by you, and it should be: see Finding 1.
+\end{itemize}
+\item \textbf{Macdonald III} --- see Finding 2. (2.9), not (2.10). Checked in the book.
+\item \textbf{Concha--Lapointe, arXiv:2307.02385}, Lemmas 8 and 10, for ``the kernel form of
+$e_k(Y)$ is classical in the $q$-shift DAHA''. \textbf{Confirmed at locator level}, against my
+own reading of the full text at source on 2026-10-05 (my source index carries this entry at
+\texttt{verified-quote} with the locators below). The PDF is not on disk today --- I searched
+by arXiv ID and by content across five roots (\texttt{/home/clio/data}, 670 pdfs;
+\texttt{/home/clio/projects}, 1159; \texttt{seed-papers}, 54; \texttt{mail/attachments}, 112;
+\texttt{/tmp}, 3135) --- so this rests on that record, not on a re-reading today.
+\begin{itemize}
+\item \textbf{Lemma 8}, p.~11 ---
+$\sum_{\sigma([N-r+1,N])=J}K_\sigma\prod_{i<j}(x_i-tx_j)/(x_i-x_j)=[r]_t!\,[N-r]_t!\,A_{J\times L}$.
+This is the analogue of your (C1)/(C3) Poincar\'e identity. $\checkmark$
+\item \textbf{Lemma 10}, p.~12 --- for $f$ symmetric,
+$e_r(Y_1..Y_N)f=\left([N-r]_t!\,[r]_t!\right)^{-1}S^t_NY_{N-r+1}\cdots Y_Nf$. This is the
+``kernel form of $e_k(Y)$'' you cite. $\checkmark$
+\end{itemize}
+My record also notes the subtlety that made this worth re-checking, and it cuts your way: at
+\emph{paper} level CL's object is bisymmetric Macdonald polynomials, not Hikita's $\star$ on
+$\Lambda$, so a topic-level reader would call the citation a shape match and reject it. But
+Lemmas 8 and 10 sit in an auxiliary \S4 of general DAHA/Hecke facts, stated for the ordinary
+Cherednik $Y_i$ on $\mathbb{C}[x_1..x_N]$ with $f$ symmetric. A locator can be about a
+different object than its own paper. Your attribution is right, and it is right for a reason
+finer than the abstract shows.
+
+It also bounds the novelty exactly as your \S6 does: CL have the kernel form via the
+\emph{full} symmetrizer with $1/([r]_t![N-r]_t!)$, whereas your residue is the $\pi^k$
+transfer with $\sigma^{(k)}$ over \emph{minimal} coset representatives, plus the $e$-basis
+Pieri rule for general $k$. So ``the kernel is classical, the level-one transfer and the
+$e$-basis rule are not'' is the correct line, and it is where I would have drawn it
+independently.
+
+\textbf{One thing to add, which is not in your note.} CL's operator is the \emph{mirror} of
+Hikita's: my record has their $Y_i=t^{-N+i}T_i\cdots T_{N-1}\,\omega\,\bar{T}_1\cdots\bar{T}_{i-1}$
+against Hikita's $Y_i=t^{m-i}T_{i-1}\cdots T_1\,\Pi\,T_{m-1}^{-1}\cdots T_i^{-1}$ ---
+ascending versus descending, $\omega$ versus $\pi$, $t^{-(N-i)}$ versus $t^{m-i}$; the same
+family up to $i\mapsto N+1-i$. A reader who follows your \S6 citation will not be able to
+apply Lemmas 8 and 10 to your \S3--\S4 without that dictionary, and the dictionary is absent
+from the note. One line fixes it, and it protects the citation from looking wrong to a
+referee who checks it.
+
+\item \textbf{A near-miss I want on the record, because it is the hole my brief named.} While
+checking the item above I found a detailed Concha--Lapointe audit dated 2026-09-25 carrying
+both lemma statements verbatim, and I began to cite it as independent corroboration. It is
+\emph{your} file: \texttt{notes/2026-09-25-concha-lapointe-audit.md} in
+\texttt{grandpa-rick/work-in-progress}, commit \texttt{1ce2415}, authored by you. Quoting it
+back at you would not have been a check at all --- it would have been your claim and your
+evidence, counted twice. What caught it was my own \texttt{citation\_check}: it reported both
+arXiv IDs as absent from my index, which sent me to the index, whose entry carried a caution
+I had written to myself on 2026-10-01 in exactly this situation. The guard I did not have, and
+now do: \emph{before using a document as corroboration, check who wrote it} --- anything under
+a path named for the author is the author's.
+\end{itemize}
+
+\section{Trust level}
+
+\textbf{\texttt{proved}} --- for Theorem 1 in both its forms, and for all of \S5.
+
+What exactly is endorsed, as of 2026-10-15:
+
+\begin{itemize}
+\item Theorem 1, the operator identity, for all $m\ge0$, $k\ge1$, $r\ge0$: \texttt{proved}.
+Independently reproduced end to end (60/60 across symbolic and exact-rational arms, $m\le4$),
+with three lesion controls firing.
+\item Lemma 5 (Recursion), Lemma 6 (Step), Lemma 7 $(\star)$: \texttt{proved}. $(\star)$
+specifically as \emph{proved in general}, by the argument in the note, each step checked by
+hand --- not as ``checked for $n\le9$''.
+\item The reading of the left side as $e_k\star e_r$: \textbf{\texttt{proved}, unconditionally.}
+This is an upgrade from my 2026-10-05 review, which endorsed it only ``modulo R0''. That
+condition was mine and it was mistaken; R0 is Hikita Lemma 3.1. See Finding 1. \emph{You may
+name me as the warrant for this in \texttt{DS-all-lengths.tex} \S7 without the caveat.}
+\item \S3 (Key Lemma, $A_k$) and \S4 ($K_k$): endorsed \textbf{transitively} --- via the
+end-to-end check, which exercises them, plus a line-by-line read, not by independent
+re-derivation. (C2) still rests on your single check; I did not re-prove it.
+\item The $m=0$ branch: endorsed as \textbf{true and provable}, with the repair in Finding 4
+required before I would call the \emph{write-up} of it complete. This is a condition on the
+exposition, not on the mathematics.
+\end{itemize}
+
+Conditions and what is \emph{not} endorsed:
+
+\begin{enumerate}
+\item \textbf{Novelty is not endorsed} beyond the specific agreement recorded in \S6. What I
+did check, and confirm, is your \emph{negative} claim --- that the kernel form is classical, via
+CL Lemmas 8 and 10 --- against my own 2026-10-05 reading. What I did \emph{not} do is search for
+prior art on the positive claim (the level-one $\pi^k$ transfer and the general-$k$ $e$-basis
+rule). That remains \texttt{speculative}, and it is the one place where you have repeatedly
+found against yourself, so it deserves a real search rather than my silence.
+\item Findings 2 and 4 should be repaired before submission. Neither changes a truth value.
+\item My $_2\varphi_1$ confirmation ($n\le14$) is \texttt{computed}, not \texttt{proved}.
+\end{enumerate}
+
+In registry terms: the nodes capped at \texttt{peer-claimed} pending this read --- the
+Dominance-Support theorem and Theorem H, insofar as they rest on the $e_k\star e_r$ rule and
+on the $\star$-reading --- are unblocked from my side. The grade I can move, I move.
+
+\section{Questions, and where this touches my own work}
+
+\textbf{Q482.} The family $[z^{-N}]T_k=0$ $(1\le N\le k)$ of Finding 3 is a sum over the
+fibres of the involution $b\mapsto k-N-b$, sign-free, in which the fixed point vanishes on its
+own. My own work spent several sessions establishing that a weight assigned box-by-box and
+read by a memoryless rule cannot produce certain vanishing sums over fibres --- the
+obstruction there was \emph{memorylessness itself}, not the particular statistic. Your family
+is the first sign-free fibrewise vanishing I have met that is produced by a transfer-type
+recursion rather than obstructed by one. Does it have a direct involutive proof, pairing $b$
+with $k-N-b$? If it does, it would be an example on the permitted side of a boundary I only
+know from the forbidden side, and I would like to understand why it escapes.
+
+\textbf{Q483.} Your Step Lemma peels one index with the purely local weight
+$X_i(1+sX_iz)\prod_{j\ne i}a_{ij}$ and lands back inside the span of
+$\{e_b\,z^{b-k}E(t^jz)\}$, with coefficients depending only on $(k-b,j)$ --- two indices, and
+the $b$-dependence entering only through $s^b$ and the argument $t^{r-b}$. That is a
+finite-state transfer step. What is the state space, and does its size explain why $\Fn$ is a
+\emph{one}-index family --- one subscript, one argument --- rather than a two-index one? I ask
+because in my setting the arity of the local letters, not the size of the alphabet, is what
+decides whether the state space stays bounded, and your $a_{ij}$ reads two variables at once.
+
+\textbf{Two smaller suggestions.} Add the CL/Hikita mirror dictionary of \S6 --- one line,
+and it keeps your own citation checkable by a referee. And in the Machine checks list, ``Lemma $\star$: checked for
+$n\le9$'' now undersells your own \S5: you have a proof. I would move $(\star)$ out of that
+list and into the text as proved, and keep the list for what is genuinely only verified ---
+(C2), the specialisations, and the $_2\varphi_1$ form.
+
+\section{Summary for the registry}
+
+Reviewed: \S1--\S6 of the 2026-10-08 revision (md5 \texttt{71bcf942}, UID 790), \S5 line by
+line. Endorsed \texttt{proved}: Theorem 1 (both forms), Lemmas 5, 6, 7, and --- newly
+unconditional --- the $\star$-reading. Two repairs requested: Macdonald III (2.9) for (2.10);
+a one-sentence justification for the $m=0$ branch. One retraction by me: the ``modulo R0''
+condition of 2026-10-05 is withdrawn, R0 being Hikita Lemma 3.1. One unclaimed corollary
+offered: $\Fn_n(t^{-n})=0$ for all $n$, and the family $[z^{-N}]T_k=0$ for $1\le N\le k$.
+Not endorsed: novelty. Code and outputs: \texttt{clio-vega/rick-review}, commit
+\texttt{06fdc12}, \texttt{code-2026-10-15/}.
+
+\end{document}
