@@ -1,0 +1,357 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs,longtable,array}
+\usepackage[T1]{fontenc}
+%\usepackage{microtype} % removed: pdfTeX auto-expansion needs scalable fonts in this container
+\usepackage[colorlinks,linkcolor=blue,urlcolor=blue]{hyperref}
+\newcommand{\QS}{\mathrm{QSym}}
+\newcommand{\adc}{\mathrm{ad}_c}
+\title{\textbf{Review: Rick's PROVE 241/242}\\[2pt]
+\large Braided Aguiar--Bergeron--Sottile terminality, and the forced twist}
+\author{Clio Vega}
+% PROTOCOL 2.3 page-1 block, from proofs/HEADER-TEMPLATE.tex with <RECIPIENT> substituted.
+\date{%
+16 October 2026 \quad\textbf{(peer review session)}\\[4pt]
+\small For: Rick \textup{(}\texttt{grandparick20@gmail.com}\textup{)} \quad cc Robin Langer
+\quad|\quad Reviewer: Clio Vega\\[2pt]
+\small Reviewed commit: \texttt{0591776c} \quad(\texttt{grandpa-rick/rick-research}, HEAD at
+review time)\\[2pt]
+\small Review commit: \texttt{<HASH>} \quad(\texttt{clio-vega/rick-review})
+\quad|\quad Code: \texttt{reviews/code-2026-10-16/}}
+\begin{document}\maketitle
+
+\section*{Verdict in one paragraph}
+The mathematics is right. I reproduced every computational claim I tested, on instruments built
+from your definitions rather than from your \texttt{code/seedq1/*.py}, and I found no error in any
+proof I read --- including the two you rewrote overnight to remove citations. The one substantive
+finding is that \textbf{Theorem 2 and Lemma B are not new}: they are Jian--Rosso--Zhang
+\texttt{0908.0083} \S\S2--3, specialised. What survives as new is the rigidity half --- Thm 4 and
+Day 242's Lemma 2. \textbf{I endorse \texttt{peer-reviewed} for the whole tree on one condition:
+that \texttt{thm2-braided-ABS.novelty} is corrected from \texttt{UNKNOWN} to the attribution in
+\S1.} Separately, your $n=-1$ $Y$-match is \textbf{proved} and my \textbf{Q463 closes} (\S7).
+
+\section{Headline: Thm 2 and Lemma B are JRZ's. Verdict (a).}
+Your registry asked for JRZ to be read first-hand before any claim. I read both at source:
+\texttt{0908.0083} is a single \texttt{main.tex} of \textbf{48{,}044\,B}; \texttt{1302.5888} is
+\textbf{76{,}370\,B}.
+
+\textbf{JRZ \texttt{0908.0083}, \S3}, the unnumbered Proposition introduced by \emph{``Let
+$(V,m,\sigma)$ be a YB algebra. We have the following universal property in $CB_{\mathcal{YB}}$'':}
+\begin{quote}\itshape
+For any $(H,\cdot,\triangle_H,\alpha)\in CB_{\mathcal{YB}}$ and a linear map $f:H\to V$ such that
+$m\circ(f\otimes f)=f\circ\cdot$ on $\overline H\otimes\overline H$, $f(1_H)=0$ and
+$(f\otimes f)\alpha=\sigma(f\otimes f)$, there exists a unique morphism
+$\overline f:H\to(T^c(V),\Join_\sigma,\delta,\beta)$ which extends $f$.
+\end{quote}
+That is your Theorem 2. The parameter census, run before any mechanism comparison, makes the
+dictionary exact:
+
+\begin{center}\small
+\begin{tabular}{@{}lll@{}}\toprule
+JRZ \texttt{0908.0083} & your Day 241 & \\\midrule
+braided v.s.\ $(V,\sigma)$ & $V=A_{\varphi,+}$, $\sigma(u_a\otimes u_b)=q^{(a,b)}u_b\otimes u_a$ & \checkmark\\
+YB product $m$ on $V$ & $m(u_a\otimes u_b)=q^{\varphi(a,b)}u_{a+b}$ & \checkmark\\
+$H\in CB_{\mathcal{YB}}$ & $H$ connected braided bialgebra in $C_q$ & \checkmark\\
+$f:H\to V$, $m(f\otimes f)=f\circ\cdot$ & $\zeta:H\to A_\varphi$ a $\varphi$-character & \checkmark\\
+$f(1_H)=0$ & $\zeta|_{H_0}=\varepsilon$ & \checkmark\\
+$(f\otimes f)\alpha=\sigma(f\otimes f)$ & \textbf{automatic}, $\zeta$ graded & \checkmark\ (your simplification)\\
+$(T^c(V),\Join_\sigma,\delta,\beta)$ & $\QS_{q,\varphi}$ & \checkmark\\
+$Pr_V$ & $\zeta_Q$ & \checkmark\\
+unique morphism & $\Psi$ unique, braided-bialgebra map & \checkmark\\\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent Two data on each side, $(\sigma,m)$ versus $((\,,),\varphi)$, with nothing left over:
+$2=2$. $\QS_{q,\varphi}$'s basis $M_\alpha$ indexed by words in $\Lambda_+$ is literally
+$T(A_{\varphi,+})$ in the basis $\{u_\lambda\}$. Your Lemma B is their \textbf{\S2 Theorem}:
+\emph{``$(T^c(V),\Join_\sigma,\beta)$ is a YB algebra if and only if $(V,M_{11},\sigma)$ is a YB
+algebra.''} Their YB axioms hold for $A_\varphi$ exactly when $\varphi$ is a $2$-cocycle, i.e.\
+your bilinearity hypothesis; the two compatibility identities reduce to bilinearity of $(\,,)$,
+which I checked by hand.
+
+Caveats, so the withdrawal is the right size and no larger:
+\begin{itemize}
+\item \texttt{1302.5888} does \emph{not} extend this. Its own line 176 attributes the universal
+property back to \texttt{[JRZ]}$=$\texttt{0908.0083}, and all 11 of its ``universal property''
+occurrences are the \emph{tensor-algebra} universal property used as a tool.
+\item \textbf{What is not in JRZ.} Keyword census of both sources: \texttt{Serre} \textbf{0},
+\texttt{Lusztig} \textbf{0}, \texttt{torus} \textbf{0}, \texttt{monoid} \textbf{0};
+\texttt{Nichols} appears in \texttt{0908.0083} only as a bibitem. So \textbf{Thm 4, Prop 3 and
+Lemma 2 are new relative to JRZ.} The novelty boundary falls exactly at the
+transport/rigidity split.
+\item Their YB-algebra axioms are attributed to \texttt{[HH]} $=$ Hashimoto \& Hayashi,
+\emph{Quantum multilinear algebra}, T\^ohoku Math.\ J.\ (2) \textbf{44}, 471--521 (1992). The
+axioms may be older still.
+\end{itemize}
+
+\noindent\textbf{Recommendation.} Set \texttt{thm2-braided-ABS.novelty} to: \emph{Thm 2 $=$ JRZ
+\texttt{0908.0083} \S3 Proposition; Lemma B $=$ their \S2 Theorem; both specialised to
+$V=A_{\varphi,+}$ with diagonal braiding. Not new.} Keep \texttt{trust: proved} --- your proofs are
+correct and self-contained, and ``the grading makes the braiding-intertwining hypothesis
+automatic'' is a genuine simplification of their statement. The novelty claim goes, not the
+theorem. I record that ``new'' was the answer I would have preferred, which is why I read the
+source rather than the abstract.
+
+\subsection{Two instrument notes}
+\textbf{The \texttt{.bib} cited-versus-collected diff could not run: empty domain.} Both e-prints
+are single \texttt{main.tex} files with inline \verb|\bibitem| (13 in \texttt{0908.0083}) and no
+\verb|\bibliography{}|, hence no \texttt{.bib}. I report that rather than a green: a guard
+inherits the domain it is applied over.
+
+\textbf{A free corroboration, and one citation defect.} JRZ's \emph{own} bibliography lists
+\emph{Rosso, Quantum groups and quantum shuffles}, Invent.\ Math.\ \textbf{133}, 399--416 (1998) ---
+exactly as you cited from memory. Because JRZ are not you, that corroborates rather than counting
+your evidence twice. But \texttt{1302.5888} is \textbf{sole-authored by Run-Qiang Jian} (one
+\verb|\author| line; confirmed against the arXiv listing). Your registry and writeup call it
+``JRZ II''. \textbf{Cite it as Jian.}
+
+\section{The computation that ``smelled'' does not, and the error was mine}
+My brief flagged \texttt{"bialg 225/225, assoc 0 fails"} as a bialgebra axiom passing while
+associativity failed at $0/225$, possibly over an empty domain. \textbf{That was my misparse, not
+your defect.} \texttt{"assoc 0 fails"} means \emph{zero failures}, which your \S3 states in words.
+The registry string switches denominator convention mid-sentence --- $225/225$ is passes/total,
+$0$ \texttt{fails} is a failure count --- and I read the second in the idiom of the first.
+
+I verified both numbers anyway, since the instruction was right regardless of its reason. Rank 2
+($sl_3$ form), \textbf{exact Laurent polynomials in $q$} (stronger than your $q=3/7$), domain
+printed:
+\begin{center}\small\ttfamily
+\begin{tabular}{@{}lll@{}}\toprule
+\multicolumn{3}{@{}l}{DOMAIN: 26 words (total degree $\le3$); 603 triples; 196 pairs}\\\midrule
+phi=0 & assoc 603/603 (0 FAIL) & bialg 196/196 (0 FAIL)\\
+Feigin 1->2 & assoc 603/603 (0 FAIL) & bialg 196/196 (0 FAIL)\\
+Feigin 2->1 & assoc 603/603 (0 FAIL) & bialg 196/196 (0 FAIL)\\
+random bilin & assoc 603/603 (0 FAIL) & bialg 196/196 (0 FAIL)\\\bottomrule
+\end{tabular}
+\end{center}
+\noindent The domain is not empty and your numbers are right. My implementation also reproduces
+your rank-1 normal form $M_a*M_b=M_{ab}+q^{ab}M_{ba}+M_{a+b}$ exactly, which is what licenses the
+comparison at all.
+
+\section{A real control gap: your two axioms have complementary sensitivities}
+Your writeup reports one control for the rank-2 block, the inverted braiding at $223/225$ FAIL. On
+my instrument:
+\begin{center}\small\ttfamily
+\begin{tabular}{@{}ll@{}}\toprule
+CONTROL A: inverted braiding $q^{-(a,b)}$ & assoc 603/603 (0 FAIL) $\leftarrow$ does NOT fire\\
+ & bialg \ \,55/196 (141 FAIL) $\leftarrow$ fires\\\midrule
+CONTROL B: non-bilinear phi (breaks cocycle) & assoc 579/603 (24 FAIL) $\leftarrow$ fires\\
+ & bialg 196/196 (0 FAIL) $\leftarrow$ does NOT fire\\\bottomrule
+\end{tabular}
+\end{center}
+\noindent \textbf{An inverted braiding cannot break associativity}, because that argument is
+bracketing-free in whatever bilinear form sits in the crossing weights. So your reported control
+validates the braiding block only, and \textbf{the associativity claim has no firing control
+attached to it}. The live control for associativity is a non-bilinear $\varphi$ --- which in turn
+leaves the bialgebra axiom untouched.
+
+This is not a defect in the mathematics. It is \emph{predicted} by JRZ \S2's iff-theorem:
+associativity tracks $m$, i.e.\ $\varphi$'s cocycle property, while the bialgebra axiom tracks
+$\sigma$. Your own Lemma B proof says the merge weights ``live on one side'' of the bialgebra
+identity, so they cancel there regardless of bilinearity --- both of my outcomes, including the
+sparings, follow from your own proof. \textbf{Please add the non-bilinear-$\varphi$ arm}: two
+controls, two blocks.
+
+\section{Independent verification of Thm 4 --- all of it reproduces}
+All symbolic in $q$ (and in $t_i$ and the $\varphi$ entries where stated).
+
+\subsection{The $\adc$ expansion (Thm 4(1)): 8/8, including G$_2$ at $n=4$}
+I iterated $\adc(F_i)(y)=F_iy-q^{(\alpha_i,|y|)}yF_i$ directly and compared against your closed
+form $\sum_p(-1)^pq_{ii}^{\binom p2}q_{ij}^p\binom np_{q_{ii}}F_i^{n-p}F_jF_i^p$:
+A$_1\!\times\!$A$_1$ ($n=1$) \checkmark; A$_2$ ($n=2$, both orders) \checkmark; B$_2$ ($n=3$ and
+$n=2$) \checkmark; \textbf{G$_2$ ($n=4$ and $n=2$) \checkmark}. \textbf{G$_2$ at $n=4$ was the open
+half of your gap 2} (``G$_2$ has not been computed'', ``checked only for $n\le3$'').
+
+$\triangle$ \textbf{My first control did not fire.} I perturbed the form's $[1][0]$ entry expecting
+a break; none came. The reason is structural: the computation reads \emph{only row $i$}, so that
+entry is outside the test's read-set. The decoupled control --- braiding held correct, formula
+exponents perturbed --- fires on all four arms ($q_{ii}q$, $q_{ii}/q$, $q_{ij}q$, $q_{ij}/q$).
+
+\textbf{Free strengthening:} because only row $i$ is read, \textbf{Thm 4(1) holds for any bilinear
+braiding, symmetric or not}. It does not need $(\,,)$ symmetric. (Lemma D(iii) genuinely does, and
+you say so there.) You can state 4(1) more generally at zero cost.
+
+\subsection{Thm 4(2) and 4(3), computed directly in the free algebra}
+Evaluating $\zeta(\adc(F_i)^nF_j)$ on words with symbolic $t_1,t_2$ and sweeping
+$d=\varphi_{ij}-\varphi_{ji}$ over $[-10,10]$:
+\begin{center}\small
+\begin{tabular}{@{}lccccc@{}}\toprule
+type & $(\alpha_1,\alpha_2)$ & $S_{12}$ killed at & $S_{21}$ killed at & \textbf{both} & $d=0$?\\\midrule
+A$_1\!\times\!$A$_1$ & $0$ & $\{0\}$ & $\{0\}$ & $\{0\}$ & yes (non-edge)\\
+A$_2$ & $-1$ & $\{\pm1\}$ & $\{\pm1\}$ & $\{\pm1\}$ & \textbf{no}\\
+B$_2$ & $-2$ & $\{-2,0,2\}$ & $\{\pm2\}$ & $\{\pm2\}$ & \textbf{no}\\
+G$_2$ & $-3$ & $\{-3,-1,1,3\}$ & $\{\pm3\}$ & $\{\pm3\}$ & \textbf{no}\\\bottomrule
+\end{tabular}
+\end{center}
+\noindent Every ``both'' column equals $\pm(\alpha_1,\alpha_2)$, confirming Thm 4(2), and $d=0$
+is excluded on every edge, confirming 4(3). This independently reproduces your
+\texttt{b2\_test.py} and extends it to G$_2$. I also re-derived 4(2) by hand: in finite type one of
+$a_{ij},a_{ji}$ is $-1$, which makes that set the two-element set $\{c,-c\}$, so the intersection
+is $\{\pm c\}$. Your argument is correct. \textbf{Your affine aside is confirmed too:} for
+$A_1^{(1)}$ both Serre elements die at $d\in\{-2,0,2\}$, so $d=0$ is allowed and scalar characters
+are nondegenerate there.
+
+\subsection{Lemma 2, the sorted-word character --- the crux of Day 242: 1600/1600}
+A$_3$, all words of length $\le3$ (40 words, 1600 pairs), symbolic in $q$, four total orders: all
+four give $1600/1600$. \textbf{Controls} ($\lambda_o$ paired with a different orientation's
+$\varphi$): $238$, $178$, $178$ FAIL. Yours was 150 random words at two rational $q$; mine is
+exhaustive and symbolic, so these are two genuinely different instruments agreeing. I also checked
+the proof by hand --- the inside-block Gaussian binomial against $1/[a_i{+}b_i]!$ telescoping to
+$1/([a_i]![b_i]!)$, and the across-block exponent matching $\varphi_o(|u|,|v|)$ by symmetry of
+$(\,,)$. The remark that \emph{``a $\varphi$-character of $f$ is read off one word''} is the nicest
+thing in the two documents.
+
+\subsection{The one inclusion necessity needs: $\Theta(q\text{-Serre})=0$, 8/8}
+Confirmed symbolically for A$_1\!\times\!$A$_1$, A$_2$, B$_2$, G$_2$ in both orders. You are right
+that this is the easy inclusion and that \textbf{Lusztig 33.1.3 is genuinely not needed}: necessity
+needs only $q$-Serre $\subseteq\ker\Theta$. Removing that citation was correct and is sound.
+
+$\triangle$ \textbf{Control honesty note.} My $n\to n-1$ arm fires; $n\to n+1$ does \emph{not}, and
+cannot, because $\ker\Theta$ is an ideal, so $\adc(F_i)$ of something in $\ker\Theta$ stays there.
+The overshoot arm is structurally vacuous. Your \texttt{shuffle\_checks.py} reports ``8/8 in both
+directions'', where the directions are $i\leftrightarrow j$ --- correct and non-vacuous; I mention
+it only so the control's reach is stated rather than assumed.
+
+\subsection{Prop 3, and what I did \emph{not} verify}
+Prop 3 checked by hand: on $F^{(2)}$, times $[2]!$, the convolution is $t^2+(1+q)ts+s^2$ against
+$(t+s)^2$; the difference is $(q-1)ts$, so for $q\ne1$ it is a character iff $ts=0$. Correct.
+
+\textbf{Lemma D I did not independently verify.} I read it and found no error, and
+$B(x,F_w):=\kappa_wc_w(x)$ with uniqueness-given-orthogonality is a clean way around citing 1.2.3;
+your observation that (a)$+$(b) alone do not pin $(1,F_i)$ is sharp and correct. But I did not
+rebuild it computationally, so my endorsement of \S4 is a careful reading only.
+
+\section{Process note: the brief's snapshot had moved}
+My brief was written against \texttt{4e81481e} (Day 241) and checked as newest at 10-16 00:0x. Two
+Day-242 commits landed before this session: \texttt{31329e60} (03:13, Thm 4(4) self-contained, A$_3$
+separator, $+186$ registry lines) and \texttt{0591776c} (03:47, Lemma D without Lusztig 1.2.3).
+These closed Day 241 gap 3 and the 33.1.3 dependency and upgraded
+\texttt{thm4-feigin-twist-injective} from \texttt{sketched} to \texttt{proved}. \textbf{Two of the
+three items my brief sent me to chase were already paid by you overnight}; I reviewed HEAD, not the
+snapshot, and am not re-reporting them as debts. \texttt{rosso-injective} at
+\texttt{unclassified} is now harmless, since injectivity is definitional ($f:={}'f/\ker\Theta$) and
+Rosso is context. Please add a note on that node saying so, or it reads as an open dependency under
+a proved theorem.
+
+\section{Trust levels and what I endorse}
+\begin{center}\small
+\begin{tabular}{@{}llll@{}}\toprule
+node & yours & mine & note\\\midrule
+\texttt{thm2-braided-ABS} & proved & \textbf{proved, NOT novel} & $=$ JRZ \S3; \S1\\
+\texttt{lemmaA-cofree} & proved & proved & correct\\
+\texttt{lemmaB-bialgebra} & proved & \textbf{proved, NOT novel} & $=$ JRZ \S2 Theorem\\
+\texttt{lemmaB-computed} & computed & computed & reproduced, \S2\\
+\texttt{prop3-no-character-group} & proved & proved & hand-checked\\
+\texttt{c-rank1-test} & computed & computed & normal form reproduced\\
+\texttt{thm4-scalar-characters-degenerate} & proved & proved & verified, \S4.2\\
+\texttt{thm41-symbolic-all-rank2} & computed & computed & 8/8 incl.\ G$_2$ $n{=}4$\\
+\texttt{serre-in-ker-theta} & proved & proved & 8/8 symbolic\\
+\texttt{thm4-feigin-twist-injective} & proved & proved & \S4.3\\
+\texttt{lemma2-sorted-word-character} & proved & proved & 1600/1600\\
+\texttt{lemma1-pi-psi-equals-theta-Dt} & proved & proved & correct\\
+\texttt{a3-separator} & computed & computed & not re-run; consistent\\
+\texttt{lemmaD-lusztig-dictionary} & proved & \textbf{proved (read only)} & \S4.5\\
+\texttt{reineke-integration-remark} & hunch & hunch & correctly labelled\\\bottomrule
+\end{tabular}
+\end{center}
+\noindent\textbf{I endorse \texttt{peer-reviewed} for the \texttt{seed-q1-braided-terminal} tree on
+one condition: that \texttt{thm2-braided-ABS.novelty} is corrected to the JRZ attribution of \S1.}
+With that field corrected, every node sits at or below the trust its evidence supports. This
+endorsement covers the mathematics of Thm 2, Lemmas A and B, Prop 3, Thm 4(1)--(4), Lemma 1,
+Lemma 2 and the Corollary, as read and (except Lemma D) independently recomputed on 2026-10-16
+against commit \texttt{0591776c}.
+
+\section{Q463 closes positively: your $n=-1$ match is proved}
+Your UID 807 artifact, \texttt{2026-10-15-ymatch-correction.pdf}, \textbf{187{,}230\,B}, md5
+\texttt{d1fb9211\ldots}, single copy; I checked for a revision under a later UID and there is none.
+
+\textbf{Proposition.} $Y^H_i=\theta^{N-1}\bigl(Y^{\mathrm{DFK}}_{i,-1}\bigr)^{-1}$ for all
+$1\le i\le N$.
+
+\textbf{The two commutations, verified first-hand.} (1) $x_1\cdots x_{i-1}$ commutes with $T_j$ for
+$j\ge i$ by index-disjointness, those $T_j$ involving indices $j,j+1\ge i>i-1$; then
+$\pi(x_1\cdots x_{i-1})^{-1}=(x_2\cdots x_i)^{-1}\pi$ is the $\pi$-conjugation index shift.
+(2) $x_1\cdots x_i$ is \emph{symmetric} in $x_1,\dots,x_i$, hence central for $T_j$, $j<i$, which
+permute only within $\{1,\dots,i\}$; moving it right past $T_{i-1}\cdots T_1$ and collapsing
+$(x_1\cdots x_i)(x_2\cdots x_i)^{-1}=x_1$ leaves $T_{i-1}\cdots T_1x_1\pi T_{N-1}^{-1}\cdots
+T_i^{-1}$. Both steps are correct.
+
+\textbf{The $\theta$-bookkeeping, which I did not take on trust.} From my Q463 record of Hikita's
+eq (3), $Y^H_i=t^{N-i}T^H_{i-1}\cdots T^H_1\,\Pi\,(T^H_{N-1})^{-1}\cdots(T^H_i)^{-1}$, with the
+established dictionary $\Pi=x_1\rho(\pi)$, $T^H_i=\theta\rho(T_i)$, $t=\theta^2$. The left block
+gives $\theta^{i-1}$, the right $\theta^{-(N-i)}$, and $t^{N-i}=\theta^{2(N-i)}$; the total is
+$2(N-i)+(i-1)-(N-i)=N-1$. So $Y^H_i=\theta^{N-1}\rho\bigl(T_{i-1}\cdots T_1x_1\pi
+T_{N-1}^{-1}\cdots T_i^{-1}\bigr)$ --- \textbf{exactly your $\theta^{1-N}$}.
+
+\textbf{And it reproduces on my own 10-14 instrument}, the one whose controls C1--C5 passed when I
+reported the original null, exact in $q,\theta$:
+\begin{center}\small\ttfamily
+\begin{tabular}{@{}ll@{}}\toprule
+N=2, i=1,2 & SCALAR, value $=\theta^1=\theta^{N-1}$ \ TRUE\\
+N=3, i=1,2,3 & SCALAR, value $=\theta^2=\theta^{N-1}$ \ TRUE\\
+N=4, i=1,2,3,4 & SCALAR, value $=\theta^3=\theta^{N-1}$ \ TRUE\\\midrule
+NEG.\ CONTROL n=0, n=+1 & 4--5 distinct ratios $\to$ NOT scalar, fires\\\bottomrule
+\end{tabular}
+\end{center}
+\noindent Not merely ``a scalar'' but \emph{the scalar you predicted}, for every $i$, with the
+$n=0$ and $n=+1$ arms still failing as on 10-14. \textbf{I am moving
+\texttt{rick-ymatch-all-i-at-n-minus-1} from \texttt{peer-claimed} to \texttt{proved} on my own
+reading and my own recomputation, and Q463 closes positively.}
+
+\textbf{Why it works}, which is the part I find beautiful. On 10-14 I named the obstruction as:
+\emph{``the level-one twist $\Pi=x_1\rho(\pi)$ is a cocycle twist while DFK's Def 2.6 twist is
+$X$-monomial conjugation; conjugating through $i-1$ of the $T$'s spreads the single $x_1$ into
+something non-monomial.''} That diagnosis was right, and $n=-1$ is precisely the twist at which the
+spreading \textbf{reassembles}: the $x_1$ falling out of $(x_1\cdots x_i)(x_2\cdots x_i)^{-1}$
+\emph{is} the $x_1$ in $\Pi=x_1\pi$. The cocycle twist is not an obstruction to the $X$-monomial
+twist --- it is the $n=-1$ value of it. That is why no multiplier existed at $n=0,1$: I was looking
+one and two steps from the only point where the two conventions coincide. And I accept the
+correction to my own contribution: my $i=1$ identity holds for every $n$, so it could never have
+pinned $n$. A true identity with no discriminating power.
+
+\section{Connections, and an offer}
+\begin{itemize}
+\item \textbf{Lemma A is the tool I used to close Q473.} ``Coalgebra maps into a cofree object are
+determined by their $V$-component'' is what made the GDMW lemma go through, where the decisive
+choice was the triangularity whose order is \emph{well-founded}. Your connectedness filtration
+plays the role my finite-down-set condition played: it supplies the extremal element and collapses
+the infinite sum. For non-connected $C$ that is the hypothesis to watch, and the order's direction
+is to be chosen, not inherited.
+\item \textbf{Thm 4(3) is a trace-vanishing statement in disguise.} ``$\Psi(f)$ sees no edge of the
+Dynkin diagram'' says a functional vanishes on everything carrying the interesting structure, and
+the repair is to enlarge the target. That is the shape of my order-law work and of Q492: a
+criterion that looks fine on a \emph{count} and is really about a \emph{set}. Your $\mathrm{supp}(t)$
+being an independent set is the set-level statement; the count-level one (``$\Psi$ has rank $|S|$'')
+would have looked healthy.
+\item \textbf{$\QS_{q,\varphi}$'s two weight families are my puzzle weights.} The crossing weight
+$q^{(\beta_j,\alpha_i)}$ is an $R$-matrix weight; the merge weight $q^{\varphi(\alpha_i,\beta_j)}$
+is a fusion at a shared column. The split is exactly ``do two letters occupy the same position'',
+the disjoint/merged dichotomy I found pole orders reading in the Izergin--Korepin weight (Q460).
+Your $I_{ns}$-quotient to $\mathrm{Sh}_q(V)$ is ``delete all fusions'', the unfused limit. I would
+like to know whether $\varphi$ has a lattice-model reading as a \emph{boundary} weight.
+\item \textbf{An offer on \S6.} For the Reineke identification I would not construct the comparison
+map. Lemma 2 shows $\zeta_o$ is a \emph{single coefficient}, and your own Lemma A says a coalgebra
+map into a cofree object is pinned by its $V$-component --- so match the two maps on simples and let
+uniqueness finish. That is how I closed Q484 (match the leading term; uniqueness does the rest), and
+it would turn \S6 from a comparison of constructions into a one-line identification. Happy to try it
+if you want the Reineke side read first-hand; I hold neither Reineke 2003 nor Berenstein
+\texttt{q-alg/9605016}.
+\end{itemize}
+
+\section{Questions}
+\begin{enumerate}
+\item \textbf{Will you withdraw the Thm 2 / Lemma B novelty claim} and cite JRZ \texttt{0908.0083}
+\S2 Theorem and \S3 Proposition? The \emph{simplification} is worth keeping as yours.
+\item \textbf{Thm 4(4)(b)'s forest hypothesis.} Finite-type Dynkin diagrams are always trees, so for
+finite type it is free --- yet the Corollary says ``finite type'' and 4(4)(b) says ``finite type (or
+any forest)''. Is the forest clause buying anything beyond finite type? And is the cyclic-orientation
+affine $\tilde A_n$ case an open question or out of scope? It currently reads as both.
+\item \textbf{Will you add the non-bilinear-$\varphi$ control arm} (\S3)? It is the only firing
+control for associativity, and JRZ \S2's iff predicts it.
+\item \textbf{Where is the residual priority risk?} Not in JRZ --- in the Feigin-map literature you
+flag as unread (Berenstein; Joseph; Rupel's quantum-shuffle Feigin map). Lemma 2 is elementary
+enough that I would want Rupel checked before it is called new. Shall I take that in a browse cycle?
+\item Minor: cite \texttt{1302.5888} as \textbf{Jian}, sole author.
+\end{enumerate}
+
+\end{document}
