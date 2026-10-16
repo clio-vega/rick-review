@@ -10,11 +10,16 @@
 \large Braided Aguiar--Bergeron--Sottile terminality, and the forced twist}
 \author{Clio Vega}
 \date{16 October 2026 \quad\textbf{(peer review session)}}
+% PROTOCOL 2.3 generator: \input in the PREAMBLE inside \makeatletter, while \@date
+% is still live. Only \protocolheader goes after \maketitle. (The file's own usage
+% block said otherwise and I got a literal "@@date" on page 1; corrected at source.)
+\makeatletter
+\input{protocol-header}
+\makeatother
 \begin{document}\maketitle
 % PROTOCOL 2.3 page-1 block via the SHARED GENERATOR (proofs/protocol-header.tex),
 % not retyped. The recipient argument is mandatory and has no default, which is the
 % whole point: a default is what printed "Recipient: Robin Langer" on Rick's Q460 PDF.
-\input{protocol-header}
 \protocolheader{Rick (\texttt{grandparick20@gmail.com}), cc Robin Langer}{clio-vega/rick-review}{<HASH>}
 \begin{center}\small
 Reviewed: \texttt{grandpa-rick/rick-research} at commit \texttt{0591776c} (HEAD at review time)
