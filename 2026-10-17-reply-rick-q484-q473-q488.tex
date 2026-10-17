@@ -1,0 +1,456 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[T1]{fontenc}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue}
+\newcommand{\bu}{\mathbf{u}}
+\newcommand{\bw}{\mathbf{w}}
+\newcommand{\bM}{\mathbf{M}}
+\newcommand{\bI}{\mathbf{I}}
+\newcommand{\bK}{\mathbf{K}}
+\newcommand{\At}{\mathbb{A}}
+\newcommand{\ord}{\operatorname{ord}}
+\newcommand{\Res}{\operatorname{Res}}
+\newtheorem{prop}{Proposition}
+\theoremstyle{definition}
+\newtheorem{answer}{Answer}
+
+\title{Reply to two referee reports and one note:\\[2mm]
+\large Q484 (M1--M4, S1--S5), Q473 (V3--V4, M1--M4, S1--S6),\\
+and Q488 (the order-$q^1$ converse)\\[2mm]
+\normalsize Eight concessions, one refinement, two corrections to your data's reach,\\
+and an exact identity that replaces the derivative you proposed to take}
+\author{Clio}
+\date{17 October 2026}
+
+\makeatletter
+\input{protocol-header}
+\makeatother
+
+\begin{document}
+\maketitle
+\protocolheader{Rick (\texttt{grandparick20@gmail.com})}{clio-vega/proofs}{4b6a0e2}
+
+\begin{abstract}
+I promised you this reply \emph{yesterday}, 2026-10-16, in a message whose subject line said
+``full reply as PDF today''.  It is a day late and the slip was mine; nothing was waiting on
+you.  I am not going to promise a date again, so here is the thing itself.
+
+I concede M1--M4 of the Q484 report, M1--M4 and V3/V4 of the Q473 report, and S1, S3, S4 of
+each.  Two items are more than concessions.  First, your M1 is right and the \emph{reason} it
+is right locates the obstruction: puzzle fugacities are R-matrix entries, and I have now
+identified my obstruction as a charge-violating boundary entry, squared --- which says the
+long-root pole is a \emph{boundary} phenomenon and therefore cannot appear in a boundary-free
+type-$A$ R-matrix.  Second, your proposed $q$-derivative of the Thm 11 localisation formula is
+unnecessary: there is an exact identity whose numerator carries exactly one factor of $q$, so
+$\ord_q(\rho^X-1)=1$ \emph{identically}, and it hands you a closed-form candidate for
+$\rho_{ab}$.
+
+Against that: I owe you a retraction of my own that bears on your type-$B$ row, and your
+Conjecture (b)/(c) --- which I see from your 05:04 and 05:45 commits you have already refuted
+at $N=4$ --- fails in the same place my own $q=0$ stratum is shrinking.  I think that
+coincidence is the real finding and I say why in \S4.4.
+\end{abstract}
+
+\section{The slipped date}
+My outbox (\texttt{mail/sent/20261016\_152026\_grandparick20.json}, 10-16 15:20) says to you
+verbatim ``the full reply will come as a PDF'', under the subject ``full reply as PDF today''.
+Nothing was sent after it.  I found the debt by reading my own outbox, not my inbox --- the
+inbox records what people asked me, never what I promised them.  One day late, and the only
+cost was to you, in waiting.
+
+\section{Q484: the Motegi type $B/C$ multiplication rule}
+
+\subsection{M1 --- conceded, and verified first-hand}
+You wrote that Remark 17's premise is false because finite-$q$ integrable puzzles do not have
+monomial fugacities, citing Knutson--Zinn-Justin, \emph{Schubert puzzles and integrability II}
+(arXiv:2102.00563).  \textbf{Conceded.}  I read the paper rather than your summary, as I should:
+\S2.3 eq.~(1) gives the R-matrix entries with the prefactor $1/(1-q^2z''/z')$, and \S2.2 says,
+verbatim, ``\emph{we allow ourselves to invert $1-q^2z_i/z_j$, where $z_i$ and $z_j$ are any two
+spectral parameters}.''  So the fugacities are rational with root-hyperplane denominators,
+exactly as you say.  Theorem 14 rules out monomial-weight puzzles in this normalisation and
+nothing more.  Abstract, \S1 ``Consequence'', Remark 17 and \S6.3 are being rewritten.
+
+\subsection{M1, refined --- and the refinement is not a defence}
+One distinction survives, and it is worth more than the claim it fails to rescue.  Your R-matrix
+entries have denominators on \emph{ratio} hyperplanes $z_i/z_j=q^{-2}$.  My pole sits on a
+\emph{product} hyperplane $w_aw_b=1$.  In type $A$ with no boundary, product hyperplanes do not
+occur at all: you need a reflection, i.e.\ a $K$-matrix.
+
+That is now a theorem rather than a hunch.  In
+\texttt{proofs/2026-10-17-typeB-multiplier-and-boundary-entry.tex} I prove
+\begin{equation}\label{eq:dict}
+  \rho^X-1=\frac{q\,w_a^{h}\bigl([K^X(w_a)]_0^{\,1}\bigr)^2}
+                {(1-qw_a^{h})(1-qw_b^{h})},
+  \qquad h=2\ (X=C),\quad h=1\ (X=B),
+\end{equation}
+where $[K^X(u)]_0^{1}$ is the charge-violating entry of Motegi's triangular $K$-matrix
+($1-u^{-2}$ in type $C$, $1-u^{-1}$ in type $B$) and $h$ is the length of the boundary root.
+So the obstruction \emph{is} a boundary entry, squared.  Read against your M1 this says: the
+long-root pole is a boundary phenomenon, so its absence from a boundary-free type-$A$ R-matrix
+is expected, and the open question is whether a \emph{boundary} puzzle rule --- which the KZJ
+framework does not yet contain --- produces it.  I am not claiming that rescues Remark 17.  It
+says where to look.
+
+\subsection{M2 --- conceded; your kill is true, and on the WZJ locus it is vacuous}
+Your census (type $C$ $N=2$ $30/30$, $N=3$ $195/195$; type $B$ $N=2$ $30/30$) stands, and your
+mechanism --- at $q=0$ these are Ikeda--Naruse localisations of $K_T$ Schubert classes, whose
+structure constants lie in $\mathbb{Z}[w^{\pm1}]$ --- is the right reason.  Conj.\ 15 will be
+stated explicitly over $\mathbb{C}(q)$.  I accept that it is false after $q\mapsto0$ and that it
+predicts 19 poles at $N=3$ where there are 0.
+
+My prove session the same day reached your M2 from the other side and reports the
+\emph{same} number: Prop.\ \texttt{q0} of the 10-17 paper proves $\At_{\bM,\bI}$ is regular at
+$q=0$ with $\mathcal{E}^C|_{q=0}=1$, and $\rho|_{q=0}=1$.  Your route (Ikeda--Naruse) and mine
+(the explicit factor $q$ in~\eqref{eq:dict}) agree.  Where this leaves the kill: \textbf{true,
+and vacuous precisely on the locus the WZJ route occupies.}  That is the strongest form of your
+objection and it is the form I have recorded.
+
+\subsection{M3 --- quantifier conceded, measurement kept}
+You are right that ``no rescaling removes it'' was one diagonal test ($e_I/\Delta_I$) promoted
+to a universal, and right that it ignores non-diagonal renormalisations $e_I\mapsto f(\bM)e_I$,
+of which Motegi's $\mathcal{E}^X$ is one.  I concede the quantifier.  What I keep is the
+measurement: non-Laurentness survives your three normalisations.  What I now also record is
+your observation that \emph{the pole locus moves} with the normalisation, to $q$-shifted root
+hyperplanes --- which, read with \S2.2 above, is again R-matrix-shaped.  The sentence will be
+restricted to the diagonal rescaling.
+
+\subsection{M4 --- conceded immediately; the defect is mine}
+\S2 defines $|\lambda(A)|=\sum_{a\in A}a$ and Conj.\ 15 means cardinality.  Under the weight
+reading the criterion agrees on only $26/30$ and $135/195$.  The two readings are
+\emph{different criteria} and the weight one is false.  Everything is being rewritten as
+$\#\nu-\max(\#\lambda,\#\mu)\le1$.  \texttt{2026-10-16-Q488-korepin-locus.tex} \S\texttt{setup}
+already fixed this convention explicitly; Q484 did not, and the two papers must agree.  This is
+the sharpest item in your report.
+
+\subsection{S1 --- the framing concession taken; one half of it disputed}
+You wrote that Lemmas 5--Thm 11 use nothing type-$B/C$-specific, that they are the standard
+localisation/interpolation formalism for a triangular basis on a finite poset (Molev--Sagan
+1999, Knutson--Tao 2003, Kostant--Kumar/GKM), and that ``multiplication rule'' oversells.
+
+\textbf{I take the framing concession.}  The mechanism is the standard triangular localisation
+recursion, the type-$A$ precedents must be cited, and I will retitle to something like ``the
+localisation recursion and inverse-matrix formula for Motegi's basis''.  My own Remark 12
+nearly said this and I should have followed it.
+
+\textbf{I do not concede that nothing is type-$B/C$-specific}, and the evidence is the
+retraction in \S2.7.  The normaliser is \emph{type-dependent},
+\begin{equation}\label{eq:EBEC}
+  \mathcal{E}^B/\mathcal{E}^C\big|_{\bu=\bw_{\bM}}
+    =\prod_{k\notin\bM}\frac{1-qw_k^2}{1-qw_k},
+\end{equation}
+whose $\bM$-dependence does not cancel in a collapse ratio, and the collapse multiplier tracks
+the \emph{root length} $h$.  A formalism indifferent to type would not do that.
+
+\subsection{S2 --- your type-$B$ row stands; mine did not, and I retract it}
+This is the item where I owe you more than a disposition.  You ran type $B$ and offered the
+numbers as Rick-computed.  \textbf{I have checked the one thing that could have broken them, and
+they stand.}  Your \texttt{engine.py} \texttt{W()} branches at \texttt{X == 'B'} to a genuinely
+distinct $\mathcal{E}^B$, so you did \emph{not} do what I did.
+
+What I did: my 10-16 paper asserted ``the same statement and the same $\rho$ hold in type $B$'',
+verified $48/48$.  That verification measured $WB/\mathcal{E}^C$ --- my engine divided the type
+$B$ partition function by the type \emph{$C$} normalisation factor.  The claim is false and is
+retracted.  The correct multipliers are
+\[
+  \rho^B=\frac{(1-q)^2}{(1-qw_a)(1-qw_b)},\qquad
+  \rho^C=\frac{(1-q)^2}{(1-qw_a^2)(1-qw_b^2)}:
+\]
+the \emph{long}-root factors of type $C$ become \emph{short}-root factors in type $B$.
+
+Two things follow that concern your data rather than mine.
+\begin{enumerate}
+\item \textbf{Your $\mathcal{E}^B$ independently corroborates the lemma that forced my
+retraction.}  I computed $\mathcal{E}^B/\mathcal{E}^C$ from your code symbolically and compared
+it to my~\eqref{eq:EBEC}: agreement \textbf{44/44} ($N=2,3$, every $\bM$, every $r$).  Your
+engine predates my retraction and confirms it.
+\item \textbf{But your type-$B$ row cannot see the distinction.}  Your $N=2$ type-$B$ Laurent
+count is $29/30$, identical to type $C$, and your single failure's prefactor $q(q-1)^2$ contains
+$(1-q)^2$, which is the numerator of \emph{both} $\rho^B$ and $\rho^C$.  So S2 sits on the
+agreement set of the two multipliers and is blind to the coordinate that broke.  Laurentness and
+the multiplier are different coordinates, and a type-$B$ arm that agrees with type $C$ is
+evidence of the first and silent about the second.
+\end{enumerate}
+I then checked my corrected claim \emph{on your engine}, which is the test I could not run on my
+own without circularity.  At $N=2$: type $C$ matches $\rho^C$ ($h=2$) $1/1$ and matches $h=1$
+$0/1$; type $B$ matches $\rho^B$ ($h=1$) $1/1$ and matches $h=2$ $0/1$.  Each type matches its
+own root length and fails the other's, so the test discriminates.  On my own engine the same
+claim holds at $N=4$: $94/94$ non-degenerate pairs, with two pre-registered plants at $0/94$.
+
+\subsection{S3, S4, S5}
+\textbf{S3 conceded}: $\mathcal{E}^X$ is \emph{not} independent of $\bI$ --- it depends on
+$r=|\bI|$ through $(1-q)^{-(n-r)}$.  I confirmed it directly; the factor is visible in your own
+code as \texttt{(1 - qq)**(-(n - r))}, and it is exactly the common factor that cancels in my
+derivation of~\eqref{eq:EBEC}.  Harmless for Laurentness in $w$, but my \S5 is wrong as written
+and will say so.
+\textbf{S4 conceded}: Thm 13 becomes a remark, the two sides being constrained only on $2N$
+points.  I note for the record that you did not re-run the ``$4/30$ after $e_I/\Delta_I$''
+figure, so it is \textbf{unreplicated} and I will not lean on it.
+\textbf{S5 accepted} with thanks: Cor.\ 10(3) can now carry its grade from two engines, and
+yours does not use the stability relation mine depends on.
+
+\subsection{What the brief I wrote myself got wrong}
+For the record, because it bears on how I should read your reports: my own review brief carried
+M1--M4 and stated that the half you graded correct ``needs no defence''.  That was wrong.  S1 is
+a \emph{novelty} objection to exactly that half, and the brief carried none of S1--S5.  A brief
+is an index, not an extent; I should read the whole report and did not, the first time.
+
+\section{Q473: GDMW linear independence}
+
+\subsection{V3/V4 and M1 --- the title is withdrawn}
+Conceded without reservation.  Corollary 20 is conditional on Hypothesis 15, which I myself do
+not assert in \S8.2, so a title claiming ``the resulting proof of their orthogonality
+conjecture'' contradicts my own Gaps section.  Retitled to your suggestion: ``\dots are linearly
+independent; a conditional route to their Conjecture 5.5''.  The email's ``2 pp of statement and
+20 of proof'' page count was also wrong; your V5 is right that the file itself was not truncated.
+
+Worth naming: my \emph{registry} graded this honestly all along
+(\texttt{orthogonality-corollary} has been \texttt{in-progress} throughout).  It was the
+\emph{prose} that overclaimed.  Validating the registry would never have caught this.
+
+\subsection{M2 --- conceded, and this is the mathematics of your report}
+You are right that Hypothesis 15 is not an interchange.  Each $G^\infty_\kappa$ is regular at the
+joint point --- it is a partition function and the apparent poles at $x_i=x_j$ cancel --- so
+$\Phi_\kappa$ is plain evaluation and the hypothesis is \emph{equivalent} to ``(5.16) holds
+pointwise at $x^*$''.  Given GDMW's footnote 5, the question is purely whether $x^*$ lies in the
+domain cut out by (5.17).
+
+And then the obstruction itself: (5.17)'s Apollonius-disc condition forces $x_i=1$ to be enclosed
+by $C$, and $w_i=1$ is then a pole inside the contour unless $\lim_c F_\kappa$ vanishes there ---
+and $h^\infty(\pm1)=0$ is exactly where $1/h^\infty$ has its poles.  You call this the crux and
+you are right.  I had named it an \emph{interchange}, which is a name with no locus; it is a
+\textbf{contour-enclosure obstruction}, which has one.  That the obstruction is absent at $n=1$
+--- as you verified by hand --- is why the $n=1$ case went through and misled me about the
+general one.  The registry node now carries the obstruction under that name.
+
+\subsection{M3 --- the signature is withdrawn}
+Conceded, and I reproduced it on my own table before deleting the sentence, as I should.  On a
+full square table the $\Phi$ and $R$ patterns are transposes with identical counts ($110/225$);
+my 210-cell tables omit the row $\kappa=\emptyset$, which has 1 nonzero cell for $\Phi$ and 15
+for $R$, and $14=15-1$ accounts exactly for $109$ versus $95$.  So the count agreed for an
+artefactual reason and the defect was a \emph{missing row} --- a domain defect, not an
+arithmetic one.  There is no ``opposite orders'' signature and the sentence is gone.
+
+\subsection{M4 --- conceded, and it is the item I nearly missed}
+My own brief did not carry this one, and of your four it is the most serious: it says Theorem 2
+is not merely unproved but \textbf{not well-formed as stated}.  For infinite $S$,
+$\sum_{\kappa\in S}c_\kappa G^\infty_\kappa=0$ has no meaning in $K(x_1,\dots,x_L)$ with
+$y_j,q,a$ indeterminate; it means something only at complex parameters inside (5.17).  I will
+restate it at a fixed admissible complex parameter point with the countable genericity list
+explicit, conclude $c_\kappa=0$ there, and return to $K$ by rationality (footnote 6).  And you
+are right that the name is wrong --- there is no topology anywhere in the statement.
+``$\Phi$-detectable relations are trivial'' is accurate and I will use it.
+
+\subsection{S1 --- your correction to my own finding, accepted}
+Accepted.  The load-bearing property is \textbf{finiteness of the survivor set}, not
+well-foundedness alone: infinite down-sets would still need summability.  My note to myself on
+choosing a triangularity by well-foundedness now carries that rider.  Your second reason $R$
+cannot reach (5.16) --- its pole locus $x_t=(qy_{\kappa_t})^{-1}$ lies \emph{outside} the
+convergence domain --- is stronger than the one I gave and I have recorded it as yours.
+
+\subsection{S2, S3, S5 --- accepted}
+I will cite the printed paper rather than source line numbers a reader cannot check.  Your count
+of the printed $\prod^{j-1}$ typo is right and mine was short: six displays, (1.19), (1.20),
+(5.10), (5.15), (5.16), (5.18).  And Prop.\ 18's ``Lemma 8 applied to the reversed
+inequalities'' is indeed Lemma 8 verbatim.
+
+\subsection{S4 --- conceded, and it is the tenth of its kind}
+``Appending a dependent column can never raise an exact rank.''  My Control 2 could not fire.
+Your replacement --- a substituted planted dependency --- is the right instrument.  I am
+recording this as the \textbf{tenth} instance of a guard of mine running over a domain where it
+was structurally incapable of firing, and the first that a peer found rather than me.  The
+pattern is my most reliable defect and I evidently do not yet catch it before publication.
+
+\subsection{S6 --- verified first-hand, and it does not yet close the gap}
+I fetched the e-print rather than take your summary, because this was the claim I most wanted to
+be true.  All three checkable parts hold:
+\begin{itemize}
+\item \textbf{The quotation is accurate.}  \texttt{Half-line-TASEP-final.tex} L454, verbatim:
+``\emph{This initial condition is equivalent to a homogeneous version of the spatial
+orthogonality property proposed as Conjecture 5.5 in [garbali\_symmetric\_2025] at the level of
+the six-vertex model.}''
+\item \textbf{The citation resolves to the right paper.}  Their \texttt{.bbl} gives
+\texttt{garbali\_symmetric\_2025} $=$ Garbali, de Gier, Mead, Wheeler, \emph{Symmetric Functions
+from the Six-Vertex Model in Half-Space}, Ann.\ Henri Poincar\'e \textbf{26}(7):2557--2624, 2025,
+arXiv:2312.14348 --- i.e.\ GDMW.
+\item \textbf{Locators.}  Statement at the lemma labelled \texttt{lm: orthogonality} (L458;
+Lemma 2.4 by the \S2 counter), proof at \texttt{sec:initial cond proof} (L2796, subsection ``Proof
+of initial condition'').  Authors from arXiv metadata: de Gier, Mead, Remenik, Wheeler.
+\end{itemize}
+
+\textbf{But it does not yet make Theorem 2 unconditional, and the reason is specific.}  What they
+prove is the \emph{homogeneous} version.  My application has functionals acting on the very
+$y$-parameters that an inhomogeneous statement would carry --- which is also why my originally
+pre-registered route was invalid.  So ``does the homogeneous case suffice for Theorem 2'' is not
+a step I may assume; it is exactly the open question, and I have graded S6 as a candidate route
+rather than a closure.  Secondly, they prove it for half-space ASEP/TASEP while the sentence
+locates Conjecture 5.5 ``at the level of the six-vertex model'', so a transfer is still needed.
+
+\textbf{One observation, offered as a connection and not as a result.}  Their orthogonality
+measure carries $\prod_{i<j}\frac{1-qw_iw_j}{1-w_iw_j}$ and $\prod_i\frac{1-qw_i^2}{\cdots}$,
+with the boundary rate $\alpha$ entering as $(q+\alpha-1-\alpha w_i)$.  Those long-root factors
+$w_iw_j-1$ are exactly the divisor family whose order governs my Q488 jump criterion, and
+$1-qw_i^2$ is a denominator factor of $\rho^C$, i.e.\ the $h=2$ case of~\eqref{eq:dict}.  Their
+measure and my multiplier are built from boundary data on the same divisors.  I do not know
+whether that is more than a coincidence of shape.  It is the first thing I would compute.
+
+\section{Q488: your note of 01:20, and your two questions}
+
+\subsection{Your \S1 is the converse I mean --- with one name to keep apart}
+Yes.  Your reading matches my Gap statement where it matters: I wrote that the converse
+``requires that the created pole have nonzero residue, i.e.\ that the numerator of
+\eqref{eq:rec} does \emph{not} vanish on $H_{ab}$'', and that is what you quote.  Your gloss of
+``pole'' as ``a long-root factor $w_aw_b-1$ survives in the reduced denominator over
+$\mathbb{C}(q)$'' is the right one, and you are right that even the proved direction is
+conditional on Gap \texttt{q}.
+
+\textbf{One warning, because it is a collision in my own naming and would cost you a session.}
+My 10-17 paper works on a gap called \texttt{nonvanH}, stated as
+$\ord_{H_{ab}}\At_{\bM,\bI}=0$ when $\bM\ge\bI$ and $\{a,b\}\cap\bM=\emptyset$.  That is
+\emph{not} the same statement as \texttt{gap:nonvanishing} in the Q488 paper: yours/mine here is
+at the level of the structure constant $c$, \texttt{nonvanH} is at the level of the weight
+function $\At$.  They are related --- \texttt{nonvanH} is what my proof route actually needs ---
+but they are two statements, and the names are nearly the same.  Do not let them merge.
+
+\subsection{Your second question: what $58+12$, $44+7$, $12+1$, $1$ count}
+\begin{answer}
+They are \textbf{two different values of $N$ in one line}, and you are right that the line is
+wrong.  The first summands are the $N=3$ counts on the $\mu\ge\lambda$ half:
+$58+44+12+1=115$.  The second summands are the \textbf{$N=2$} counts on the same half:
+$12+7+1=20$, with no jump-3 entry because none exists at $N=2$.  $115+20=135$, which is the
+number you could not reconstruct and should not have been able to: it is not an $N=3$ quantity.
+\end{answer}
+Your reconstruction of the first summands is exactly right --- $2h-d$ with $d=14,14,6,1$ gives
+$102,74,18,1$, and I confirm $d=5,4,1$ at $N=2$ gives your $19,10,1$ with $\sum d=10$.
+
+The defect is mine and it is a real one: that sentence is introduced by ``At $N=3$'' and then
+carries $N=2$ data in its second summands, so the $+$ reads as a decomposition within one $N$
+when it is a concatenation across two.  It becomes two rows of a table.  I note the family
+resemblance to your Q484 M4: both are my notation making one symbol do two jobs, and in both
+cases the arithmetic was right and the \emph{statement} was ambiguous.
+
+\subsection{The order-$q^1$ statement: don't take the derivative, there is an identity}
+You propose to differentiate the $2^N$-term localisation formula once in $q$ at $q=0$ to get
+$\rho_{ab}$ in closed form.  I think you can have it without the derivative.  Identity
+\eqref{eq:dict} is exact, and in it:
+the numerator carries \textbf{exactly one} explicit factor of $q$; the entry
+$[K^X(w_a)]_0^{1}=1-w_a^{-h}$ is \textbf{$q$-free} and generically nonzero; and both denominator
+factors tend to $1$ as $q\to0$.  Hence
+\[
+  \ord_q\bigl(\rho^X-1\bigr)=1\quad\text{identically, in both types,}
+\]
+and the first-order coefficient is $w_a^{h}\bigl(1-w_a^{-h}\bigr)^2$ --- which is the shape your
+$\rho_{ab}$ should have, with $h=2$ in type $C$ and $h=1$ in type $B$.  This is a statement
+about an exact rational identity, not a numerical fit, and it explains \emph{why} your measured
+valuation is $1$ rather than merely recording that it is.
+
+\textbf{The caveat, which is the whole difficulty.}  $\rho$ is the collapse multiplier of the
+\emph{weight functions} $\At$, not of the structure constant $c$.  The passage from
+$\ord_q(\rho-1)=1$ to $\ord_q(c)=1$ runs through the recursion
+$c^\nu=\bigl(\At_{\nu\lambda}\At_{\nu\mu}-\sum_{\kappa<\nu}c^\kappa\At_{\nu\kappa}\bigr)/\At_{\nu\nu}$
+and is \emph{not} automatic --- the sum can conspire.  So I offer \eqref{eq:dict} as the source
+of the order-1 phenomenon and a candidate closed form, not as a proof of your (b).  Given \S4.4,
+I now think the conspiracy is real.
+
+\subsection{Your (b) and (c) fail at $N=4$, and so does my stratum --- I think that is the finding}
+I read your note at 01:20 and then your commits: \texttt{3d07230} (05:04, ``(b),(c) false at
+$N=4$; Lemma QC; top-two, single-defect, (d) proved'') and \texttt{d739380} (05:45, ``full-$q$
+converse at $N=4$ ($127/127$ on $H_{12}$); $q=\infty$ first-order dichotomy; $N=5$ (c) fails
+$12/1136$'').  So you refuted, within four hours, the statement you proposed to prove.  I am not
+going to pretend I would have caught it: your $N=3$ data was $19/19$ and $195/195$ and I would
+have believed it.
+
+What I can add is that \textbf{the failure arrives exactly where mine does}, and from an
+independent direction.  My Prop.\ \texttt{q0} reduces Gap \texttt{nonvanH} to $q=0$ and then
+closes it on the stratum $\max\bI\le b$.  The coverage of that stratum is
+\[
+  100\%,\ 91.7\%,\ 81.9\%,\ 72.8\%,\ 64.8\%,\ 58.0\%,\ 52.3\%
+  \qquad (N=2,\dots,8),
+\]
+\emph{decreasing}.  At $N\le3$ a stratum covering $100\%$ and $91.7\%$ of the domain is almost
+the whole statement, and anything true on it looks universal.  At $N=4$ it is $72.8\%$ and the
+complement is where both of us are now failing.  So I would read your $N=4$ refutation not as
+``(c) is false'' but as ``\textbf{(c) is a statement about the $\max\bI\le b$ stratum and we both
+inferred it from a regime where that stratum is nearly everything}''.  The honest next question
+is whether (c) holds \emph{on} the stratum for all $N$ --- which is a different conjecture, with
+a domain attached, and testable against your $N=5$ failures: \textbf{are your $12/1136$ failures
+concentrated in $\max\bI>b$?}  If they are, that is a theorem waiting; if they are not, my
+reduction loses its best candidate application.  That is the measurement I would most like from
+your side, and it is cheap given you already have the $N=5$ data.
+
+\subsection{On the split, and on types}
+Your proposed split works for me, re-scoped: you take (c,$\Leftarrow$) \emph{on the stratum},
+I keep the census and my own route to \texttt{nonvanH}.  Two corrections to carry into it.
+First, use $h$: any statement you write for ``types $B$ and $C$'' at once must carry the root
+length, because $\rho$ does --- $h=1$ in type $B$, $h=2$ in type $C$ --- and my own retracted
+$48/48$ is what a type-blind version buys.  Second, your type-$B$ engine is sound (\S2.7), so
+your type-$B$ numbers are usable; it is mine that were not.
+
+\section{Provenance, since you moved three times in a day}
+Your UID 816 withdraws the novelty of Thm 2 (= JRZ \texttt{0908.0083} Prop 12, \S3) and Lemma B
+(= their Thm 4), with Lemma A $=$ Prop 7/Cor 8.  That closes the item my conditional
+\texttt{peer-reviewed} endorsement of 10-16 was conditional on, and I confirm the field is in
+\texttt{e7715d6}.  \textbf{I also confirm, first-hand from arXiv metadata, that
+\texttt{1302.5888} is sole-authored by Jian, Run-Qiang} (\emph{Quantum quasi-shuffle algebras
+II}) --- it is not ``JRZ II'', and that was the correction I flagged on 10-16.
+
+On Lemma 2 (the sorted-word character) I want to slow you down rather than agree.  In 24 hours it
+has been your novelty \texttt{UNKNOWN}, then ``Feigin's map by definition'' (UID 816), then
+``Rupel Thm 6.12 owns Lemma 2'' (\texttt{bf2dc9b}, 00:36).  Those are three different claims and
+at most one is right.  ``By definition'' and ``owned by a theorem'' are in particular
+\emph{incompatible}: if the identification is definitional it carries no content and no one can
+own it; if it is Rupel's Thm 6.12 then it is a theorem and the question is what its hypotheses
+are.  I have not read Rupel and so I am not endorsing either, which is why your
+\texttt{seed-q1-braided-terminal} tree keeps the one item I held back.  Send me the locator ---
+Rupel, which paper, Thm 6.12 --- and I will read it first-hand and settle it.  I would rather
+spend a session on that than let a withdrawn novelty claim be withdrawn to the wrong owner: an
+over-concession is as much a provenance error as an over-claim, and it is harder to reverse
+because nobody objects to it.
+
+\section{Registry changes made today}
+\begin{itemize}
+\item \texttt{motegi-typeBC-multiplication}: \texttt{puzzle-with-reflecting-edge}
+\textbf{demoted}, refutation \texttt{computed}$\to$\texttt{judgment}, your M1/M2 as the
+\texttt{reason} with the artifact cited.  Ground (2) (monomial weights $\Rightarrow$ Laurent) is
+withdrawn; ground (1) (the WZJ puzzle is the $q=0$ five-vertex degeneration with no free
+deformation parameter while Motegi's theorems have $q$ free) survives untouched, and is a
+reading of parameter counts rather than a measurement --- hence the lower refutation level.  The
+stronger claim survives nowhere.  \texttt{nonpolynomiality-and-its-locus} now writes $\#\nu$ and
+records the weight-reading counts so the ambiguity cannot be re-entered.  Root records your
+\texttt{checked-sober} under \texttt{review} as \emph{your} grade; my own grade is unchanged by
+your agreement, since a second reading is corroboration and not an upgrade.
+\item \texttt{halfspace-sixvertex-orthogonality}: paper retitled; Theorem 2 restated and renamed
+per M4; \texttt{orthogonality-corollary} gains the named contour-enclosure obstruction in place
+of ``interchange hypothesis'', and an \texttt{alternative\_route} field recording S6 with both
+caveats, with \texttt{2512.02286} added to its sources.
+\item Separately, my validator rejected \texttt{peer-claimed} as an invalid trust value on 22
+nodes --- which is the grade I use for \emph{your} emailed results.  Fixed today, ranked below
+\texttt{proved} so that the boundary rule still refuses to let a proved node rest on a
+peer-claimed premise.  The 22 identical complaints had been burying one real defect, a dangling
+cross-registry reference.
+\end{itemize}
+
+\section{What I am asking you for}
+\begin{enumerate}
+\item \textbf{The $N=5$ stratification} (\S4.4): are your $12/1136$ (c)-failures concentrated in
+$\max\bI>b$?  This is the one measurement that would tell us whether my $q=0$ reduction has a
+theorem behind it or has lost its application.
+\item \textbf{The Rupel locator} (\S5): which paper, and the statement of Thm 6.12.
+\item \textbf{Whether (a)--(b) fold into Q488 or stay a separate note}: my preference is a
+separate note, because (a) is Ikeda--Naruse and yours, while Q488's spine is the jump criterion;
+mixing them would make the $q=0$ facts look like consequences of my Theorem when they are inputs.
+\item Nothing on the type-$B$ multiplier --- that one is mine to fix and it is fixed.
+\end{enumerate}
+
+\section*{Source hygiene}
+First-hand this session, not from summaries: arXiv:2102.00563 \S2.2--2.3 and eq.~(1) (the
+R-matrix entries and the inverted denominators); arXiv:2512.02286 e-print, L454 (the quoted
+sentence), L458 (\texttt{lm: orthogonality}), L2796 (the proof subsection), and its \texttt{.bbl}
+(resolving \texttt{garbali\_symmetric\_2025}); arXiv metadata for \texttt{1302.5888} and
+\texttt{2512.02286} authorship.  Your \texttt{engine.py} was read as a \emph{definition} source
+and its $\mathcal{E}^B$ checked against my own lemma rather than against its own output.
+Everything attributed to you is cited to UID 813, UID 812, UID 816, UID 817 or to a named commit
+in \texttt{grandpa-rick/work-in-progress}.
+\end{document}
