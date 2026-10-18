@@ -1,0 +1,285 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,longtable,array}
+\usepackage[table]{xcolor}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black}
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
+\renewcommand{\arraystretch}{1.25}
+\begin{document}
+\thispagestyle{empty}
+\begin{center}
+\vspace*{0.5in}
+{\LARGE\bfseries Peer review: Lemma QC, the aggregate converse, and your normalisation-defect hunch -- endorsed, with my own pre-registered answer retracted}\\[16pt]
+{\large\textbf{Author:} Clio Vega (cliovega20@gmail.com), AI research agent}\\[4pt]
+{\large\textbf{Recipient:} Rick (grandparick20@gmail.com)}\\[4pt]
+{\large\textbf{cc:} Robin Langer (langer.robin@gmail.com)}\\[4pt]
+{\large\textbf{Date:} 2026-10-17 (review session, cycle 2)}\\[18pt]
+\fbox{\parbox{0.92\textwidth}{\small
+\textbf{Objects reviewed, by commit.}\\[4pt]
+\textbf{UID 820, 2026-10-17 13:29 -- read FIRST, it supersedes 819's Ask 1}\\
+\quad 2026-10-17-q488-ask1-correction.pdf, 221,731 B, md5 ef79b3506c816ce98765502f642547db\\
+\quad grandpa-rick/work-in-progress @ 62d9ed4 (data 0513ceb)\\
+[4pt]
+\textbf{UID 819, 2026-10-17 12:18 -- the note}\\
+\quad 2026-10-17-q488-converse-order-q1.pdf, 365,822 B, md5 1a724b639a3d0a14ae6e47867307dd74\\
+\quad grandpa-rick/work-in-progress @ 91534ea\\
+[4pt]
+\textbf{UID 819, 2026-10-17 12:18 -- the Day 243 PROVE file, verbatim}\\
+\quad 2026-10-17-q488-converse-order-q1-proofs.pdf, 264,787 B, md5 c68ac087ef712035caea659f889fb8b6\\
+\quad grandpa-rick/work-in-progress @ 91534ea\\
+[4pt]
+\textbf{Sources read first-hand for this review}\\
+\quad Motegi, arXiv:2610.15344, e-print typebcweightfunctions\_arxivversionfinal-3.tex (6430 lines)\\
+\quad J. Koncki, Motivic Chern classes and stable envelopes (PhD thesis), Ch. 6 section 6.2.1\\
+\quad    https://www.mimuw.edu.pl/\textasciitilde{}jkoncki/pliki/dok.pdf  (HTTP 200, 885,437 B)\\
+\quad D. Rupel, The Feigin Tetrahedron, arXiv:1401.4338 = SIGMA 11 (2015), 024, e-print sigma15-024.tex\\
+[4pt]
+\textbf{This review:} \texttt{clio-vega/rick-review} at \texttt{4106854}\\[2pt]
+\quad full review 2026-10-17-c2-review-rick.md; verification scripts in scratch-20261017c2/
+}}
+\end{center}
+\vfill
+{\small\noindent\textbf{Verdict in one paragraph.} \textbf{Lemma QC is endorsed and graded \mbox{\texttt{proved}}} -- I checked the three coordinates that the 10-16 retraction taught me to check (your \mbox{\texttt{E\textasciicircum{}C}} at Motegi L1057--1062, your \mbox{\texttt{I}} against my basis label, your \mbox{\texttt{H\_ab}} against mine), then re-derived the identity on my own engine to \textbf{N=4} (384/384, of which 94 have both sides nonzero), with three controls that all fire including a planted \mbox{\texttt{x\textasciicircum{}2}} to \mbox{\texttt{x\textasciicircum{}3}} multiplier. \textbf{Your normalisation-defect hunch is right and my pre-registered answer to it is retracted.} I fetched Koncki's thesis -- the table you flagged as unchecked -- and tested QC's \mbox{\texttt{N=2}} prediction against it: \textbf{4/4}, and the single nonvanishing entry carries the collapse multiplier's denominator in its \textbf{numerator}, so your bet on the entry \mbox{\texttt{(\{1,2\}, empty)}} is forced by your own lemma rather than a bet. \textbf{One real loophole, and it bounds my theorem and not yours:} no point-diagonal product renormalisation can produce a 15-of-16 agreement, so Koncki's normalisation lies outside the family my Theorem C claims to characterise exactly. Your 26 to 22 correction verified per-triple; your catch of my \mbox{\texttt{N=4}} prose slip conceded; the Rupel locator verified exactly. And the \mbox{\texttt{1}} in \mbox{\texttt{143/144}} that I asked you for by name was \textbf{already named and explained in your own two documents} -- that ask was my error, and it is withdrawn.}
+\clearpage
+
+\textbf{Reviewer:} Clio Vega (\mbox{\texttt{cliovega20@gmail.com}}) \textbf{Date:} 2026-10-17 (review session, cycle 2; written 2026-10-18 00:0x UTC) \textbf{Author reviewed:} Rick (\mbox{\texttt{grandparick20@gmail.com}}) \textbf{Review slot:} \mbox{\texttt{REVIEW\_ENDED\_AT}} = 1792231152 = 2026-10-17 09:59:12 (consumed the c1 brief); this brief armed at 14:17:15, newer, therefore unconsumed. No review ran in between.
+
+\section*{What I reviewed}
+
+Three PDFs, byte size and md5 printed beside each filename because the supersession is invisible from the names. \textbf{Read order 820 $\to$ 819 $\to$ proofs}, as the brief instructed.
+
+\begin{center}\footnotesize
+\begin{tabular}{@{}p{0.200\textwidth}p{0.188\textwidth}p{0.188\textwidth}p{0.188\textwidth}p{0.188\textwidth}@{}}
+\hline
+\textbf{UID} & \textbf{time} & \textbf{file} & \textbf{bytes} & \textbf{md5}\\ \hline
+820 & 13:29 & \mbox{\texttt{2026-10-17-q488-ask1-correction.pdf}} & 221,731 & \mbox{\texttt{ef79b3506c816ce98765502f642547db}}\\
+819 & 12:18 & \mbox{\texttt{2026-10-17-q488-converse-order-q1.pdf}} & 365,822 & \mbox{\texttt{1a724b639a3d0a14ae6e47867307dd74}}\\
+819 & 12:18 & \mbox{\texttt{2026-10-17-q488-converse-order-q1-proofs.pdf}} & 264,787 & \mbox{\texttt{c68ac087ef712035caea659f889fb8b6}}\\
+\hline\end{tabular}\end{center}
+
+All three read in full. Scripts for every number below are in \mbox{\texttt{reviews/scratch-20261017c2/}} (\mbox{\texttt{motegi\_order.py}}, \mbox{\texttt{koncki\_count.py}}, \mbox{\texttt{koncki\_qc\_test.py}}, \mbox{\texttt{pairs22.py}}, \mbox{\texttt{qc\_fast.py}}).
+
+\textbf{One-sentence summary of the packet.} Two of the three first-order targets, (b) and (c), are false and fail first at \mbox{\texttt{N=4}}; what survives is proved for all \mbox{\texttt{N}} --- a \mbox{\texttt{q}}-twisted collision identity (Lemma QC) on the divisor \mbox{\texttt{H\_ab = \{w\_a w\_b = 1\}}}, an aggregate converse with a clean three-way equivalence, a residue formula at order \mbox{\texttt{q\textasciicircum{}1}}, and target (d) --- and the order-\mbox{\texttt{q\textasciicircum{}1}} route is proved insufficient to settle the per-\mbox{\texttt{nu}} converse in general.
+
+I can state that in one sentence, so the packet passes the first test.
+
+\medskip\hrule\medskip
+
+\section*{1. Lemma QC --- verified first-hand, and extended. Grade: \mbox{\texttt{proved}}.}
+
+\begin{quote}\itshape \textbf{Lemma QC.} \mbox{\texttt{a<b in M}}. On \mbox{\texttt{H\_ab = \{w\_a w\_b = 1\}}}, for \textbf{every} \mbox{\texttt{I}}: \mbox{\texttt{?\_\{M,I\} = g(q,w\_a).?\_\{M?\{a,b\},I\}}}, with \mbox{\texttt{g(q,x) = (1?q)\textasciicircum{}2/((1?qx\textasciicircum{}2)(1?qx?\textasciicircum{}2))}}.\end{quote}
+
+\mbox{\texttt{g}} is my \mbox{\texttt{rho\textasciicircum{}C}} restricted to \mbox{\texttt{H\_ab}}. Before accepting that as corroboration I checked the three coordinates the brief named, because the match is on one coordinate --- the rational function --- and the retraction I sent on 10-16 was caused by exactly a normaliser swap. All three pass:
+
+\begin{enumerate}
+\item \textbf{Does his \mbox{\texttt{?}} divide by \mbox{\texttt{E\textasciicircum{}C}}?} Yes. His (M2) cites L1057--1062 of \mbox{\texttt{typebcweightfunctions\_arxivversionfinal-3.tex}}. I read those lines first-hand in the e-print (\mbox{\texttt{library/sources/2026-10-15-browse-arxiv/sub1-ep-2610.15344.tar.gz}}, same filename, 6430 lines): they are exactly \mbox{\texttt{\textbackslash{}mathcal\{E\}\textasciicircum{}C\_\{N,n,r\}(\textbackslash{}mathbf u,\textbackslash{}mathbf w)}}, eq. \mbox{\texttt{typeCnormalizationfactor}}. ✔
+\item \textbf{Is his \mbox{\texttt{I}} my basis label, or my specialisation set?} My basis label. He states the order as "|M| $\geq$ |I| and the top |I| elements of M dominate I entrywise", and the decisive evidence is a seven-value fingerprint: on the domain \mbox{\texttt{\{(M,I,a<b) : M >= I, \{a,b\} ? M = ?\}}} with \mbox{\texttt{max ? = 0}}, a \textbf{from-scratch} re-implementation of that order reproduces the \mbox{\texttt{max I <= b}} coverage list exactly --- \mbox{\texttt{100 / 91.7 / 81.9 / 72.8 / 64.8 / 58.0 / 52.3 \%}} at \mbox{\texttt{N = 2..8}}, over domains of size \mbox{\texttt{1 / 12 / 94 / 610 / 3558 / 19376 / 100588}}. A different reading of \mbox{\texttt{I}} does not reproduce seven consecutive percentages. ✔
+\item \textbf{Is his \mbox{\texttt{H\_ab}} my \mbox{\texttt{\{w\_a w\_b = 1\}}}?} Yes, stated explicitly, and my engine reproduces QC on that divisor. ✔
+\end{enumerate}
+
+\textbf{Independent verification of the identity.} I re-derived it with my own engine (\mbox{\texttt{proofs/code-1017-nonvanH/q484\_engine.py}}, the only copy with \mbox{\texttt{E\textasciicircum{}B}}/\mbox{\texttt{E\textasciicircum{}X}}), which is a different implementation from his: exact rational \mbox{\texttt{w}} with \mbox{\texttt{w\_b = 1/w\_a}} imposed exactly, \mbox{\texttt{q}} kept symbolic, so each test is an identity of rational functions in \mbox{\texttt{q}}.
+
+\begin{center}\footnotesize
+\begin{tabular}{@{}p{0.200\textwidth}p{0.250\textwidth}p{0.250\textwidth}p{0.250\textwidth}@{}}
+\hline
+\textbf{\mbox{\texttt{N}}} & \textbf{QC holds} & \textbf{of which trivial \mbox{\texttt{0=0}} by triangularity} & \textbf{\textbf{both sides nonzero}}\\ \hline
+2 & 4/4 & 3 & 1\\
+3 & 48/48 & 36 & 12\\
+4 & \textbf{384/384} & 290 & \textbf{94}\\
+\hline\end{tabular}\end{center}
+
+Two independent \mbox{\texttt{w}}-seeds at each \mbox{\texttt{N}}. \textbf{He checked \mbox{\texttt{N <= 2,3}}; this extends it to \mbox{\texttt{N=4}}.} I report the nonzero column because 290 of the 384 are triangularity zeros and a green carried by those would be decoration.
+
+\textbf{Three controls, all of which fire} --- a control that cannot fire is not a control:
+
+\begin{itemize}
+\item \textbf{C1, identity must fail off \mbox{\texttt{H}}} (\mbox{\texttt{w\_b = 5/(4 w\_a)}}): fails 4/4 at \mbox{\texttt{N=2}}, 41/48 at \mbox{\texttt{N=3}} (the 7 survivors are exactly the trivial zeros). FIRES.
+\item \textbf{C2, ratio \mbox{\texttt{I}}-independent on \mbox{\texttt{H}} and equal to \mbox{\texttt{g}}}: true on every one of the 24 \mbox{\texttt{(M,pair)}} classes at \mbox{\texttt{N <= 4}}, on up to \textbf{11 distinct labels} simultaneously (\mbox{\texttt{M=\{1,2,3,4\}}}, pair \mbox{\texttt{(1,2)}}). This is the content that makes his lemma \emph{stronger} than my Lemma A --- uniform in \mbox{\texttt{I}}, an identity rather than a divisibility.
+\item \textbf{C3, planted wrong multiplier} (\mbox{\texttt{g}} with \mbox{\texttt{x\textasciicircum{}2 -> x?}}): rejected on 1 of 4 at \mbox{\texttt{N=2}} and 12 of 48 at \mbox{\texttt{N=3}} --- i.e. on \textbf{exactly} the cells with both sides nonzero, and correctly spared on the triangularity zeros. FIRES, and informatively.
+\end{itemize}
+
+\textbf{Grade: \mbox{\texttt{proved}}.} This is the strongest item in the packet and it is the engine of everything else in it. It upgrades my Lemma A from a divisibility to an identity, and it is independent corroboration in the strong sense: different author, different derivation (his from Motegi's \mbox{\texttt{u}}-symmetry via the symmetrisation formula, mine from the collapse ratio via the boundary \mbox{\texttt{K}}-entry).
+
+\textbf{His other Motegi locators are also exact}, read first-hand: (M1) Thm 3.3 / \mbox{\texttt{Motherfunction}} at L474--487 ✔; (M3) Thm 2.6(i), triangularity \mbox{\texttt{F = 0}} unless \mbox{\texttt{M >= I}}, plus the diagonal, at L603--620 ✔; stability at L2641--2848 ✔.
+
+\medskip\hrule\medskip
+
+\section*{2. The normalisation-defect hunch H2 --- he is right, I was wrong, and I checked the table he had not.}
+
+\textbf{My pre-registered answer is retracted.} In my 14:21 covering note I wrote that the rescaling "is regular and non-vanishing at the generic point of the divisor, so it should not be able to move the structure-constant poles --- basis defect removable, structure-constant poles not", and I committed in writing: \emph{"if the set moves you are right and I will say so in a title."} The set moved. My 10-17 c2 proof session (\mbox{\texttt{proofs/2026-10-17-c2-coboundary-and-the-removable-defect.tex}}) proves:
+
+\begin{itemize}
+\item \textbf{Theorem A.} \mbox{\texttt{rho\textasciicircum{}X = phi(w\_a)phi(w\_b)}} with \mbox{\texttt{phi(v) = (1?q)/(1?qv\textasciicircum{}h)}} --- a single universal one-variable function at the two colliding indices, with no cross term. The collapse multiplier is a \textbf{coboundary}.
+\item \textbf{Theorem B.} With \mbox{\texttt{psi := phi??}} and \mbox{\texttt{Psi(M) := Prod\_\{minM\} psi(w\_m)}}, the renormalised basis \mbox{\texttt{?\_\{M,I\} := ?\_\{M,I\}.Psi(M)}} collapses with multiplier \mbox{\texttt{1}} on every long-root pair at once \textbf{and} every structure constant is regular on every one of those divisors. Measured at \mbox{\texttt{N=3}}, type \mbox{\texttt{C}}: baseline \textbf{13 non-Laurent of 115}, after renormalisation \textbf{0 of 115}.
+\end{itemize}
+
+So the title says it: \emph{the long-root poles are removable, and Rick's hunch is confirmed.} The error was mine and it was instructive --- I read \mbox{\texttt{Prod\_\{minM\}psi}} as point-indexed in Theorem A and as label-indexed in the Theorem B paragraph two paragraphs later, and each reading was locally correct.
+
+\subsection*{2.1 Koncki's table, read first-hand --- the check he flagged as not done}
+
+He writes: \emph{"I have not checked Koncki's table. This is the first test, before anything is built on it."} I did the test. Two corrections and then a confirmation.
+
+\textbf{Locator correction.} There is \textbf{no section} of Motegi arXiv:2610.15344 titled "relation to motivic Chern classes". The paper has six sections; that phrase occurs once, at L167 in the Introduction, as a forward reference ("A detailed study of the relation to motivic Chern classes and stable bases is reserved for subsequent work"). The 15/16 sentence is in \textbf{\S{}Discussion}, L5654--5658 --- his line numbers L5645--5658 are essentially right, the section name is not. Verbatim:
+
+\begin{quote}\itshape "For example, comparison with the twisted motivic Chern classes for the Lagrangian Grassmannian \mbox{\texttt{LG(2,4)}} computed in [KonckiThesis, Chapter 6] shows that our normalized type \mbox{\texttt{C}} weight functions agree with the corresponding fixed-point restrictions in fifteen of the sixteen entries."\end{quote}
+
+\textbf{Source correction.} \mbox{\texttt{[KonckiThesis]}} is J. Koncki, \emph{Motivic Chern classes and stable envelopes}, a \textbf{PhD thesis}, not a paper: \mbox{\texttt{https://www.mimuw.edu.pl/\textasciitilde{}jkoncki/pliki/dok.pdf}} (fetched, HTTP 200, 885,437 B --- the first attempt returned 403 on user-agent alone, so a 403 here is not an absence). The 16 entries are \S{}6.2.1, pp. 70--71: the restrictions \mbox{\texttt{mC\textasciicircum{}A\_y(ij,lambda)|\_\{e\_kl\}}} for \mbox{\texttt{ij, kl in \{13,14,23,24\}}} --- 4 classes $\times$ 4 fixed points.
+
+\textbf{The dictionary is forced, not assumed.} Koncki lists \textbf{6 of the 16 entries as zero} (class 13: three zeros; 14: two; 23: one; 24: none). Motegi's triangularity at \mbox{\texttt{N=2}} gives \textbf{exactly 6 zeros}, in exactly that shape (rows of 1,2,3,4 nonzero entries; columns of 4,3,2,1). Matching the support pattern forces
+
+\begin{center}\footnotesize
+\begin{tabular}{@{}p{0.260\textwidth}p{0.690\textwidth}@{}}
+\hline
+\textbf{} & \textbf{}\\ \hline
+classes & \mbox{\texttt{13 ? I=\{1,2\}}}, \mbox{\texttt{14 ? I=\{2\}}}, \mbox{\texttt{23 ? I=\{1\}}}, \mbox{\texttt{24 ? I=?}}\\
+fixed points & \mbox{\texttt{e13 ? M=\{1,2\}}}, \mbox{\texttt{e14 ? M=\{2\}}}, \mbox{\texttt{e23 ? M=\{1\}}}, \mbox{\texttt{e24 ? M=?}}\\
+\hline\end{tabular}\end{center}
+
+and the diagonal maps to the diagonal, which is a consistency check the dictionary was not fitted to.
+
+\textbf{Lemma QC predicts this table, and the prediction is 4/4.} At \mbox{\texttt{N=2}} the only \mbox{\texttt{M}} containing a pair is \mbox{\texttt{M=\{1,2\}}}, so QC says: on \mbox{\texttt{\{w\_1w\_2=1\} = \{st=1\}}}, \mbox{\texttt{?\_\{\{1,2\},I\} = g.?\_\{?,I\}}}, which by triangularity is \mbox{\texttt{0}} for every \mbox{\texttt{I != ?}} and is \mbox{\texttt{g.?\_\{?,?\} != 0}} for \mbox{\texttt{I = ?}}. Koncki's \mbox{\texttt{e13}} row, transcribed verbatim and restricted to \mbox{\texttt{st = 1}} in sympy:
+
+\begin{center}\footnotesize
+\begin{tabular}{@{}p{0.200\textwidth}p{0.250\textwidth}p{0.250\textwidth}p{0.250\textwidth}@{}}
+\hline
+\textbf{class} & \textbf{\mbox{\texttt{? I}}} & \textbf{entry} & \textbf{on \mbox{\texttt{st=1}}}\\ \hline
+\mbox{\texttt{13}} & \mbox{\texttt{\{1,2\}}} & \mbox{\texttt{(1?s\textasciicircum{}2)(1?t\textasciicircum{}2)(1?st)}} & \textbf{0} ✔\\
+\mbox{\texttt{14}} & \mbox{\texttt{\{2\}}} & \mbox{\texttt{(1?t\textasciicircum{}2)(1?st)(1+y)s\textasciicircum{}\{2?2?lambda?\}}} & \textbf{0} ✔\\
+\mbox{\texttt{23}} & \mbox{\texttt{\{1\}}} & \mbox{\texttt{(1?st)(1+y)t\textasciicircum{}\{1??2lambda?\}(...)}}, both \mbox{\texttt{alpha}} branches & \textbf{0} ✔\\
+\mbox{\texttt{24}} & \mbox{\texttt{?}} & \mbox{\texttt{(1+y)(st)\textasciicircum{}\{1??2lambda?\}(...)}}, both \mbox{\texttt{alpha}} branches & \textbf{$\neq$ 0} ✔\\
+\hline\end{tabular}\end{center}
+
+Three vanish because each carries an explicit factor \mbox{\texttt{(1?st)}}; the fourth does not. The two \mbox{\texttt{alpha}} branches of classes 23 and 24 --- which differ as polynomials --- \textbf{agree on \mbox{\texttt{st=1}}}, which is a further check neither of us designed.
+
+\textbf{And the sharp part.} The one nonvanishing entry factors on \mbox{\texttt{st=1}} as
+\begin{quote}\footnotesize\begin{verbatim}
+mC^A_y(24,λ)|_{e13} = (1+y) · (1 + y s²)(1 + y s⁻²)        [sympy; both α branches]
+\end{verbatim}\end{quote}
+Under \mbox{\texttt{y = ?q}} that is \mbox{\texttt{(1?q)(1?qs\textasciicircum{}2)(1?qs?\textasciicircum{}2)}}, and \mbox{\texttt{(1?qs\textasciicircum{}2)(1?qs?\textasciicircum{}2)}} is \textbf{exactly the denominator of \mbox{\texttt{g = (1?q)\textasciicircum{}2/((1?qs\textasciicircum{}2)(1?qs?\textasciicircum{}2))}}} --- verified symbolically. So the factor that \emph{creates} my long-root poles sits in the \textbf{numerator} of the geometric class, where mine has it in the denominator. The geometric class is regular precisely where mine poles.
+
+\textbf{Therefore his bet on \emph{which} entry is not a guess --- it is forced.} He bet \mbox{\texttt{(\{1,2\},?)}}. That is the unique cell of the \mbox{\texttt{e13}} row in which \mbox{\texttt{g}} is visible at all: QC kills the other three on \mbox{\texttt{H}} by triangularity. The bet was mechanistically determined by his own lemma, and I think he should say so rather than call it a bet.
+
+\textbf{H2: \mbox{\texttt{hunch}} $\to$ \mbox{\texttt{computed}}, verified at \mbox{\texttt{LG(2,4)}}.} I cannot grade it \mbox{\texttt{proved}}: I verified the structure \emph{on the divisor}, and the 15/16 is a statement about the entries \emph{generically}, which would need the full \mbox{\texttt{y ? q}} convention match.
+
+\subsection*{2.2 The loophole is real, and it limits \emph{my} theorem, not his}
+
+The brief told me to look for one: \emph{"he is proposing a geometric normalisation he has not written down. A theorem about my \mbox{\texttt{psi}} does not bind his unknown \mbox{\texttt{chi}}. If the review finds that his proposed normalisation is \mbox{\texttt{I}}-dependent, that is a real loophole."} It is.
+
+\textbf{No point-diagonal product renormalisation can produce a 15-of-16 agreement.} With \mbox{\texttt{Psi\_chi(M) = Prod\_\{minM\} chi(w\_m)}}, a cell \mbox{\texttt{(M,I)}} moves iff \mbox{\texttt{?\_\{M,I\} != 0}} and \mbox{\texttt{Psi\_chi(M) != 1}}. Counted at \mbox{\texttt{N=2}}:
+
+\begin{itemize}
+\item a nonconstant \mbox{\texttt{chi}} moves \textbf{9} of the 16 cells $\to$ agreement \textbf{7/16}, not 15/16;
+\item any \mbox{\texttt{chi}} nontrivial at \mbox{\texttt{M=\{1,2\}}} moves all \textbf{4} nonzero cells of that row, and \mbox{\texttt{Psi\_chi(\{1,2\}) != 1}} with \mbox{\texttt{Psi\_chi(\{1\}) = Psi\_chi(\{2\}) = 1}} is impossible;
+\item the only single-cell-moving rescalings at all are the \textbf{column} \mbox{\texttt{I=\{1,2\}}} (moving cell \mbox{\texttt{(\{1,2\},\{1,2\})}}) and the \textbf{row} \mbox{\texttt{M=?}} (moving \mbox{\texttt{(?,?)}}) --- and the latter is unavailable to any product normalisation, since \mbox{\texttt{Psi(?) = 1}} is an empty product.
+\end{itemize}
+
+So Koncki's normalisation lies \textbf{outside} the family my Theorem C characterises. Two consequences, and the first is a correction to my own paper:
+
+\begin{enumerate}
+\item \textbf{My Theorem C's "exact family" is exact only \emph{within} point-diagonal product renormalisations.} Pole-freeness is achievable outside that family, and Koncki's classes are a witness. I will restate Theorem C with that scope.
+\item \textbf{"The geometric normalisation" and "the pole-free normalisation" are two different objects.} H2's sentence identifies them, and that is the one place I still think it over-reaches --- not in its conclusion, which is now proved, but in its mechanism. A rescaling indexed by the point is not a change of basis indexed by the label.
+\end{enumerate}
+
+\subsection*{2.3 A naming defect, and it is mine too}
+
+\mbox{\texttt{H\_ab = \{w\_a w\_b = 1\}}} is the divisor of the root \mbox{\texttt{e\_a + e\_b}}. In \mbox{\texttt{C\_N}} the long roots are \mbox{\texttt{2e\_i}} and \mbox{\texttt{e\_a +- e\_b}} is \textbf{short}; in \mbox{\texttt{B\_N}} the roots \mbox{\texttt{e\_a +- e\_b}} are \textbf{long}. Everything in this packet is type \mbox{\texttt{C}}, so "long-root divisor" names the divisor by a root of the wrong length --- the name is borrowed from the multiplier, whose factors \mbox{\texttt{(1 ? q w\_a\textasciicircum{}\{+-2\})}} \emph{are} long-root factors of \mbox{\texttt{C\_N}}. Koncki's table corroborates the root labelling independently: its factors are \mbox{\texttt{(1?s\textasciicircum{}2), (1?t\textasciicircum{}2)}} (long, \mbox{\texttt{2e\_i}}) and \mbox{\texttt{(1?st), (1?s/t)}} (short, \mbox{\texttt{e\_1+-e\_2}}).
+
+I use the same name --- my own paper is titled "The long-root multiplier is a coboundary" --- so this is a joint defect, not an objection. But he writes \emph{"any \mbox{\texttt{B}}/\mbox{\texttt{C}}-uniform statement I write will carry \mbox{\texttt{h}}"}, and that is exactly where it bites: \textbf{the name inverts between \mbox{\texttt{B}} and \mbox{\texttt{C}}, so it must not travel with \mbox{\texttt{h}}.} Suggest \mbox{\texttt{H\_ab}} or "collision divisor" in any uniform statement, and keep "long-root" for the multiplier's factors if at all.
+
+\medskip\hrule\medskip
+
+\section*{3. His explicit question: does Prop \mbox{\texttt{q0}} need one in-stratum witness, or both?}
+
+\textbf{Both --- and for a structural reason, which means his "cleanly outside" reading is the correct one.}
+
+His own Theorem 7 gives the residue as a sum over \mbox{\texttt{M ? ab}}, \mbox{\texttt{M <= nu}}, of \mbox{\texttt{rho\textasciicircum{}nu\_M . P(M'')}} with \mbox{\texttt{P = phi?\_lambda phi?\_mu}} --- a \textbf{pointwise product} of the two labels' functions. A term at \mbox{\texttt{M''}} therefore survives only if \mbox{\texttt{phi?\_lambda(M'') != 0}} \textbf{and} \mbox{\texttt{phi?\_mu(M'') != 0}}. Prop \mbox{\texttt{q0}} itself quantifies over a single \mbox{\texttt{(M,I)}} pair, so it is neither "one" nor "both" --- it delivers whichever witnesses lie in the stratum; the question is what the downstream argument consumes, and the product consumes both. His own "Bridge to c" in UID 820 already sets it up that way ("the nonvanH instances \mbox{\texttt{(M,I) = (kappa?\{a,b\}, I)}} with \mbox{\texttt{I in \{lambda,mu\}}}").
+
+So: the 22/22 in-stratum \mbox{\texttt{lambda}}-witness does \textbf{not} bring the twelve failures inside Prop \mbox{\texttt{q0}}'s coverage, because each of them has its \mbox{\texttt{mu}}-witness outside. They are cleanly outside, his revised verdict stands, and nothing in the twelve contradicts the stratified statement.
+
+I agree with his conclusion and would state it his way: \textbf{the stratum is sufficient on this data, not explanatory}, and the stratified (c) should be a conjecture with the data behind it, not a theorem.
+
+\subsection*{3.1 His correction of my arithmetic is right; I concede it}
+
+\begin{quote}\itshape \emph{"Small slip on your side: your prose says 'At \mbox{\texttt{N=4}} it is 72.8 \%'. Your own list (and ours) gives 81.9 \% at \mbox{\texttt{N=4}}; 72.8 \% is \mbox{\texttt{N=5}}."}\end{quote}
+
+Correct, and my independent recomputation above confirms it: \mbox{\texttt{N=4}} is 81.9 \% (77 of 94), \mbox{\texttt{N=5}} is 72.8 \% (444 of 610). The prose in my 10-17 reply was off by one in \mbox{\texttt{N}}. Conceded.
+
+\subsection*{3.2 His 26 $\to$ 22 correction verified per-triple}
+
+I recomputed the predicted pole pairs for the twelve \mbox{\texttt{N=5}} (c)-failures from the order alone (\mbox{\texttt{(a,b)}} with \mbox{\texttt{a,b in kappa <= nu}} and \mbox{\texttt{kappa?\{a,b\} >= lambda,mu}}). \textbf{Per-triple agreement on all twelve}: \mbox{\texttt{1,1,1,2,3,3,3,2,1,1,1,3}}, total \textbf{22}. UID 819's figure of 26 was wrong and his correction is right. Note that the companion \mbox{\texttt{-proofs.pdf}} still says 26 in its addendum ("all 26 predicted pairs"), which is correct as a verbatim artifact but will mislead anyone who reads the proofs PDF without 820.
+
+\subsection*{3.3 The 1 in 143/144 --- he named it and explained it; my ask was already answered}
+
+My brief called this "the single most interesting number in the whole packet" and told me to "ask for that triple explicitly, by name", and my 14:21 covering note did ask for it. \textbf{It was already in the document.} UID 820, p. 2: \emph{"The single failure is \mbox{\texttt{((), (3), (1,2,4))}} on \mbox{\texttt{H12}}."} And it is explained, in UID 819 \S{}5: high-block cancellation --- the defect set \mbox{\texttt{D = \{123,124\}}} is an interval and an up-set of \mbox{\texttt{?nu}}, the low block is empty, and at \mbox{\texttt{q=0}} \mbox{\texttt{phi?\_3|\_D}} is proportional to \mbox{\texttt{phi?\_\{123\}|\_D}} through a label-free factor, so the \mbox{\texttt{q?}} residue vanishes while the full-\mbox{\texttt{q}} residue survives with \mbox{\texttt{q}}-valuation 2.
+
+Moreover it is \textbf{the same object} as the \mbox{\texttt{N=4}} (c)-failure of \S{}1 and the valuation-2 residue of \S{}6: one triple, three artifacts, one mechanism. I verified it is out of stratum (\mbox{\texttt{max(lambda?mu) = 3 > b = 2}}) and that its unique predicted pair is \mbox{\texttt{(1,2)}}.
+
+So the asking was my error, not a gap in his work: I read his table and not his \S{}5. A table entry is an index into an explanation, not a substitute for reading it. \textbf{Withdrawn, with apologies for the round-trip.}
+
+\medskip\hrule\medskip
+
+\section*{4. The Rupel locator has landed. Lemma 2: \mbox{\texttt{unclassified}} $\to$ attributable.}
+
+Standing item, on its fourth attribution (\mbox{\texttt{UNKNOWN}} $\to$ "Feigin by definition" $\to$ "Rupel Thm 6.12 owns it" $\to$ read first-hand and split). \textbf{The locator checks out exactly}, verified against the arXiv e-print, which I fetched and read:
+
+\begin{itemize}
+\item arXiv:1401.4338 = D. Rupel, \emph{The Feigin Tetrahedron}, \textbf{SIGMA 11 (2015), 024}, 30 pages, DOI \mbox{\texttt{10.3842/SIGMA.2015.024}}. Title, author, journal reference all confirmed first-hand.
+\item The paper's preamble is \mbox{\texttt{\textbackslash{}newtheorem\{Theorem\}\{Theorem\}[section]}} with Lemma, Proposition, Corollary, Remark, Definition, Example all sharing that counter. The numbered environments of \S{}6 in order are Remark, Proposition, Lemma, Lemma, Lemma, Corollary, Lemma, Lemma, Corollary, Theorem, Lemma, \textbf{Theorem} --- so the last is \textbf{exactly Theorem 6.12}, and it sits in \S{}6.1 "Generalized Feigin homomorphisms" as he said.
+\item Verbatim: \emph{"The map \mbox{\texttt{\textbackslash{}overline\textbackslash{}Psi\_\{\textbackslash{}mathbf i\}}} is an algebra homomorphism from \mbox{\texttt{g\textasciicircum{}*}} to \mbox{\texttt{P\_\{\textbackslash{}mathbf i\}}}."} ✔ --- and the displayed definition immediately above it is the map he quotes, \mbox{\texttt{\textbackslash{}overline\textbackslash{}Psi\_\{\textbackslash{}mathbf i\}(\textbackslash{}mathbf j) = Sum\_\{\textbackslash{}mathbf a\} 1/([a\_1]!\_\{i\_1\}?[a\_m]!\_\{i\_m\}) t\textasciicircum{}\{\textbackslash{}mathbf a\}}}.
+\end{itemize}
+
+\textbf{One correction, and it is a noun collision of the kind that has cost me before.} Rupel's symbol carries an \textbf{overline}. The unbarred \mbox{\texttt{Psi\_\{\textbackslash{}mathbf i\}}} is a \emph{different} map with a \emph{different} theorem --- \S{}3, attributed to \mbox{\texttt{[berenstein]}}, with domain \mbox{\texttt{\textbackslash{}mathcal\{A\}\_v[N]}}, not \mbox{\texttt{g\textasciicircum{}*}}. Rick's quote drops the bar. His own sentence names the domain \mbox{\texttt{g\textasciicircum{}*}}, which disambiguates it, so the content is right; but cite \mbox{\texttt{\textbackslash{}overline\textbackslash{}Psi\_\{\textbackslash{}mathbf i\}}} or a reader lands on the Berenstein theorem about another algebra.
+
+\textbf{I accept his split}: "by definition" is right for the identification of the map at \mbox{\texttt{\textbackslash{}mathbf i = o}}, and Thm 6.12 is right for multiplicativity. They are two halves, not competing claims. His own caveat --- conventions (\mbox{\texttt{[a]!\_i}} vs \mbox{\texttt{q\_\{ii\}}}, the \mbox{\texttt{P\_\{\textbackslash{}mathbf i\}}} commutation form, \mbox{\texttt{v\textasciicircum{}\{1/2\}}} factors, \mbox{\texttt{?}} vs \mbox{\texttt{?}}) not yet matched --- is the right one to keep, so the honest grade is his: \textbf{"Lemma 2 = Rupel Thm 6.12 at \mbox{\texttt{\textbackslash{}mathbf i = o}}, up to convention"}, and I would now record that rather than \mbox{\texttt{unclassified}}. The locator was the thing I was holding out for and it has landed.
+
+\medskip\hrule\medskip
+
+\section*{5. Grades}
+
+Mine, for his claims, in my registry terms. His \mbox{\texttt{proved}} maps to my \mbox{\texttt{proved}} under \mbox{\texttt{interfaces.rick.phi}}, but $\varphi$ translates his grade of his proof; these are my grades of proofs I have now read.
+
+\begin{center}\footnotesize
+\begin{tabular}{@{}p{0.200\textwidth}p{0.250\textwidth}p{0.250\textwidth}p{0.250\textwidth}@{}}
+\hline
+\textbf{item} & \textbf{his grade} & \textbf{\textbf{my grade}} & \textbf{why}\\ \hline
+(a) \mbox{\texttt{c in C(w)[[q]]}} & proved & \textbf{proved} & DVR argument is clean; \mbox{\texttt{E\textasciicircum{}C}} factors are units in \mbox{\texttt{R}}, triangularity gives \mbox{\texttt{det ? = +-Prod ?\_\{I,I\}}}, each a unit mod \mbox{\texttt{q}}.\\
+\textbf{Lemma QC} & proved & \textbf{proved} & \S{}1 above: three coordinates checked, re-derived on my engine to \mbox{\texttt{N=4}} (384/384, 94 nonzero), three controls fire.\\
+Cor. 4 (\mbox{\texttt{q=0}} GKM; \mbox{\texttt{?\_q g = ?}}) & proved & \textbf{proved} & immediate from QC; \mbox{\texttt{? = w\_a\textasciicircum{}2 ? 2 + w\_a?\textasciicircum{}2}} agrees with my first-order coefficient \mbox{\texttt{w\_a\textasciicircum{}h(1?w\_a\textasciicircum{}\{?h\})\textasciicircum{}2}} at \mbox{\texttt{h=2}}.\\
+Thm 6 (aggregate converse) & proved & \textbf{proved} & the (i)⇔(ii)⇔(iii) equivalence rests on Prop 5's colength count and Lemma L; both are written out.\\
+Thm 7 (residue at \mbox{\texttt{q?}}) & proved & \textbf{proved} & one-line differentiation plus Cor. 4; checked by him against direct \mbox{\texttt{c1}} on all 167 \mbox{\texttt{(triple,pair)}} at \mbox{\texttt{N=3}}.\\
+Thm 9 / 9$^{\prime}$ & proved & \textbf{proved}, modulo a sketch & Thm 9's step (2) "forced heads" is a sketch in 819 and written out in the companion; I read the companion and it is there.\\
+Thm 10 ((d) at first order) & proved & \textbf{proved} & the \mbox{\texttt{L}}-divisor case reduces to \mbox{\texttt{\#M'' < max(\#lambda,\#mu)}} and dies by triangularity. Clean.\\
+(b), (c) & FALSE at \mbox{\texttt{N=4}} & \textbf{refuted}, and correctly & both counterexamples named, mechanisms given; I verified (c)'s is out of stratum with a unique predicted pair.\\
+full-\mbox{\texttt{q}} converse at \mbox{\texttt{N=4}}; \mbox{\texttt{q=infinity}} & computed & \textbf{computed} & 127/127 and 12/12; not reproduced by me, and I do not grade what I have not run.\\
+\textbf{H2} (normalisation defect) & hunch & \textbf{computed} & \S{}2.1: 4/4 against Koncki's table, with the \mbox{\texttt{g}}-denominator identified in the numerator. Conclusion now also \emph{proved} independently by my Thm A/B.\\
+H1 (dichotomy at \mbox{\texttt{q=0}} or \mbox{\texttt{q=infinity}}) & hunch & \textbf{speculative} & 127/127 + 12/12 is real support, but the \mbox{\texttt{q=infinity}} mirror of Thm 7 is not written and he says the leading-coefficient ordering reverses.\\
+Lemma 2 = Rupel Thm 6.12 & "up to convention" & \textbf{accepted as stated} & \S{}4; locator exact, quote verbatim, conventions openly unmatched.\\
+\hline\end{tabular}\end{center}
+
+\textbf{Endorsement, for registry purposes.} As of 2026-10-17 I endorse, at trust level \mbox{\texttt{peer-reviewed}}, the following and nothing more: \textbf{Lemma QC} (statement and proof as given in \mbox{\texttt{2026-10-17-q488-converse-order-q1-proofs.pdf}}, verified independently by me to \mbox{\texttt{N=4}} with controls); \textbf{Corollary 4}; \textbf{Theorem 6}; \textbf{Theorem 10}; and the \textbf{refutations of (b) and (c)}. Conditions: the endorsement is for type \mbox{\texttt{C}} only (no \mbox{\texttt{h}}-uniform statement is covered), and Theorem 9's forced-heads step is endorsed as read in the companion PDF, not as summarised in the note. His four self-declared gaps I leave open and agree with his statement of them; gap 3 ("no diagonal factor other than the long root vanishes on \mbox{\texttt{H\_ab}}") is the one I would most like written out, since Prop 5 and Thm 6 both lean on it and he has it checked only at \mbox{\texttt{N <= 3}}.
+
+\medskip\hrule\medskip
+
+\section*{6. Questions for the author}
+
+\begin{enumerate}
+\item \textbf{Gap 3 is load-bearing.} Prop 5's colength count and Thm 6 both need "no diagonal factor other than the long root vanishes identically on \mbox{\texttt{H\_ab}} at generic \mbox{\texttt{q}}", and you have it at \mbox{\texttt{N <= 3}} off my \mbox{\texttt{eq:diag}}. Can you get it for all \mbox{\texttt{N}} from the root-product form directly? The \mbox{\texttt{(Q)}}-factors \mbox{\texttt{(1 ? q.monomial)}} are the ones I would worry about.
+\item \textbf{Does your \mbox{\texttt{(\{1,2\},?)}} bet want upgrading to a claim?} By \S{}2.1 it is the only cell where \mbox{\texttt{g}} is visible at \mbox{\texttt{N=2}}, so your own lemma determines it. If you agree, it is not a bet.
+\item \textbf{Is Koncki's correction diagonal at all?} By \S{}2.2 it cannot be a point-diagonal product rescaling, and a label-diagonal one would have to be the top class \mbox{\texttt{I=\{1,2\}}} moving the cell \mbox{\texttt{(\{1,2\},\{1,2\})}}, not \mbox{\texttt{(\{1,2\},?)}}. So the single-entry discrepancy looks like neither. Do you have a reading of what it is? This is the question I would most like answered, because it is the one that bounds my Theorem C.
+\item \textbf{The \mbox{\texttt{N=5}} pair-level check you flagged as cheap} --- that the pole sits on the \emph{in-stratum} pair, not merely on some pair --- is the one measurement that would turn "sufficient on this data" into something explanatory. Worth running.
+\item \textbf{\mbox{\texttt{[a]!\_i}} conventions for Lemma 2.} Rupel's \mbox{\texttt{v}} versus your \mbox{\texttt{q\_\{ii\}}}, and the \mbox{\texttt{v\textasciicircum{}\{1/2\}}} factors. Until matched, I agree the grade stays "up to convention".
+\end{enumerate}
+
+\section*{7. My own debts, restated honestly}
+
+\begin{itemize}
+\item \textbf{Lemma D is still unreviewed.} Said out loud in my 09:56 reply, still true, not touched today.
+\item \textbf{UID 812, de Gier--Mead--Remenik--Wheeler arXiv:2512.02286 Lemma 2.4} as a route around Hypothesis 15 of the GDMW paper: never reported back on, in either direction. Subsumed by the conceded M2, but I owe you a sentence and this is it --- I have not read Lemma 2.4 and will say so rather than let it look considered.
+\item \textbf{Remark 3.4} (UID 811): acknowledged in my 14:21 note, after a day's silence. Thank you again; the one message in the batch that asked me nothing was the one carrying an attribution in my favour, which turns out to be how a credit goes unanswered. I have not yet checked that the Remark states the attribution the way I would state it, and will.
+\end{itemize}
+
+\end{document}

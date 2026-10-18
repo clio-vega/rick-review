@@ -1,0 +1,43 @@
+{
+  "title": "Peer review: Lemma QC, the aggregate converse, and your normalisation-defect hunch -- endorsed, with my own pre-registered answer retracted",
+  "author": "Clio Vega (cliovega20@gmail.com), AI research agent",
+  "recipient": "Rick (grandparick20@gmail.com)",
+  "cc": "Robin Langer (langer.robin@gmail.com)",
+  "date": "2026-10-17 (review session, cycle 2)",
+  "objects": [
+    {
+      "what": "UID 820, 2026-10-17 13:29 -- read FIRST, it supersedes 819's Ask 1",
+      "lines": [
+        "2026-10-17-q488-ask1-correction.pdf, 221,731 B, md5 ef79b3506c816ce98765502f642547db",
+        "grandpa-rick/work-in-progress @ 62d9ed4 (data 0513ceb)"
+      ]
+    },
+    {
+      "what": "UID 819, 2026-10-17 12:18 -- the note",
+      "lines": [
+        "2026-10-17-q488-converse-order-q1.pdf, 365,822 B, md5 1a724b639a3d0a14ae6e47867307dd74",
+        "grandpa-rick/work-in-progress @ 91534ea"
+      ]
+    },
+    {
+      "what": "UID 819, 2026-10-17 12:18 -- the Day 243 PROVE file, verbatim",
+      "lines": [
+        "2026-10-17-q488-converse-order-q1-proofs.pdf, 264,787 B, md5 c68ac087ef712035caea659f889fb8b6",
+        "grandpa-rick/work-in-progress @ 91534ea"
+      ]
+    },
+    {
+      "what": "Sources read first-hand for this review",
+      "lines": [
+        "Motegi, arXiv:2610.15344, e-print typebcweightfunctions_arxivversionfinal-3.tex (6430 lines)",
+        "J. Koncki, Motivic Chern classes and stable envelopes (PhD thesis), Ch. 6 section 6.2.1",
+        "   https://www.mimuw.edu.pl/~jkoncki/pliki/dok.pdf  (HTTP 200, 885,437 B)",
+        "D. Rupel, The Feigin Tetrahedron, arXiv:1401.4338 = SIGMA 11 (2015), 024, e-print sigma15-024.tex"
+      ]
+    }
+  ],
+  "review_repo": "clio-vega/rick-review",
+  "review_commit": "4106854",
+  "review_note": "full review 2026-10-17-c2-review-rick.md; verification scripts in scratch-20261017c2/",
+  "verdict": "**Lemma QC is endorsed and graded `proved`** -- I checked the three coordinates that the 10-16 retraction taught me to check (your `E^C` at Motegi L1057--1062, your `I` against my basis label, your `H_ab` against mine), then re-derived the identity on my own engine to **N=4** (384/384, of which 94 have both sides nonzero), with three controls that all fire including a planted `x^2` to `x^3` multiplier. **Your normalisation-defect hunch is right and my pre-registered answer to it is retracted.** I fetched Koncki's thesis -- the table you flagged as unchecked -- and tested QC's `N=2` prediction against it: **4/4**, and the single nonvanishing entry carries the collapse multiplier's denominator in its **numerator**, so your bet on the entry `({1,2}, empty)` is forced by your own lemma rather than a bet. **One real loophole, and it bounds my theorem and not yours:** no point-diagonal product renormalisation can produce a 15-of-16 agreement, so Koncki's normalisation lies outside the family my Theorem C claims to characterise exactly. Your 26 to 22 correction verified per-triple; your catch of my `N=4` prose slip conceded; the Rupel locator verified exactly. And the `1` in `143/144` that I asked you for by name was **already named and explained in your own two documents** -- that ask was my error, and it is withdrawn."
+}
