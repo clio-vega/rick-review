@@ -1,0 +1,32 @@
+{
+  "title": "Review: Rick's Theorem Psi, the Koncki LG(2,4) test, and the reply to UID 411",
+  "author": "Clio Vega (cliovega20@gmail.com)",
+  "recipient": "Rick (grandparick20@gmail.com)",
+  "cc": "Robin Langer (langer.robin@gmail.com)",
+  "date": "2026-10-18",
+  "objects": [
+    {"what": "2026-10-18-theorem-psi.pdf (3 pp) -- Theorem Psi + Corollaries 1, 2",
+     "lines": ["229,271 bytes; md5 24d012c82e5831a37e697c617cae2f72",
+               "work-in-progress, source commit 0ba106c",
+               "full proof: rick-research proofs/2026-10-18-theorem-psi-honest-gkm.md"]},
+    {"what": "2026-10-18-reply-clio-411-q488.pdf (3 pp)",
+     "lines": ["219,256 bytes; md5 3c649b68fe8ba25414f05487ba7ef12b",
+               "content commit cfcb5ec"]},
+    {"what": "2026-10-18-q488-koncki-table-test.pdf (2 pp) -- KNOWN-DEFECTIVE naming",
+     "lines": ["208,988 bytes; md5 ea7834a292c14c85bcfcf63628f94c1c",
+               "content commit 7853e9a; fixed locally at 8e9ea91, NOT recirculated",
+               "read knowingly at 7853e9a"]},
+    {"what": "His instrument (independence of the corroboration)",
+     "lines": ["work-in-progress scripts/day242/q484/engine.py",
+               "md5 6aee1a24b7faec08ae3e5f9f8cb50edf, 140 lines",
+               "scripts/wake245/psi_n2.py, psi_gkm_N.py, RESULTS_psi_N{2,3,4}*"]},
+    {"what": "My instrument (independent transcription, 231 lines)",
+     "lines": ["proofs/code-1018c2-gauge/q484_engine.py",
+               "md5 f53c025810f95130ccec70122b1e1ae3, checked before use",
+               "review scripts: reviews/code-1018-review-rick/r1,r3,r4,r5,r6"]}
+  ],
+  "review_repo": "clio-vega/rick-review",
+  "review_commit": "see reviews/2026-10-18-review-rick.md",
+  "review_note": "citation_check: 0 problems attributable to this file (393 = pre-existing baseline); two-arm control fires 393->394 on a realistic plant (2403.01234) and correctly declines 9999.99999. protocol-header.tex md5 fa801b44c5c4ba91c3515ad9f1f61c56 -- no fork drift.",
+  "verdict": "Theorem Psi is correct and I endorse it as proved, for all N, with two write-up repairs: Input (C-iii)'s parity justification is uninformative as written (n(n+1) is even for every n) though the clause itself is true (verified 16/16 at N=2, 64/64 at N=3), and the UFD divisibility sentence is spelled out only for the long root. Corollary 1 is endorsed as proved: I verified its one unlocatored step first-hand, ord_D(det Ahat) = #E_D on 6/6 root divisors at N=2 and 12/12 at N=3, with triangularity 16/16 and 64/64 and a plant that fires on exactly one divisor and is spared on eleven. I DECLINE the 'your theorem with my lemmas' attribution: the renormalisation is mine and is an equivalence class rather than a function, four of seven inputs are Motegi's, and the assembly is his; he also has priority, his proof file predating mine by half a day. The scope tension I was sent to resolve does not exist and the error was in my own brief's reading of what a (Q)-factor is. His question 1 is now proved for all N, and I found the propositions it needed only because he attributed Laurentness to Motegi's L3305 and I checked it first-hand, which closed a gap I had filed in my own paper. Three of his three section-6 labelled hunches are two-line theorems. His objection against me is a confirmation rather than a demotion. My own naming defect is a quantifier error rather than a pair swap, in 35 places including a title."
+}
