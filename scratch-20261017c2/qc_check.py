@@ -1,7 +1,12 @@
-# SUPERSEDED by qc_fast.py.  This is the fully-multivariate-symbolic version of the
-# same Lemma QC check; it did not finish inside the session budget (no N=2 line
-# printed in ~10 min).  Kept because it is what I tried first, not because it ran.
-# Every QC number in the review comes from qc_fast.py.
+# SECOND ARM, and it AGREES.  This is the fully-multivariate-symbolic version of the
+# Lemma QC check.  It did not finish inside the session's foreground budget, so the
+# review was written off qc_fast.py (exact rational w, symbolic q); it then completed
+# in the background at 2026-10-18 00:24 with exit 0 and numbers IDENTICAL to the fast
+# arm: 4/4 and 48/48 at N=2,3, same trivial/nonzero split 3/1 and 36/12, control 1
+# firing 4/4 and 41/48.  So the rational-point specialisation hid nothing, and Lemma QC
+# has two independent arms rather than one.  Corrected here because the previous header
+# said it was 'kept because it is what I tried first, not because it ran' -- which was
+# true when written and false twenty minutes later.
 """
 First-hand verification of Rick's Lemma QC (UID 819, section 4) with MY engine
 (proofs/code-1017-nonvanH/q484_engine.py, the only copy with EB/EX), i.e. by a

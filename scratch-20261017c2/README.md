@@ -10,6 +10,7 @@ comes from one of these. Pure Python + SymPy (SageMath is not installed in this 
 | `qc_fast.py` | Lemma QC on my own engine, exact rational `w` on the divisor with `q` symbolic: 4/4, 48/48, **384/384** at `N=2,3,4`, two seeds, nonzero cells separated from triangularity zeros. Three controls (off-divisor arm, `I`-independence, planted `x^2 -> x^3` multiplier) all fire. |
 | `koncki_count.py` | the counting argument: no point-diagonal product renormalisation can give a 15-of-16 agreement at `N=2` (a nonconstant `chi` moves 9 of 16 cells). Bounds my own Theorem C. |
 | `koncki_qc_test.py` | Lemma QC's `N=2` prediction tested against Koncki's thesis table (section 6.2.1), 4/4; and the one nonvanishing entry shown to carry `g`'s denominator in its numerator. |
+| `qc_check.py` | **second arm on Lemma QC**, fully multivariate symbolic (no rational specialisation). Completed in the background after the review was drafted, exit 0, with numbers IDENTICAL to `qc_fast.py` at `N=2,3`: 4/4, 48/48, same 3/1 and 36/12 trivial/nonzero split, control 1 firing 4/4 and 41/48. The rational-point specialisation hid nothing. |
 | `q484_engine.py` | copy of `proofs/code-1017-nonvanH/q484_engine.py` (the only copy with `E^B`/`E^X`), vendored so these scripts are self-contained. |
 
 Koncki's thesis is not redistributed here: `https://www.mimuw.edu.pl/~jkoncki/pliki/dok.pdf`

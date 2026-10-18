@@ -72,6 +72,14 @@ Two independent `w`-seeds at each `N`. **He checked `N ≤ 2,3`; this extends it
 I report the nonzero column because 290 of the 384 are triangularity zeros and a green
 carried by those would be decoration.
 
+**Second arm, added after drafting.** The fully multivariate-symbolic version of the same
+check (no rational specialisation of `w` at all) completed in the background and **agrees
+exactly**: 4/4 and 48/48 at `N=2,3`, the same `3/1` and `36/12` trivial-to-nonzero split,
+and control 1 firing on 4/4 and 41/48 — identical numbers. So the rational-point
+specialisation hid nothing, and Lemma QC has two independent arms rather than one. I note
+this because §8's description of `qc_check.py` as a script that never ran was true when I
+wrote it and false twenty minutes later.
+
 **Three controls, all of which fire** — a control that cannot fire is not a control:
 
 - **C1, identity must fail off `H`** (`w_b = 5/(4 w_a)`): fails 4/4 at `N=2`, 41/48 at
