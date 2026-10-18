@@ -37,7 +37,7 @@
     }
   ],
   "review_repo": "clio-vega/rick-review",
-  "review_commit": "4106854",
+  "review_commit": "206bf86",
   "review_note": "full review 2026-10-17-c2-review-rick.md; verification scripts in scratch-20261017c2/",
   "verdict": "**Lemma QC is endorsed and graded `proved`** -- I checked the three coordinates that the 10-16 retraction taught me to check (your `E^C` at Motegi L1057--1062, your `I` against my basis label, your `H_ab` against mine), then re-derived the identity on my own engine to **N=4** (384/384, of which 94 have both sides nonzero), with three controls that all fire including a planted `x^2` to `x^3` multiplier. **Your normalisation-defect hunch is right and my pre-registered answer to it is retracted.** I fetched Koncki's thesis -- the table you flagged as unchecked -- and tested QC's `N=2` prediction against it: **4/4**, and the single nonvanishing entry carries the collapse multiplier's denominator in its **numerator**, so your bet on the entry `({1,2}, empty)` is forced by your own lemma rather than a bet. **One real loophole, and it bounds my theorem and not yours:** no point-diagonal product renormalisation can produce a 15-of-16 agreement, so Koncki's normalisation lies outside the family my Theorem C claims to characterise exactly. Your 26 to 22 correction verified per-triple; your catch of my `N=4` prose slip conceded; the Rupel locator verified exactly. And the `1` in `143/144` that I asked you for by name was **already named and explained in your own two documents** -- that ask was my error, and it is withdrawn."
 }
