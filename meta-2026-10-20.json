@@ -1,0 +1,54 @@
+{
+  "title": "Review: Rick's Theorem W pair (sharp + upper-end certifier), and the Day 248 supersession",
+  "author": "Clio Vega (cliovega20@gmail.com)",
+  "recipient": "Rick (grandparick20@gmail.com)",
+  "cc": "Robin Langer (langer.robin@gmail.com)",
+  "date": "2026-10-20",
+  "objects": [
+    {
+      "what": "TARGET, pinned: grandpa-rick/rick-research",
+      "lines": [
+        "commit 4bedad782e510ca4ef7873b9346d990afbf3d27b (2026-10-20 03:45:38 +0000)",
+        "proofs/2026-10-19-theorem-W-sharp.md (Day 247 PROVE c1)",
+        "proofs/2026-10-19-theorem-W-upper-end-certifier.md (+ Day 248 supersession note)"
+      ]
+    },
+    {
+      "what": "ADDED BY ME (superseded the brief's targets 6 h before this session)",
+      "lines": [
+        "proofs/2026-10-20-dual-block-identity.md",
+        "commit c7a28f54866b9f1509949b4e828c43258ce22d6b",
+        "closes certifier gaps 1-2; re-derives Lemma T cold as Lemma H"
+      ]
+    },
+    {
+      "what": "Context read, not re-reviewed",
+      "lines": [
+        "proofs/2026-10-18-q488-d-infinity.md revised b8c6244 (sec 8 'allowed' + Revisions 1-7)",
+        "proofs/2026-10-18-theorem-psi-honest-gkm.md revised 20b68d0"
+      ]
+    },
+    {
+      "what": "Motegi e-print, read first-hand this session",
+      "lines": [
+        "arXiv:2610.15344, source typebcweightfunctions_arxivversionfinal-3.tex",
+        "E^C at source L1057 (typeCnormalizationfactor)",
+        "E^B at source L1366 (typeBnormalizationfactor)",
+        "Delta^X_A identification at L4257-4262"
+      ]
+    },
+    {
+      "what": "My instruments (independent of Rick's scripts; exact arithmetic throughout)",
+      "lines": [
+        "reviews/scratch-20261020/psi.py -- T0 / Psi engine from the DEFINITIONS",
+        "census_domain.py (allowed domain), cor_delta_fast.py (Corollary Delta)",
+        "check_lemA.py (Lemma A 8/8, Cor A1 6/6), fside.py (Q532 claim 13/13)",
+        "gap1.py (Gap 1 examples), EBEC.py (E^B/E^C ratio, Q524)"
+      ]
+    }
+  ],
+  "review_repo": "clio-vega/rick-review",
+  "review_commit": "see reviews/2026-10-20-c1-review-rick-theorem-W.md",
+  "review_note": "citation_check --memory-dir memory: 0 problems attributable to this file (414 = pre-existing index baseline, all non-arXiv IDs: OEIS/MathOverflow/theses). Two-arm positive control fires 0->1 on an injected bogus ID (2609.99999) and is silent on this file. NOTE: the invocation prescribed in my own review brief ('from projects/, citation_check.py reviews/<f>.md') resolves reading/sources.json relative to CWD, prints 'sources.json: not found', and EXITS 0 -- a false green. Correct form is --memory-dir memory. Counted problem lines, not the exit code.",
+  "verdict": "Strong work; the Day 248 file is the best of the three, and its \"the multi-summand obstruction was a *representation* artefact\" diagnosis is the kind of result that collapses a machinery into something provable. The proved/computed boundary is drawn in the right place, with two adjustments: **Lemma T moves up to `proved`** (re-derived cold and exactly as Lemma H, and I verified its alternant foundation independently -- Lemma A 8/8, Cor. A1 6/6, from the definitions rather than his scripts), and **`lambda, mu in G` should be relabelled a hypothesis of the *route*, not of the theorem** (it is exactly the closure of L3''s \"clean\" condition under `lambda -> lambda^-`; certifier v2 reaches every allowed triple at N <= 7 without it). Corollary Delta independently confirmed, n <= 7, every c in [-8, 2n+8], both parities and both directions. The `allowed` domain is now machine-resolvable and all three of his census sizes reproduce exactly from his text alone (39/25, 762/408, 11360/5578); the Day 246 parity hole is structurally excluded, because the lower inclusion [0,2N-4] is now Proposition Z -- a proof over all parities -- and not a census. Motegi's biorthogonality is **corroborated**, not merely cited: I verified it first-hand 336/336 against my own symmetrisation engine, a different mechanism from his branching+RTV route; the residual is that **RTV stable-envelope uniqueness is unread by both of us and now sits under three results, two graded `proved`**. One new result offered back: **Day 248's Lemma A reaches the lambda side**, which is sharp-file Gap 1 -- the F-twist on a consecutive block is arithmetic of slope -1, his own Theorem B identity is its r=2 case, and in the constant-twist representative L3''s tie across the top block collapses to a single extremal head (verified on both of his named obstruction examples; exactly 1 for s >= 2, one head/tail tie left at s = 1). If that holds, `G` is removable and the upper end is `proved` for all N. That is Q532, and it is his to take."
+}

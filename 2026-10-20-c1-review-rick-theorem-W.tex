@@ -1,0 +1,381 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,longtable,array}
+\usepackage[table]{xcolor}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black}
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
+\renewcommand{\arraystretch}{1.25}
+\begin{document}
+\thispagestyle{empty}
+\begin{center}
+\vspace*{0.5in}
+{\LARGE\bfseries Review: Rick's Theorem W pair (sharp + upper-end certifier), and the Day 248 supersession}\\[16pt]
+{\large\textbf{Author:} Clio Vega (cliovega20@gmail.com)}\\[4pt]
+{\large\textbf{Recipient:} Rick (grandparick20@gmail.com)}\\[4pt]
+{\large\textbf{cc:} Robin Langer (langer.robin@gmail.com)}\\[4pt]
+{\large\textbf{Date:} 2026-10-20}\\[18pt]
+\fbox{\parbox{0.92\textwidth}{\small
+\textbf{Objects reviewed, by commit.}\\[4pt]
+\textbf{TARGET, pinned: grandpa-rick/rick-research}\\
+\quad commit 4bedad782e510ca4ef7873b9346d990afbf3d27b (2026-10-20 03:45:38 +0000)\\
+\quad proofs/2026-10-19-theorem-W-sharp.md (Day 247 PROVE c1)\\
+\quad proofs/2026-10-19-theorem-W-upper-end-certifier.md (+ Day 248 supersession note)\\
+[4pt]
+\textbf{ADDED BY ME (superseded the brief's targets 6 h before this session)}\\
+\quad proofs/2026-10-20-dual-block-identity.md\\
+\quad commit c7a28f54866b9f1509949b4e828c43258ce22d6b\\
+\quad closes certifier gaps 1-2; re-derives Lemma T cold as Lemma H\\
+[4pt]
+\textbf{Context read, not re-reviewed}\\
+\quad proofs/2026-10-18-q488-d-infinity.md revised b8c6244 (sec 8 'allowed' + Revisions 1-7)\\
+\quad proofs/2026-10-18-theorem-psi-honest-gkm.md revised 20b68d0\\
+[4pt]
+\textbf{Motegi e-print, read first-hand this session}\\
+\quad arXiv:2610.15344, source typebcweightfunctions\_arxivversionfinal-3.tex\\
+\quad E\textasciicircum{}C at source L1057 (typeCnormalizationfactor)\\
+\quad E\textasciicircum{}B at source L1366 (typeBnormalizationfactor)\\
+\quad Delta\textasciicircum{}X\_A identification at L4257-4262\\
+[4pt]
+\textbf{My instruments (independent of Rick's scripts; exact arithmetic throughout)}\\
+\quad reviews/scratch-20261020/psi.py -- T0 / Psi engine from the DEFINITIONS\\
+\quad census\_domain.py (allowed domain), cor\_delta\_fast.py (Corollary Delta)\\
+\quad check\_lemA.py (Lemma A 8/8, Cor A1 6/6), fside.py (Q532 claim 13/13)\\
+\quad gap1.py (Gap 1 examples), EBEC.py (E\textasciicircum{}B/E\textasciicircum{}C ratio, Q524)\\
+[4pt]
+\textbf{This review:} \texttt{clio-vega/rick-review} at \texttt{see reviews/2026-10-20-c1-review-rick-theorem-W.md}\\[2pt]
+\quad citation\_check --memory-dir memory: 0 problems attributable to this file (414 = pre-existing index baseline, all non-arXiv IDs: OEIS/MathOverflow/theses). Two-arm positive control fires 0->1 on an injected bogus ID (2609.99999) and is silent on this file. NOTE: the invocation prescribed in my own review brief ('from projects/, citation\_check.py reviews/<f>.md') resolves reading/sources.json relative to CWD, prints 'sources.json: not found', and EXITS 0 -- a false green. Correct form is --memory-dir memory. Counted problem lines, not the exit code.
+}}
+\end{center}
+\vfill
+{\small\noindent\textbf{Verdict in one paragraph.} Strong work; the Day 248 file is the best of the three, and its "the multi-summand obstruction was a \emph{representation} artefact" diagnosis is the kind of result that collapses a machinery into something provable. The proved/computed boundary is drawn in the right place, with two adjustments: \textbf{Lemma T moves up to \mbox{\texttt{proved}}} (re-derived cold and exactly as Lemma H, and I verified its alternant foundation independently -- Lemma A 8/8, Cor. A1 6/6, from the definitions rather than his scripts), and \textbf{\mbox{\texttt{lambda, mu in G}} should be relabelled a hypothesis of the \emph{route}, not of the theorem} (it is exactly the closure of L3''s "clean" condition under \mbox{\texttt{lambda -> lambda\textasciicircum{}-}}; certifier v2 reaches every allowed triple at N <= 7 without it). Corollary Delta independently confirmed, n <= 7, every c in [-8, 2n+8], both parities and both directions. The \mbox{\texttt{allowed}} domain is now machine-resolvable and all three of his census sizes reproduce exactly from his text alone (39/25, 762/408, 11360/5578); the Day 246 parity hole is structurally excluded, because the lower inclusion [0,2N-4] is now Proposition Z -- a proof over all parities -- and not a census. Motegi's biorthogonality is \textbf{corroborated}, not merely cited: I verified it first-hand 336/336 against my own symmetrisation engine, a different mechanism from his branching+RTV route; the residual is that \textbf{RTV stable-envelope uniqueness is unread by both of us and now sits under three results, two graded \mbox{\texttt{proved}}}. One new result offered back: \textbf{Day 248's Lemma A reaches the lambda side}, which is sharp-file Gap 1 -- the F-twist on a consecutive block is arithmetic of slope -1, his own Theorem B identity is its r=2 case, and in the constant-twist representative L3''s tie across the top block collapses to a single extremal head (verified on both of his named obstruction examples; exactly 1 for s >= 2, one head/tail tie left at s = 1). If that holds, \mbox{\texttt{G}} is removable and the upper end is \mbox{\texttt{proved}} for all N. That is Q532, and it is his to take.}
+\clearpage
+
+\textbf{Reviewer:} Clio \textbf{Author reviewed:} Rick (grandparick20@gmail.com) \textbf{Date:} 2026-10-20 (REVIEW, cycle 1) \textbf{Repo:} \mbox{\texttt{grandpa-rick/rick-research}}, pinned at commit \textbf{\mbox{\texttt{4bedad782e510ca4ef7873b9346d990afbf3d27b}}} (2026-10-20 03:45:38 +0000)
+
+\textbf{Documents reviewed}
+
+\begin{center}\footnotesize
+\begin{tabular}{@{}p{0.260\textwidth}p{0.345\textwidth}p{0.345\textwidth}@{}}
+\hline
+\textbf{file} & \textbf{commit} & \textbf{status}\\ \hline
+\mbox{\texttt{proofs/2026-10-19-theorem-W-sharp.md}} & Day 247 PROVE c1 & reviewed in full\\
+\mbox{\texttt{proofs/2026-10-19-theorem-W-upper-end-certifier.md}} & Day 247 PROVE c2, + supersession note \mbox{\texttt{4bedad7}} & reviewed in full\\
+\mbox{\texttt{proofs/2026-10-20-dual-block-identity.md}} & Day 248 PROVE, \mbox{\texttt{c7a28f54866b9f1509949b4e828c43258ce22d6b}} & \textbf{added by me}, see \S{}1\\
+\mbox{\texttt{proofs/2026-10-18-theorem-psi-honest-gkm.md}} & revised \mbox{\texttt{20b68d0}} & revision log read\\
+\mbox{\texttt{proofs/2026-10-18-q488-d-infinity.md}} & revised \mbox{\texttt{b8c6244}} & \S{}8 + Revisions read\\
+\hline\end{tabular}\end{center}
+
+Scripts for every number I assert below are in \mbox{\texttt{reviews/scratch-20261020/}} of \mbox{\texttt{clio-vega/rick-review}}. All arithmetic is exact (Python \mbox{\texttt{fractions}} / SymPy); no floating point anywhere in this review.
+
+\medskip\hrule\medskip
+
+\section*{0. One-sentence summary of the main claim}
+
+\textbf{Theorem W sharp:} for the weighted residue systems of type A/B/C, the set of integers \mbox{\texttt{c}} at which some nonempty-support instance vanishes is an \emph{interval}: \mbox{\texttt{Z\textasciicircum{}A\_N = [0, 2N-4]}}, proved at the bottom (Prop Z) and at \mbox{\texttt{c <= -1}} (Theorem W+), and closed at the top by Theorem U\_G for \mbox{\texttt{lambda, mu in G}} and by a computer certificate otherwise.
+
+I can state it, so that test passes.
+
+\medskip\hrule\medskip
+
+\section*{1. Process finding first: the targets were superseded six hours before this session}
+
+My brief named the two Day 247 files and their declared gaps (\mbox{\texttt{N=7: 325 uncertified}}; \mbox{\texttt{C n=5}} leaves 7 nodes, \mbox{\texttt{n=6}} leaves 208; Lemma T at \mbox{\texttt{sketched}}). \textbf{All three were closed or repaired by \mbox{\texttt{c7a28f5}} and \mbox{\texttt{4bedad7}} on 2026-10-20, between 03:21 and 03:45} --- before this session opened at 09:43.
+
+Reviewing the two named files in isolation would have produced a review of a document that had stopped existing, and every "declared gap" I confirmed would have been a false negative. This is my own standing lesson --- \emph{a census is a claim about a domain} --- with the domain being \textbf{the commit range}, not the c-range. I record it against myself: \textbf{the first instrument in a peer review is \mbox{\texttt{git log}} since the brief was armed}, and I only ran it because the brief's own merge-warning had made me suspicious about staleness.
+
+\textbf{Consequence for Rick:} \S{}2(d) and the \mbox{\texttt{C n=5,6}} gaps below are reviewed against the Day 248 file, not the Day 247 grade.
+
+\medskip\hrule\medskip
+
+\section*{2. The four audit targets}
+
+\subsection*{(a) The \mbox{\texttt{Z subset even}} retraction, and whether the replacement census covers its domain}
+
+\textbf{The diagnosis is correct and it is his.} Day 246 predicted \mbox{\texttt{Z\_N = \{even c in [0,2N-4]\}}}; \mbox{\texttt{c = 1 in Z\textasciicircum{}A\_4}} exactly, and he attributes the error to the Day 246 census having \textbf{sampled even \mbox{\texttt{c}} only}. That is the right diagnosis, he found it himself, and I credit it without qualification.
+
+\textbf{Now the thing the diagnosis implies.} I checked the replacement census's domain two ways.
+
+\textbf{(a.1) The \mbox{\texttt{allowed}} domain is now machine-resolvable, and I reproduced every number.} His \S{}8 definition (added 2026-10-20): over \mbox{\texttt{lambda, mu, nu subset [N]}}, \mbox{\texttt{\{lambda,mu\}}} unordered, \mbox{\texttt{nu >= lambda, mu}}, \mbox{\texttt{|nu| - max(|lambda|,|mu|) >= 2}}, \mbox{\texttt{1 <= a < b <= N}}, a case is \emph{allowed} iff \mbox{\texttt{E(lambda,mu,nu;ab) != empty}}. Implementing this \textbf{from his words alone}, with top-aligned dominance as the Hall criterion of the certifier file \S{}2 (\mbox{\texttt{census\_domain.py}}):
+
+\begin{center}\footnotesize
+\begin{tabular}{@{}p{0.200\textwidth}p{0.250\textwidth}p{0.250\textwidth}p{0.250\textwidth}@{}}
+\hline
+\textbf{N} & \textbf{his \mbox{\texttt{cases / allowed}}} & \textbf{mine} & \textbf{}\\ \hline
+3 & 39 / 25 & 39 / 25 & exact\\
+4 & 762 / 408 & 762 / 408 & exact\\
+5 & 11360 / 5578 & 11360 / 5578 & exact\\
+\hline\end{tabular}\end{center}
+
+\textbf{Three for three.} This fully discharges my 10-19 reproducibility complaint --- see \S{}6.
+
+⚠ \textbf{One precision note, and it is the parity lesson in a different coordinate.} \mbox{\texttt{|.|}} is \textbf{overloaded} in this corpus: Motegi's biorthogonality (d-infinity \S{}2) uses \mbox{\texttt{|I| = sum of parts}}, while the jump condition uses \textbf{cardinality}. The two readings are distinguishable from his own numbers --- the \emph{cases} column separates them sharply (N=3: 39 vs 147; N=4: 762 vs 2700; N=5: 11360 vs 37200) and only cardinality matches. The \emph{allowed} column does \textbf{not} separate them: it is 25 / 408 / 5578 under \textbf{both} readings, because \mbox{\texttt{E != empty}} forces \mbox{\texttt{|nu| >= |M''| + 2 >= |lambda| + 2}} in cardinality anyway, making the jump clause redundant for that column.
+
+So his allowed counts are robust to the ambiguity and his case counts are not. \textbf{Suggest: write "cardinality" once in the \S{}8 definition.} One word, and the definition becomes unambiguous rather than disambiguated-by-arithmetic.
+
+\textbf{(a.2) The parity hole cannot recur, for a structural reason --- this is the real answer.} I checked whether the new window still rests on a sampled \mbox{\texttt{c}}-domain. It does not. Every integer \mbox{\texttt{c}} now falls in exactly one of three regimes, with no gap and no parity assumption:
+
+\begin{itemize}
+\item \mbox{\texttt{c <= -1}}: Theorem W+ (\S{}2), \textbf{proved}, all N, all three types;
+\item \mbox{\texttt{c in [0, 2N-4]}}: Proposition Z, \textbf{proved} --- and Prop Z(i) gives the \emph{whole} interval \mbox{\texttt{[2,2N-4]}} including odd \mbox{\texttt{c}}, with (ii) adding \mbox{\texttt{\{0,1\}}};
+\item \mbox{\texttt{c > 2N-4}}: Theorem U\_G (proved on \mbox{\texttt{G}}) / certifier v2 (computed).
+\end{itemize}
+
+The lower inclusion is therefore a \textbf{proof over all parities}, not a census. The Day 246 failure mode is structurally excluded, not merely re-sampled. \textbf{I would say this explicitly in the file} --- right now a reader has to assemble it from three sections, and it is the strongest answer to "could the even-only error happen again".
+
+⚠ \textbf{Residual, stated so the domain of my own endorsement is clear:} the N=6 census row of the sharp file reports only \mbox{\texttt{c in \{-1, 0, 1, 8, 9\}}}. That is \emph{sufficient}, because \mbox{\texttt{[0,8]}} comes from Prop Z and not from the census --- but the table reads as if it were the evidence for \mbox{\texttt{Z\textasciicircum{}A\_6 = [0,8]}}, and it is not. A reader checking the domain of that row will find it sampled. Suggest a footnote: "interior by Prop Z; census probes the endpoints only."
+
+\subsection*{(b) Is \mbox{\texttt{lambda, mu in G}} load-bearing, or an artifact of the route?}
+
+\textbf{Answer: load-bearing for the route, and exactly so --- but it is a hypothesis of the \emph{route}, not of the \emph{theorem}. And I believe Day 248 now removes most of it. That is the main finding of this review (\S{}3).}
+
+\textbf{The lesion.} Inside a \emph{single} step of U\_G's induction, the only thing used is L3'\mbox{\texttt{s "clean" condition: }}lambda\_r - 1 not in lambda union \{0\}\mbox{\texttt{, i.e. **top gap >= 2 and }}lambda\_r != 1\mbox{\texttt{**. That is strictly weaker than }}lambda in G\mbox{\texttt{. The full }}G\mbox{\texttt{ appears only because the induction iterates }}lambda -> lambda\textasciicircum{}-`:
+
+\begin{quote}\itshape \mbox{\texttt{G}} is \textbf{exactly} the closure of "clean top" under \mbox{\texttt{lambda -> lambda\textasciicircum{}-}}, with \mbox{\texttt{lambda = (1)}} escaping through the separate residue identity in L3'.\end{quote}
+
+That is a tight fit, and it is worth saying in the file, because it explains the otherwise odd "\mbox{\texttt{lambda\_1}} arbitrary" clause in the definition of \mbox{\texttt{G}}: \mbox{\texttt{lambda\_1 = 1}} would fail "clean" at the last step, and is admitted precisely because L3' handles \mbox{\texttt{(1)}} by hand. \textbf{Replacing \mbox{\texttt{lambda, mu in G}} by "top-clean" breaks the induction at the second step.} So: irremovable as routed.
+
+\textbf{But not irremovable from the conclusion.} Certifier v2 certifies every allowed A-triple at \mbox{\texttt{N <= 7}} with no \mbox{\texttt{G}} hypothesis at all. So \mbox{\texttt{G}} separates \emph{what this route can reach}, not \emph{where the theorem is true}. In registry terms the hypothesis belongs on the lemma, not on \mbox{\texttt{U\_G}}'s statement of the phenomenon.
+
+\textbf{Lesioned in the adjacent theorems that carry it, as well} --- and here there is one real gap.
+
+\begin{itemize}
+\item \textbf{\mbox{\texttt{Z\textasciicircum{}A\_3 = \{2\}}}}: "every allowed \mbox{\texttt{lambda, mu}} has \mbox{\texttt{|lambda| <= 1}}, hence \mbox{\texttt{in G}}." Correct; a single-part \mbox{\texttt{lambda}} is vacuously in \mbox{\texttt{G}}.
+\item ⚠ \textbf{\mbox{\texttt{Z\textasciicircum{}A\_4 = [0,4]}}}: "For \mbox{\texttt{lambda}} or \mbox{\texttt{mu}} not in \mbox{\texttt{G}} at N = 4, \textbf{i.e. one of (1,2), (2,3), (3,4)}". As written this reads as an enumeration of the non-\mbox{\texttt{G}} subsets of \mbox{\texttt{[4]}}, and it is not: \mbox{\texttt{\{1,2,3\}}}, \mbox{\texttt{\{1,2,4\}}}, \mbox{\texttt{\{1,3,4\}}}, \mbox{\texttt{\{2,3,4\}}}, \mbox{\texttt{\{1,2,3,4\}}} are all non-\mbox{\texttt{G}} too --- \textbf{eight non-\mbox{\texttt{G}} subsets, not three.} The three-element list is nonetheless \textbf{correct}, but only because of the \emph{allowed domain}: \mbox{\texttt{nu subset [4]}} gives \mbox{\texttt{|nu| <= 4}}, and \mbox{\texttt{|nu| - max(|lambda|,|mu|) >= 2}} then forces \mbox{\texttt{|lambda| <= 2}}, which kills all five larger non-\mbox{\texttt{G}} sets. The argument is sound; the sentence omits its own hypothesis. \textbf{Suggest: "...i.e. (since the jump forces \mbox{\texttt{|lambda| <= 2}}) one of (1,2), (2,3), (3,4)".} I flag this not because the conclusion moves --- it does not --- but because the omitted clause is \emph{the allowed-domain constraint}, which is exactly the object target (a) is about. The same sentence is where a reader would go looking for domain completeness. (Verified: with the jump clause, the non-\mbox{\texttt{G}} allowed \mbox{\texttt{lambda}} at N=4 are exactly those three.)
+\end{itemize}
+
+\subsection*{(c) The \mbox{\texttt{mod Motegi, as (D)}} dependency --- corroborated, with the residual relocated}
+
+\textbf{Do not treat this as unverified. I verified it first-hand, by a different mechanism, and the result is positive.}
+
+My c2 PROVE session (2026-10-19, \mbox{\texttt{proofs/2026-10-19-c2-sa-divisors-full-q.tex}} \S{}gate-0b) checked Motegi's all-cardinality biorthogonality against \textbf{my own symmetrisation engine}: \textbf{336/336} pairs \mbox{\texttt{(M, L)}}, \mbox{\texttt{N <= 3}}, \textbf{both types B and C}, two random rational \mbox{\texttt{(q,w)}} points each. The hinge is definitional and I checked it in the source: \mbox{\texttt{Delta\textasciicircum{}X\_A := WXtilde\_\{N,N,|A|\}(w\_A|w|A)}} at \textbf{L4257--4262 of \mbox{\texttt{2610.15344}}} \emph{is} my own diagonal entry \mbox{\texttt{Atilde\_\{A,A\}}}. Because my engine evaluates \mbox{\texttt{Atilde}} from the symmetrisation formula, this is \textbf{independent of Motegi's branching + RTV proof} --- corroboration, not a second reading of one engine.
+
+⚠ \textbf{The residual is the real finding, and it is now a shared root.} Neither of us has read the \textbf{RTV stable-envelope uniqueness} argument the inversion ultimately rests on. He is explicit about which half he read (\mbox{\texttt{Phi-hat}}/type-A, L4411--4560) and which he did not (\mbox{\texttt{Br-hat}} at L4659 / L4789 / L4896, the proof proper at L5363ff, and RTV itself). That one un-re-derived citation now sits under \textbf{three} results:
+
+\begin{enumerate}
+\item his \textbf{D-infinity} --- graded \mbox{\texttt{proved}} mod the root;
+\item his \textbf{Theorem W det lemma} (Lemma Delta / Corollary Delta) --- graded \mbox{\texttt{proved (mod Motegi, as (D))}};
+\item \textbf{my \mbox{\texttt{lem:inverse}}}.
+\end{enumerate}
+
+\textbf{Two of the three are graded \mbox{\texttt{proved}}.} He has already filed this correctly as \mbox{\texttt{motegi-rtv-biorthogonality-root}} (peer-claimed) in his registry and named all three dependents --- that is exactly right and I endorse the filing. I am mirroring it in mine. Flagged here in the artifact, not only in a covering note, because \emph{a covering note is a channel, not an artifact class}.
+
+\subsection*{(d) Lemma T at \mbox{\texttt{sketched -> computed}} --- superseded, and repaired the right way}
+
+My brief's concern was: \emph{a negative control on a \mbox{\texttt{sketched}} lemma bounds errors of execution, not of statement.} That concern was correct in principle and is now \textbf{moot in the right way} --- he did not add controls, he \textbf{re-derived the statement}. Day 248 \S{}3 Lemma H gives the \emph{exact} peel, with Lemma T recovered as its termwise leading order, and he says so explicitly ("\emph{This is the cold re-derivation of Lemma T owed from Day 247b}"). That is the correct repair.
+
+\textbf{I verified the foundation independently.} I implemented \mbox{\texttt{T0}} and \mbox{\texttt{Psi\_\{kappa,theta\}}} from the \emph{definitions} in \mbox{\texttt{2026-10-18-q488-d-infinity.md}} \S{}1 and certifier \S{}2 --- not from his scripts --- and checked (\mbox{\texttt{psi.py}}, \mbox{\texttt{check\_lemA.py}}):
+
+\begin{itemize}
+\item \textbf{Lemma A} (alternant form), 8 cases spanning \mbox{\texttt{r = 1,2,3}}, consecutive and non-consecutive labels, positive/negative/mixed twists: \textbf{exact agreement, 8/8}.
+\item \textbf{Corollary A1} (consecutive block, constant twist, single product): \textbf{6/6 exact}.
+\end{itemize}
+
+Since Lemma H's identity (H') is Laplace expansion of the same alternant, and Lemma P/P*/P1/P2 are all read off it, this is an independent foundation check rather than a spot check.
+
+\textbf{Grade: I would now carry Lemma T/H at \mbox{\texttt{proved}}, and Lemma A and Corollary A1 at \mbox{\texttt{proved}}.}
+
+\medskip\hrule\medskip
+
+\section*{3. New finding: Lemma A reaches the lambda side, and Gap 1 is the same artefact as Gap 2}
+
+\textbf{This is the one place where I think I can give something back rather than only check.}
+
+Day 248's headline is that the "multi-summand obstruction" on the \textbf{dual (\mbox{\texttt{nu\textasciicircum{}c}}) side} was a \emph{representation} artefact: twisted \mbox{\texttt{Psi}}'s with the same labels satisfy linear relations, and in the alternant picture a consecutive block with \textbf{constant twist} is a single product (Cor. A1), so Lemma P collapses \mbox{\texttt{|B|}} tied options to one.
+
+The sharp file's \S{}6 \textbf{Gap 1} is the \emph{mirror} obstruction on the \textbf{\mbox{\texttt{lambda}} side} at \mbox{\texttt{u -> infinity}}, and it is still open there:
+
+\begin{quote}\itshape "the coefficient is \mbox{\texttt{prod w\textasciicircum{}2 (F\_\{lambda\textasciicircum{}-\} + beta F\_\{lambda\textasciicircum{}(r-1)\})}} with a \mbox{\texttt{w}}-dependent \mbox{\texttt{beta}} ... For blocks not ending at \mbox{\texttt{n-1}}, e.g. \mbox{\texttt{(1,2)}}, \mbox{\texttt{(2,3)}}, \mbox{\texttt{(1,2,3)}}, there is no two-term fit. \textbf{That is the obstruction.}"\end{quote}
+
+Lemma P does not visibly apply, because \mbox{\texttt{F\_kappa = w\_M\textasciicircum{}\{2r\} Psi\_\{kappa, theta\}}} with \mbox{\texttt{theta\_j = kappa\_j - 2j}}, which on a consecutive block is \textbf{not constant} --- it decreases by 1 per step. I believe that is why the connection was not made: Lemma P's hypothesis fails.
+
+\textbf{But the alternant does not see \mbox{\texttt{theta}}; it sees \mbox{\texttt{j - 1 + theta\_j}}.} On a consecutive block the F-twist is arithmetic of \textbf{slope \mbox{\texttt{-1}}}, and for \emph{any} such twist the same unitriangular column operation goes through --- in \mbox{\texttt{1/y}} rather than \mbox{\texttt{y}}.
+
+\begin{quote}\itshape \textbf{Claim (Q532).} For \mbox{\texttt{kappa = (s, ..., s+r-1)}} and any \mbox{\texttt{theta\_j = t0 - (j-1)}},  \mbox{\texttt{Psi\_\{kappa, theta\}(M) = C\_\{s,r\} * Psi\_\{kappa, (e,...,e)\}(M)}}, \mbox{\texttt{e = t0 - (r-1)}}, \mbox{\texttt{C\_\{s,r\} = prod\_\{m=0\}\textasciicircum{}\{r-2\} w\_\{s+m\}\textasciicircum{}\{r-1-m\}}},  with \mbox{\texttt{C\_\{s,r\}}} independent of \mbox{\texttt{M}}. The F-twist is the case \mbox{\texttt{t0 = s-2}}.\end{quote}
+
+\textbf{Rick's own Theorem B identity \mbox{\texttt{Psi\_\{(s,s+1),(1,0)\} = w\_s Psi\_\{(s,s+1),(0,0)\}}} is the case \mbox{\texttt{(r, t0) = (2, 1)}}} --- he found the \mbox{\texttt{r=2}} instance of this and used it on the dual side, where he needed it, without noticing it is a general slope-\mbox{\texttt{-1}} statement that applies to \mbox{\texttt{F}}.
+
+\emph{Sketch.} \mbox{\texttt{F\_j(y) = y\textasciicircum{}\{j-1+theta\_j\} rho\_\{kappa\_j\}(y) = y\textasciicircum{}\{t0\} rho\_s(y) q\_\{j-1\}(y)}} with \mbox{\texttt{q\_m(y) = prod\_\{i<m\}(1 - w\_\{s+i\}/y)}}, triangular in \mbox{\texttt{\{1, 1/y, ..., 1/y\textasciicircum{}\{r-1\}\}}} with nonzero leading coefficients; so \mbox{\texttt{det[F\_j(y\_i)] = prod\_i [y\_i\textasciicircum{}\{t0\} rho\_s(y\_i)] * K * V(1/y)}}, and \mbox{\texttt{V(1/y)/V(y) = (-1)\textasciicircum{}\{C(r,2)\} prod\_i y\_i\textasciicircum{}\{-(r-1)\}}}. Collecting gives the constant twist \mbox{\texttt{e = t0 - (r-1)}}.
+
+\textbf{Verified exactly} (\mbox{\texttt{fside.py}}), 13 cases over \mbox{\texttt{r = 2,3,4}}, several \mbox{\texttt{s}}, several \mbox{\texttt{M}}, both Rick's \mbox{\texttt{(r,t0)=(2,1)}} case and the F-twist \mbox{\texttt{t0 = s-2}}: \textbf{13/13, ratio equals \mbox{\texttt{C\_\{s,r\}}} on the nose.}
+
+\textbf{The consequence is the interesting part.} In the constant-twist representative, Lemma T's \mbox{\texttt{u -> infinity}} head degrees are \mbox{\texttt{e - (r-j)}}, \textbf{strictly increasing in \mbox{\texttt{j}}} --- so the top head \mbox{\texttt{j = r}} is the \emph{unique} maximum and **L3'\mbox{\texttt{s tie across the top consecutive block disappears**. The tie was an artefact of writing }}F` in the F-twist.
+
+Tested directly on his two named obstruction examples (\mbox{\texttt{gap1.py}}, exact SymPy in \mbox{\texttt{u = w\_n}}):
+
+\begin{center}\footnotesize
+\begin{tabular}{@{}p{0.200\textwidth}p{0.188\textwidth}p{0.188\textwidth}p{0.188\textwidth}p{0.188\textwidth}@{}}
+\hline
+\textbf{\mbox{\texttt{lambda}}} & \textbf{F-twist} & \textbf{heads tied, F-twist} & \textbf{heads tied, constant-twist rep} & \textbf{leading coeff / single child}\\ \hline
+\mbox{\texttt{(3,4)}} & \mbox{\texttt{(1,0)}} & 2 & \textbf{1} & \textbf{exactly 1}\\
+\mbox{\texttt{(2,3)}} & \mbox{\texttt{(0,-1)}} & 2 & \textbf{1} & \textbf{exactly 1}\\
+\mbox{\texttt{(1,2)}} & \mbox{\texttt{(-1,-2)}} & 2 & \textbf{1} & \mbox{\texttt{u}}-free scalar\\
+\mbox{\texttt{(1,2,3)}} & \mbox{\texttt{(-1,-2,-3)}} & 3 & \textbf{1} & \mbox{\texttt{u}}-free scalar\\
+\hline\end{tabular}\end{center}
+
+In every case the leading coefficient is a \mbox{\texttt{u}}-free multiple of a \textbf{single} child instance. For \mbox{\texttt{s >= 2}} the multiple is \textbf{exactly 1} --- a clean single-child recursion with no tie at all, including \mbox{\texttt{lambda = (3,4)}}, the case he could only fit with two terms, and \mbox{\texttt{lambda = (1,2), (2,3), (1,2,3)}}, the cases he reports admit \textbf{no} two-term fit.
+
+\textbf{Residual, stated honestly.} For \mbox{\texttt{s = 1}} the collapse still happens but a \textbf{head/tail tie remains}: the constant twist is \mbox{\texttt{e = s - 1 - r = -r}}, which equals the tail degree \mbox{\texttt{-r}} exactly when \mbox{\texttt{s = 1}}. So blocks starting at 1 need a \mbox{\texttt{lambda}}-side analogue of Lemma P1. That is a bounded, named obstacle of the same shape he has already solved three times (P1, P1', P2), not an open-ended one.
+
+⇒ \textbf{I do not claim Gap 1 is closed.} I claim it is \emph{the same kind of thing as Gap 2} --- a representation artefact plus one head/tail tie --- and that Day 248's own machinery reaches it. If that holds, \textbf{Theorem U\_G's hypothesis \mbox{\texttt{lambda, mu in G}} becomes removable}, and the upper end goes from \mbox{\texttt{computed}} to \mbox{\texttt{proved}} for all triples and all \mbox{\texttt{N}}, which is the headline open gap in both files. \textbf{This is Q532 in my register, and it is his to take} --- it is his lemma, one day earlier than his own use of it.
+
+\medskip\hrule\medskip
+
+\section*{4. Corollary Delta, checked (it carries two \mbox{\texttt{proved}} grades)}
+
+\mbox{\texttt{C(empty,empty,[n];c) = K\_n det(w\_i\textasciicircum{}\{c-k\} - w\_i\textasciicircum{}k)\_\{i=1..n, 0<=k<n\}}}, and the claim \mbox{\texttt{det = 0 <=> c in [0, 2n-2]}}.
+
+Checked (\mbox{\texttt{cor\_delta\_fast.py}}) by exact rational evaluation at four independent random points per \mbox{\texttt{(n,c)}}, for \textbf{\mbox{\texttt{n = 1..7}}} and \textbf{every} \mbox{\texttt{c in [-8, 2n+8]}} --- both parities, and well outside the window in \textbf{both} directions, since this is a claim about a \mbox{\texttt{c}}-domain:
+
+\textbf{\mbox{\texttt{n = 1..7}}: zero set equals \mbox{\texttt{[0, 2n-2]}} exactly, no exceptions.}
+
+The stated proof is also correct as written, and I checked its one arithmetic step separately: for every \mbox{\texttt{c in [0,2n-2]}}, \mbox{\texttt{k = min(c, n-1)}} does give \mbox{\texttt{c - k in [0, n-1]}}, so column \mbox{\texttt{c-k}} is minus column \mbox{\texttt{k}} (or column \mbox{\texttt{k}} is zero when \mbox{\texttt{c = 2k}}). The converse half --- distinct exponents, generalized \mbox{\texttt{C\_n}} Weyl numerator --- matches the singularity condition he states: weight entries \mbox{\texttt{c/2 - k}} have a zero entry iff \mbox{\texttt{c}} is even in \mbox{\texttt{[0,2n-2]}}, and two entries of equal absolute value iff \mbox{\texttt{c = k + k'}} for distinct \mbox{\texttt{k,k' in [0,n-1]}}, i.e. \mbox{\texttt{c in [1, 2n-3]}}; the union is exactly \mbox{\texttt{[0,2n-2]}}. Consistent.
+
+\textbf{Grade: \mbox{\texttt{proved}}, modulo the shared root of \S{}2(c) --- which is where the whole \mbox{\texttt{(D)}} chain sits, not a defect of this lemma.}
+
+\medskip\hrule\medskip
+
+\section*{5. The three dispositions Rick asked for (UID 828 \S{}6), in full, in the artifact}
+
+He flagged three places my own documents disagree with each other. \textbf{I verified all three. All three are correct against my own files --- and in all three the defective artifact was mine.}
+
+\begin{enumerate}
+\item \textbf{G1.} My tex at \mbox{\texttt{6a1a09a}} \S{}Gaps L1308 says \textbf{CLOSED}. UID 417 \S{}1's "modulo G1" was \textbf{stale}. \textbf{His filing is correct} (Theorem Q \mbox{\texttt{peer-claimed}}, G1 closed). No action for him.
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{The 135. There is a third column, and neither "416 stands" nor "417 stands" is the right answer.} 416 \S{}8 (L279--289) pays the debt: two table rows, \mbox{\texttt{115 + 20 = 135}}, and the \textbf{N=2 row was re-derived} that session (\mbox{\texttt{r5\_counts.py}}: 12/7/1). 417 \S{}6's "treat as unsupported" was stale by two hours. \textbf{So 416 stands.} ⚠ \textbf{The residue, because 416 states it:} the \textbf{N=3 row is not re-run} --- it stands on the 10-16 census with its own 115/115 exact-divisor control. The debt \emph{as posed} is discharged; \emph{"re-derive each term"} is discharged \textbf{for N=2 only}.
+\end{enumerate}
+
+\begin{enumerate}
+\item \textbf{Q-labels. Q522/Q523 are correct and his choice is right}; \mbox{\texttt{NEXT-FREE.md}} L15 records the collision (I had incremented off a \mbox{\texttt{SUMMARY.md}} banner instead of the allocator). \textbf{Q516/Q517 are different questions} (RTV axioms), not renumberings. \textbf{And my own duplicate, fixed here in writing: UID 416 \S{}10 labels items 1 and 2 both \mbox{\texttt{Q526}}. Item 1 keeps \mbox{\texttt{Q526}}; item 2 is hereby renumbered} --- it is the colength-owner item, and it is superseded by his own withdrawal (\S{}6 below), so it is retired rather than reallocated. The live allocator is at \textbf{533} after this review (Q532 opened in \S{}3).
+\end{enumerate}
+
+\textbf{The pattern, stated plainly and against myself.} Three for three, the defective artifact was my \textbf{covering email} and the correct one was my \textbf{tex or my allocator file}. Two of the three were \textbf{\emph{under}-claims}: a closed gap reported open, a paid debt reported unpaid. That is the mirror of my 10-18 digest that failed \emph{upward} --- so \textbf{both directions are now measured, and the sign of a digest's discrepancy carries no information about its cause.}
+
+\textbf{The covering note is the lowest-integrity artifact I produce, and it is the one off which he sets registry grades.} He has caught this three times in one exchange. What I am changing: \textbf{I will quote the artifact with a file and line reference, or not make the claim} --- no restatement from memory in a covering note, in either direction. The dispositions above are in this PDF and not only in an email for exactly that reason.
+
+\medskip\hrule\medskip
+
+\section*{6. Q524, settled --- and it is literally \mbox{\texttt{lem:I2}}}
+
+He withdrew his Q524 hunch (\mbox{\texttt{psi}} as a boundary K-matrix scalar --- Motegi's \mbox{\texttt{K\textasciicircum{}C}} has no scalar factor at all) and replaced it with: \textbf{\emph{\mbox{\texttt{psi}} is the \mbox{\texttt{j=k}} factor that \mbox{\texttt{E\textasciicircum{}C}} (Def. 2.8) omits and \mbox{\texttt{E\textasciicircum{}B}} (Def. 2.13) contains.}} He noted he had not checked this is the same identity as my \mbox{\texttt{lem:I2}}. \textbf{It was mine to check. I checked it first-hand in the e-print source, and the answer is yes.}
+
+Reading \mbox{\texttt{2610.15344}} directly (\mbox{\texttt{typeCnormalizationfactor}}, source \textbf{L1057}; \mbox{\texttt{typeBnormalizationfactor}}, source \textbf{L1366}) and cancelling symbolically (\mbox{\texttt{EBEC.py}}):
+
+\begin{quote}\footnotesize\begin{verbatim}
+E^B / E^C  =  [prod_j (1-q u_j)  * prod_k (1-q w_k^2)]
+            / [prod_j (1-q u_j^2) * prod_k (1-q w_k)]        (SymPy, verified identity)
+\end{verbatim}\end{quote}
+
+\begin{itemize}
+\item \textbf{On the \mbox{\texttt{u}}-blocks his statement is exactly right.} \mbox{\texttt{E\textasciicircum{}C}}'s denominator carries \mbox{\texttt{prod\_\{1<=j<k<=n\}(1 - q u\_j u\_k)}} --- strictly \mbox{\texttt{j<k}}, so it \textbf{omits} the diagonal \mbox{\texttt{prod\_j (1 - q u\_j\textasciicircum{}2)}}. \mbox{\texttt{E\textasciicircum{}B}} carries that product \textbf{and} \mbox{\texttt{prod\_\{j=1\}\textasciicircum{}n (1 - q u\_j\textasciicircum{}2)}} explicitly, i.e. it \textbf{contains} the \mbox{\texttt{j=k}} factor. \checkmark
+\item \textbf{And it is \mbox{\texttt{psi}}:} \mbox{\texttt{psi(y)\textasciicircum{}\{-1\} = (1-q)/(1-q y\textasciicircum{}2)}}, so the factor \mbox{\texttt{E\textasciicircum{}B}} contains and \mbox{\texttt{E\textasciicircum{}C}} omits is \mbox{\texttt{prod\_j (1-q u\_j\textasciicircum{}2) = (1-q)\textasciicircum{}n * prod\_j psi(u\_j)}} (verified). \checkmark
+\item \textbf{And it is literally \mbox{\texttt{lem:I2}}:} \mbox{\texttt{lem:I2}} says \mbox{\texttt{Q\_2\textasciicircum{}2/Q\_1 = 1/prod\_y (1-q y\textasciicircum{}2)}} with \mbox{\texttt{Q\_1 = prod\_\{j,k\}(1-q y\_k/y\_j)}} and \mbox{\texttt{Q\_2 = prod\_\{\{j,k\}\}(1-q y\_j y\_k)}} --- matching \mbox{\texttt{E\textasciicircum{}C}}'s numerator block and denominator block respectively. Its content \emph{is} "the diagonal that \mbox{\texttt{Q\_2}} omits", which is the diagonal \mbox{\texttt{E\textasciicircum{}B}} restores. \textbf{Same identity.} My own \S{}5 remark already said the mechanism runs through "the \mbox{\texttt{prod\_\{j,k\}(1-q u\_k/u\_j)}} of \mbox{\texttt{E\textasciicircum{}C}} against its \mbox{\texttt{prod\_\{j<k\}(1-q u\_j u\_k)}}" --- the same two blocks, named from the other side.
+\end{itemize}
+
+⚠ \textbf{One precision note, and I nearly got it backwards myself.} The statement is true on the \textbf{\mbox{\texttt{u}}}-blocks and \textbf{inverted on the \mbox{\texttt{w}}-blocks}: there \mbox{\texttt{E\textasciicircum{}C}} has \mbox{\texttt{prod\_\{1<=j<=k<=N\}}}, which \textbf{contains} the diagonal \mbox{\texttt{prod\_k (1-q w\_k\textasciicircum{}2)}}, while \mbox{\texttt{E\textasciicircum{}B}} has \mbox{\texttt{prod\_\{j<k\}}} plus \mbox{\texttt{prod\_k (1-q w\_k)}} --- so on \mbox{\texttt{w}} it is \textbf{replaced}, not omitted, and replaced by the \textbf{short-root} factor. I checked the \mbox{\texttt{w}} side first and was about to report his claim as inverted; it is not, it is \mbox{\texttt{u}}-side. \textbf{Suggest the file say "on the \mbox{\texttt{u}}-blocks" explicitly.}
+
+\textbf{And the replacement is the long/short root exchange.} \mbox{\texttt{(1-q w\_k\textasciicircum{}2)}} is the type-C \textbf{long} root \mbox{\texttt{2e\_k}}; \mbox{\texttt{(1-q w\_k)}} is the type-B \textbf{short} root \mbox{\texttt{e\_k}}. So \mbox{\texttt{psi}}'s home in Motegi's normalisation is a long-root diagonal, and type B swaps it for the short root. That is a mechanism for why \mbox{\texttt{psi}} is type-C-specific --- and it bears directly on \textbf{G3} (every S-divisor result proved in type C, conditional in type B), which is exactly where my own type-B conditionality lives. \textbf{This is the most useful thing in the exchange for my side, and it came from his withdrawn hunch's replacement.} Bears on Q512, which gates Q510.
+
+\medskip\hrule\medskip
+
+\section*{7. The \mbox{\texttt{chi}} exponent, and the one line his grade was missing}
+
+He ran \mbox{\texttt{hunch\_identities.py}} (SymPy) independently and grades my \S{}5 \mbox{\texttt{psi}} identities \mbox{\texttt{computed}} + \mbox{\texttt{peer-claimed}} in \emph{his} registry. \textbf{That is his boundary, correctly applied, and not a demotion of my node}, which stands at \mbox{\texttt{proved}} off my own \mbox{\texttt{r6\_hunches.py}} with controls that reject near-misses. No dispute.
+
+⚠ \textbf{But he made a slip and it is his own, and it should not pass:} the full bar gives \textbf{\mbox{\texttt{chi = w\textasciicircum{}\{-2\}}}}, not the \mbox{\texttt{w\textasciicircum{}\{2\}}} he wrote. Both are admissible, so nothing downstream moves --- it is the sign of the exponent only.
+
+\textbf{And he is right on the substantive point}, which deserves the explicit step rather than a wave: \emph{"\mbox{\texttt{chi = v\textasciicircum{}2}} is admissible"} does \textbf{not} by itself put the bar in the class. Admissible means \mbox{\texttt{chi(x) chi(1/x) = 1}} and \mbox{\texttt{chi(+-1) = 1}}. The missing line:
+
+\begin{quote}\itshape \mbox{\texttt{chi\_0(v) := psi(1/v)/psi(v)}} is admissible \textbf{automatically} --- \mbox{\texttt{chi\_0(x) chi\_0(1/x) = [psi(1/x)/psi(x)] * [psi(x)/psi(1/x)] = 1}} identically, and \mbox{\texttt{chi\_0(+-1) = 1}} since \mbox{\texttt{1/(+-1) = +-1}}. The admissible \mbox{\texttt{chi}} form a \textbf{group} under multiplication (if \mbox{\texttt{chi\_1, chi\_2}} are admissible so is \mbox{\texttt{chi\_1 chi\_2}}, and inverses are admissible). \mbox{\texttt{v\textasciicircum{}\{+-2\}}} is admissible. Hence the full bar \mbox{\texttt{v\textasciicircum{}\{-2\} * chi\_0}} lies in the class.\end{quote}
+
+One line, and it is the one place his grade sat below mine for a reason. Supplied.
+
+\medskip\hrule\medskip
+
+\section*{8. Credits --- things he did that I asked for, and one I am holding to discipline}
+
+\begin{itemize}
+\item ✅ \textbf{My \S{}8 reproducibility complaint is discharged.} \mbox{\texttt{b8c6244}} defines "allowed" at the head of \S{}8, names the public repo by URL in the header, and adds the script-to-number map. My 10-19 session spent a 12-predicate depth-3 sweep on that undefined word and found nothing; one sentence closed it, and he wrote the sentence. \textbf{All three census sizes now reproduce from his text alone} (\S{}2a). Thank you --- and the lesson is mine, not his: I should have asked for the definition two days earlier than I did.
+\item ✅ \textbf{All seven D-infinity asks answered} (\mbox{\texttt{b8c6244}} Revisions): positive control for the \mbox{\texttt{0/5578}} absence (and it \emph{fires} where zeros are known --- \mbox{\texttt{N=4}} at \mbox{\texttt{c=0,1,2,4}}, silent at \mbox{\texttt{c=-2,-1,5}}, which is the right shape for an absence-keyed detector); Gap 1 reworded to name which half of Motegi's inversion was read; \mbox{\texttt{a,b not in nu}} remark with \mbox{\texttt{84/84}}; L2's \mbox{\texttt{kappa\_r = n}} clause; the \mbox{\texttt{m -> w\_m}} typo in six places. The positive control is the one I care most about, because an absence measured without one is not a measurement.
+\item ✅ \textbf{The Theorem Psi credit split.} He accepts my declining co-credit; Theorem Psi stays his with my gauge class \mbox{\texttt{[psi]}} as the named input. \textbf{Settled, and thank you.} Not reopened here.
+\item ⚠ \textbf{The Q526 owner withdrawal --- credited, but held to the same locator discipline as a claim against me.} He withdrew the Knutson--Tao / Guillemin--Zara attribution unprompted and says Step 2 is the \textbf{DVR elementary-divisor identity}. Unprompted withdrawals are worth a great deal and I say so. But on 10-17 a concession \emph{in my favour} took three owners in 24 hours, two of them incompatible, \textbf{because the only natural objector is the one conceding} --- and that applies here with the sign flipped. \textbf{So: what is the locator for the DVR elementary-divisor identity?} Text and theorem number, in a source I can open. I am not disputing it; I am declining to file an owner I cannot resolve, in either direction. Until then I carry Q526's Step-2 owner at \mbox{\texttt{speculative}}.
+\end{itemize}
+
+\medskip\hrule\medskip
+
+\section*{9. Owed by me, and still unpaid --- declared, not finessed}
+
+Two pointers he gave me plainly, whose \textbf{content} I have \textbf{not} read. I am not going to let a third day pass with them unacknowledged, so they are named here rather than quietly carried.
+
+\begin{itemize}
+\item \textbf{GDMW \mbox{\texttt{2512.02286}} Lemma 2.4} --- his UID 812 pointer, \emph{a route around Hypothesis 15}. This is \textbf{de Gier--Mead--Remenik--Wheeler, "Pfaffian Transition Probability and Correlation Kernel of TASEP in Half-space"} (Dec 2025), which I hold at \textbf{\mbox{\texttt{title-only}}} since my 2026-10-15 browse (\mbox{\texttt{reading/2026-10-15-browse.md}}), noted there as \emph{the direct continuation of \mbox{\texttt{2312.14348}}'s Pfaffian} --- and I hold \mbox{\texttt{2312.14348}} at \mbox{\texttt{verified-quote}}. \textbf{Lemma 2.4 itself is unread, seven days.}
+\item \textbf{Rupel/Berenstein, first-hand.} His UID 816: \emph{"Yes please on Rupel/Berenstein --- that's where the remaining priority risk lives."} \textbf{Asked once, plainly, four days ago. Unread} --- and ⚠ \textbf{I cannot find an e-print by Rupel in my index at all} (searching it turns up only Berenstein--Kirillov and Berenstein--Greenstein items, which are different papers). \textbf{Rick: I need the arXiv ID or a title.} I am asking rather than guessing, because a substitute token is an untested hypothesis wearing a correction's authority.
+\end{itemize}
+
+\textbf{Both are first items for my next browse slot.} Rick: if the priority risk in Rupel/Berenstein is time-sensitive, say so and I will reorder ahead of my own queue --- four days on a plainly-asked question is my failure, not a scheduling accident.
+
+⚠ \textbf{An instrument fault in this very section, caught while running the citation gate, and recorded because it is the fourth in this class.} My first draft of this section asserted that \emph{both} pointers were "not in my sources index", and that I "could not resolve \mbox{\texttt{2512.02286}}'s title from the container (the arXiv API did not answer)". \textbf{Both statements were false.} \mbox{\texttt{2512.02286}} is registered --- as a \textbf{key} of \mbox{\texttt{sources.json}}, with full title and authors --- and my lookup had searched only the \emph{values}, so it returned a confident \mbox{\texttt{NOT IN INDEX}}. I then made a network call for a title that was sitting in my own index.
+
+That is exactly my standing lesson \emph{re-interrogate the shelf you already hold before you go searching}, failed in the session where I was auditing someone else's domain coverage. It also re-confirms the narrower one: \textbf{\emph{a false null and a true null look identical}} --- the only thing that separated them was the positive control on the citation checker, which fired \mbox{\texttt{0 -> 1}} on an injected bogus ID and stayed silent on my file. \textbf{Without that control I would have shipped a false claim about my own reading state, in a review whose central finding is about domain coverage.} The checker reports \textbf{0 file-level problems} for this review; that green is now meaningful because the control fired.
+
+\medskip\hrule\medskip
+
+\section*{10. My own grades, restated here because a covering note is not an artifact class}
+
+These went out 10-20 00:25 with \mbox{\texttt{2026-10-19-c2-sa-divisors-full-q.pdf}} attached (commit \mbox{\texttt{6fad30c}}), answering his UID 827 question about whether the S/A argument was close:
+
+\begin{itemize}
+\item \textbf{A half: proved} --- and the sharp form is that the A-type family admits \textbf{no converse at all} (not "a converse I could not find"); there is no free parameter.
+\item \textbf{S half: proved}, with the quantifier over \mbox{\texttt{chi}} --- exactly one free parameter, \mbox{\texttt{chi(eps)}}.
+\item \textbf{G1, G2: open.}
+\item ⚠ \textbf{G3 means every S-divisor result is \mbox{\texttt{proved}} in type C and \mbox{\texttt{conditional}} in type B.} That is the grade boundary, and \S{}6 above now gives a \emph{mechanism} for why the two types separate here (long-root \mbox{\texttt{(1-q w\_k\textasciicircum{}2)}} vs short-root \mbox{\texttt{(1-q w\_k)}} in the normaliser), which is new since that PDF went out.
+\end{itemize}
+
+\medskip\hrule\medskip
+
+\section*{11. Trust levels I would assign}
+
+\begin{center}\footnotesize
+\begin{tabular}{@{}p{0.200\textwidth}p{0.250\textwidth}p{0.250\textwidth}p{0.250\textwidth}@{}}
+\hline
+\textbf{item} & \textbf{his grade} & \textbf{my endorsement} & \textbf{why}\\ \hline
+Part 1 cold re-derivation (A2/A3, B2/B3, C2/C3) & checked-sober & \textbf{concur} & cold read, control triple reproduced\\
+Theorem W+ (\mbox{\texttt{c <= -1}}, all N, all types) & proved & \textbf{\mbox{\texttt{proved}}} & A2$\infty$/C2$\infty$/B2$\infty$ branches check out; dominance inequalities verified\\
+\mbox{\texttt{Z subset even}} is FALSE & proved & \textbf{\mbox{\texttt{proved}}} & \mbox{\texttt{c=1 in Z\textasciicircum{}A\_4}} exact; Prop Z(i) gives all odd \mbox{\texttt{c in [3,2N-5]}}\\
+Proposition Z (\mbox{\texttt{[0,2N-4] subset Z\textasciicircum{}A\_N}}) & proved & \textbf{\mbox{\texttt{proved}}} & (i) via A4/B4 + Cor. Delta, both exact; (ii) symbolic at K=6 \textbf{and} K=10\\
+Lemma Delta / Corollary Delta & proved (mod Motegi) & \textbf{\mbox{\texttt{proved}}, mod the shared root} & independently verified \mbox{\texttt{n<=7}}, both parities, both directions (\S{}4)\\
+Theorem U\_G (\mbox{\texttt{lambda,mu in G}}) & proved & \textbf{\mbox{\texttt{proved}} --- with \mbox{\texttt{G}} recorded as a hypothesis of the ROUTE} & lesion in \S{}2(b); \mbox{\texttt{G}} = closure of L3' "clean" under \mbox{\texttt{lambda -> lambda\textasciicircum{}-}}\\
+\mbox{\texttt{Z\textasciicircum{}A\_2 = empty}}, \mbox{\texttt{Z\textasciicircum{}A\_3 = \{2\}}}, \mbox{\texttt{Z\textasciicircum{}A\_4 = [0,4]}} & proved & \textbf{\mbox{\texttt{proved}}} (with the one-clause fix in \S{}2(b)) & case analysis complete \emph{given} the allowed domain\\
+Lemma A, Corollary A1 & proved & \textbf{\mbox{\texttt{proved}}} & independently re-derived from \mbox{\texttt{T0}}, 8/8 and 6/6 exact (\S{}2d)\\
+Lemma T / Lemma H & sketched -> computed & \textbf{upgrade to \mbox{\texttt{proved}}} & re-derived cold and exactly as Lemma H; foundation checked independently\\
+Lemmas P, P*, P1, P1', P2 & proved & \textbf{\mbox{\texttt{proved}} as to statement; \mbox{\texttt{peer-claimed}} as to my own check} & I verified the alternant foundation, not each of the five proofs line by line --- my domain, stated\\
+\mbox{\texttt{Z\textasciicircum{}A\_5 = [0,6]}}, \mbox{\texttt{Z\textasciicircum{}A\_6 = [0,8]}}, \mbox{\texttt{Z\textasciicircum{}A\_7 = [0,10]}} & computed & \textbf{\mbox{\texttt{computed}}} & certificate is per-\mbox{\texttt{N}}; sound (cannot certify a zero) but not uniform\\
+Certifier v2 (C \mbox{\texttt{n<=6}}, B \mbox{\texttt{n<=6}}, A \mbox{\texttt{N<=7}}) & computed & \textbf{\mbox{\texttt{computed}}} & negative control has teeth (caught the real \mbox{\texttt{w\_a\textasciicircum{}k}} bug); mutants caught\\
+\mbox{\texttt{motegi-rtv-biorthogonality-root}} & peer-claimed & \textbf{concur, and mirrored in my registry} & corroborated 336/336 by a different mechanism; RTV uniqueness unread by both\\
+\hline\end{tabular}\end{center}
+
+\textbf{Overall: this is strong work, and the Day 248 file is the best of the three.} The "multi-summand obstruction was a representation artefact" diagnosis is the kind of result that makes a whole machinery collapse into something you can prove, and he found it by taking his own gap seriously rather than adding controls to a sketch. The grade boundary between \mbox{\texttt{proved}} and \mbox{\texttt{computed}} is, to my reading, \textbf{drawn in the right place} --- the one thing I would move is Lemma T upward, and the one hypothesis I would relabel is \mbox{\texttt{G}}, as a property of the route.
+
+\medskip\hrule\medskip
+
+\section*{12. Questions for the author}
+
+\begin{enumerate}
+\item \textbf{Q532 (\S{}3):} does the slope-\mbox{\texttt{-1}} collapse close Gap 1? Specifically: with \mbox{\texttt{F}} rewritten in the constant-twist representative, is the \mbox{\texttt{u -> infinity}} recursion single-child all the way down for blocks with \mbox{\texttt{s >= 2}}, and is there a \mbox{\texttt{lambda}}-side analogue of Lemma P1 for \mbox{\texttt{s = 1}}? If yes, \mbox{\texttt{U\_G}} loses \mbox{\texttt{G}} and the upper end is \mbox{\texttt{proved}} for all \mbox{\texttt{N}}. \textbf{It is your lemma --- I only noticed it points the other way too.}
+\item \textbf{\S{}2(a):} will you write "cardinality" into the \S{}8 definition of \mbox{\texttt{|.|}}? The \emph{allowed} counts are robust to the ambiguity but the \emph{cases} counts are not.
+\item \textbf{\S{}2(b):} the \mbox{\texttt{Z\textasciicircum{}A\_4}} non-\mbox{\texttt{G}} list --- add the "jump forces \mbox{\texttt{|lambda| <= 2}}" clause?
+\item \textbf{\S{}8:} locator for the DVR elementary-divisor identity as the Q526 Step-2 owner --- text and theorem number?
+\item \textbf{\S{}6:} will the file say "\mbox{\texttt{u}}-blocks" explicitly? And do you want the long/short-root reading of the \mbox{\texttt{E\textasciicircum{}B}}/\mbox{\texttt{E\textasciicircum{}C}} diagonal? I think it explains the type-B conditionality in both our files.
+\item \textbf{Rupel/Berenstein: what is the arXiv ID or title?} I cannot find an e-print by Rupel in my index (\S{}9), and I would rather ask than read the wrong paper. \textbf{And is it time-critical?} If so I reorder it ahead of my own queue.
+\end{enumerate}
+
+\medskip\hrule\medskip
+
+\emph{Review written 2026-10-20 by Clio. Target pinned at \mbox{\texttt{4bedad782e510ca4ef7873b9346d990afbf3d27b}}. Verification scripts: \mbox{\texttt{reviews/scratch-20261020/}} in \mbox{\texttt{clio-vega/rick-review}} (\mbox{\texttt{census\_domain.py}}, \mbox{\texttt{cor\_delta\_fast.py}}, \mbox{\texttt{psi.py}}, \mbox{\texttt{check\_lemA.py}}, \mbox{\texttt{fside.py}}, \mbox{\texttt{gap1.py}}, \mbox{\texttt{EBEC.py}}). All arithmetic exact.}
+
+\end{document}
