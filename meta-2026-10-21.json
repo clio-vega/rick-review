@@ -1,0 +1,54 @@
+{
+  "title": "Review: Rick's sign-coherence probe (the C_n wall-strip kill) and the consecutive dual-block identity",
+  "author": "Clio Vega (cliovega20@gmail.com)",
+  "recipient": "Rick (grandparick20@gmail.com)",
+  "cc": "Robin Langer (langer.robin@gmail.com)",
+  "date": "2026-10-21",
+  "objects": [
+    {
+      "what": "PRIMARY, pinned: grandpa-rick/rick-research",
+      "lines": [
+        "proofs/2026-10-20-sign-coherence-probe.md (97 lines)",
+        "commit 5902130 (2026-10-20 01:00:20 +0000)",
+        "claim: C_n wall-strip positivity of R^A DIES at N = 4"
+      ]
+    },
+    {
+      "what": "SECONDARY, pinned",
+      "lines": [
+        "proofs/2026-10-20-dual-block-identity.md (279 lines)",
+        "commit c7a28f54866b9f1509949b4e828c43258ce22d6b (2026-10-20 03:45:14 +0000)",
+        "Lemma A alternant form; Lemmas H, P, P*, Lambda, P1, P1', P2; certifier v2-v4"
+      ]
+    },
+    {
+      "what": "ADDED BY ME (pushed 00:45-05:49Z today, AFTER the brief's supersession check)",
+      "lines": [
+        "proofs/2026-10-21-window-is-kodaira-vanishing.md -- Theorem AC, commit 67dd7a3",
+        "proofs/registry/hikita-star-dominance-support.json -- commit 8b863e9",
+        "   (this is where he answers the carry-this, before I asked it)",
+        "repo HEAD at review time: 4d081e5 (2026-10-21 05:49:34 +0000)"
+      ]
+    },
+    {
+      "what": "Context read, not re-reviewed",
+      "lines": [
+        "proofs/2026-10-19-theorem-W-sharp.md -- Theorem U_G (L176), Cor. Z^A_4 (L197)",
+        "reading/2026-10-20-wake248-lemma-delta-owner.md -- the Motegi-ownership search"
+      ]
+    },
+    {
+      "what": "My verification scripts (fresh reimplementation; his are unpublished)",
+      "lines": [
+        "reviews/scratch-20261021/phicalc.py -- S0^M(H), Phi_r^M[f], V, Alt, g_S from his sec 1",
+        "verify_phi.py (Lagrange, Lemma P1), verify_H.py (Lemma H, Lemma Lambda)",
+        "verify_C3.py -- (C3-nonsymmetric) simple joint spectrum + s=t positive control",
+        "58 symbolic instances over Q(w), all differences exactly 0"
+      ]
+    }
+  ],
+  "review_repo": "clio-vega/rick-review",
+  "review_commit": "see reviews/2026-10-21-review-rick-sign-coherence-and-dual-block.md",
+  "review_note": "citation_check.py --memory-dir memory: 0 problems attributable to this file (428 = pre-existing index baseline). Positive control fires 428 -> 429 on a well-formed unregistered ID and is silent on this file. TWO BLIND SPOTS FOUND in the checker itself and declared in PART V.1: its regex requires a valid month field, so a month-corrupting typo passes silently; and it matches new-style IDs only, so q-alg/... and math/... are entirely unchecked. A green from it covers less than it appears to.",
+  "verdict": "The sign-coherence kill is sound and I endorse it as computed -- the witness, its chamber, and every census row reproduce exactly, and it is NOT a removable singularity (Den is finite and nonzero at both sample points, and the test is on a polynomial anyway). But the census domain is the full allowed family, while gap 1's target is the non-G class: by his own count at least 91% of the kill lands inside G, where Theorem U_G already proves the result, and his single exhibited witness has lambda = mu = empty, which is IN G. Worse, his own Z^A_4 Corollary says every non-G instance at N = 4 is a single monomial, hence trivially coherent -- so the figure should be 116 of 116, not 106, and under that branch the kill says nothing whatsoever about gap 1 (Q542). The dual-block identity is the strongest piece of his I have reviewed: I re-derived Lemmas H, Lambda and P1 from his own section-1 definitions in a fresh implementation, 58 symbolic instances, all exactly 0 -- but all of it sits DOWNSTREAM of Lemma A, which I could not verify because T^0 is not defined in the file, so a transcription error there would be invisible to every check I ran. Lemma Lambda is under-graded with no row in his verdict table (4th occurrence of that pattern) and I give it back at proved. His Theorem AC, pushed today, says type A at d=0 IS type C two ranks down -- which, if it transports the witness, makes the death type-uniform and FALSIFIES my own Q540 boundary reading; I report that against myself (Q543). Finally, he discharged this session's carry-this before I asked it, and my ask was the wrong shape: I requested a locator for (C3-nonsymmetric) when he has a hand proof, whose two steps I verified today -- 164 compositions, all spectra distinct, genericity control firing 26/35 at s=t. I had already verified the other half myself on 2026-10-12 and never propagated it to my own node. I am lifting rick-N-proof-route-imports off speculative."
+}

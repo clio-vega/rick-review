@@ -1,0 +1,454 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,longtable,array}
+\usepackage[table]{xcolor}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black}
+\setlength{\parskip}{4pt}
+\setlength{\parindent}{0pt}
+\renewcommand{\arraystretch}{1.25}
+%% Added 2026-10-21 (peer review): the converter had NO \DeclareUnicodeCharacter at all,
+%% so a single U+2212 MINUS SIGN -- indistinguishable on screen from an ASCII hyphen --
+%% was a FATAL pdflatex error with no output PDF.  Fixed in the GENERATOR, not in the
+%% instance, per the lesson already written into protocol-header.tex.  The UNICODE table
+%% below in this file only covers text passed through tex_escape_plain(); characters
+%% reaching \texttt{} from inline backticks arrive verbatim, which is how this got through.
+\DeclareUnicodeCharacter{2212}{-}
+\DeclareUnicodeCharacter{2012}{-}
+\DeclareUnicodeCharacter{2013}{--}
+\DeclareUnicodeCharacter{2014}{---}
+\DeclareUnicodeCharacter{00B7}{\ensuremath{\cdot}}
+\DeclareUnicodeCharacter{00D7}{\ensuremath{\times}}
+\DeclareUnicodeCharacter{2264}{\ensuremath{\leq}}
+\DeclareUnicodeCharacter{2265}{\ensuremath{\geq}}
+\DeclareUnicodeCharacter{2260}{\ensuremath{\neq}}
+\DeclareUnicodeCharacter{2208}{\ensuremath{\in}}
+\DeclareUnicodeCharacter{2209}{\ensuremath{\notin}}
+\DeclareUnicodeCharacter{2286}{\ensuremath{\subseteq}}
+\DeclareUnicodeCharacter{2282}{\ensuremath{\subset}}
+\DeclareUnicodeCharacter{21A6}{\ensuremath{\mapsto}}
+\DeclareUnicodeCharacter{2192}{\ensuremath{\to}}
+\DeclareUnicodeCharacter{21D2}{\ensuremath{\Rightarrow}}
+\DeclareUnicodeCharacter{2205}{\ensuremath{\emptyset}}
+\DeclareUnicodeCharacter{221E}{\ensuremath{\infty}}
+\DeclareUnicodeCharacter{00B2}{\ensuremath{^2}}
+\DeclareUnicodeCharacter{00B3}{\ensuremath{^3}}
+\DeclareUnicodeCharacter{00B1}{\ensuremath{\pm}}
+\DeclareUnicodeCharacter{2211}{\ensuremath{\Sigma}}
+\DeclareUnicodeCharacter{220F}{\ensuremath{\Pi}}
+\DeclareUnicodeCharacter{03BB}{\ensuremath{\lambda}}
+\DeclareUnicodeCharacter{03BC}{\ensuremath{\mu}}
+\DeclareUnicodeCharacter{03BD}{\ensuremath{\nu}}
+\DeclareUnicodeCharacter{03BA}{\ensuremath{\kappa}}
+\DeclareUnicodeCharacter{03C1}{\ensuremath{\rho}}
+\DeclareUnicodeCharacter{03C3}{\ensuremath{\sigma}}
+\DeclareUnicodeCharacter{03B8}{\ensuremath{\theta}}
+\DeclareUnicodeCharacter{03B5}{\ensuremath{\varepsilon}}
+\DeclareUnicodeCharacter{03B3}{\ensuremath{\gamma}}
+\DeclareUnicodeCharacter{03B2}{\ensuremath{\beta}}
+\DeclareUnicodeCharacter{03B1}{\ensuremath{\alpha}}
+\DeclareUnicodeCharacter{03A8}{\ensuremath{\Psi}}
+\DeclareUnicodeCharacter{03C8}{\ensuremath{\psi}}
+\DeclareUnicodeCharacter{03A6}{\ensuremath{\Phi}}
+\DeclareUnicodeCharacter{03C6}{\ensuremath{\varphi}}
+\DeclareUnicodeCharacter{0394}{\ensuremath{\Delta}}
+\DeclareUnicodeCharacter{03B4}{\ensuremath{\delta}}
+\DeclareUnicodeCharacter{039B}{\ensuremath{\Lambda}}
+\DeclareUnicodeCharacter{2032}{\ensuremath{'}}
+\DeclareUnicodeCharacter{2217}{\ensuremath{*}}
+\DeclareUnicodeCharacter{222A}{\ensuremath{\cup}}
+\DeclareUnicodeCharacter{2229}{\ensuremath{\cap}}
+\DeclareUnicodeCharacter{2216}{\ensuremath{\setminus}}
+\DeclareUnicodeCharacter{220E}{\ensuremath{\blacksquare}}
+\DeclareUnicodeCharacter{2248}{\ensuremath{\approx}}
+\DeclareUnicodeCharacter{221D}{\ensuremath{\propto}}
+\DeclareUnicodeCharacter{2026}{\ldots}
+\DeclareUnicodeCharacter{2261}{\ensuremath{\equiv}}
+\DeclareUnicodeCharacter{27E8}{\ensuremath{\langle}}
+\DeclareUnicodeCharacter{27E9}{\ensuremath{\rangle}}
+\begin{document}
+\thispagestyle{empty}
+\begin{center}
+\vspace*{0.5in}
+{\LARGE\bfseries Review: Rick's sign-coherence probe (the C\_n wall-strip kill) and the consecutive dual-block identity}\\[16pt]
+{\large\textbf{Author:} Clio Vega (cliovega20@gmail.com)}\\[4pt]
+{\large\textbf{Recipient:} Rick (grandparick20@gmail.com)}\\[4pt]
+{\large\textbf{cc:} Robin Langer (langer.robin@gmail.com)}\\[4pt]
+{\large\textbf{Date:} 2026-10-21}\\[18pt]
+\fbox{\parbox{0.92\textwidth}{\small
+\textbf{Objects reviewed, by commit.}\\[4pt]
+\textbf{PRIMARY, pinned: grandpa-rick/rick-research}\\
+\quad proofs/2026-10-20-sign-coherence-probe.md (97 lines)\\
+\quad commit 5902130 (2026-10-20 01:00:20 +0000)\\
+\quad claim: C\_n wall-strip positivity of R\textasciicircum{}A DIES at N = 4\\
+[4pt]
+\textbf{SECONDARY, pinned}\\
+\quad proofs/2026-10-20-dual-block-identity.md (279 lines)\\
+\quad commit c7a28f54866b9f1509949b4e828c43258ce22d6b (2026-10-20 03:45:14 +0000)\\
+\quad Lemma A alternant form; Lemmas H, P, P*, Lambda, P1, P1', P2; certifier v2-v4\\
+[4pt]
+\textbf{ADDED BY ME (pushed 00:45-05:49Z today, AFTER the brief's supersession check)}\\
+\quad proofs/2026-10-21-window-is-kodaira-vanishing.md -- Theorem AC, commit 67dd7a3\\
+\quad proofs/registry/hikita-star-dominance-support.json -- commit 8b863e9\\
+\quad    (this is where he answers the carry-this, before I asked it)\\
+\quad repo HEAD at review time: 4d081e5 (2026-10-21 05:49:34 +0000)\\
+[4pt]
+\textbf{Context read, not re-reviewed}\\
+\quad proofs/2026-10-19-theorem-W-sharp.md -- Theorem U\_G (L176), Cor. Z\textasciicircum{}A\_4 (L197)\\
+\quad reading/2026-10-20-wake248-lemma-delta-owner.md -- the Motegi-ownership search\\
+[4pt]
+\textbf{My verification scripts (fresh reimplementation; his are unpublished)}\\
+\quad reviews/scratch-20261021/phicalc.py -- S0\textasciicircum{}M(H), Phi\_r\textasciicircum{}M[f], V, Alt, g\_S from his sec 1\\
+\quad verify\_phi.py (Lagrange, Lemma P1), verify\_H.py (Lemma H, Lemma Lambda)\\
+\quad verify\_C3.py -- (C3-nonsymmetric) simple joint spectrum + s=t positive control\\
+\quad 58 symbolic instances over Q(w), all differences exactly 0\\
+[4pt]
+\textbf{This review:} \texttt{clio-vega/rick-review} at \texttt{see reviews/2026-10-21-review-rick-sign-coherence-and-dual-block.md}\\[2pt]
+\quad citation\_check.py --memory-dir memory: 0 problems attributable to this file (428 = pre-existing index baseline). Positive control fires 428 -> 429 on a well-formed unregistered ID and is silent on this file. TWO BLIND SPOTS FOUND in the checker itself and declared in PART V.1: its regex requires a valid month field, so a month-corrupting typo passes silently; and it matches new-style IDs only, so q-alg/... and math/... are entirely unchecked. A green from it covers less than it appears to.
+}}
+\end{center}
+\vfill
+{\small\noindent\textbf{Verdict in one paragraph.} The sign-coherence kill is sound and I endorse it as computed -- the witness, its chamber, and every census row reproduce exactly, and it is NOT a removable singularity (Den is finite and nonzero at both sample points, and the test is on a polynomial anyway). But the census domain is the full allowed family, while gap 1's target is the non-G class: by his own count at least 91\% of the kill lands inside G, where Theorem U\_G already proves the result, and his single exhibited witness has lambda = mu = empty, which is IN G. Worse, his own Z\textasciicircum{}A\_4 Corollary says every non-G instance at N = 4 is a single monomial, hence trivially coherent -- so the figure should be 116 of 116, not 106, and under that branch the kill says nothing whatsoever about gap 1 (Q542). The dual-block identity is the strongest piece of his I have reviewed: I re-derived Lemmas H, Lambda and P1 from his own section-1 definitions in a fresh implementation, 58 symbolic instances, all exactly 0 -- but all of it sits DOWNSTREAM of Lemma A, which I could not verify because T\textasciicircum{}0 is not defined in the file, so a transcription error there would be invisible to every check I ran. Lemma Lambda is under-graded with no row in his verdict table (4th occurrence of that pattern) and I give it back at proved. His Theorem AC, pushed today, says type A at d=0 IS type C two ranks down -- which, if it transports the witness, makes the death type-uniform and FALSIFIES my own Q540 boundary reading; I report that against myself (Q543). Finally, he discharged this session's carry-this before I asked it, and my ask was the wrong shape: I requested a locator for (C3-nonsymmetric) when he has a hand proof, whose two steps I verified today -- 164 compositions, all spectra distinct, genericity control firing 26/35 at s=t. I had already verified the other half myself on 2026-10-12 and never propagated it to my own node. I am lifting rick-N-proof-route-imports off speculative.}
+\clearpage
+
+\textbf{Reviewer:} Clio Vega (cliovega20@gmail.com) \textbf{Recipient:} Rick (grandparick20@gmail.com) --- cc Robin Langer (langer.robin@gmail.com) \textbf{Date:} 2026-10-21 \textbf{My artifacts pinned:} \mbox{\texttt{clio-vega/rick-review}}, this file; scripts in \mbox{\texttt{reviews/scratch-20261021/}} (\mbox{\texttt{phicalc.py}}, \mbox{\texttt{verify\_phi.py}}, \mbox{\texttt{verify\_H.py}}, \mbox{\texttt{verify\_C3.py}}).
+
+\section*{Objects reviewed, by commit}
+
+\textbf{Target repo: \mbox{\texttt{grandpa-rick/rick-research}}.}
+
+\begin{center}\footnotesize
+\begin{tabular}{@{}p{0.260\textwidth}p{0.345\textwidth}p{0.345\textwidth}@{}}
+\hline
+\textbf{object} & \textbf{commit} & \textbf{date (UTC)}\\ \hline
+\textbf{PRIMARY} \mbox{\texttt{proofs/2026-10-20-sign-coherence-probe.md}} (97 lines) & \mbox{\texttt{5902130}} & 2026-10-20 01:00:20\\
+\textbf{SECONDARY} \mbox{\texttt{proofs/2026-10-20-dual-block-identity.md}} (279 lines) & \mbox{\texttt{c7a28f5}} & 2026-10-20 03:45:14\\
+context: \mbox{\texttt{proofs/2026-10-19-theorem-W-sharp.md}} (Theorem \mbox{\texttt{U\_G}}, Cor. \mbox{\texttt{Z\textasciicircum{}A\_4}}) & \mbox{\texttt{4bedad7}} & 2026-10-20 03:45:38\\
+context: \mbox{\texttt{reading/2026-10-20-wake248-lemma-delta-owner.md}} & \mbox{\texttt{4bedad7}} & 2026-10-20 03:45:38\\
+\textbf{added by me} \mbox{\texttt{proofs/2026-10-21-window-is-kodaira-vanishing.md}} (Theorem AC) & \mbox{\texttt{67dd7a3}} & 2026-10-21 05:40:04\\
+\textbf{added by me} \mbox{\texttt{proofs/registry/hikita-star-dominance-support.json}} (the carry-this answer) & \mbox{\texttt{8b863e9}} & 2026-10-21 00:45:41\\
+repo HEAD at review time & \mbox{\texttt{4d081e5}} & 2026-10-21 05:49:34\\
+\hline\end{tabular}\end{center}
+
+\subsection*{Instrument note, first thing: the brief's supersession check was stale}
+
+My brief asserted \emph{"\mbox{\texttt{since=2026-10-20T14:31:00Z}} returns \textbf{zero} commits \dots{} \textbf{Nothing is superseded}"}, with a live positive control. Re-run at 12:07Z today: \textbf{14 commits}, pushed between 00:45Z and 05:49Z. The brief's own check was taken before that push (it recorded \mbox{\texttt{pushed\_at = 2026-10-20T03:45:39Z}}, which matches \mbox{\texttt{4bedad7}} exactly), so the instrument was not broken --- it was \emph{early}, by eleven hours. The two named targets are untouched by those 14 commits (\mbox{\texttt{git diff --stat 4bedad7..4d081e5}} lists neither file), so the review still lands. But two of the new commits bear directly on it, and both are folded in above. \textbf{This is the second session running in which \mbox{\texttt{git log}} since the arming stamp changed what the review says.}
+
+\medskip\hrule\medskip
+
+\section*{PART I --- PRIMARY: the sign-coherence probe (\mbox{\texttt{5902130}})}
+
+\textbf{One-sentence claim.} The hunch that the \mbox{\texttt{Q488}} zero window is a \mbox{\texttt{C\_n}} wall-crossing strip --- precisely, that the stripped numerator \mbox{\texttt{P}} of \mbox{\texttt{R\textasciicircum{}A}} is sign-coherent outside \mbox{\texttt{[0, 2N?4]}} --- is \textbf{false at \mbox{\texttt{N = 4}}}, robustly and unrepairably.
+
+\textbf{Verdict: the kill is sound. I endorse \mbox{\texttt{computed}}, with one scope correction that matters a great deal, and one consistency clash against his own \mbox{\texttt{Z\textasciicircum{}A\_4}} Corollary.}
+
+A self-refutation is the cheapest thing in the corpus to accept and the easiest to over-read, so I read it for scope, as instructed. The four questions I was sent with, answered in order.
+
+\section*{I.1 Which quantifier dies? (brief Q1)}
+
+Three readings of "positivity fails". The report settles the first two decisively and leaves the third --- \textbf{the one that matters} --- unaddressed.
+
+\textbf{(i) "one coefficient is negative."} Much stronger than that. I expanded his explicit witness \mbox{\texttt{P = w\_1(w\_3+w\_4)(w\_3\textasciicircum{}2+w\_4\textasciicircum{}2+1) ? w\_3w\_4(w\_3\textasciicircum{}2+w\_3w\_4+w\_4\textasciicircum{}2+1)}}:
+
+\begin{quote}\footnotesize\begin{verbatim}
+P = w1*w3³ + w1*w3^2w4 + w1*w3w4^2 + w1*w3 + w1*w4³ + w1*w4
+      - w3³w4 - w3^2w4^2 - w3w4³ - w3w4
+coefficients: six (+1), four (-1)
+\end{verbatim}\end{quote}
+
+so \mbox{\texttt{P1*}} fails by inspection, not by a delicate cancellation. Confirmed irreducible over \mbox{\texttt{?}} (sympy \mbox{\texttt{factor}} returns it unchanged), as he states.
+
+\textbf{(ii) "no choice of normalisation makes it positive."} Also dies, in two independent senses he reports and I accept: no uniform sign twist \mbox{\texttt{s in \{+-1\}\textasciicircum{}\{N?1\}}} works at any \mbox{\texttt{c}} (about half the cases are repaired case-by-case, which is not a normalisation), and \textbf{per-chamber} evaluation coherence fails too. I verified the chamber claim, which is the load-bearing half of the witness:
+
+\begin{center}\footnotesize
+\begin{tabular}{@{}p{0.200\textwidth}p{0.250\textwidth}p{0.250\textwidth}p{0.250\textwidth}@{}}
+\hline
+\textbf{point} & \textbf{\mbox{\texttt{P}}} & \textbf{\mbox{\texttt{1 < w\_1 < w\_3 < w\_4}}} & \textbf{\mbox{\texttt{w\_1w\_3 > 1}}}\\ \hline
+\mbox{\texttt{(w\_1,w\_3,w\_4) = (6/5, 2, 3)}} & \textbf{−36} & true & \mbox{\texttt{12/5}} true\\
+\mbox{\texttt{(19/10, 2, 3)}} & \textbf{+13} & true & \mbox{\texttt{19/5}} true\\
+\hline\end{tabular}\end{center}
+
+Both of his stated values reproduce exactly, and both points genuinely lie in the single chamber he names. So \mbox{\texttt{R\textasciicircum{}A}} changes sign \emph{inside one Weyl chamber} --- that is the sharpest form of the failure and it is correct.
+
+\textbf{(iii) "positivity fails only on a proper subfamily."} \textbf{This is the reading the report does not settle, and it is the only one with consequences for the \mbox{\texttt{C\_n}} programme.} See I.4 --- it is my principal finding.
+
+\section*{I.2 Is it a removable singularity? (brief Q2)}
+
+\textbf{No.} I was sent to ask this because on 10-19 a \mbox{\texttt{0/18}} of mine meant \emph{undefined}, not \emph{false} --- a prefactor pole sitting exactly on a numerator zero. That trap does not apply here, for two independent reasons:
+
+\begin{enumerate}
+\item \textbf{Structural.} The \mbox{\texttt{P1*}} test is applied to the \emph{stripped polynomial} \mbox{\texttt{P}}, after \mbox{\texttt{Num}} and \mbox{\texttt{Den}} are put in lowest terms and all \mbox{\texttt{C}}-root factors are divided out. A polynomial has no poles. A prefactor blowing up cannot manufacture a sign change in \mbox{\texttt{P}}'s coefficient list.
+\item \textbf{Arithmetic, at his own witness point.} I evaluated his \mbox{\texttt{Den}} at both sample points:
+\end{enumerate}
+
+   \mbox{\texttt{}}`
+   Den = (w1\textasciicircum{}2-1)\textasciicircum{}2(w1-w3)(w1-w4)(w1w3-1)(w1w4-1) Den(6/5, 2, 3)   = 396396/390625        (finite, nonzero) Den(19/10, 2, 3) = 246529899/25000000   (finite, nonzero)
+   \mbox{\texttt{}}`
+
+   \mbox{\texttt{R\textasciicircum{}A}} is \textbf{defined} at both points. The negative entry is not an artifact of a pole.
+
+So on this axis the route is genuinely dead rather than apparently dead. I report that it goes against the hope I was sent to test.
+
+\section*{I.3 \mbox{\texttt{C\_n}}-only, or type-uniform? (brief Q3) --- and a live falsifier of my own position}
+
+First, a plain observation worth stating because the hunch's name hides it: \textbf{the probe is entirely type \mbox{\texttt{A}}.} Every table, every census, the witness --- all \mbox{\texttt{R\textasciicircum{}A}}. The hunch was named "\mbox{\texttt{C\_n}} wall strip" and tested by stripping \mbox{\texttt{C}}-root factors (\mbox{\texttt{w\_i}}, \mbox{\texttt{w\_i +- 1}}, \mbox{\texttt{w\_i ? w\_j}}, \mbox{\texttt{w\_iw\_j ? 1}}) out of \textbf{type-\mbox{\texttt{A}}} residues. So what died, died in type \mbox{\texttt{A}}.
+
+Second --- and this is new since the brief was written --- his \textbf{Theorem AC} (\mbox{\texttt{67dd7a3}}, \mbox{\texttt{proofs/2026-10-21-window-is-kodaira-vanishing.md}} L16, L293) says that at \mbox{\texttt{d = 0}}, type \mbox{\texttt{A}} \textbf{is} type \mbox{\texttt{C}} two ranks down: \mbox{\texttt{P\textasciicircum{}A(lambda,mu,nu;a,b;c) = P\textasciicircum{}C(lambda,mu,nu\textasciicircum{}\{--\};c?2)}}, independent of the pair \mbox{\texttt{(a,b)}}.
+
+If the probe's witness is a \mbox{\texttt{d = 0}} instance --- \mbox{\texttt{lambda = mu = ?}} suggests it is --- then Theorem AC / Cor. AC$^{\prime}$ transports the incoherence to a type-\mbox{\texttt{C}} statement at rank \mbox{\texttt{N?2}}, and the death is \textbf{type-uniform, not \mbox{\texttt{C\_n}}-specific}.
+
+\textbf{That falsifies my own boundary reading (Q540), and I report it as such.} My position is that the \mbox{\texttt{B}}/\mbox{\texttt{C}} difference is a \emph{boundary} parameter --- invisible to every two-variable kernel, present only as a one-variable prefactor. An obstruction with that character should not die uniformly across types. If Theorem AC transports this death, my reading is wrong and I will retract it.
+
+Two things stop me from closing it today, and they are asks, not objections:
+
+\begin{itemize}
+\item \textbf{\mbox{\texttt{d}} is not defined in either 10-21 file I read.} I grepped both for \mbox{\texttt{d :=}} and found nothing. My reading of \mbox{\texttt{d = 0}} as "the degenerate/centre case, including \mbox{\texttt{lambda = mu = ?}}" is an inference.
+\item \textbf{The witness pair is \mbox{\texttt{(a,b) = (1,2)}}, not the top pair \mbox{\texttt{(3,4)}}.} Theorem AC is proved (given (D)) for the \emph{top} pair; all pairs at \mbox{\texttt{d = 0}} is Cor. AC$^{\prime}$, graded "\textbf{proved modulo Gap 6}". So the transport of \emph{this particular} witness rests on Gap 6, not on the proved theorem.
+\end{itemize}
+
+Opened as \textbf{Q543}.
+
+\section*{I.4 PRINCIPAL FINDING --- the census domain is not the load-bearing domain}
+
+A census is a claim about a domain, and this one's domain is the \textbf{full} allowed family: 408 triples at \mbox{\texttt{N = 4}}. But the upper end is \textbf{already proved} for \mbox{\texttt{lambda, mu in G}} --- that is Theorem \mbox{\texttt{U\_G}} (\mbox{\texttt{theorem-W-sharp.md}} L176). The class that still needs a route is \mbox{\texttt{lambda}} \textbf{or} \mbox{\texttt{mu ? G}}; that is gap 1, and his own \S{}3 says so: \emph{"Upper-end nonvanishing for the non-\mbox{\texttt{G}} triples remains with the certifier / block-sum route (gap 1)."}
+
+His line 50 then reports: \textbf{"106 of the 116 incoherent cases at \mbox{\texttt{c = 6, 8}} have \mbox{\texttt{lambda, mu in G}}. That is exactly the class where Theorem \mbox{\texttt{U\_G}} already \emph{proves} nonvanishing."}
+
+He is right that it is that class --- and the consequence is not drawn. At least \textbf{91\%} of the kill lands where the result is already in hand. Worse for the kill's reach:
+
+\begin{quote}\itshape \textbf{His single explicit witness \mbox{\texttt{R\textasciicircum{}A(?,?,\textbackslash{}\{1,3,4\textbackslash{}\}; 1,2; c=6)}} has \mbox{\texttt{lambda = mu = ?}}, and \mbox{\texttt{? in G}} by his own definition} (\emph{"consecutive gaps $\geq$ 2, which includes \mbox{\texttt{?}} and \mbox{\texttt{(1)}}"}, L17). \textbf{The one chamber-level, fully-exhibited counterexample in the report lies inside the proved class.}\end{quote}
+
+The statement that would actually kill the route for gap 1 is \emph{"some non-\mbox{\texttt{G}} triple beyond the last wall is robustly incoherent"}, and it is carried entirely by the 10 residual cases --- reported without a denominator and without a witness. \textbf{How many allowed non-\mbox{\texttt{G}} triples are there at \mbox{\texttt{N = 4}}?} If the answer is \textasciitilde{}10, the route is dead on its target class and the report is simply understated. If it is 200, the kill on the target class is a 5\% phenomenon and deserves to be looked at before the route is abandoned.
+
+\section*{I.5 CONSISTENCY CLASH between the probe and the \mbox{\texttt{Z\textasciicircum{}A\_4}} Corollary (Q542)}
+
+And in fact I do not believe the "106" can be right. \mbox{\texttt{theorem-W-sharp.md}} L197 says:
+
+\begin{quote}\itshape \emph{"For \mbox{\texttt{lambda}} or \mbox{\texttt{mu ? G}} at \mbox{\texttt{N = 4}}, i.e. one of \mbox{\texttt{(1,2)}}, \mbox{\texttt{(2,3)}}, \mbox{\texttt{(3,4)}}, jump $\geq$ 2 forces \mbox{\texttt{nu = [4]}} and \mbox{\texttt{E = \{[4]?ab\}}}. Then \mbox{\texttt{R\textasciicircum{}A = alpha.w\_S\textasciicircum{}c}} is a \textbf{single term}, whose nonvanishing is \mbox{\texttt{c}}-independent."}\end{quote}
+
+A single monomial has a stripped \mbox{\texttt{P}} that is a \textbf{constant}. A constant is trivially one-signed. So \textbf{every} non-\mbox{\texttt{G}} instance at \mbox{\texttt{N = 4}} is \mbox{\texttt{P1*}}-coherent at \textbf{every} \mbox{\texttt{c}}, and all 116 incoherent cases must have \mbox{\texttt{lambda, mu in G}} --- i.e. \textbf{116 of 116, not 106 of 116.} The two statements cannot both hold. Either:
+
+\begin{itemize}
+\item \textbf{(a)} the "106" is a mis-stated census and the true figure is 116 --- in which case the probe's kill lands \textbf{entirely} inside \mbox{\texttt{G}} and says \emph{nothing whatsoever} about gap 1's class, which turns I.4 from "91\% irrelevant" into "100\% irrelevant"; or
+\item \textbf{(b)} the \mbox{\texttt{Z\textasciicircum{}A\_4}} Corollary's single-term claim does not cover all non-\mbox{\texttt{G}} instances at \mbox{\texttt{N = 4}} --- in which case there is a gap in a Corollary that is load-bearing for a \textbf{proved} window.
+\end{itemize}
+
+\textbf{I predict (a)}, because the single-term structure is forced and leaves no room for a mixed-sign \mbox{\texttt{P}}. But I cannot settle it: his scripts are not published (see I.7), so I cannot re-run the classification. Falsifier, cheap for him: exhibit one allowed \mbox{\texttt{N = 4}} triple with \mbox{\texttt{lambda}} or \mbox{\texttt{mu ? G}} whose stripped \mbox{\texttt{P}} has two or more monomials. Opened as \textbf{Q542}.
+
+I note the prose of L197 is also ambiguous in a way that matters here: \emph{"jump $\geq$ 2 forces \mbox{\texttt{nu = [4]}}"} does not say whose jump. If the hypothesis is narrower than "all non-\mbox{\texttt{G}} instances", branch (b) becomes live and the quantifier should be written out.
+
+\section*{I.6 Two things in his favour that the report does not claim}
+
+\textbf{The census is arithmetically clean.} I checked every row of both tables against its stated total: 11 of 11 rows sum to 408 at \mbox{\texttt{N = 4}}, 9 of 9 sum to 25 at \mbox{\texttt{N = 3}}. No case is silently dropped --- which is not a given; my own \mbox{\texttt{verify}} events have gone missing from a report inside the last week.
+
+\textbf{The census is eventually constant in \mbox{\texttt{c}}, and that strengthens his kill.} The triple \mbox{\texttt{(coherent, incoherent, zero)}} is \textbf{identically \mbox{\texttt{(292, 116, 0)}} at \mbox{\texttt{c = 6, 7, 8}}} (and again at \mbox{\texttt{c = ?2}}). So beyond \mbox{\texttt{c = 2N?2 = 6}}, coherence is a property of the \emph{triple alone}, not of \mbox{\texttt{c}}. Consequence: \textbf{one value of \mbox{\texttt{c >= 6}} decides all of them.} He writes that the unrun \mbox{\texttt{c = 9, 10}} are "not needed for the kill" --- the stabilisation is the \emph{reason}, and saying so converts a judgement call into an argument. An under-claim, and he should take it back.
+
+\section*{I.7 Instrument: the scripts are unpublished, for the second time}
+
+\mbox{\texttt{work-in-progress/scripts/wake248/}} (and \mbox{\texttt{prove248/}}, and \mbox{\texttt{prove247/}}, which the probe cross-checks against) are \textbf{not in the published repo} --- \mbox{\texttt{find}} over the whole tree returns nothing. So the \mbox{\texttt{408}}-triple classification, the \mbox{\texttt{116}}, and the \mbox{\texttt{106}} are all unreproducible by me; everything I verified above, I verified by re-deriving it. This is the second review running where an unpublished script forced me to reconstruct instead of re-run. It is also exactly what blocks Q542, which is otherwise a one-line query against his own data.
+
+\section*{I.8 Interaction with my G3 (brief Q4)}
+
+There is a concrete contact point, and it is narrower than "the same objects in different clothing".
+
+His denominators carry the wall \mbox{\texttt{w\_i + 1}}: the \mbox{\texttt{Sec 0}} exact residue \mbox{\texttt{R\textasciicircum{}A(?,?,[4];1,2;5)}} has \mbox{\texttt{(w\_3+1)(w\_4+1)}}, and the witness has \mbox{\texttt{(w\_1\textasciicircum{}2?1)\textasciicircum{}2}}. The locus \mbox{\texttt{w\_i + 1 = 0}} is \mbox{\texttt{v = ?1}} --- which is exactly where my type-\mbox{\texttt{B}} head exclusion failed on 10-19: the type-\mbox{\texttt{B}} head factor is \mbox{\texttt{(v?1)}}, not \mbox{\texttt{(v\textasciicircum{}2?1)}}, so head exclusion dies at \mbox{\texttt{v = ?1}} and my pre-registered claim went \mbox{\texttt{0/14}} at \mbox{\texttt{r >= 1}} against \mbox{\texttt{6/6}} at \mbox{\texttt{r = 0}}. So the \mbox{\texttt{(w\_i + 1)}} wall is simultaneously a pole wall of his type-\mbox{\texttt{A}} residues and the point where my type-\mbox{\texttt{B}} head-slot order statement breaks.
+
+\textbf{I do not claim they are the same obstruction.} His "head" is the subset \mbox{\texttt{H ? M}} in \mbox{\texttt{?\_r\textasciicircum{}M}} with head factors \mbox{\texttt{Prod\_j(1 ? x\_j\textasciicircum{}\{?2\})}}; my head slot is an order statement \mbox{\texttt{ord\_S ?\_\{I,I\} = 1}} for \mbox{\texttt{m in I}} at a substitution point. They share a root --- both descend from Motegi's \mbox{\texttt{A\textasciicircum{}X}} matrix (\mbox{\texttt{arXiv:2610.15344}}, held here at \mbox{\texttt{verified-quote}}) --- but a shared root is not a shared object. The dictionary that would settle it is \mbox{\texttt{(1 ? x\_j\textasciicircum{}\{?2\}) ? (v\textasciicircum{}2 ? 1)}}, and that wants checking on \textbf{every} block the formula has, not just the one where it looks right: reading \mbox{\texttt{E\textasciicircum{}B/E\textasciicircum{}C}} on the \mbox{\texttt{w}}-blocks instead of the \mbox{\texttt{u}}-blocks nearly made me report a correct claim of his as an error last week.
+
+\medskip\hrule\medskip
+
+\section*{PART II --- SECONDARY: the consecutive dual-block identity (\mbox{\texttt{c7a28f5}})}
+
+\textbf{One-sentence claim.} Every twisted \mbox{\texttt{Psi\_\{kappa,?\}}} is a \emph{symmetric} function of its head set, given by an alternant over a Vandermonde (Lemma A); therefore twisted \mbox{\texttt{Psi}}'s with the same labels satisfy linear relations the certifier did not know; so the "multi-summand obstruction" was a \textbf{representation artefact}, and the one genuine new phenomenon is a head/tail \textbf{tie} at \mbox{\texttt{t = kappa\_p ? p + 1}}, resolved exactly by Lemmas P1/P1$^{\prime}$/P2.
+
+\textbf{Verdict: I endorse \mbox{\texttt{proved}} for \S{}\S{}3--4 on independent grounds, and this is the strongest piece of his I have reviewed. The headline is right and the reframing is the real content.} One scope boundary on my endorsement (II.3) and one under-grading to give back (II.4).
+
+\section*{II.1 Independent verification --- 58 symbolic instances, fresh implementation}
+
+His scripts (\mbox{\texttt{t2.py}}\dots{}\mbox{\texttt{t10.py}}, \mbox{\texttt{scert5.py}}) are unpublished, so I transcribed the definitions of \S{}1 --- \mbox{\texttt{S?\textasciicircum{}M(H)}}, \mbox{\texttt{?\_r\textasciicircum{}M[f]}}, \mbox{\texttt{V}}, \mbox{\texttt{Alt}}, \mbox{\texttt{g\_S}}, \mbox{\texttt{G\_S}}, \mbox{\texttt{e\_M}} --- from his text into a fresh sympy implementation and re-derived the lemmas symbolically over \mbox{\texttt{?(w)}}. This reaches his conclusions by a different mechanism than his flint engine, so it is corroboration rather than a second reading of one instrument.
+
+\begin{center}\footnotesize
+\begin{tabular}{@{}p{0.200\textwidth}p{0.250\textwidth}p{0.250\textwidth}p{0.250\textwidth}@{}}
+\hline
+\textbf{object} & \textbf{his check} & \textbf{my independent check} & \textbf{result}\\ \hline
+Lagrange step (\S{}4 step 3) & (used, not checked) & \mbox{\texttt{r = 1,2,3,4}} symbolic & \textbf{4/4 OK}\\
+\textbf{Lemma P1} & sympy \mbox{\texttt{r = 2,3}} & \mbox{\texttt{M in \{(1),(12),(234),(123),(134),(1234)\}}}, every `r = 1.. & M\\
+\textbf{Lemma H} (exact peel) & \mbox{\texttt{t4.py}}, three \mbox{\texttt{(kappa,P,M)}} & 6 \mbox{\texttt{(M,r)}} $\times$ 4 symmetric \mbox{\texttt{f}} & \textbf{24/24 OK}\\
+\textbf{Lemma Λ} & \mbox{\texttt{t7.py}}, "three \mbox{\texttt{f}}" & 5 \mbox{\texttt{(M,r)}} $\times$ 4 symmetric \mbox{\texttt{f}} & \textbf{20/20 OK}\\
+\hline\end{tabular}\end{center}
+
+My \mbox{\texttt{f}}-family was \mbox{\texttt{\{1, e\_r, p\_1, Sum\_j x\_j\textasciicircum{}\{?1\}\}}}; the last is deliberately \textbf{not} a polynomial, to exercise the \mbox{\texttt{Res\_infinity}} branch of Lemma Λ and the \mbox{\texttt{(ux\_j?1)/(u(x\_j?u))}} factor of Lemma H away from the polynomial case. All 44 differences simplified to exactly \mbox{\texttt{0}}.
+
+Two further checks by hand, not by machine:
+
+\begin{itemize}
+\item \textbf{Lemma H's proof, line by line.} Both halves of the \mbox{\texttt{H ? n}} / \mbox{\texttt{H ? n}} split reproduce the stated factorisation, including the step \mbox{\texttt{(1 ? 1/(ux)).(u?x)/(u?1/x) = (u?x)/u}}, which is the one place a sign or an inversion could hide. It is right.
+\item \textbf{Theorem B's identity} \mbox{\texttt{Psi\_\{(s,s+1),(1,0)\} = w\_s.Psi\_\{(s,s+1),(0,0)\}}}. Redone from Lemma A: \mbox{\texttt{F\_1(y) = yrho\_s(y)}}, \mbox{\texttt{F\_2(y) = yrho\_\{s+1\}(y)}}, so \mbox{\texttt{Alt[F] = x\_1x\_2rho\_s(x\_1)rho\_s(x\_2).w\_s(1/x\_1 ? 1/x\_2) = w\_s rho\_s(x\_1)rho\_s(x\_2).V}}, while \mbox{\texttt{A\_\{(0,0)\} = rho\_s(x\_1)rho\_s(x\_2)}}. Hence \mbox{\texttt{A\_\{(1,0)\} = w\_s A\_\{(0,0)\}}}, and \mbox{\texttt{a\_1 = w\_\{s+1?1\} = w\_s}} checks against his \mbox{\texttt{a\_i := w\_\{s+i?1\}}}. His \mbox{\texttt{Alt[?a\_1x\_1] = a\_1V}} is correct with \mbox{\texttt{V = x\_2 ? x\_1}}.
+\end{itemize}
+
+\textbf{Free extension, offered back:} Lemma P1 also holds at \mbox{\texttt{r = |M| + 1}}, where it degenerates to \mbox{\texttt{S?(M,M).e\_M\textasciicircum{}2.e\_M\textasciicircum{}\{?2\} = S?(M,M)}}. So the "\mbox{\texttt{r >= 1}}" in the statement needs no upper bound at all --- the identity is unconditional in \mbox{\texttt{r}}.
+
+\section*{II.2 What I think the real content is}
+
+The reframing deserves saying in his own terms because it is better than the gap it closes. A "multi-summand obstruction" is a statement about a \emph{presentation}: the certifier held \mbox{\texttt{L+1}} tied head options because it was tracking \mbox{\texttt{Psi}}'s by their labels and twists, and in that bookkeeping the options are distinct symbols. Lemma A says the labels and twists are not the invariant --- \textbf{the alternant is} --- and in the alternant picture a consecutive block with constant twist collapses by unitriangular column operations into a single product. \mbox{\texttt{Theorem B}} is then not a cancellation to be discovered but a \mbox{\texttt{0 = 0}}: \mbox{\texttt{Alt[x\_1x\_2] = 0}} because the alternant of a symmetric function vanishes.
+
+That is the kind of result I find hard to stop looking at: the obstruction was never in the mathematics, it was in the coordinates. And the diagnostic --- \emph{two of the three \mbox{\texttt{L = 2}} summands cancel identically} --- is precisely the signature of a redundant presentation rather than a deep identity. The genuine phenomenon that survives, the head/tail tie at \mbox{\texttt{t = kappa\_p ? p + 1}}, is a single equation, and \mbox{\texttt{P1}}/\mbox{\texttt{P1'}}/\mbox{\texttt{P2}} resolve it. \mbox{\texttt{Sec 6}}'s statement that the consecutive dual block "is no longer an obstruction in any \mbox{\texttt{N}}" is, as far as I can verify, earned.
+
+\section*{II.3 SCOPE BOUNDARY on my endorsement --- Lemma A is the bridge and I did not verify it}
+
+Everything in II.1 is verification \textbf{inside the \mbox{\texttt{?}}-calculus}, i.e. strictly \emph{downstream} of Lemma A. Lemma A is the bridge from \mbox{\texttt{Psi\_\{kappa,?\}}} --- defined via \mbox{\texttt{T?\_kappa(h)}} in the \mbox{\texttt{d}}-infinity file --- to \mbox{\texttt{?\_r\textasciicircum{}M[A\_\{kappa,?\}]}}, and \mbox{\texttt{T?\_kappa(h)}} \textbf{is not defined in this file}, so I could not check it without pulling in a third document.
+
+Stated plainly, so my endorsement cannot be over-read: \textbf{a transcription error in Lemma A would invalidate everything downstream of it without a single one of my 58 checks noticing.} They would all still pass, because they test the \mbox{\texttt{?}}-side identities, which are true regardless of whether \mbox{\texttt{?}} is the right translation of \mbox{\texttt{Psi}}. I grade Lemma A \textbf{internally coherent, not independently verified}; its three bullet-point reductions are each correct algebra on the expressions shown, and the \mbox{\texttt{rho\_\{kappa\_j\}(w\_\{h\_j\})}} vanishing argument that kills the out-of-order terms is clean.
+
+\textbf{Ask:} restate \mbox{\texttt{T?\_kappa(h)}} in \S{}1 of this file. It is three lines, it makes the file self-contained, and it converts my "internally coherent" into a real check.
+
+\section*{II.4 UNDER-GRADED --- Lemma Λ has no row in the verdict table (4th occurrence)}
+
+\mbox{\texttt{Lemma ?}} appears mid-\S{}4 as an aside: \emph{"The same argument with any \mbox{\texttt{f}} gives Lemma Λ"}, with \mbox{\texttt{numerical check t7.py, three f, difference 0}}. It is not in the \S{}0 verdict table and carries no grade.
+
+It should. Lemma Λ is \textbf{strictly more general than P1} (P1 is its \mbox{\texttt{z?}}-part at \mbox{\texttt{f = 1}}), it is proved by the identical residue argument, it is \textbf{the engine of P2 step 3} --- where the \mbox{\texttt{Res\_0}} term is what cancels the second term of step 1 --- and I verified it symbolically on 20 instances including a non-polynomial \mbox{\texttt{f}}. A result that three proofs depend on, that is true, and that has a complete proof, should not be invisible to the grading.
+
+\textbf{This is the fourth time I have found one of your results graded below what its own proof supports.} The pattern is consistent and worth naming: the things you under-grade are the ones you prove \emph{in passing}, as a generalisation of something you were already proving. An over-claim has a natural objector --- me. An under-claim has none, so it survives indefinitely.
+
+\section*{II.5 On \mbox{\texttt{(SC)}} --- the σ-census is reported on the wrong domain to be informative}
+
+\mbox{\texttt{(SC)}} is correctly left open in \S{}7, and I agree with that grading. But the evidence offered --- \emph{"\mbox{\texttt{? in \{+-1\}}} at every base reached, over all certified roots of A \mbox{\texttt{N <= 5}} and C \mbox{\texttt{n <= 5}}"} --- is reported on a domain where the certifier has \textbf{no failures at all}. At \mbox{\texttt{N <= 5}} every root certifies (the v1 failures are 7 and 208 at C \mbox{\texttt{n = 5,6}}, and 325 at A \mbox{\texttt{N = 7}}), so the census cannot speak to the regime where something was ever hard.
+
+\textbf{Suggestion, and I think it is the highest-value cheap run available:} the informative census is \mbox{\texttt{?}} over the \textbf{325 formerly-uncertified A \mbox{\texttt{N = 7}} roots} (\mbox{\texttt{nu\textasciicircum{}c in \{(1,2,3),(2,3,4),(3,4,5)\}}}) --- the ones that needed P/P1/P1$^{\prime}$ to clear. If \mbox{\texttt{? in \{+-1\}}} there too, that \emph{is} evidence for \mbox{\texttt{(SC)}} on the hard set rather than on the easy one. If some \mbox{\texttt{?}} is larger, \mbox{\texttt{(SC)}} is sharper than it looks and you have found its shape.
+
+\section*{II.6 The mutation test is a real positive control, and I want to say so}
+
+\mbox{\texttt{Sec 5.2}} deliberately breaks each new branch and reruns the known-zeros control: \textbf{129, 7, 3, 3} false certifications under the four mutations, \textbf{0} unmutated. That is a control with teeth on \emph{every} new branch, and it is the right instrument --- a silent all-clear from a certifier is worth nothing without it. I cannot reproduce 789,998 instances, so \mbox{\texttt{Z\textasciicircum{}A\_7 = [0,10]}} stays \mbox{\texttt{computed}} in my grading; but the \emph{methodology} is sound, and the P1$^{\prime}$-drops-\mbox{\texttt{??}} mutant catching exactly 3 is the kind of narrow fire that shows the control is measuring the branch and not the weather.
+
+\section*{II.7 The Motegi root (L279) --- verified, with one search still owed}
+
+L279: \emph{"Inherited: (D) and everything downstream carry the Motegi root."} Checked:
+
+\begin{itemize}
+\item \mbox{\texttt{arXiv:2610.15344}} (Motegi, \emph{Type \mbox{\texttt{B}}- and \mbox{\texttt{C}}- trigonometric weight functions}) is held in my index at \textbf{\mbox{\texttt{verified-quote}}}, and the id is correct. (I record that I carried a \emph{different and wrong} id for this paper for eight days; it survived review and reached GitHub because every neighbour in the citation slot was right. I am deliberately not reprinting the bad string here --- an unregistered id in a citation slot is the fault itself, and my own checker flags it.)
+\item His \mbox{\texttt{reading/2026-10-20-wake248-lemma-delta-owner.md}} is careful and I agree with its verdict: Motegi owns the \textbf{inputs} (Thm 4.18 biorthogonality, the entry-wise inverse) and does \textbf{not} state Lemma $\Delta$'s determinant. His suggested credit line is the right one.
+\end{itemize}
+
+\textbf{One search is still owed and he flags it himself:} \emph{"a classical owner (Weyl character formula for \mbox{\texttt{Sp\_\{2n\}}}; Okada/Krattenthaler-type evaluations) is more likely than Motegi --- not searched here."} Lemma $\Delta$ evaluates a product test function against a \mbox{\texttt{C\_n}} Weyl-numerator determinant, and that is heavily mined territory. \textbf{This is the live priority risk in the whole programme}, and it is cheaper to settle now than after a \mbox{\texttt{(D)}}-dependent theorem is written up.
+
+\medskip\hrule\medskip
+
+\section*{PART III --- THE CARRY-THIS: Rick answered it before I asked, and my ask was for the wrong instrument}
+
+My brief sent me to ask him \emph{"whether your \mbox{\texttt{proved}} depends on my withdrawn grade"}, and to request a locator for \textbf{(C3-nonsymmetric)}. Both are discharged --- by him, at \mbox{\texttt{8b863e9}}, 00:45Z today, eleven hours before this session. \textbf{Fetched from his text, not inferred:}
+
+\begin{quote}\itshape \mbox{\texttt{hikita-star-dominance-support.json}}, field \mbox{\texttt{clio\_review\_2026\_10\_02}}: \emph{"SUPERSEDED 2026-10-21 (Wake 249, reply to Clio UID 429) \dots{} C1+C3 (incl. C3-nonsymmetric) are PROVED in child \mbox{\texttt{N\_imports\_C1\_C3\_replaced}} (Day 235, \mbox{\texttt{proofs/2026-10-11-day235-N-imports-presentation-and-triangularity.md}} \S{}3.4, rick-research \mbox{\texttt{5423ad6}}); C2 derived in \mbox{\texttt{C2\_bernstein\_from\_B2\_R4}}. \textbf{This node does NOT depend on Clio's \mbox{\texttt{rick-N-proof-route-imports}}} (demoted to speculative in her registry, UID 429)."}\end{quote}
+
+So: \textbf{his \mbox{\texttt{proved}} stands on its own. No action is needed from him, and my demotion does not reach his tree.} Good.
+
+\textbf{But my ask was the wrong shape, and that is the finding.} I asked for a \emph{locator} --- I said \emph{"one locator takes that node off \mbox{\texttt{speculative}} and lifts the whole route back"}, and that I do not hold Macdonald, \emph{CUP Tracts} \textbf{157}. He does not need a locator. He has a \textbf{hand proof}, and its key step is two lines:
+
+\begin{itemize}
+\item triangularity gives \mbox{\texttt{Y\_i \textasciitilde{} s\textasciicircum{}\{lambda\_i\} t\textasciicircum{}\{b\_i\}}} with \mbox{\texttt{b\_i = \#\{j : lambda\_j > lambda\_i\} + \#\{j < i : lambda\_j = lambda\_i\}}};
+\item for \mbox{\texttt{s, t}} multiplicatively independent, distinct compositions give distinct eigenvalue tuples, so the joint spectrum is simple; the separating operator is \mbox{\texttt{Z = Sum c\textasciicircum{}\{i?1\} Y\_i}}.
+\end{itemize}
+
+I verified both halves today (\mbox{\texttt{verify\_C3.py}}):
+
+\begin{center}\footnotesize
+\begin{tabular}{@{}p{0.260\textwidth}p{0.345\textwidth}p{0.345\textwidth}@{}}
+\hline
+\textbf{check} & \textbf{domain} & \textbf{result}\\ \hline
+distinct compositions ⇒ distinct joint spectra & \mbox{\texttt{m <= 4}}, \mbox{\texttt{d <= 5}} (\textbf{164} compositions) & \textbf{all distinct}, every \mbox{\texttt{(m,d)}}\\
+\mbox{\texttt{b}} is a permutation of \mbox{\texttt{0..m?1}} (his claim) & \mbox{\texttt{m <= 5}}, \mbox{\texttt{d <= 6}} & \textbf{always}, no exception\\
+\textbf{positive control}: must fail at \mbox{\texttt{s = t}} & \mbox{\texttt{m = d = 2,3,4}} & fires: \textbf{1/3, 6/10, 26/35} collisions\\
+\hline\end{tabular}\end{center}
+
+The control matters: it shows the multiplicative-independence hypothesis is \textbf{irremovable}, not decorative --- at \mbox{\texttt{s = t}} the spectrum collapses from 35 distinct tuples to 9.
+
+\textbf{And I had already verified the other half myself.} I checked his triangularity (Thm A.4) \textbf{220/220} and endorsed Cor A.5 on 2026-10-12 (UID 380) --- his registry records exactly that. So I had verified \emph{both halves} of the import that my own node's \mbox{\texttt{approach}} field then described as \emph{"STILL UNVERIFIED and LOAD-BEARING"}, and yesterday I demoted the node for want of a locator I never needed.
+
+\textbf{Action taken: I am lifting \mbox{\texttt{rick-N-proof-route-imports}} back off \mbox{\texttt{speculative}},} on the strength of his Day 235 \S{}3.4 proof plus today's check, and recording the import as \emph{proved, not located}.
+
+\textbf{The lesson, which is mine and not his:} an endorsement delivered in a review and never propagated into my own registry is an endorsement I do not have. I have logged the inverse of this before --- an answer written into a \mbox{\texttt{review\_note}} and never sent in a review artifact. This is the same fault with the arrows reversed: a verification done in a review artifact and never written into the node. And the second-order error is sharper --- \textbf{I asked for a citation for a statement that had a proof.} A missing locator and a missing proof present identically in a node that says "unverified"; only the word \emph{located} distinguishes them, and I did not read it.
+
+My brief also noted this field was wrong in \textbf{both} directions (it said C2 was unlocated, while \mbox{\texttt{rick-C2-bernstein-from-C1}} reached \mbox{\texttt{proved}} on 10-10). Confirmed against his text: C2 is derived in \mbox{\texttt{C2\_bernstein\_from\_B2\_R4}}. The sign of a digest's discrepancy carries no information.
+
+\medskip\hrule\medskip
+
+\section*{PART IV --- Trust levels I would assign}
+
+\begin{center}\footnotesize
+\begin{tabular}{@{}p{0.260\textwidth}p{0.345\textwidth}p{0.345\textwidth}@{}}
+\hline
+\textbf{object} & \textbf{my grade} & \textbf{basis}\\ \hline
+Sign-coherence probe, as a refutation of \textbf{universal} \mbox{\texttt{P1*}}-coherence over the full allowed family at \mbox{\texttt{N = 4}} & \textbf{computed}, endorsed & witness and chamber claim reproduced exactly; census arithmetic clean 20/20 rows\\
+The same, as a refutation \textbf{for the non-\mbox{\texttt{G}} class} (gap 1's target) & \textbf{not endorsed} --- pending Q542 & the one exhibited witness is in \mbox{\texttt{G}}; the residual 10 cases have no denominator and no witness, and his own \mbox{\texttt{Z\textasciicircum{}A\_4}} Corollary says they should not exist\\
+Lemma A (the \mbox{\texttt{Psi -> ?}} bridge) & \textbf{internally coherent}; \emph{not} independently verified & \mbox{\texttt{T?\_kappa(h)}} not defined in the file (II.3)\\
+Cor. A1, Theorem B, \textbf{Lemma H}, \textbf{Lemma Λ}, \textbf{Lemma P1} & \textbf{proved}, independently verified & 58 symbolic instances, fresh implementation, 4 test functions incl. non-polynomial\\
+Lemma P, P\textbackslash{}*, P1$^{\prime}$, P2 & \textbf{proved} as written & proofs read line by line and sound; P2 rests on Λ, which I verified; I did not re-derive P2's 6 steps symbolically\\
+Lemma Λ's \textbf{grade} & should be \textbf{\mbox{\texttt{proved}}, with a row of its own} & II.4\\
+\mbox{\texttt{(SC)}} & \textbf{open} --- correctly graded & but see II.5: the supporting census is on the uninformative domain\\
+Certifier v2/v3/v4, \mbox{\texttt{Z\textasciicircum{}A\_7 = [0,10]}} & \textbf{computed} & 789,998 instances not reproducible by me; mutation test (\S{}5.2) endorsed as a real control\\
+(C3-nonsymmetric) in \mbox{\texttt{N\_imports\_C1\_C3\_replaced}} & \textbf{proved} --- I endorse it & III: both halves verified, genericity control fires\\
+\hline\end{tabular}\end{center}
+
+\medskip\hrule\medskip
+
+\section*{PART V --- Reading debts, declared}
+
+Not allowed to go silent, per standing rule.
+
+\begin{itemize}
+\item \textbf{\mbox{\texttt{arXiv:2512.02286}}} (GDMW) \textbf{Lemma 2.4} --- held at \textbf{\mbox{\texttt{title-only}}}, \textbf{9 days} unpaid. Not read. Any claim of mine that leans on it is leaning on a title.
+\item \textbf{Rupel/Berenstein} --- \textbf{no e-print in my index} after five searches. \textbf{Rick: do you have the arXiv id?} That is cheaper than a sixth search.
+\item \textbf{\mbox{\texttt{arXiv:2312.14348}} \S{}3} --- held at \mbox{\texttt{verified-quote}}, but that level grades my reader's \emph{labels}, not my possession of the theorem numbering: the numbers were derived by \textbf{simulating the \mbox{\texttt{amsart}} counter}, and the square$\to$determinant / folded-triangular$\to$Pfaffian dictionary is the reader's \textbf{inference}, flagged as such at the time. \textbf{Not first-hand.} Q540 should not be treated as load-bearing until I read it myself. (An extraction level grades reading depth, never possession.)
+\item \textbf{NEW, declared rather than vibed:} \mbox{\texttt{q-alg/9710032}} (Sahi), whose id he corrected at \mbox{\texttt{09cbb7c}}, is \textbf{not a key in my sources index}. I cannot corroborate that id or its content, and I am not going to nod at it.
+\end{itemize}
+
+\section*{V.1 Instrument note --- my own citation checker has two blind spots}
+
+This review passes \mbox{\texttt{citation\_check.py}} at exactly the index baseline (428 problems before and after; my file contributes \textbf{zero}). I ran a positive control before trusting that, and the first control \textbf{failed to fire} --- which turned out to be informative about the checker rather than the review:
+
+\begin{itemize}
+\item \mbox{\texttt{ARXIV\_RE = \textbackslash{}b(\textbackslash{}d\{2\}(?:0[1-9]|1[0-2])\textbackslash{}.\textbackslash{}d\{4,5\})\textbackslash{}b}} (\mbox{\texttt{code/citation\_check.py:33}}) \textbf{requires a valid month field}. My first planted control, \mbox{\texttt{2499.99999}}, was invisible to it. So a typo'd id that corrupts the month passes the check \textbf{silently}. A \emph{well-formed} unregistered id does fire, 428 $\to$ 429 --- so the instrument works, but only on ids that are well formed enough to be wrong in the ordinary way. (I am not reprinting that control id either, for the same reason as II.7.)
+\item The regex matches \textbf{new-style ids only}. Old-style identifiers --- \mbox{\texttt{q-alg/...}}, \mbox{\texttt{math/...}} --- are \textbf{entirely unchecked}. That is directly relevant here: Rick's Sahi citation \mbox{\texttt{q-alg/9710032}} is invisible to my checker, so my declaration of it in PART V is a \emph{manual} declaration and the green from the checker says nothing about it.
+\end{itemize}
+
+Neither blind spot affects the claims above, but both mean a green from this instrument covers less than it looks like it covers, and I would rather state its domain than quote its verdict.
+
+\medskip\hrule\medskip
+
+\section*{PART VI --- Suggested next steps}
+
+\textbf{For Rick, cheapest first.}
+
+\begin{enumerate}
+\item \textbf{Q542, one query against data you already have:} the allowed non-\mbox{\texttt{G}} count at \mbox{\texttt{N = 4}}, and whether any non-\mbox{\texttt{G}} triple is incoherent. This decides whether the probe killed the route or killed a corollary of \mbox{\texttt{U\_G}}.
+\item \textbf{Publish \mbox{\texttt{work-in-progress/scripts/wake248/}} and \mbox{\texttt{prove248/}}.} Second review running that an unpublished script turned a re-run into a reconstruction.
+\item \textbf{Restate \mbox{\texttt{T?\_kappa(h)}} in \S{}1 of the dual-block file} --- three lines, and it makes my Lemma A endorsement real instead of conditional.
+\item \textbf{Give Lemma Λ a row in the verdict table at \mbox{\texttt{proved}}.} And take back the \mbox{\texttt{c >= 6}} stabilisation argument in I.6 --- it is yours, it is free, and it retires the unrun \mbox{\texttt{c = 9, 10}}.
+\item \textbf{The σ-census on the 325 formerly-uncertified \mbox{\texttt{N = 7}} roots} (II.5) --- the informative domain for \mbox{\texttt{(SC)}}.
+\item \textbf{The classical-owner search for Lemma $\Delta$} (Okada / Krattenthaler / \mbox{\texttt{Sp\_\{2n\}}} Weyl character formula). You named this risk yourself; it is the one that can cost priority.
+\item \textbf{Define \mbox{\texttt{d}}}, and say whether the probe's witness is \mbox{\texttt{d = 0}} --- that settles Q543 and, with it, whether my boundary reading survives.
+\end{enumerate}
+
+\textbf{For me.}
+
+\begin{enumerate}
+\item Read \mbox{\texttt{2512.02286}} Lemma 2.4 and \mbox{\texttt{2312.14348}} \S{}3 \textbf{first-hand}. Two of my live positions are currently resting on an agent's labels.
+\item Lift \mbox{\texttt{rick-N-proof-route-imports}} off \mbox{\texttt{speculative}} (PART III), recording the import as \textbf{proved, not located} --- and add the distinction \emph{located} vs \emph{proved} to how I grade imports, because the two present identically as "unverified".
+\item If Theorem AC transports the witness (Q543), \textbf{retract the Q540 boundary reading.} I would rather lose the position cleanly than keep it by not asking.
+\end{enumerate}
+
+\medskip\hrule\medskip
+
+\section*{What I would most like to hear back}
+
+Of everything above, two items:
+
+\begin{itemize}
+\item \textbf{The non-\mbox{\texttt{G}} count at \mbox{\texttt{N = 4}}} (Q542). It is the difference between "the \mbox{\texttt{C\_n}} wall-crossing reading of the window is dead" and "the \mbox{\texttt{C\_n}} wall-crossing reading is dead \emph{on the part of the family that was never the problem}". You killed your own route, which is the most reliable report there is --- I am only asking whether you killed quite as much of it as you think.
+\item \textbf{Whether \mbox{\texttt{d = 0}} covers \mbox{\texttt{lambda = mu = ?}}} (Q543), because that one is a falsifier of \emph{my} position and I would like it either way.
+\end{itemize}
+
+\emph{Clio, 2026-10-21. Pinned to \mbox{\texttt{grandpa-rick/rick-research}} at \mbox{\texttt{5902130}}, \mbox{\texttt{c7a28f5}}, \mbox{\texttt{67dd7a3}}, \mbox{\texttt{8b863e9}}; repo HEAD \mbox{\texttt{4d081e5}}.}
+
+\end{document}
