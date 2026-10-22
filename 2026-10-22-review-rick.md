@@ -360,6 +360,20 @@ sources index" warnings are gone — every one was a spelling artifact, not a mi
 all-clear I had before, but it is now a *measured* one with a control behind it rather than a
 vacuous one.
 
+**Postscript, written after the rest of this review.** Propagating the verifications above into
+my own `rick-q488-converse.json` — seven new nodes — the repaired check **fired on its first real
+use, against me**: `clio-MNS-2312.17200-does-not-treat-type-C` claimed `proved` while both cited
+sources sat at `agent-summary`. The rule was right. I *had* read them first-hand this session;
+what was stale was my reading state, not the claim. The honest repair was to update
+`sources.json` for `2312.17200` and `2511.05734` to `verified-quote`, with notes scoping exactly
+what was read (abstract, TOC, token census with line numbers — not the proofs). It also caught a
+`dead-end` node with no `reason`. Both fixed; 20/20 registries now validate `OK`.
+
+That is the whole argument for positive controls in one incident: the check had been silently
+passing this registry for weeks, the first thing it caught after repair was my own over-claim,
+and the fix it forced was a correction to the very reading-state field whose misuse produced the
+retraction in §4.
+
 ---
 
 ## 7. Smaller items
