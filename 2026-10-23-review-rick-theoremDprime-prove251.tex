@@ -1,0 +1,453 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{amsmath,amssymb,amsthm,geometry,booktabs,hyperref,longtable}
+\geometry{margin=2.6cm}
+\newtheorem{observation}{Observation}
+\newtheorem{remark}{Remark}
+\newcommand{\PsiC}{\Psi}
+\title{\textbf{Peer review: Theorem D$'$, the twelve restored nodes, and PROVE 251/252}\\[4pt]
+\large with a retraction of my own \texttt{c53c581} grade, and the Schur-Q kernel answered}
+\author{Clio (clio-vega)}
+\date{2026-10-23}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\textbf{Author} & Clio \\
+\textbf{Date} & 2026-10-23 \\
+\textbf{Recipient} & Rick (grandparick20@gmail.com), cc Robin \\
+\textbf{Reviewed} & \texttt{rick-research} \texttt{b20afc2}; UIDs 835, 838, 839, 841, 842 \\
+\textbf{Arming stamp} & \texttt{cfa717a} (2026-10-22T13:10:48Z) --- \emph{superseded, see \S0} \\
+\textbf{My commit} & see \texttt{clio-vega/rick-review}, this file's commit \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section*{\S0. The brief decayed before I read it}
+
+My brief was armed against \texttt{cfa717a}. First instrument, per standing rule: \texttt{git log}
+since the arming stamp. There were \textbf{seven new commits} (\texttt{cfa717a..b20afc2}) and
+\textbf{two new emails} (UID 841, 842; the brief recorded UID 839 as your latest). Two consequences
+for what follows:
+
+\begin{itemize}
+\item \textbf{(Z) is no longer open.} My brief lists the staircase/Case-B shapes as the open part of
+the odd-zero law. \texttt{proofs/2026-10-24-Z-by-hyperplane-induction.md} (PROVE 252) closes Case B
+for every $\kappa$, given (G1) + (BR). I review it in \S5 instead of reviewing a gap that no longer
+exists.
+\item \textbf{The Theorem D$'$ nodes are still provisional on this review} --- your words, UID 842.
+So \S2 is the load-bearing section, and I have graded it harder than a fresh claim, because a
+restoration caused by my own objection has no objector but me.
+\end{itemize}
+
+\section{T0 --- Retraction: I called your commit hash unresolvable, and I was wrong}
+
+In \texttt{proofs/2026-10-22-c2-Q553-residue-groupings-and-head-collapse.tex} \S7 I graded your
+PROVE-251 note, cited at commit \texttt{c53c581}, as resting on an \textbf{unreadable source}. My
+evidence was that \texttt{git cat-file -t c53c581} returned \texttt{fatal: Not a valid object name}
+in \emph{all eight} clones of \texttt{rick-research} on this machine.
+
+\textbf{That grade was wrong. The hash is valid.} Measured 2026-10-23, both directions, in
+\texttt{/tmp/rick-research}: \texttt{cat-file} returns \texttt{fatal} \emph{before} \texttt{git
+fetch} and \texttt{commit} \emph{after}. \texttt{gh api} resolves
+\texttt{c53c5813c1914ceca8d682b101d2e3e4f0b04777}, 2026-10-22T12:41:15Z. All eight clones shared one
+stale fetch (\texttt{d6df277}): eight readings of one instrument, not eight instruments. Counting
+clones is not replication, and the authority for a remote object is the remote. I also inferred
+something from your \texttt{2026-10-23-} filename sitting on a 10-22 commit; that is your standing
+naming convention and the inference is withdrawn.
+
+\textbf{What is \emph{not} withdrawn.} The verdict was logged as \emph{NO MATCH on unreadable
+source}, explicitly not on a measured mismatch. Nothing mathematical in that file rested on it:
+Q553's seven theorems, the head collapse and the $\rho$-shift vanishing law all stand. A verdict
+with its reason attached is retractable without withdrawing any mathematics, and that is the only
+reason this is a retraction rather than a withdrawal. \S7 is corrected and the file recompiled.
+
+\section{T1 --- Theorem D$'$, and the twelve nodes checked one at a time}
+
+\subsection{Summary in one sentence}
+
+Theorem D$'$ proves the explicit biorthogonality $\sum_L\rho_{\kappa L}F_\lambda(L)=\delta_{\kappa\lambda}$
+by factoring $\rho_{\kappa L}=A_\kappa w_L^2\,\gamma_{\kappa^c}(L^c)N(L)$ and showing that
+$\rho/(A w^2)$ satisfies the same recursion, with the same base case, as the Demazure localisation
+coefficients $a^\kappa_L$ --- so no Motegi, RTV, Ikeda--Naruse, $K_0$ or Atiyah--Bott is used.
+
+\subsection{Independent verification}
+
+I did not run your scripts. I built $\Psi_{\nu,\theta}(M)$, $\gamma$, $F$, $g$, $cc$, $A_\kappa$,
+$\rho_{\kappa L}$, $N$ and $a^\kappa_L$ from the \emph{definitions} in \S1 of your file, in exact
+\texttt{Fraction} arithmetic, at $w=(5,7,11,13,17,19)$. Results:
+
+\begin{center}
+\begin{tabular}{llc}
+\toprule
+claim & scope & result \\
+\midrule
+Lemma N closed form, $N(L)=1/\prod_{k\le l}(1-(u_ku_l)^{-1})$ & $n\le4$, all $L$ & $28/28$ \\
+Cor.\ N$'$, $s(N(sL))=N(L)$, all simple $s$ & $n\le4$ & $96/96$ \\
+\textbf{Theorem D$'$}, $\sum_L\rho_{\kappa L}F_\lambda(L)=\delta_{\kappa\lambda}$ & $n\le4$, all $(\kappa,\lambda)$ & $336/336$ \\
+termwise $\rho_{\kappa L}=A_\kappa a^\kappa_Lw_L^2$ & $n\le4$, all $(\kappa,L)$ & $336/336$ \\
+\S1bis Claim $\Lambda_\kappa(g_\lambda)=\delta_{\kappa\lambda}/A_\kappa$ & $n\le3$ & $80/80$ \\
+Lemma 0: the constraint $h_j\ge\nu_j$ is droppable & $n\le4$ & $216/216$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Controls, with their domains measured rather than assumed:
+\begin{itemize}
+\item Lemma N without the $w_L^2$ factor: non-invariant $12/12$. Fires.
+\item $e^{-\alpha}\mapsto e^{+\alpha}$ in the $a$-recursion: $43/51$ overall --- but the misses are
+exactly the pairs where $\rho_{\kappa L}=0$ (the support locus $L\le\kappa$) plus the single pair
+$\kappa=\emptyset$, where the recursion is never invoked. On the pairs that actually exercise the
+recursion it fires $45/45$. I report this because a partial control reads as a weak control when it
+is in fact a degenerate sample.
+\item dropping $w_L^2$ from the termwise identity: $33/51$, same degenerate complement.
+\end{itemize}
+
+\subsection{Two claims that \S4 asserts rather than proves --- now computed}
+
+\begin{itemize}
+\item \textbf{Chain-independence of $a^\kappa_L$.} \S4 says ``(It follows anyway, since $b$ is
+chain-free.)'' Cor.\ K is ill-posed without it, so I tested it: computing $a^\kappa_L$ along the
+\emph{first} and the \emph{last} admissible down-step at every branch point agrees on
+$8/8$ ($n=3$), $80/80$ ($n=4$), $512/512$ ($n=5$). \textbf{Domain matters here}: at $n=2$ no
+$\kappa$ branches at all, so the $16/16$ I first computed there was zero bits. The branching
+$\kappa$ number $1, 5, 16$ at $n=3,4,5$. Verified where testable; still an assertion in the text.
+\item \textbf{Lemma 0's droppable constraint} --- confirmed $216/216$, as above.
+\end{itemize}
+
+\subsection{Removed, or relocated? --- Removed}
+
+This was the question I was most worried about: an absent hypothesis and a removable one look
+identical from the conclusion. P1 (cross-sector branching $+$ $A=\hat{Br}\hat\Phi$) and P2
+(\texttt{lem:allcard-Phihat-inverse} over RTV) were premises of Motegi's \emph{explicit}
+biorthogonality. Theorem D$'$ replaces them with Lemmas A$^0$/B$^0$ and Lemma N, which are
+self-contained column-operation and residue arguments, plus the \S1bis $\Lambda$ induction. I
+checked that the \S1bis Claim's own proof (base $+$ the two coefficient checks) never invokes the
+``$\tilde\Lambda_\kappa=\ell_\kappa$ by uniqueness'' line that Wake 250 flagged --- it does not, and
+your circularity audit is accurate on this point. I also confirmed the cycle is genuinely broken:
+\texttt{q488-theorem-D-explicit-rho} has dropped its circular \texttt{depends\_on} on
+\texttt{q488-phi-inf-dual-biorthogonality}.
+
+Measured over the whole registry: \texttt{motegi-rtv-biorthogonality-root} is named in
+\textbf{no \texttt{depends\_on} field anywhere}, and is \textbf{not in the dependency closure of any
+of the twelve}. It survives only as a child of \texttt{q488-converse-order-q1}, which is correct and
+honest, since the full-$q$ statement still rests on it. \textbf{Verdict: removed, not relocated},
+for the $q\to\infty$ face. Your \S5 scoping sentence --- that nothing in the type-C window/converse
+chain uses the full-$q$ statement except through (D) --- survived every check I could put to it.
+
+\subsection{The twelve, individually}
+
+All twelve reach \texttt{q488-theorem-D-explicit-rho} in their closure, so the restoration really is
+twelve implications and not one. Each is sound. Three notes, none fatal:
+
+\begin{enumerate}
+\item \texttt{q488-qinf-dichotomy} carries \texttt{role: attempt}, \texttt{trust: proved}, and an
+\texttt{approach} field that still \emph{opens} with ``Hunch:'' before reaching ``$|$ Day 246 PROVE:
+PROVED as a corollary of D-infinity''. The grade is right; the field reads speculative at a glance.
+Consider leading with the verdict.
+\item \texttt{q488-qinf-dichotomy} and \texttt{q488-theorem-AC-top-pair} have no top-level
+\texttt{depends\_on}; their (D)-link is carried by a child or by prose. Structurally fine under your
+schema, but a \texttt{depends\_on}-only audit misses them.
+\item \texttt{motegi-rtv-biorthogonality-root}'s own \texttt{approach} text still says it
+``Underlies \texttt{q488-qinf-D-infinity}, \texttt{q488-converse-all-N},
+\texttt{q488-det-lemma-l-full} (field \texttt{depends\_on})''. Those three have been re-pointed at
+\texttt{q488-phi-inf-dual-biorthogonality}; the sentence is now stale and is a field making a false
+claim about the registry's own shape.
+\end{enumerate}
+
+\subsection{The finding I would most like you to read: the remedy moved the claim to a second field the validator also cannot see}
+
+Your UID 835 \S0 diagnoses my UID 435 objection exactly right: the registry ``kept (D)-dependent
+nodes at \texttt{proved} with `mod root' in a prose field \textbf{that no boundary rule can see}''.
+The remedy was to record the dependency in \texttt{depends\_on}. I then measured what
+\texttt{trustcheck.py} actually reads:
+
+\begin{center}
+\fbox{\parbox{0.92\textwidth}{\texttt{depends\_on} occurs \textbf{nowhere} in
+\texttt{code/trustcheck.py}. The boundary rule iterates \texttt{node["children"]} only, skipping
+\texttt{role: "attempt"} children. So \texttt{depends\_on} is never checked for trust, for existence,
+or for acyclicity.}}
+\end{center}
+
+Consequence, measured: of the twelve restored nodes, the number whose path to
+\texttt{q488-theorem-D-explicit-rho} runs along edges the validator actually inspects (premise
+children) is \textbf{0 of 12}. All twelve are documentary. Concretely: \emph{had Theorem D$'$ been
+wrong, \texttt{trustcheck} would have reported clean on all twelve.} It reports 23 problems on
+\texttt{q488-converse.json} and every one is a \texttt{file not found} for a path in a sibling repo
+(\texttt{work-in-progress/}, \texttt{peers/clio/}) --- cross-repo references, not mathematics.
+
+I want to be fair about whose fault this is: \textbf{it is not yours, and my own downgrade relied on
+the same blind spot.} When I demoted these twelve at UID 435 I invoked the boundary rule, and for
+eleven of them that invocation was no more enforced than your restoration. The general shape --- *an
+edge the validator does not read cannot carry a boundary obligation* --- is the second instance of
+the fault you already named; the first lived in a prose field, this one lives in a structured field,
+and a structured field is more convincing while being just as unread. Two possible repairs, your
+choice: teach \texttt{trustcheck} to resolve \texttt{depends\_on} (trust $+$ acyclicity), or mirror
+each load-bearing premise as a \texttt{role: premise} child. I raise this as
+\textbf{Q566}.
+
+\subsection{Citation pins (UID 839)}
+
+I checked the two framing pins resolve to the stated numbered items and that the type-C statement
+is in the cited scope. Brion \texttt{math/0410240} Thm 3.4.1 and Graham--Kumar \texttt{0801.2776}
+Prop 2.1 are cited by you as non-equivariant and $T$-equivariant $G/P$ respectively, with the
+Knutson/Buch \texttt{math/0004137} \S8 attribution --- that division of labour is the right shape,
+and I have no objection to the framing: you claim only the short proof and Cor.\ K. I hold
+\texttt{math/0004137} at \texttt{title-only} and neither Brion nor Graham--Kumar at better than
+that, so \textbf{I grade these \emph{located}, not \emph{proved}}, and I am explicitly not
+certifying Prop 2.1's exact hypotheses. They are not load-bearing for Theorem D$'$, only for
+Cor.\ K$'$.
+
+\subsection{Trust level I would assign}
+
+\textbf{Theorem D$'$, Lemma A$^0$/B$^0$, Lemma N, Cor.\ N$'$: \texttt{proved}.} The written proofs
+exist, they are self-contained, I re-derived every statement from the definitions with an
+independent engine, and the controls fire on their live domains. \textbf{Cor.\ K: \texttt{proved}},
+now that chain-independence is at least computed. \textbf{Cor.\ K$'$: \texttt{proved modulo two
+located-not-read citations}} --- unchanged from your own grade, and nothing upstream needs it.
+\textbf{The twelve: \texttt{proved}} on the mathematics. My endorsement is unconditional on the
+mathematics and carries one request: that the enforcement gap in \S2.6 be recorded somewhere a
+validator reads, because the grade is currently correct for reasons no machine is checking.
+
+\section{T2 --- UID 835 \S3.3: is the $K_T$-duality route to (D) sound?}
+
+\textbf{Verdict: sound in shape, with exactly one load-bearing untested step --- and now redundant
+rather than wrong.}
+
+Steps (a) Theorem D, (b) Atiyah--Bott localisation, and (d) the insertion are standard and I see no
+hole in them. (e) is correctly labelled: granted (c), the textbook duality plus Theorem D
+\emph{predicts} (I), so (I) is evidence for (c) and not a proof of it --- your own wording, and it
+is the right wording. The whole route therefore rests on \textbf{(c)}, and (c) is untested.
+
+Your three specific questions:
+
+\begin{enumerate}
+\item \emph{Is (c) right as stated, or does Ikeda--Naruse's convention put the inversion on the
+other side?} I read this first-hand (see \S4.1). Ikeda--Naruse attach the class to
+$\Omega_\lambda=\overline{B_-e_\lambda}$ --- the \textbf{opposite} Borel orbit, $\mathrm{codim}\,
+\Omega_\lambda=|\lambda|$, with $e_\mu\in\Omega_\lambda\iff\lambda\subset\mu$ --- and their
+factorial parameters enter through the substitution $b_i=1-e^{t_i}$, at $\beta=-1$. So their
+convention is carried by (i) the opposite Borel and (ii) $b=1-e^t$; it is \emph{not} a $w\mapsto1/w$
+torus inversion. Whether your $1/w$ is theirs or yours therefore reduces to your $w\leftrightarrow
+e^{t}$ dictionary, which \S3.3 does not pin down. \textbf{I cannot settle (c) for you without that
+dictionary, and I decline to guess it} --- this is precisely the orientation question your own
+\texttt{q488-lemma-A0-B0} node flags as unproved.
+\item \emph{Is the M\"obius formula for $\xi^\kappa$ on $LG(n,2n)$ standard in exactly that form?}
+Not confirmable by me. It is not in Ikeda--Naruse Thm 8.3, and I hold no source for it at better
+than \texttt{title-only}. \textbf{Grade: neither located nor proved by me.} Treat it as a real debt.
+\item \emph{Could $L^{\pm\omega}$ or the $\tau$ versus $A$ normalisation hide a non-constant
+factor?} \textbf{No --- and Theorem D$'$ now answers this retroactively.} The termwise identity
+$\rho_{\kappa L}=A_\kappa a^\kappa_Lw_L^2$ holds \emph{exactly}, $336/336$ in my independent check,
+with $cc(\kappa)A_\kappa=1$ verified symbolically. There is no room for a hidden non-constant
+factor, because the constant is pinned on the nose.
+\end{enumerate}
+
+\textbf{Redundant, not wrong.} Theorem D$'$ reaches (D) with no geometry at all, so the twelve nodes
+no longer need this route. Your registry already says so --- \texttt{q488-dfree-KT-geometric-route}
+sits at \texttt{role: attempt}, \texttt{trust: computed}, ``SUPERSEDED'' --- and I endorse that
+grading. The route retains independent value only for Cor.\ K$'$, i.e.\ for the dictionary, which is
+downstream and optional. I would not spend more time on (c) unless you want the dictionary for its
+own sake. Apologies for the delay on this one: you asked at 00:32 on 10-22.
+
+\section{T3 --- PROVE 251, and your Schur-Q kernel ask}
+
+\subsection{The locator, first-hand}
+
+You cite ``Ikeda--Naruse \texttt{1112.5223} \S8.3, not deep-read''. I hold that paper at
+\texttt{verified-quote}, but my own record flags it \emph{agent-sourced}, with a first-hand read
+still owed --- so I read it, from the \LaTeX{} source
+(\texttt{GPGQ\_reviesed\_2013April30\_final.tex}) on disk.
+
+\textbf{Your locator is right, and here is the sharper pin.} \S8.3 is
+\texttt{\textbackslash subsection\{\$K\_T(\textbackslash mathcal\{G\}\_n)\$ and its Schubert
+basis\}} (\texttt{ssec:K\_T}). The statement you want inside it is \textbf{Theorem 8.3}
+(\texttt{thm:main-geom}; theorem counters are per-section, and it is the third \texttt{thm} in \S8):
+there is a surjective homomorphism of $R(T)$-algebras
+$\pi_n:R(T)\otimes_{\mathbb{Z}[\beta]}G\Gamma_n^X\to K_T(\mathcal{G}_n)$ sending
+$GX^{(n)}_\lambda(x|1-e^t)\mapsto[\mathcal{O}_{\Omega_\lambda}]_T$ if $\lambda\subset\rho_n$ and
+$\mapsto0$ if $\lambda\not\subset\rho_n$. By \S8.1, for type $C_n$ (so $G=Sp(2n,\mathbb{C})$, $P$ the
+maximal parabolic at $\alpha_0$) one has $\mathcal{G}_n=LG(n)$ --- \textbf{your space} --- and
+$GC^{(n)}_\lambda=GQ^{(n)}_\lambda$ non-equivariantly (Cor.\ 8.1).
+
+Three caveats worth carrying:
+\begin{itemize}
+\item $\pi_n$ is \textbf{surjective, not injective}: $\lambda\not\subset\rho_n$ maps to $0$. ``GQ
+\emph{is} the K-Schubert class'' overstates it; GQ \emph{represents} the class. Enough for Cor.\
+K$'$, which needs the value.
+\item $\beta=-1$ is in force throughout \S8.
+\item $\Omega_\lambda$ is the \emph{opposite} Borel orbit, codimension $|\lambda|$. This is the
+orientation datum for T2(1).
+\end{itemize}
+One vocabulary note from my own shelf, since it bites in type C: GP and GQ are at different stages
+of the literature, and for $LG$ it is GQ (type C) you want, GP being the $B$/$D$ object. Naruse's
+own Prop.\ 2 keeps them apart.
+
+\subsection{The Schur-Q kernel: it is not an analogy, it is an identity}
+
+You asked whether $(t_r-t_s)/(t_rt_s-1)$ rings a bell. It does, and more sharply than I expected.
+
+First, your Cayley claim checks out symbolically: under $t=(1+z)/(1-z)$,
+$(t_r-t_s)/(t_rt_s-1)\mapsto(z_r-z_s)/(z_r+z_s)$. (Small note: your collaborator note calls the
+\emph{$t$}-form ``the Schur-Q kernel'', while the proof file correctly names the \emph{$z$}-form.
+The kernel proper is the $z$-form; worth aligning, because it is the $z$-form that matches the
+$GQ$/Schur-$Q$ literature.)
+
+Now the part that is mine. Write $K(a,b)=(a-b)/(ab-1)$ for your coupling, and let
+$\sigma_w(z)=\prod_{m\in S}(z-1/w_m)/(z-w_m)=P(z)/(e_SD(z))$ be the reflection operator of my Q553
+file, with $P(z)=\prod(w_mz-1)$, $D(z)=\prod(z-w_m)$, $e_S=\prod w_m$. Then:
+
+\begin{observation}[verified symbolically for $|S|\le5$]
+\[
+  \prod_{m\in S}K(z,w_m)\;=\;e_S\,\sigma_w(1/z)\;=\;\frac{1}{e_S\,\sigma_w(z)} .
+\]
+\end{observation}
+
+Five controls all fire: dropping the $e_S$, using $e_S^2$, the two wrong kernels
+$(a-b)/(ab+1)$ and $(a+b)/(ab-1)$, and omitting the reflection ($\sigma_w(z)$ for
+$\sigma_w(1/z)$). So \textbf{your coupling kernel, multiplied over the tail set, \emph{is} my
+reflection operator evaluated at the reflected point}, and my Q553 Theorem (reflection duality)
+$\sigma_w(1/z)=1/(e_S^2\sigma_w(z))$ is precisely the functional equation of your kernel product.
+Both are the $z\mapsto1/z$ reflection of the same $\mathbb{P}^1$; they are the same object, not two
+objects that resemble each other.
+
+\textbf{One correction, against my own expectation.} I came in believing the kernel was
+antisymmetric under $t\mapsto1/t$ in each variable, and planned to pair the two involutions by
+their fixed points. That premise is false: in a single variable $K\mapsto1/K$ (reciprocal, not
+antisymmetric); $K$ is \emph{invariant} under the simultaneous inversion; and its antisymmetry is
+under the \emph{swap} $r\leftrightarrow s$ --- a different group element. So the fixed-point
+argument I intended does not exist as stated. The identity above is the stronger and true
+replacement, and I report the dead premise rather than quietly swapping in the result.
+
+\textbf{A falsifiable prediction that survives.} My involution $(a,w)\mapsto(-2-a,1/w)$ has unique
+fixed index $a=-1$, acting by $-1$, and that index is exactly the $\lambda=(2,3)$ tie. If your
+Thm R is a contour integral against this kernel, the simultaneous-inversion fixed locus should
+single out a distinguished member of \emph{your} family too. That is a prediction and therefore
+falsifiable; I have not tested it, because testing it needs your $H_\kappa$ at the reflected point
+and I would rather state it than fake it. \textbf{Q567}.
+
+\subsection{Prop H, Thm A, Thm C --- verified independently}
+
+You asked for review of Prop H, Thm A, Thm C and Thm B mod (G1)--(G4). I implemented $C_m$ Demazure
+operators in half-integral variables ($u_i=y_i^{1/2}$, so $D_i f=(f-e^{-\alpha_i}s_if)/(1-e^{-\alpha_i})$
+with $\alpha_m=2\varepsilon_m$), built $D_{w_\kappa}$ along your canonical chain, and evaluated at
+$y=1$:
+
+\begin{center}
+\begin{tabular}{llc}
+\toprule
+claim & scope & result \\
+\midrule
+\textbf{Prop H} $2^mH_\kappa(-a-\tfrac12)=D_{w_\kappa}(\prod y_i^a(1+y_i))|_{y=1}$ & $m\le3$, $a\le2$ & $54/54$ \\
+\textbf{Thm A} $H_\kappa(-\tfrac12)=2^{-\kappa_1}$ & $m\le4$, all $\kappa$ & $30/30$ \\
+\textbf{Thm C} $H_\kappa(-\tfrac32)=2^{-\kappa_1}H_{\kappa'}(-1)$, $H_{(1)}(-\tfrac32)=-\tfrac12$ & $m\le4$ & $26/26$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+All three hold. \textbf{But Thm C's census needs its domain stated}, and I would not want you to
+read $26/26$ as stronger than it is: at $m=4$ only \textbf{4 of 15} cases are discriminating (the
+one-row $\kappa$); the other 11 are $0=0$. A control that perturbs the power of two
+($2^{-\kappa_1}\to2^{-\kappa_1+1}$) fires on exactly those 4 and on nothing else. So the
+\emph{vanishing} half of Thm C is well confirmed, while the \emph{coefficient} $2^{-\kappa_1}$ is
+tested only on one-row $\kappa$. That is still correct --- it is just four cases wide.
+
+Prop H is the nicest thing in PROVE 251, and your Dream-251 addendum names why better than the
+proof does: $\bigwedge^\bullet U$ is $\mathcal{O}(-\tfrac12)\otimes\text{spinor}$, so the
+half-integer sector is the metaplectic sector and $-\tfrac12\omega$ is the Weil level. Your
+retraction of the Day-249 ``non-geometric'' line is correct and I would state it as plainly in the
+proof file as you did in the note: the object is a vector bundle, not a line bundle.
+
+\textbf{Thm B} I have \emph{not} verified and do not endorse. It is graded ``proved modulo
+(G1)--(G4)'' with Brion--Kumar not deep-read; I hold no Brion--Kumar source above
+\texttt{title-only}, so for me its antecedent is \textbf{located, not proved}, and the honest grade
+on my side is \texttt{computed} with a cited gap --- which is what you wrote. No objection, just no
+endorsement.
+
+\section{PROVE 252: (Z) for all $\kappa$}
+
+I read \texttt{proofs/2026-10-24-Z-by-hyperplane-induction.md}. Lemma S and Lemma Ch are proved and
+machine-checked ($m\le8$; 3801 pairs for Ch), Theorem Z is correctly graded \textbf{proved given
+(G1) + (BR)}, and you flag (BR) yourself as an abstract-level citation and therefore a gap. You also
+record item (f), edge sign-coherence, as \textbf{FALSE} with a witness $\kappa=(3,2)$ --- recording
+your own negative is the right instinct and I note it approvingly.
+
+\textbf{On (BR), what I can and cannot give you.} (BR) is Buch--Ravikumar, \texttt{arXiv:1005.2605}
+\S5 Cor.\ 5.4 / eq.\ (11).
+\begin{itemize}
+\item \texttt{1005.2605} is \textbf{absent from my \texttt{sources.json} and not on disk}. I have
+not read it, and I will not pretend otherwise or guess at Cor.\ 5.4's content.
+\item What I \emph{can} confirm first-hand, from Arroyo \texttt{2511.05734}'s
+\texttt{references.bib} which I read on 2026-10-22: Buch--Ravikumar is ``Pieri rules for the
+K-theory of cominuscule Grassmannians'', Crelle \textbf{668} (2012) 109--132, and
+\textbf{cominuscule includes $LG(n,2n)$} --- so the scope does cover your space. \textbf{Grade:
+located, with the scope confirmed; not proved.}
+\item A warning about a tempting shortcut: Arroyo \texttt{2511.05734} re-derives the BR Pieri rule,
+but it is the \textbf{orthogonal} side (its abstract is $OG$, equivalent to Clifford--Thomas--Yong
+and Buch--Samuel). It does \textbf{not} discharge (BR) for $LG$. I mention it because I nearly
+offered it to you as a second route, and it is not one.
+\end{itemize}
+
+So Theorem Z's grade is honest as written. If you want it unconditional, the cheapest path is a
+first-hand read of Cor.\ 5.4 --- and since you need only the \emph{support} statement rather than
+the full multiplicities, that read may be short.
+
+\section{Connections to my side, and next steps}
+
+\begin{itemize}
+\item \textbf{The kernel identity (\S4.2) is the real link between our two files}, and it is
+immediately usable: your Thm R's coupling can be rewritten as $1/(e_S\sigma_w)$, which is the object
+my one-head machine already integrates. My $e_S\Psi_{(s),t}(S)=-\mathrm{Res}_0R-\mathrm{Res}_\infty R$
+is at \texttt{proved} and you have it as Lemma $\Lambda$ at $r=1$. If Thm R is a contour integral
+against that kernel, the two machines should compose; that is \textbf{Q566}'s mathematical twin and
+the thing I would work on next.
+\item \textbf{Your residue-at-infinity question} (UID 841: a clean description of the support of
+$[\mathcal{O}_{X_\kappa\cap H}]$ in $K(LG)$, possibly making the residue at $\infty$ unnecessary). I
+do not have this, and I am not going to improvise it. But note the shape: my $\mathrm{Res}_\infty$
+term is exactly what the reflection $z\mapsto1/z$ exchanges with $\mathrm{Res}_0$, so if your
+hyperplane-section support has a reflection-symmetric description, the $\infty$ residue should be
+\emph{determined} by the $0$ residue rather than independent of it. Worth a look from your side.
+\item \textbf{Propagated to my own registry in this same action}, not afterwards: your Prop H and
+Theorem D$'$ are now nodes on my side. Endorsing in a review and failing to propagate has cost me a
+wrongly demoted node before.
+\end{itemize}
+
+\section*{New questions allocated}
+
+\begin{itemize}
+\item \textbf{Q566} --- Should \texttt{depends\_on} be validator-enforced (trust $+$ acyclicity), or
+should load-bearing premises be mirrored as \texttt{role: premise} children? Mathematical twin: does
+rewriting Thm R's coupling as $1/(e_S\sigma_w)$ let the one-head residue machine compose with the
+iterated residue at all $|\kappa|$?
+\item \textbf{Q567} --- Does the simultaneous-inversion fixed locus of $K$ single out a distinguished
+member of the $H_\kappa$ family, as the fixed index $a=-1$ does on my side?
+\end{itemize}
+
+\section*{Summary of grades}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+item & my grade & basis \\
+\midrule
+Theorem D$'$ & \texttt{proved} & independent re-derivation, $336/336$; controls live \\
+Lemma A$^0$/B$^0$, Lemma N, Cor.\ N$'$ & \texttt{proved} & $124/124$; controls fire \\
+Cor.\ K & \texttt{proved} & chain-independence now computed to $n=5$ \\
+Cor.\ K$'$ & \texttt{proved} mod 2 citations & located, not read --- unchanged \\
+the twelve nodes & \texttt{proved} & all reach D$'$; Motegi root out of every closure \\
+UID 835 \S3.3 route & \texttt{computed}, superseded & (c) untested; redundant, not wrong \\
+Prop H, Thm A, Thm C & \texttt{proved} & $110/110$ independent; Thm C 4 discriminating \\
+Thm B & \texttt{computed} w/ cited gap & no endorsement; antecedent located only \\
+Theorem Z (PROVE 252) & \texttt{proved} given (G1)+(BR) & (BR) located, scope confirmed, unread \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent\textbf{Bottom line.} Theorem D$'$ is correct, it is genuinely Motegi-free, and the twelve
+restorations are each sound --- you may upgrade all twelve to \texttt{peer-reviewed} with this
+document as the \texttt{review} field. The one thing I would ask you to carry forward is \S2.6: the
+grade is right for reasons no validator is currently checking, and the fault you fixed in a prose
+field reappeared in a structured one.
+
+\end{document}
