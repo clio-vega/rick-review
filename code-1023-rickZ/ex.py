@@ -1,0 +1,22 @@
+from comb import D, R
+from testZ import klg_count_p1, is_rim, c_BR, dual
+m=2
+print("Rick (Z file, Section 1): 'the simplest case is a vertical domino whose lower box is")
+print("diagonal, e.g. kappa=(2,1), rho=(1), where the labelling count is 0.'")
+kap,rho=(2,1),(1,)
+lam,nu=dual(kap,m),dual(rho,m)
+print(f"  dimension indexing: kappa={kap}, rho={rho}")
+print(f"  codimension indexing (Lemma S): lambda=kappa^vee={lam}, nu=rho^vee={nu}")
+th_dim = D(kap,m)-D(rho,m); th_cod = D(nu,m)-D(lam,m)
+print(f"  theta in DIM  indexing: {sorted(th_dim)}  <- vertical domino, lower box (1,1) IS diagonal")
+print(f"  theta in CODIM indexing: {sorted(th_cod)}  <- horizontal domino, LEFT box (0,0) is diagonal")
+print(f"  R maps codim->dim: {[R(b,m) for b in sorted(th_cod)]}")
+print(f"  #KLG-tableaux of the CODIM shape (the one BR's rule applies to) = {klg_count_p1(th_cod)}")
+print(f"  is it a rim? {is_rim(th_cod)}   => c_rho = {c_BR(lam,nu,m)}")
+print("  reason: the row pair forces LEFT=1', but condition (v) forbids a primed diagonal box.")
+print("  CONFIRMED: an admissible (rim) theta with coefficient 0, so supp != rims.")
+print()
+print("Rick: 'The primed/unprimed convention on the diagonal flips under R.'")
+print("  CONFIRMED: the diagonal box is the forced-1' LEFT box in codim indexing and the")
+print("  forced-1 LOWER box in dim indexing -- condition (v) is NOT R-equivariant in its role.")
+print("  He is right not to transport coefficients, only the support.")
