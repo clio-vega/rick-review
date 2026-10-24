@@ -11,6 +11,7 @@
 \newcommand{\LG}{\mathrm{LG}}
 \newcommand{\OG}{\mathrm{OG}}
 \newcommand{\Dg}{D}
+\newcommand{\wh}[1]{\widehat{#1}}
 \title{\textbf{Peer review: Theorem I and Theorem I\textsubscript{OG}}\\[4pt]
 \large the integer zero window, exactly, on $\LG(m,2m)$ and $\OG(m,2m{+}1)$\\[2pt]
 \normalsize \emph{endorsed; with a shorter proof of its load-bearing lemma,
@@ -24,7 +25,7 @@ and a correction to my own closed form}}
 
 \begin{document}
 \maketitle
-\protocolheader{Rick (grandparick20@gmail.com), cc Robin}{clio-vega/rick-review}{297d85a1f93d4a31fa9fa22dcd47c1e6a5573275}
+\protocolheader{Rick (grandparick20@gmail.com), cc Robin}{clio-vega/rick-review}{11772d46e644fea40c54b822b1ccbc7f075a41c9}
 
 \begin{center}
 \begin{tabular}{p{3.0cm}p{11.2cm}}
@@ -34,7 +35,7 @@ and a correction to my own closed form}}
 \textbf{Arming stamp} & \texttt{7bd9ae3c}; \texttt{origin/main} had moved to \texttt{b44a146}
   (11 commits) \\
 \textbf{Covering mail} & UID 847; context UIDs 848, 850, 851 \\
-\textbf{Verification code} & \texttt{clio-vega/rick-review} \texttt{297d85a},
+\textbf{Verification code} & \texttt{clio-vega/rick-review} \texttt{11772d4},
   dir \texttt{code-1024c2-thmI/} \\
 \bottomrule
 \end{tabular}
@@ -232,6 +233,74 @@ direct evaluation at negative weights: for integral $\lambda$ the germ evaluatio
 it before relying on it --- direct versus interpolated, \textbf{0/522 mismatches}, both types ---
 and with interpolation dropped, $m=5$ takes \textbf{8.2\,s} and $m=6$ takes \textbf{201\,s}.
 
+\section*{5a. Refereeing \S3.3 --- his UID 850 ask, and the step F2 leans on}
+
+UID 850 (which landed after the arming watermark, and which the mail client's own
+\texttt{attachment\_count} reported as \textbf{0} while \texttt{read} showed a 430\,KB PDF) says:
+\emph{``Two steps are hand-written and I have re-read them only once: \S3.3 (BR Cor 5.6 at
+$p=1$, by induction against Thm 5.5) and \S9.3 (the shift lemma 9.4 and Lemma 9.5). Please
+referee those two.''}
+
+\S3.3 is precisely the step that retires the reader-left Cor 5.6 --- so my F2, and the grade
+upgrade it implies, rest on a step its own author marked as thinly checked. I refereed it.
+
+\paragraph{Method.} I implemented BR's recursion $\mathcal C(\theta,p)$ \textbf{from the
+statement of Thm 5.5} (lines 1439--1466), including BR's definitions of the north-east arm
+(\emph{``the largest row or column that can be obtained by intersecting $\theta$ with a square
+whose upper-right box agrees with the upper-right box of $\theta$''}, lines 1051--1060, verbatim)
+and $\wh\theta$. Thm 5.5 is proved in full in BR. I then compared $\mathcal C(\varphi,1)$ against
+brute-force KLG-tableau enumeration. The two engines share nothing: one is an alternating
+recursion on the arm, the other enumerates labellings.
+
+\textbf{Result: 1243/1243} shifted skew shapes with $\nu_1\le6$ (419 rims, 824 non-rims), 0
+mismatches.
+
+\paragraph{And the case decomposition is the right one.} At $p=1$ the recursion's live arms
+reduce to exactly $(iii)\,a{=}1\mapsto-\mathcal C(\wh\theta,1)$,
+$(iv)\,a{=}1\mapsto-2\mathcal C(\wh\theta,1)$, $(iv)\,a{=}2\mapsto+\mathcal C(\wh\theta,1)$,
+$a\ge3\mapsto0$, plus the (i)/(ii) row/column base cases --- precisely the list \S3.3 walks
+through, in that order, with those values.
+
+\begin{remark}[my first negative control was silent, and the control was wrong, not the test]
+I lesioned the coefficient of $\mathcal C(\wh\theta,p-a)$ in case (iv) $a{=}1$ and got
+\textbf{0/1243} disagreements, which reads exactly like ``case (iv) is never exercised''. It
+\emph{is} exercised --- 180 shapes. The lesion landed on $\mathcal C(\wh\theta,0)$, which is
+\textbf{identically zero} because $\wh\theta\neq\emptyset$ and $p\le0$. \emph{A lesion on a term
+that vanishes at the evaluation point cannot fire, and its silence says nothing about coverage.}
+Re-aimed at the live coefficients, all five arms fire.
+\end{remark}
+
+\begin{center}
+\small
+\begin{tabular}{p{7.4cm}r}
+\toprule
+\textbf{Lesion} & \textbf{Disagreements} \\
+\midrule
+(iii) sign flip & 40/1243 \\
+\textbf{(iv) $a{=}1$, the live $-2\to-1$} & \textbf{74/1243} \\
+\textbf{(iv) $a{=}2$, last coefficient $+1\to+2$} & \textbf{62/1243} \\
+(ii) leading $2\to1$ & 43/1243 \\
+(i) drop the column correction & 43/1243 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent So case (iv) --- the one \S3.3 handles with the $\psi$-independence argument ---
+\textbf{is} covered.
+
+\paragraph{What this does and does not license.} The \emph{identity} \S3.3 establishes is
+refereed: true on 1243 shapes, by an independent implementation of a theorem BR prove in full,
+with controls firing on every live arm. I have \textbf{not} line-by-line verified his geometric
+prose --- the (g1)--(g5) facts and the independence claim $K(\varphi)=K(\psi)K(\wh\theta)$ in
+case (iv). So: \textbf{conclusion refereed, argument not yet read.} Enough to make F2 safe to
+act on; not enough to call \S3.3 itself \texttt{proved} on my authority. \S9.3 (his second ask)
+is \textbf{not} refereed --- it is queued.
+
+Note: he reports ``2225 shifted skew shapes $2\le n\le6$''; I count \textbf{1243} distinct
+box-sets with $\nu_1\le6$. Probably $(\nu,\lambda)$ pairs versus distinct shapes --- worth
+reconciling, since a census whose domain neither of us can restate is a census neither of us can
+compare.
+
 \section*{6. Findings}
 
 \begin{finding}[Lemma A(i) is one case too wide --- minor, \emph{not} a gap]
@@ -257,7 +326,9 @@ is \textbf{3025/3025} correct against brute-force KLG enumeration, wrong-shape c
 
 \textbf{The registry is right; the file is stale.} Theorem I carries no pointer to \S3.3, so a
 reader of Theorem I alone still inherits a dependency it no longer has. This is the only finding
-that changes a grade, and it changes it \emph{upward}.
+that changes a grade, and it changes it \emph{upward}. \textbf{And \S3.3 is now refereed
+(\S5a)}, which is what makes F2 safe to act on: until that was done, F2 was leaning on a step he
+had himself flagged as hand-written and re-read once.
 \end{finding}
 
 \begin{finding}[the OG arm's premises live in prose, where no validator reads them]

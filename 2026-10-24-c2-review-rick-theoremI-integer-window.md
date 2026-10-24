@@ -5,7 +5,7 @@
 reviewed at commit [`7ff2361`](https://github.com/grandpa-rick/rick-research/blob/7ff2361d182d258dbf6c829c4aa97bcfd9fffc8a/proofs/2026-10-24-integer-window-and-OG-twin.md)
 (308 lines; introduced `1f18a705`, extended `61c5b821`, `e45a5bf1`, `e45a5bf1`→`86da4fd`→`418932c`).
 **Covering mail:** UID 847; context UID 848, 850, 851.
-**My verification code:** `clio-vega/rick-review`, commit `297d85a1f93d4a31fa9fa22dcd47c1e6a5573275`,
+**My verification code:** `clio-vega/rick-review`, commit `11772d46e644fea40c54b822b1ccbc7f075a41c9`,
 directory `code-1024c2-thmI/`.
 
 ---
@@ -206,6 +206,63 @@ Q33, and it is already a corollary of his own Lemma P.
 
 ---
 
+## 5a. Refereeing §3.3 — his UID 850 ask, and the step F2 leans on
+
+UID 850 (which landed after the arming watermark, and which the mail client's own
+`attachment_count` reported as **0** while `read` showed a 430 KB PDF) says:
+
+> *"Two steps are hand-written and I have re-read them only once: §3.3 (BR Cor 5.6 at p = 1, by
+> induction against Thm 5.5) and §9.3 (the shift lemma 9.4 and Lemma 9.5). Please referee those
+> two."*
+
+§3.3 is precisely the step that retires the reader-left Cor 5.6 — so my F2, and the grade
+upgrade it implies, rest on a step its own author marked as thinly checked. I refereed it.
+
+**Method.** I implemented BR's recursion `𝒞(θ,p)` **from the statement of Thm 5.5**
+(`thm:pieriCrec`, lines 1439–1466), including BR's definitions of the north-east arm (*"the
+largest row or column that can be obtained by intersecting θ with a square whose upper-right box
+agrees with the upper-right box of θ"*, lines 1051–1060, verbatim) and `θ̂`. Thm 5.5 is proved in
+full in BR. I then compared `𝒞(φ,1)` against brute-force KLG-tableau enumeration. The two
+engines share nothing: one is an alternating recursion on the arm, the other enumerates
+labellings.
+
+**Result: 1243/1243** shifted skew shapes with `ν₁ ≤ 6` (419 rims, 824 non-rims), 0 mismatches.
+
+**And the case decomposition is the right one.** At `p = 1` the recursion's live arms reduce to
+exactly
+`(iii) a=1 ↦ −𝒞(θ̂,1)`, `(iv) a=1 ↦ −2𝒞(θ̂,1)`, `(iv) a=2 ↦ +𝒞(θ̂,1)`, `a ≥ 3 ↦ 0`, plus the
+`(i)`/`(ii)` row/column base cases — which is precisely the list §3.3 walks through, in that
+order, with those values. His `(iii)/(iv) a ≥ 3 ⇒ K = 0` (three boxes, two labels) and his
+`a = 2 ⇒` row-or-column-of-three are both consistent with the recursion collapsing to 0 there.
+
+> **My first negative control was silent, and the control was wrong, not the test.** I lesioned
+> the coefficient of `𝒞(θ̂, p−a)` in case (iv) `a=1` and got **0/1243** disagreements, which
+> reads exactly like "case (iv) is never exercised". It is exercised — 180 shapes. The lesion
+> landed on `𝒞(θ̂, 0)`, which is **identically zero** because `θ̂ ≠ ∅` and `p ≤ 0`. *A lesion on
+> a term that vanishes at the evaluation point cannot fire, and its silence says nothing about
+> coverage.* Re-aimed at the live coefficients, all five arms fire:
+
+| lesion | disagreements |
+|---|---|
+| (iii) sign flip | 40/1243 |
+| **(iv) a=1, the live `−2` → `−1`** | **74/1243** |
+| **(iv) a=2, last coefficient `+1` → `+2`** | **62/1243** |
+| (ii) leading `2` → `1` | 43/1243 |
+| (i) drop the column correction | 43/1243 |
+
+So case (iv) — the one §3.3 handles with the ψ-independence argument — **is** covered.
+
+**What this does and does not license.** The *identity* §3.3 establishes is refereed: true on
+1243 shapes, by an independent implementation of a theorem BR prove in full, with controls that
+fire on every live arm. I have **not** line-by-line verified his geometric prose — the (g1)–(g5)
+facts and the independence claim `K(φ) = K(ψ)K(θ̂)` in case (iv). So: **conclusion refereed,
+argument not yet read.** That is enough to make F2 safe to act on, and it is not enough to call
+§3.3 itself `proved` on my authority. §9.3 (his second ask) is **not** refereed — it is queued.
+
+(Note: he reports "2225 shifted skew shapes `2 ≤ n ≤ 6`"; I count **1243** distinct box-sets with
+`ν₁ ≤ 6`. Probably `(ν,λ)` pairs versus distinct shapes — worth reconciling, since a census
+whose domain neither of us can restate is a census neither of us can compare.)
+
 ## 6. Findings
 
 ### F1 — Lemma A(i) is stated one case too widely (minor; **not** a gap)
@@ -238,6 +295,10 @@ wrong-shape control firing 528/3025.
 anyone reading Theorem I alone still inherits a reader-left dependency it no longer has. **Ask:
 add one line to §10 gap 2 pointing at crownF §3.3 / Theorem Q30, and the LG arm of (BR) reduces
 to results BR prove.** This is the only finding that changes a grade, and it changes it upward.
+
+**And §3.3 is now refereed, which is what makes F2 safe to act on** — see §5a. He asked for
+exactly this in UID 850, and until it was done my F2 was leaning on a step he had flagged as
+hand-written and re-read once.
 
 ### F3 — the OG arm's premises live in prose, where no validator reads them
 
