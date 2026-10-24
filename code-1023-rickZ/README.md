@@ -13,6 +13,7 @@ from his scripts. Pure Python + stdlib `fractions`; no SageMath (not installed i
 | `supp.py` | closed form `c_ρ = (−1)^{|θ|−1}2^{f}` for the `p=1` K-Pieri coefficients | `m ≤ 7`, 3025 rims |
 | `worked.py` | reproduces his §4 worked example sign row `+000+++` | `κ=(4,3,2,1)` |
 | `ex.py` | his `κ=(2,1), ρ=(1)` diagonal-domino witness, in both indexings | `m = 2` |
+| `q30.py` | **Q30**: `|c_ρ|` vs. strict `{even<odd}` fillings, all four indexing/diagonal conventions | `m ≤ 7`, 6918 pairs |
 | `evidence.py` | the `r′` / window / `H_κ(−M/2)` evidence table | `m = 3,4` |
 
 Run from this directory: `python3 testZ.py 4`, `python3 comb2.py`, `python3 supp.py`, etc.
