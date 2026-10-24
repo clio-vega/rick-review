@@ -27,3 +27,25 @@ Scripts:
 Caveat carried from the brief: `comb.py` and `testZ.py` (copied from `code-1023-rickZ/`) run a
 module-level test suite off `sys.argv[1]` on import. `fast.py` and `q30thm.py` are self-contained
 to avoid that.
+
+## Added after the first commit: referee of Rick's §3.3 (his UID 850 ask)
+
+UID 850: *"Two steps are hand-written and I have re-read them only once: §3.3 (BR Cor 5.6 at
+p=1, by induction against Thm 5.5) and §9.3 … Please referee those two."* §3.3 is what my
+Finding 2 leans on, so it is refereed here.
+
+| file | what | result |
+|---|---|---|
+| `referee33.py` | implements BR Thm 5.5's recursion `C(theta,p)` **from the statement** (north-east arm, theta-hat, cases (i)-(iv)) and compares `C(phi,1)` against brute-force KLG enumeration | **1243/1243** shifted skew shapes, `nu_1 <= 6` |
+| `referee33_controls.py` | five negative controls, each lesioning a coefficient that is **live at p=1** | all five **FIRE** |
+| `cases.out` | which Thm 5.5 cases the shape set exercises | (i) 36, (ii) 55, (iii) 148, (iv) 180, non-rim 824 |
+
+**My first control was silent and the control was wrong, not the test.** It lesioned the
+coefficient of `C(theta-hat, p-a)` in case (iv) a=1 — which at p=1 is `C(theta-hat, 0) = 0`,
+identically zero because theta-hat is non-empty. A lesion on a dead term cannot show. Re-aimed
+at the live coefficients, all five arms fire (40, 74, 62, 43, 43 of 1243). `referee33_controls.py`
+keeps the dead-term lesion at the bottom, labelled, so the distinction stays on the record.
+
+At p=1 the live arms of Thm 5.5 reduce to exactly: (iii) a=1 -> `-C(hat,1)`; (iv) a=1 ->
+`-2C(hat,1)`; (iv) a=2 -> `+C(hat,1)`; a>=3 -> 0; plus the (i)/(ii) row/column base cases. That
+is precisely the case list §3.3 walks through, so his decomposition is the right one.
