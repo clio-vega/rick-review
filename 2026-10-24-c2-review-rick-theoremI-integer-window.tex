@@ -1,0 +1,418 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm,geometry,booktabs,hyperref,longtable}
+\usepackage[htt]{hyphenat}
+\emergencystretch=3em
+\sloppy
+\geometry{margin=2.5cm}
+\newtheorem{finding}{Finding}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newcommand{\LG}{\mathrm{LG}}
+\newcommand{\OG}{\mathrm{OG}}
+\newcommand{\Dg}{D}
+\title{\textbf{Peer review: Theorem I and Theorem I\textsubscript{OG}}\\[4pt]
+\large the integer zero window, exactly, on $\LG(m,2m)$ and $\OG(m,2m{+}1)$\\[2pt]
+\normalsize \emph{endorsed; with a shorter proof of its load-bearing lemma,
+and a correction to my own closed form}}
+\author{Clio (clio-vega)}
+\date{2026-10-24}
+
+\makeatletter
+\input{protocol-header}
+\makeatother
+
+\begin{document}
+\maketitle
+\protocolheader{Rick (grandparick20@gmail.com), cc Robin}{clio-vega/rick-review}{297d85a1f93d4a31fa9fa22dcd47c1e6a5573275}
+
+\begin{center}
+\begin{tabular}{p{3.0cm}p{11.2cm}}
+\toprule
+\textbf{Target} & \texttt{proofs/2026-10-24-integer-window-and-OG-twin.md} (308 lines) \\
+\textbf{Reviewed at} & \texttt{rick-research} \texttt{7ff2361d182d258dbf6c829c4aa97bcfd9fffc8a} \\
+\textbf{Arming stamp} & \texttt{7bd9ae3c}; \texttt{origin/main} had moved to \texttt{b44a146}
+  (11 commits) \\
+\textbf{Covering mail} & UID 847; context UIDs 848, 850, 851 \\
+\textbf{Verification code} & \texttt{clio-vega/rick-review} \texttt{297d85a},
+  dir \texttt{code-1024c2-thmI/} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section*{0. First instrument: the commit range}
+
+Eleven commits landed between the arming stamp and this session. The target file did
+\emph{not} move, so I reviewed the version the brief named. Three things in the range matter:
+PROVE/Dream 254 upgraded many registry nodes \texttt{computed}$\to$\texttt{proved} (including
+\textbf{Theorem B}, which I had left unendorsed, \S6); \texttt{0e4001a} gives a BR-free second
+proof of SR\textsubscript{LG}; and the new file
+\texttt{proofs/2026-10-25-crownF-strict-reciprocity.md} contains \textbf{Theorem Q30}, which
+\emph{retires the reader-left dependency Theorem I still declares for itself}. That is
+Finding~2, and it moves the grade upward.
+
+Inbox re-checked immediately before sending, not at arming: UIDs 849, 850, 851 had landed past
+the watermark and are answered in \S8.
+
+\section*{1. The claim, in one sentence}
+
+With $s_j(\kappa) := (-1)^{|\kappa|}H_\kappa(-j)$, one monotone induction on $|\kappa|$ ---
+driven by the K-theoretic recursion
+\[
+  s_{j+1}(\kappa) \;=\; s_j(\kappa) \;+\; \sum_\rho |c_\rho|\, s_j(\rho)
+  \tag{$\star$}
+\]
+whose increments are all $\ge 0$ \emph{because the anchor $s_1=0$ leaves the alternating signs
+nothing to fight} --- yields the exact integer zero set $\{-1,\dots,-W\}$ with
+$W=\lceil r(\kappa)/2\rceil$ on $\LG$ and $W=r(\kappa)$ on $\OG$, plus the sign
+$(-1)^{|\kappa|}$ beyond the window.
+
+The mechanism is the best idea in the file, and \S11 names it correctly: when an
+alternating-sign recursion refuses to be coherent, look for the specialisation where the base
+case vanishes.
+
+\section*{2. Verdict}
+
+\begin{center}
+\small
+\begin{tabular}{p{3.0cm}p{3.5cm}p{6.4cm}}
+\toprule
+\textbf{Item} & \textbf{Grade I endorse} & \textbf{Basis} \\
+\midrule
+Lemma 0 (chain formula) & proved & 510 $\kappa$, $m\le8$, three definitions agree, 0 mismatches \\
+Lemma 1 (anchor $H_\kappa(-1)=0$) & proved given (G1) & read, incl.\ Lemma P which licenses it \\
+Lemma 2 (Pieri support, sign) & proved given (BR) & every quote verbatim, every locator correct \\
+Lemma Ch$'$ (chain drop) & proved & citation checked; 0 violations, drops exactly $2/1$, $m\le7$ \\
+Lemma A (i),(ii),(iv),(v) & proved (one scope slip, F1) & 502 $\kappa$, $m\le8$ \\
+\textbf{Lemma A(iii)} \emph{(sole nonvanishing witness)} & proved given (BR) & \textbf{502/502}, $m\le8$; two-line proof in \S7 \\
+\textbf{Theorem I ($\LG$)} & \textbf{proved given (G0),(G1),(BR)} --- ENDORSED & independent engine $m\le6$, 0 failures, 8 control arms firing \\
+\textbf{Theorem I\textsubscript{OG}} & \textbf{proved given (G0),(G1),(BR)} --- ENDORSED & independent \textbf{type-B} engine, $m\le6$, 0 failures \\
+Cor NZ\textsubscript{R} (\S12) & proved given (G0),(G1),(BR) & conditional on Prop.\ R, which I did not re-read \\
+R1/R2, Lemma E (\S12) & computed; gap self-declared, correctly scoped & not independently verified \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\medskip
+\noindent\textbf{The (BR) debt is lighter than the file says.} \S10 gap~2 declares a dependency
+on BR Cor~5.6, whose proof BR leave to the reader. His own Theorem Q30 derives that statement
+from BR Thm~5.5, which BR prove in full. I verified Theorem Q30 independently,
+\textbf{3025/3025}. So the honest grade is \texttt{proved given (G0),(G1),(BR)} with
+\textbf{(BR) now meaning only results BR prove}.
+
+\section*{3. The pre-registered falsifier: P1 CONFIRMED}
+
+P1 asked whether the \emph{strict} step $s_W<s_{W+1}$ rests on a nonzero witness or on
+``$\mathrm{supp}=\mathrm{rims}$''. The latter would be unsound: my 10-23 census found
+$1252/3025$ rim shapes carrying coefficient $0$, re-measured here at \textbf{41.4\%}.
+
+\textbf{It rests on a nonzero witness.} Lemma A(iii) \emph{exhibits} a KLG-tableau of shape
+$R(T_{t^*})$. Nothing appeals to $\mathrm{supp}=\mathrm{rims}$. Better: Lemma 2 writes
+$c_\rho=(-1)^{|\theta|-1}N(\theta)$ with $N(\theta)\ge0$, so a vanishing coefficient on a rim is
+\emph{built into the statement}, and \S6's control records 42 of 67 $r$-odd 2-strips vanishing.
+He knew the correction and used the right version in the right place. I verified the witness
+rather than trusting the construction: $N(T_{t^*})\ge1$ on \textbf{502/502} nonempty $\kappa$ at
+$m\le8$. The vanishing half needs only the containment, so the zero rims are harmless there.
+Both halves are correctly scoped.
+
+\section*{4. Verified by reading}
+
+\textbf{Lemma P is the premise the anchor really rests on}, because Lemma 1 evaluates the
+Demazure expression at the \emph{non-dominant} weight $j=-1$. I worked through it: the operator
+identity $D_if=(f-s_if)/(1-e^{-\alpha_i})+s_if$ is equivalent to the standard form; $f-s_if$
+vanishes on $\alpha_i=0$ since $s_i$ fixes that hyperplane pointwise, and
+$1-e^{-\alpha_i}=\alpha_i\cdot(\text{unit})$, so $D_i(\mathfrak{m}^k)\subseteq\mathfrak{m}^{k-1}$;
+hence $D_w(\mathfrak{m}^{L+1})\subseteq\mathfrak{m}$, the Taylor tail drops, and $P_w(\lambda)$
+is polynomial of degree $\le\ell(w)$. \textbf{Sound --- the anchor is safe.} This was the premise
+I most expected to break.
+
+\textbf{Lemma Ch$'$'s cross-file citation is accurate.} \S5 claims the Z file's Lemma Ch proof
+``never uses row 0''. I read it: the three-box case analysis uses only the rim condition and the
+$\le2$ bound; only the \emph{consequence} paragraph used $\Dg(\kappa)_+$, and Lemma Ch$'$
+correctly re-derives it on the full diagram via Lemma 0. A verified locator, not a vibe.
+
+\textbf{(G0) is invoked, not merely listed} (my 10-24 F1 asked for this): it is consumed at the
+Recursion step, $b_\kappa(j)=\chi([\mathcal O_{X_\kappa}]\cdot(1-[L^{-1}])\cdot[L^j])$. I also
+re-derived $(\star)$ by hand; the sign bookkeeping
+($c_\rho=(-1)^{|\theta|-1}|c_\rho|$, $|\kappa|=|\rho|+|\theta|$, $(-1)^{2|\theta|-1}=-1$) is
+correct, including the cancellation that leaves $+\sum|c_\rho|s_j(\rho)$.
+
+\textbf{Every BR citation checks out, first-hand}, against \texttt{1005.2605}~v1 source on my
+disk, with the theorem counter reconstructed (\verb|\newtheorem{thm}{Theorem}[section]|, shared
+by lemma/prop/cor):
+
+\begin{center}
+\small
+\begin{tabular}{p{5.0cm}p{4.0cm}p{3.6cm}}
+\toprule
+\textbf{His label} & \textbf{Actual number} & \textbf{Check} \\
+\midrule
+``unlabelled Cor after eq.\ (hsumB)'' & \textbf{Cor 4.4}, line 956 (eq.\ line 948) & verbatim \\
+Lemma \texttt{vanishB} & \textbf{Lemma 4.5}, line 961 & (a),(b),(c) verbatim \\
+Cor \texttt{pieriCtab} & \textbf{Cor 5.6}, line 1567 & verbatim \\
+rook strip $=\le1$ per row/col, ``\S3'' & line 537, inside \S3 & locator correct \\
+``OG, \S4'' / ``LG, \S5'' & \S4 max.\ orthogonal / \S5 Lagrangian & correct \\
+KLG conditions (i)--(v), $\{1'{<}1{<}2'{<}2{<}\cdots\}$ & lines 1553--1562 & all five verbatim \\
+``left to the reader'' for Cor 5.6 & line 1564 & verbatim \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent No phantom determinants. One subtlety he handled correctly: BR's KLG definition opens
+``Let $\theta$ be a \emph{rim}'', so the count is defined only on rims --- exactly the support
+condition Lemma 2 imposes.
+
+\section*{5. Independent computation}
+
+The brief required a positive control \emph{including the OG side}; my 10-24 census was LG-only.
+I built a \textbf{type-B $(\mathrm{SO}(2m{+}1))$ Demazure engine} (weights stored as $2\lambda$
+so the spinor weight stays integral) and validated it before use: $H^{\OG}_\kappa(0)=1$ for all
+$\kappa$, and $H^{\OG}_{(2,1)}(j)=\binom{j+3}{3}$, the order polynomial of the 3-chain
+$\Dg(2,1)$.
+
+\begin{center}
+\small
+\begin{tabular}{p{4.1cm}p{4.4cm}p{4.6cm}}
+\toprule
+\textbf{Check} & \textbf{Domain} & \textbf{Result} \\
+\midrule
+Lemma 0, three definitions & 510 $\kappa$, $m\le8$ & 0 mismatches \\
+Lemma A (i),(ii),(iv),(v) & 502 $\kappa$, $m\le8$ & 0 failures but F1 \\
+\textbf{Lemma A(iii)} $N(T_{t^*})\ge1$ & 502 $\kappa$, $m\le8$ & \textbf{502/502} \\
+Lemma Ch$'$ drop $\le2$ / $\le1$ & true support, $m\le7$ (LG 1168, OG \textbf{449}) & 0 violations; max exactly $2/1$ \\
+\textbf{Theorem I} window & $m\le6$, 126 $\kappa$ & vanishing 359/359, positive 630/630, monotone 863/863 \\
+\textbf{Theorem I\textsubscript{OG}} window & $m\le6$, 126 $\kappa$ & vanishing 645/645, positive 630/630, monotone 1149/1149 \\
+Theorem Q30 closed form & 3025 rim pairs, $m\le7$ & \textbf{3025/3025} \\
+Theorem B conclusion (\S6) & 150 $(\kappa,a)$, $m\le4$ & \textbf{150/150} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+My OG support count \textbf{449 at $m=7$ matches his 449 exactly}. The LG figures separate
+usefully from his: \textbf{1337} admissible pairs but only \textbf{1168} with nonzero
+coefficient --- the 169-pair difference \emph{is} the support correction, measured.
+
+\textbf{Which $\kappa$}: all 126 strict $\kappa$ with parts in $[m]$ for $m\le6$, i.e.\
+\emph{every} $\kappa$, not a sample --- including $r(\kappa)$ up to 11, both parities of $r$, and
+the staircase $(6,5,4,3,2,1)$. A census domain can be the already-proved class; this one is not.
+
+\paragraph{Negative controls --- every arm fired.}
+\begin{center}
+\small
+\begin{tabular}{p{5.0cm}p{2.6cm}p{5.2cm}}
+\toprule
+\textbf{Control} & \textbf{Expected} & \textbf{Result} \\
+\midrule
+window shifted $\pm1$ (8 arms, both types) & must fire & \textbf{8/8 fire} \\
+use $t=2$ when $r$ odd (wrong parity) & must fail & $N(T_2)=0$ on \textbf{163/293} \\
+$\mathrm{supp}=\mathrm{rims}$ & must be false & \textbf{41.4\%} of rims carry 0 \\
+Theorem B without $a\ge m$ & must fail & \textbf{26/68} violate $\ge1$ \\
+closed form on $\theta$ instead of $R(\theta)$ & must fire & \textbf{528/3025} wrong \\
+\midrule
+\emph{positive}: \texttt{rho\_of\_ideal}$(\Dg(\kappa))=\kappa$ & must pass & 510/510 \\
+\emph{positive}: closed form vs brute force & must pass & 2033 shapes, 0 mismatches \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{remark}[how I caught my own bug]
+My first Lemma A run reported \textbf{2963 failures}, and I nearly had a finding. But Lemma 0
+and Lemma Ch$'$ were simultaneously clean, and clause (i) ``the complement is an order ideal''
+--- near-tautological --- failed on 453 of 502. A theorem does not fail that way; an instrument
+does. \texttt{rho\_of\_ideal} was adding a spurious $+i$ to each part. After repair: 8 failures,
+all explained (F1). \emph{The asymmetry between a failing clause and its clean neighbours was
+the diagnostic, not the count.}
+\end{remark}
+
+\paragraph{A by-product: his Q33, answered by his own Lemma P.}
+\S8 records \texttt{check.py 5} and \texttt{mono.py 5} \textbf{killed} (50 min, exact-Fraction
+interpolation at degree 15), so $m\ge5$ is unchecked in the file. But Lemma P already licenses
+direct evaluation at negative weights: for integral $\lambda$ the germ evaluation at $h=0$
+\emph{is} the Laurent coefficient sum, which is what the three-case recursion returns. I tested
+it before relying on it --- direct versus interpolated, \textbf{0/522 mismatches}, both types ---
+and with interpolation dropped, $m=5$ takes \textbf{8.2\,s} and $m=6$ takes \textbf{201\,s}.
+
+\section*{6. Findings}
+
+\begin{finding}[Lemma A(i) is one case too wide --- minor, \emph{not} a gap]
+As written, for $\kappa\neq\emptyset$ and $t\in\{1,2\}$, $r(\rho_t)\le r(\kappa)-t$. This is
+\textbf{false} when $r(\kappa)<t$: for $\kappa=(1)$, $r=1$, $\rho_2=\emptyset$ and
+$r(\rho_2)=0>-1$. Exactly \textbf{8 witnesses} at $m\le8$, all $\kappa=(1)$ at $t=2$. It is
+\emph{never used}: $r=1$ is odd, so $t^*=1$ there. Fix: add $t\le r(\kappa)$.
+\end{finding}
+
+\begin{finding}[\S10 gap 2 is stale, and understates the theorem --- in his favour]
+\S10 gap 2 says BR leave Cor \texttt{pieriCtab} to the reader and that it supplies the LG sign
+and Lemma A(iii). That was honest when written, and Cor 5.6 \emph{is} reader-left (verbatim,
+\S4). But registry node \texttt{q488-oc-support-rule-BR} now reads ``BR Cor 5.6 (reader-left)
+\textbf{NOT used}'', flatly contradicting the file.
+
+The contradiction resolves in his favour: the new crownF file \S3.3 plus \textbf{Theorem Q30}
+proves the $p=1$ count from \textbf{BR Thm 5.5}, proved in full in BR, and its Remark says route
+(i) via Cor 5.6 ``rests on a reader-left proof. \S3.3 replaces it.'' I verified Theorem Q30
+rather than accepting it: the intrinsic criterion ($c_\rho=0$ iff $\theta$ has a 3-chain or a
+diagonal box $(c,c)$ with $(c-1,c)\in\theta$; else $|c_\rho|=2^{\#\text{isolated off-diagonal}}$)
+is \textbf{3025/3025} correct against brute-force KLG enumeration, wrong-shape control firing
+528/3025.
+
+\textbf{The registry is right; the file is stale.} Theorem I carries no pointer to \S3.3, so a
+reader of Theorem I alone still inherits a dependency it no longer has. This is the only finding
+that changes a grade, and it changes it \emph{upward}.
+\end{finding}
+
+\begin{finding}[the OG arm's premises live in prose, where no validator reads them]
+\begin{quote}\small\ttfamily
+q488-oc-Zint-by-induction (LG)\\
+\hspace*{2em}depends\_on: [anchor, Ind-chain-drop, support-rule-BR, strip-lemmaA]\\[2pt]
+q488-oc-ZOG-by-induction (OG)\\
+\hspace*{2em}depends\_on: [anchor, strip-lemmaA]
+\end{quote}
+Theorem I\textsubscript{OG} uses the same two ingredients as Theorem I, but its
+\emph{OG-specific} versions (BR Lemma 4.5 \texttt{vanishB}; the drop $r(\rho)\ge r-1$) appear
+\textbf{only} in prose \texttt{approach}/\texttt{conditional\_grade} strings --- no node, no
+edge. So \textbf{had the OG Pieri input been wrong, no validator-enforced path would have caught
+it}: the OG node would have passed on two edges that are both about the shared half. Same shape
+as the \texttt{depends\_on} finding in my 10-23 D$'$ review, one level down.
+
+Smaller and related: \texttt{q488-oc-Ind-chain-drop} records the \emph{primed} form
+$r'(\rho)\ge r'(\kappa)-2$, while Lemma Ch$'$ needs the \emph{full-diagram} $r$ form. I verified
+the generalisation directly, so this is a recording gap, not a mathematical one --- but the edge
+as recorded does not carry what Theorem I draws from it.
+\end{finding}
+
+\begin{finding}[a correction to \emph{my own} closed form, on which his Lemma 2 leans]
+My \texttt{clio-BR-p1-closed-form-Q30} says $c_\rho=(-1)^{|\theta|-1}2^{f(\theta)}$ with $f$ the
+number of boxes alone in their row, alone in their column, and off-diagonal. \textbf{That is true
+only of the BR shape $R(\theta)$, not of $\theta=\Dg(\kappa)\setminus\Dg(\rho)$} --- and my
+write-up did not say which.
+
+The $p=1$ KLG count is \textbf{not} $R$-invariant: $R$ is order-\emph{reversing} and swaps rows
+with columns, so it flips the forced $(1',1)$ order in a two-box line while leaving ``a diagonal
+box must be unprimed'' alone. Measured: \textbf{528 of 3024} Pieri pairs disagree.
+
+The sharpest case is \textbf{his own worked example}: $\kappa=(3,2)$, $\rho=(2)$,
+$\theta=\{(0,2),(1,1),(1,2)\}$ has $N(\theta)=0$ but $N(R(\theta))=1$, and BR gives
+$c_{(2)}=+1$. Read on the wrong shape, my formula would zero out the very coefficient his strict
+step uses.
+
+Two things follow. \textbf{His Lemma 2 is right} --- he writes ``shape $R(\theta)$'' and means
+it; the one place the distinction is load-bearing is the place he got it right. And \textbf{my own
+histogram could never have caught this}: $R$ is a bijection on Pieri shapes, so the multiset
+$\{0{:}1252,\,1{:}892,\,2{:}714,\,4{:}156,\,8{:}10\}$ is \emph{identical} on both conventions. My
+``41\% of rims carry 0'' survives intact --- but for a reason that also made it blind to a
+17.5\% per-pair error. A total cannot witness a claim about its summands, again. The repair is to
+adopt his intrinsic Theorem Q30 phrasing, which has no shape to get wrong.
+\end{finding}
+
+\begin{finding}[Theorem B --- owed from UID 841, discharged as far as I can take it]
+Three days open; my 10-23 review endorsed Prop H (54/54), Thm A (30/30), Thm C (26/26) and
+recorded ``Thm B not verified, not endorsed''. Since arming it was upgraded to \texttt{proved}
+via Theorem HZ.
+
+I \textbf{cannot} check its proof --- Serre duality on a CM variety, (G2)/(G4), a Lie--Kolchin
+filtration, $h^0$ of line bundles on the $P/B$-bundle $Y$ are out of my engine's reach. I
+\emph{can} check the conclusion: for $M=2a+1$ with $a\ge m$,
+$(-1)^{|\kappa|}2^mH_\kappa(-M/2)\ge1$ (\textbf{150/150}, $m\le4$),
+$2^mH_\kappa(-M/2)\in\mathbb Z$ (\textbf{150/150}), sign $(-1)^{|\kappa|}$ (\textbf{150/150});
+and $a\ge m$ is load-bearing (dropped: 26 of 68 points violate $\ge1$).
+
+\textbf{So Theorem B's statement is confirmed at \texttt{computed}, and I endorse it at that
+level only.} I do \emph{not} endorse the Brion--Kumar route, not having read it. The registry's
+new HZ route claims Theorem B from $(G0),(G1),(BR)$ alone --- and since I have read (BR)
+first-hand, that is the route I would grade, if he wants it graded. It is not graded here.
+\end{finding}
+
+\section*{7. A shorter proof of Lemma A(iii), from his own Theorem Q30}
+
+Lemma A(iii) is the sole nonvanishing witness in the file, and its $r$-even case costs half a
+page of case analysis about which image box lands left-of or above which. Theorem Q30 makes it
+two lines, because both vanishing conditions are immediate from the antidiagonal structure.
+
+\emph{No 3-chain.} Along a chain $a+b$ strictly increases, and $T_t$ occupies at most two
+antidiagonals, so no chain in $T_t$ has three boxes.
+
+\emph{No non-minimal diagonal box.} A diagonal box $(c,c)$ has \emph{even} sum $2c$; its lower
+neighbour $(c-1,c)$ has \emph{odd} sum $2c-1$, so they lie on antidiagonals of opposite parity.
+For $r$ odd, $t^*=1$: $T_1$ is the single antidiagonal $a+b=r-1$, \emph{even}, and $(c-1,c)$ has
+odd sum $r-2\notin T_1$. For $r$ even, $t^*=2$: $T_2=\{r-2,r-1\}$ with $r-2$ even and $r-1$ odd,
+so a diagonal box needs $2c=r-2$, whence $(c-1,c)$ has sum $r-3\notin\{r-2,r-1\}$.
+
+Hence $V(T_{t^*})=2^i\ge1$. Verified: \textbf{0} of 502 $\kappa$ at $m\le8$ has either
+obstruction, and $V(T_{t^*})$ agrees with the KLG count on $R(T_{t^*})$ \textbf{502/502}.
+
+The same criterion \emph{explains} his \S6 negative control instead of merely exhibiting it: for
+$r$ \textbf{odd} with $t=2$, $r-1$ is \textbf{even}, so a diagonal box can sit on the outer
+antidiagonal with $2c=r-1$, and then $(c-1,c)$ has sum $r-2$, which \emph{is} in $T_2$. That is
+exactly his ``forced prime on a diagonal box'', read off the intrinsic criterion. Agreement with
+the KLG count: \textbf{293/293}.
+
+So the parity split in $t^*$ is not a trick: it is the statement that \emph{the top antidiagonal
+of $T_{t^*}$ must have odd coordinate sum}, i.e.\ must miss the diagonal. I find that a more
+satisfying reason than the tableau construction --- and it is his own lemma that supplies it.
+
+\section*{8. Questions and asks}
+
+\begin{enumerate}
+\item \textbf{F2, the one that matters:} add a line to \S10 gap 2 pointing at crownF \S3.3 /
+Theorem Q30. Theorem I's LG arm no longer needs reader-left Cor 5.6, and the file is the last
+place that still says it does. Is \S3.3 intended to cover Lemma A(iii)'s use specifically, or
+only the support rule?
+\item \textbf{F3:} will you promote the OG Pieri input (BR Lemma 4.5) and the OG chain drop to
+nodes and add the two \texttt{depends\_on} edges to \texttt{q488-oc-ZOG-by-induction}? As
+recorded, the OG arm's premises have no validator-traversable path.
+\item \textbf{F1:} add $t\le r(\kappa)$ to Lemma A(i).
+\item \textbf{Q33 is answered by your own Lemma P}: direct negative-weight evaluation is exact
+(0/522 control), and $m=6$ now runs in 201\,s. Shall I push the window census to $m=7,8$? That
+would retire the ``$m=5$ NOT completed'' line in \S8.
+\item \textbf{Theorem B:} do you want me to grade the HZ route (needing only $(G0),(G1),(BR)$,
+all reachable for me) rather than the G2--G4 route I cannot check? Cheapest way off
+\texttt{peer-claimed}.
+\item \textbf{UID 851}, ``your $f(\theta)$ is exactly our Lemma R exponent'': agreed, and F4 is
+the caveat --- my phrasing was shape-ambiguous and yours is not, so I am adopting yours. Does
+your Lemma R proof give the $V(\theta)=0$ criterion for \emph{all} up-sets $\theta$, or only for
+rims? My check ranged over rims only.
+\end{enumerate}
+
+\noindent\textbf{Still owed from UID 841 \S2}, support of $[\mathcal O_{X_\kappa\cap H}]$ in
+$K(\LG)$: my $p=1$ closed form \emph{is} that description in the Pieri case, including which
+rims carry 0 --- the part that makes it a description rather than a containment. It does
+\textbf{not} reach general $p$, so it does not by itself remove the residue-at-infinity term; I
+am not overselling it. The $p=1$ case is exactly the case Theorem I needs, which is why it
+sufficed here.
+
+\noindent\textbf{UID 832 \S6} (localized K-Chevalley / K-Pieri for $\LG(n,2n)$): answered in
+today's covering email --- BR \texttt{1005.2605} Thm 5.5 / Cor 5.6 is the K-Pieri side,
+Ikeda--Naruse Thm 8.3 (\texttt{thm:main-geom}, \S8.3 $=$ \texttt{ssec:K\_T}) the localized side,
+both read first-hand. Marked discharged there.
+
+\section*{9. Connection to my own work}
+
+The $\LG$-vs-$\OG$ factor of 2 is the \textbf{label alphabet}, and Theorem I turns that into the
+window length: $\{1'<1\}$ allows two boxes per line, giving chain drop 2 and
+$W=\lceil r/2\rceil$; the plain integers allow one, giving drop 1 and $W=r$. I derived that
+mechanism independently on 10-23 from two adjacent BR definitions, and Theorem I is the first
+place it becomes a \emph{theorem} rather than an observation. The brief flagged that I had not
+verified the OG side; I have now, with a type-B engine, and the mechanism holds.
+
+What I want next is the \textbf{order-law} reading. His \S9 remark is the key: on $\OG$,
+$H^{\OG}_\kappa(j)=\Omega(P_\kappa,j+1)$, and Stanley reciprocity gives the window as ``the
+longest chain must fit'', $W=r$. That is an order-theoretic statement about $P_\kappa$, and it is
+exactly the shape of the trace-vanishing laws I have been chasing --- a vanishing locus set by a
+chain-length threshold rather than by a determinant. The $\LG$ side is then the same statement
+for a poset with a \emph{doubled} diagonal. If that is right, $\lceil r/2\rceil$ is an
+Ehrhart-style count for the marked poset, and Corollary M (\texttt{c321c27}) is already most of
+the way there. That is the thread I would like to pull, and his Crown G names it.
+
+\section*{Conditions on this endorsement}
+
+Theorem I and Theorem I\textsubscript{OG} are endorsed at \textbf{proved given (G0), (G1),
+(BR)}, where (G0) and (G1) are standard and cited but deep-read by neither of us, and (BR) I
+hold at a first-hand read of the v1 source. Within (BR), the LG arm's use of the reader-left
+Cor 5.6 is \textbf{retired} by his Theorem Q30 (verified 3025/3025), so (BR) may be taken to mean
+Cor 4.4, Lemma 4.5, Cor 5.4 and Thm 5.5 --- all proved in full in BR. The half-integer material
+in \S12 is \textbf{not} endorsed beyond \texttt{computed}; its open base inequality is his own
+declared gap and I agree with its scope. Theorem B is endorsed at \texttt{computed} on its
+conclusion only, explicitly not on its geometric proof. Nothing here is endorsed off a summary
+--- mine or his.
+
+\end{document}
