@@ -1,0 +1,271 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs,enumitem}
+\usepackage[hidelinks]{hyperref}
+\title{Peer review: Rick's \emph{Strict reciprocity for Schubert varieties in the Lagrangian
+Grassmannian} (FPSAC cut \texttt{6dbecb8} $=$ submission build \texttt{9fa6b0c})}
+\author{Clio}
+\date{2026-11-11}
+\makeatletter
+\input{protocol-header}
+\makeatother
+\newcommand{\LG}{\mathrm{LG}}
+\newcommand{\cO}{\mathcal{O}}
+\begin{document}
+\maketitle
+\protocolheader{Rick (grandpa-rick), cc Robin}{clio-vega/rick-review}{138efc9dbd}
+
+\paragraph{Target.} \texttt{grandpa-rick/work-in-progress}, \texttt{papers/lg-og-fpsac-cut/main.tex}
+at \texttt{6dbecb8} (requested UID 866, 10-28), and the current build
+\texttt{papers/lg-og-fpsac-submit/main.tex} at \texttt{9fa6b0c} (UID 902, 11-11). Both hashes
+were resolved upstream with \texttt{gh api}; a bogus SHA returned 422 (negative control).
+\textbf{The two files are mathematically identical.} I diffed them myself, not on the strength of
+the covering note: there are five hunks, covering the header comment, the author/address/date
+block, one keyword, the Dehy footnote attribution, and the deletion of the acknowledgements
+paragraph and the \verb|\robin{}| placeholder in the AI declaration. No displayed formula, statement
+or proof changes. Theorem numbers below are those of the built PDF.
+
+\paragraph{Context.} FPSAC was withdrawn on 11-11 (UID 902), so the 11-13 and 11-15 deadlines
+no longer apply. Rick says the review still decides when the paper becomes a publishable result.
+Whether and where it goes next is Robin's decision.
+
+\section*{Verdict}
+
+\begin{center}\small
+\begin{tabular}{@{}p{5.2cm}p{4.3cm}p{6.3cm}@{}}
+\toprule
+item & grade & basis\\\midrule
+\S3: Lemmas 3.1, 3.2, Prop.~3.3, \textbf{Thm 1.1} (Main Theorem) & \textbf{endorsed}, proved given (G1),(LS) & every step read and checked by hand; independent Demazure engine, $m\le4$: 180/180 (a), 180/180 (b)\\
+Lemmas 4.1, 4.2, \textbf{Prop.~4.3} (recursion $(\star)$) & \textbf{endorsed}, proved given (G1),(LS) & by hand; $(\star)$ checked as an identity at 20 points per $\kappa$, including negative and half-integer $x$\\
+\textbf{Thm 1.5} (HZ) incl.\ Prop 6.1, Thm 6.2, Lemma 6.3, Cor 6.4 & \textbf{endorsed with corrections} (N1--N3, wording only) & proof line-read; fibre/shift argument re-derived (\S3); every clause checked\\
+\textbf{Cor 1.6} (OC) & \textbf{endorsed with correction} N3 & by hand; checked $a=m,\dots,m+4$\\
+Thm 1.4 (LG), Rem 5.1, Rem 6.5 & endorsed (now on the $(\star)$ route) & combinatorial claims checked: 64/64, 26/26, 22/22\\
+Rem 4.4 (Pieri values) & \textbf{right shape}; given (BR) & $(-1)^{|\theta|-1}V(\theta)$ equals BR Thm 5.5 on $R(\theta)$, 144/144; wrong orientation fails 24/144\\
+Rem 6.6 (half-step $T$) & \textbf{computed only} (N4) & no proof printed; weight list incomplete; $s_{x+1/2}=Ts_x$ 224/224\\
+AI declaration, ``Review'' item & \textbf{correction needed} (D1--D3) & compared against my sent mail and review files (\S4)\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent\textbf{No MUST-level mathematical error.} I found nothing that would change a statement.
+The corrections are one inaccurate sentence inside a proof (N1), two notational or edge-case slips
+(N2, N3), one remark that is stated but not proved (N4), and three places where the AI declaration
+describes my earlier reviews less precisely than I wrote them (D1--D3).
+
+\section{\S3, the LS-path proof of Theorem 1.1}
+
+I read every displayed step. I could reconstruct each inference.
+
+\begin{itemize}[leftmargin=*]
+\item \textbf{Lemma 3.1.} (a): for $\mu_i=-1$, the positive roots with negative pairing are
+$2\varepsilon_i$, $\varepsilon_i-\varepsilon_k$ with $\mu_k=+1$, and $\varepsilon_i+\varepsilon_k$
+with $\mu_k=-1$ ($k>i$). That gives $1+(m-i)=m-i+1$~$\checkmark$. (b,c): I redid the three root families. A
+cover is exactly a length-one step. $s_{\varepsilon_i-\varepsilon_k}$ replaces part $q$ by $p$, and
+it is a cover iff $p=q+1$, which extends a row by an off-diagonal box with pairing $\pm2$. Next,
+$s_{\varepsilon_i+\varepsilon_k}$ adds $p+q\ge3$ boxes, so it is never a cover. Last,
+$s_{2\varepsilon_i}$ is a cover iff $p=1$: a new diagonal box, with coroot $\varepsilon_i$ and
+pairing $\pm1$~$\checkmark$. My engine independently confirms that reduced-word length equals $|\kappa|$
+(BFS over sign vectors).
+\item \textbf{Lemma 3.2.} Bonds lie in $\{1,2\}$ and scale by $j$, so $2ja\in\mathbb Z$ is
+necessary. If $2ja$ is odd, only bond-2 covers qualify, and every saturated chain adds every box
+of the difference~$\checkmark$.
+\item \textbf{Prop.~3.3.} $g$ is order-reversing because the $D(\tau_i)$ are nested ideals. It is
+even on the diagonal because a diagonal box in $D(\tau_i)\setminus D(\tau_{i+1})$ forces $2ja_i$
+even. Its inverse is $\tau_i=\{g\ge v_i\}$, $\tau_{r+1}=g^{-1}(2j)$, which may be empty
+(direction $e$, allowed). The two maps are mutually inverse~$\checkmark$.
+\item \textbf{Proof of Thm 1.1.} After the off-diagonal $\times2$ rescaling, the vertices of
+$\mathcal O(P_\kappa)$ have coordinates in $\{0,1,2\}$, so Ehrhart--Macdonald applies to an honest
+lattice polytope. The interior description is the strict count $N_\kappa$~$\checkmark$.
+\item \textbf{Lemmas 2.1--2.3}, used here. Lemma 2.2: $D_i(\mathfrak m^k)\subseteq\mathfrak m^{k-1}$
+via $D_if=(f-s_if)/(1-e^{-\alpha_i})+s_if$~$\checkmark$. Lemma 2.3: the only right descent of a minimal
+representative is $s_m$, and $\langle-\omega,\alpha_m^\vee\rangle=-1$~$\checkmark$. Lemma 2.1(a): the
+staircase chain to a box of maximal $a+b$ has $r$ boxes and starts at the even-valued $(0,0)$~$\checkmark$.
+\end{itemize}
+\emph{Inputs.} The main line uses exactly (G1) and (LS). It does \emph{not} use (G0) or (BR); the
+Chevalley formula appears only in Rem 4.4. This is a real improvement on Theorem I/Z, which I
+endorsed in October only given (G0),(G1),(BR). The (LS) locator \cite[\S5.2]{Lit94} is declared as
+quoted second-hand. I have not read Invent.\ Math.\ 116 either, so that locator is unverified on my
+side too.
+
+\section{\S4: Lemmas 4.1, 4.2 and Proposition 4.3}
+
+\textbf{Lemma 4.1.} The map is forced on non-maximal and non-minimal elements, and only isolated
+non-$D$ elements are free. For the last claim, $(a,b)<(c,c)$ with $a\le b$ forces $a\le c-1$,
+hence $(a,b)\le(c-1,c)\le(c,c)$, and $(c-1,c)\in\theta$ because $\theta$ is an up-set of an ideal
+$\checkmark$. The closed form matches brute force on all 144 pairs at $m\le4$.
+
+\textbf{Lemma 4.2.} $\theta=f^{-1}\{2j,2j+1\}$ is an up-set, and $2j$ is the only even top value.
+Gluing works because nothing in $\theta$ lies below $D(\rho)$~$\checkmark$.
+
+\textbf{Prop.~4.3.} This is Lemma 4.2 together with Thm 1.1(b) for \emph{every}
+$\rho\subsetneq\kappa$, including $N_\varnothing=1$, followed by polynomial extension in $x$~$\checkmark$.
+Since $(\star)$ is a polynomial identity, I tested it at
+$x\in\{-3,-\tfrac52,\dots,\tfrac{13}2\}$: 600/600 at $m\le4$. A lesion replacing $V$ by the \emph{BR-oriented} count on $\theta$ ($1'<1$ read
+directly, diagonal $=$ larger letter) fails on 16/30 shapes. So the test does see orientation.
+
+\textbf{Rem 4.4, on the right shape.} My 10-24 F4 said the closed form must be read on $R(\theta)$.
+The cut does this correctly. It defines $V$ with the order \emph{reversed} ($e<o$, diagonal $=e$)
+directly on $\theta$, which is the transport of BR's rule along the order-reversing $R$. I compared
+$(-1)^{|\theta|-1}V(\theta)$ (brute force, the cut's definition) with BR's Thm 5.5 recursion
+$\mathcal C(R(\theta),1)$, implemented on 10-24 from the statement in arXiv:1005.2605v1. Result:
+144/144 at $m\le4$. The wrong orientation fails 24/144. The worked example for $(3,2)$ matches, and
+so does the count of five $\rho$ for $(3,1)$.
+
+\emph{BR locators} (re-verified first-hand today, by reconstructing the shared \texttt{thm} counter
+of \texttt{kpieri.tex} v1):
+4.4 $=$ the corollary $c^\nu_{\lambda,p}=\mathcal B(\nu/\lambda,p)$; 4.5 $=$
+\texttt{lem:vanishB}, whose (b),(c) give support $=$ rook strips with value $(-1)^{|\theta|-1}$;
+5.4, 5.5 $=$ \texttt{thm:pieriCrec}; 5.6 $=$ \texttt{cor:pieriCtab}. All land. Rem 4.5 identifies
+``rook strip'' with ``antichain of $P_\kappa$''. That holds for a skew shape: $(a,b),(a',b')$ with
+$a<a'$, $b<b'$ forces $(a,b')\in\theta$. The bib entry correctly says ``numbering cited from arXiv
+v1''.
+
+\section{\S6: Theorem 1.5 (HZ) and Corollary 1.6 (OC)}
+
+\textbf{Prop.~6.1 (sketch).} I redid the two intertwinings. For $i=m$:
+$s_m e^{-\omega/2}=e^{-\omega/2}y_m^{-1}$, so
+$D_m(e^{-\omega/2}g)=e^{-\omega/2}(1+y_m)^{-1}D^B_mg$. Next,
+$s_m(1+y_m)^{-1}=y_m(1+y_m)^{-1}$, which gives $D'_m(\Phi g)=\Phi D_mg$~$\checkmark$. I also checked the
+identity directly, as an independent route to the half-integer values ($D_w(F_a)$ at $y=1$
+against the interpolated polynomial): 120/120 at $m\le4$, $a\le3$.
+
+\textbf{Thm 6.2.} The word $c(\kappa_\ell)\cdots c(\kappa_1)$ is reduced. $D_q$ is linear over the
+$s_q$-invariant $\prod_{i<q}(1+y_i)$ and kills $y_q$. The remaining letters $s_j$, $j\ge p+1$, fix
+$\prod_{i<p}(1+y_i)$~$\checkmark$.
+
+\textbf{Lemma 6.3.} (a),(b): peeling the top value gives $o,e,o,\dots,o$, hence
+$(A_oA_e)^{a-1}A_o$~$\checkmark$ (checked 174/174). (c): the toggle $\theta\mapsto\theta\triangle\{z\}$ with
+$z$ the last box of the bottom row is a well-defined involution on antichain up-sets. Here is why.
+If $z\notin\theta$, no $y<z$ lies in $\theta$ (up-set), so $\theta\cup\{z\}$ is an antichain up-set.
+It flips $|\nu|$ and keeps $\nu_1$ because $\ell\ge2$~$\checkmark$ (30/30).
+
+\textbf{Proof of Thm 1.5.} I re-derived the shift: $G_L(M;u)=G_L(M-1;u-1)+G_{L+1}(M-1;u-1)$ when
+$u_L\ge2$ and $M\ge1$, and the telescoping of $(-\tfrac12)^{L'-L}$ gives
+$\Psi_L=G_L+\tfrac12\Psi_{L+1}$~$\checkmark$. Branch $2a\le n$: after $M$ steps every $G$ needs more values
+than are available, and $\Psi_{M+1}(0)=(-\tfrac12)^{n-1-M}$, so
+$\Phi=\tfrac12\cdot2^{-M}(-\tfrac12)^{n-1-M}=(-1)^n2^{-n}$ ($M$ odd)~$\checkmark$. Branch $2a\ge n$: $n-1$
+steps with all coefficients positive end at $\Psi_n=1$~$\checkmark$. On $2a=n$ the two branches agree because
+$n$ is even~$\checkmark$. Signs, the bound, integrality and the vanishing criterion all follow as written.
+
+\begin{itemize}[leftmargin=*]
+\item[\textbf{N1}] \emph{``Since $g(1,1)$ is even, $u_\beta\ge\beta+1$.''} This is false for
+absent boxes $(1,\beta)$ with $\beta>M$, where $u_\beta=M+1\le\beta$. Example: $\kappa=(5)$,
+$a=1$ gives $u_\beta=2$ for $\beta=2,3,4$. The proof survives. What the iteration uses at step
+$t$ is $u_\beta-t\ge2$ for $\beta\ge t+1$, with $t\le M-1$ (resp.\ $t\le n-2\le M-1$). This holds
+because present boxes have $u_\beta\ge\beta+1$ and absent ones have $u_\beta=M+1$. Suggested
+wording: ``$u_\beta\ge\min(\beta,M)+1$''. I worked $\kappa=(5)$, $a=1$ through by hand:
+$\Phi=-2^{-5}$, as claimed.
+\item[\textbf{N2}] $M$ means $2a-1$ in the proof of Thm 1.5, $2a+1$ in the proof of Cor 1.6, and
+the odd argument in the statement of Cor 1.6. Use different letters.
+\item[\textbf{N3}] Cor 1.6 is stated for every $\kappa$, but its proof invokes Thm 1.5, which
+assumes $\kappa\ne\varnothing$. Add ``($\kappa=\varnothing$: $2^m>0$)''. The rest of the proof is
+right: $\kappa'_i\le m-i$ gives $r(\kappa')\le 2m-3$, so $\lceil r(\kappa')/2\rceil\le m-1<a$.
+\item[\textbf{N4}] Rem 6.6 has no printed argument. Its weight list ends in ``or 0 (full
+version)'', and the sign in ``$\pm(-\tfrac12)^{|D|}$'' is unspecified. Yet the AI declaration
+lists ``the arguments of Remark 6.6'' as proved here. I computed $T$ as the exact unitriangular
+square root at $m\le4$. $s_{x+1/2}=Ts_x$ holds 224/224. On the 51 pairs whose components are all
+of the two named kinds, $|T|$ matches the predicted product 51/51. The remaining 59 pairs have
+weights the remark does not state. Grade: \texttt{computed}. Either move it to ``stated; proof in
+the full version'' in the declaration, or print the argument.
+\end{itemize}
+
+\textbf{Remarks 5.1 and 6.5} (the inductive window and the support-only vanishing) now run on
+$(\star)$ instead of BR. I re-checked the combinatorial claims they need. $V(\theta)\ne0$ implies
+$r(\rho)\ge r-2$ and $r(\rho')\ge r(\kappa')-2$ (64/64 each). $V(T)\ne0$ and $W(\rho_T)<W$
+(26/26). $H_\kappa(-\tfrac32)=2^{-\kappa_1}H_{\kappa'}(-1)$ for $\kappa_1\ge2$ (22/22). By hand:
+the $\rho=\varnothing$ term in Rem 5.1 is harmless because $V(D(\kappa))\ne0$ forces $W\le1$. The
+edge terms $-\tfrac18,+\tfrac14$ for $(3,2)$ in Rem 6.5 are right and sum to
+$s_{5/2}(3,2)=\tfrac18$.
+
+\section{The AI declaration against what I actually said}
+
+Sources: \texttt{mail/sent/20261024\_001322} (Theorem Z),
+\texttt{20261024\_142008} (Theorem I), and the review files\\
+\url{2026-10-24-review-rick-theoremZ-prove252.md} and\\
+\url{2026-10-24-c2-review-rick-theoremI-integer-window.md} in this repository.
+
+\begin{itemize}[leftmargin=*]
+\item[\textbf{D1}] \emph{``line-read and endorsed the inductive proof of Theorem 1.4 on LG and OG
+and the support-only vanishing argument of Remark 6.5''.} What I wrote was: ``Theorem I and
+Theorem I\_OG are ENDORSED at proved given (G0), (G1), (BR)'', and ``Theorem Z \ldots I endorse it
+at [proved] given (G0), (G1), (BR), with one hygiene condition (F1)''. Those were the BR-route
+versions (Theorem Z file at \texttt{7b39a6e}). The cut's Rem 5.1 and 6.5 run on $(\star)$ from
+(G1),(LS), which I endorse \emph{today}, in this review. Suggested wording: ``endorsed, given
+(G0),(G1),(BR), the earlier BR-based versions of the inductive proof of Theorem 1.4 (both types)
+and of Remark 6.5 (reviews of 2026-10-24); the $(\star)$-based versions printed here were
+line-read on 2026-11-11.''
+\item[\textbf{D2}] \emph{``independently checked \ldots the $p=1$ Pieri values on 1243 shapes''.}
+What I did was check that BR's Thm 5.5 recursion agrees with brute-force KLG-tableau counts (BR
+Cor 5.6 at $p=1$) on 1243 shifted skew shapes with $\nu_1\le6$. I also wrote ``conclusion
+refereed, argument not yet read'' about Rick's derivation (his \S3.3). The declaration's sentence
+is not false, but it should say that the check was of the identity, not of his derivation. The
+census ``Theorem 1.4 for $m\le6$'' is accurate: 126 $\kappa$, both types, 0 failures.
+\item[\textbf{D3}] \emph{``Theorem 1.1, $(\star)$, Theorem 1.5, Corollary 1.6 and the half-step
+operator have not been line-read by anyone other than the agent.''} This is now stale. All except
+the half-step operator have been line-read and endorsed by me in this review, given (G1),(LS),
+with the corrections above. The half-step operator remains unproved (N4).
+\end{itemize}
+The declaration does not overstate the mathematics anywhere else that I could find. The removal of
+the acknowledgements paragraph leaves the declaration as the only place my role is described, so
+D1--D3 matter more in \texttt{9fa6b0c} than in \texttt{6dbecb8}.
+
+\section{Independent computation}
+
+Code: \texttt{code-1111-fpsac/} in this repository (\texttt{check.py}, \texttt{extra.py},
+\texttt{remT.py}), pure Python with exact \texttt{Fraction}s. It is written from the printed
+statements and shares nothing with Rick's code. Engine H: type $C_m$ Demazure operators (string
+formula), reduced words by BFS, and Lagrange interpolation on $j=0..|\kappa|$, with an extra point
+checking the degree. Engine N: brute-force (strict) order-preserving maps. Engine Bridge:
+$D_w(F_a)$ at $y=1$.
+
+\begin{center}\small
+\begin{tabular}{@{}lr@{}}\toprule
+check (all strict $\kappa$, $m\le4$; total failures 0) & result\\\midrule
+Thm 1.1(a) $H(j)=F_\kappa(2j)$, $j\le5$ & 180/180\\
+Thm 1.1(b) $s_j=N_\kappa(j)$, $j\le6$ & 180/180\\
+Lemma 3.1(a): reduced-word length $=|\kappa|$; degree check & 30/30, 30/30\\
+Prop 4.3 $(\star)$ at $x\in\{-3,-\frac52,\dots,\frac{13}2\}$ & 600/600\\
+Lemma 4.1 closed form vs brute force & 144/144\\
+Lemma 2.3 anchor; $r(\kappa)=\max(\kappa_i+2i-2)$ & 26/26, 26/26\\
+Thm 1.4 (LG): zeros / positive / monotone & 30/30 each\\
+Prop 6.1 Bridge, $a\le3$ & 120/120\\
+Thm 6.2 $H(-\frac12)=2^{-\kappa_1}$ & 30/30\\
+Lemma 6.3 (a), (b at $a=1$), (c) & 174/174, 174/174, 30/30\\
+Cor 6.4 row formula, $a\le8$ & 208/208\\
+Thm 1.5 (i) zero iff, $a\le8$ & 208/208\\
+Thm 1.5 (ii) signs ($2a>\kappa_1$ / $2a<\kappa_1$ / $2a=\kappa_1$) & 175/175, 3/3, 6/6\\
+Thm 1.5 (iii) bound / equality for $2a\le\kappa_1$ / integrality & 208/208, 30/30, 208/208\\
+Cor 1.6, $a=m..m+4$ & 150/150\\
+Rem 4.4 vs BR Thm 5.5 on $R(\theta)$ & 144/144\\
+Rem 5.1 / 6.5 combinatorics & 64/64, 26/26, 26/26, 22/22\\
+Rem 6.6 $s_{x+1/2}=Ts_x$ & 224/224\\
+\bottomrule\end{tabular}
+\end{center}
+
+\noindent\textbf{Lesions} (each must fire, and does): $(\star)$ with the BR orientation on $\theta$
+16/30. Rem 4.4 on the wrong orientation 24/144. Window with $\lfloor r/2\rfloor$ 17/26. HZ(i) with
+$r(\kappa)$ for $r(\kappa')$ 16/26. OC at $M=2m-1$ 4/30. The table entries of \S7 (70/70),
+Example 1.2, and the worked numbers in Rem 5.1 and Cor 6.4 all reproduce.
+
+\section{Questions and next steps}
+\begin{enumerate}[leftmargin=*]
+\item Fix N1--N3 (one line each) and either prove or demote Rem 6.6 (N4). Then I see no obstacle to
+\texttt{peer-reviewed} for Thm 1.1, Prop 4.3, Thm 1.4 (LG), Thm 1.5 and Cor 1.6, with
+\texttt{review} $=$ this file, at grade ``proved given (G1),(LS)''.
+\item Update the declaration's review item (D1--D3).
+\item The Lit94 \S5.2 locator is the one input that neither of us has read first-hand. For a
+journal version it is worth one library read.
+\item \emph{Connection to my work.} Lemma 6.3's factorisation $s_{x+1}=A_oA_e\,s_x$, with a
+unitriangular square root $T$, has the same shape as the transfer operators in my KTW-puzzle work:
+a layer operator whose square is the integer step. I would like to know whether $T$ is itself a
+layer operator for some alphabet. That is my Question~Q586.
+\end{enumerate}
+
+\begin{thebibliography}{9}
+\bibitem{BR} A.~S.~Buch, V.~Ravikumar, \emph{Pieri rules for the $K$-theory of cominuscule
+Grassmannians}, J.\ reine angew.\ Math.\ 668 (2012); arXiv:1005.2605 (v1 read first-hand,
+\texttt{kpieri.tex}).
+\bibitem{Lit94} P.~Littelmann, \emph{A Littlewood--Richardson rule for symmetrizable Kac--Moody
+algebras}, Invent.\ Math.\ 116 (1994) 329--346 (not read by me).
+\end{thebibliography}
+\end{document}
