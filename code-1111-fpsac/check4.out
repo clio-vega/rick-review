@@ -1,0 +1,33 @@
+m=1: done, 2 shapes
+m=2: done, 4 shapes
+m=3: done, 8 shapes
+m=4: done, 16 shapes
+
+  reduced word length = |kappa| (Lemma bonds a)               30/30    
+  interp uses deg |kappa| (extra point agrees)                30/30    
+  Bridge (Prop bridge)                                       120/120   
+  Thm main (a) H(j)=F(2j)                                    180/180   
+  Thm main (b) s_j = N_j                                     180/180   
+  Thm window zeros                                            30/30    
+  Thm window positive after                                   30/30    
+  Thm window monotone                                         30/30    
+  Prop star (all x, incl half-int, negative)                 600/600   
+  Thm A H(-1/2)=2^-k1                                         30/30    
+  Cor OC positive integer                                    150/150   
+  r formula max(k_i+2i-2)                                     26/26    
+  Lemma anchor H(-1)=0                                        26/26    
+  Lemma R closed form                                        144/144   
+  HZ (i) zero iff                                            208/208   
+  HZ (ii) sign 2a>k1                                         175/175   
+  HZ (iii) bound                                             208/208   
+  HZ (iii) integrality                                       208/208   
+  Cor row                                                    208/208   
+  HZ (ii) 2a=k1 both formulas agree                            6/6     
+  HZ (iii) equality 2a<=k1                                    30/30    
+  HZ (ii) sign 2a<k1                                           3/3     
+  Table 1 entry                                               70/70    
+  Ex 1.2 H_(2,1)(j)=(j+1)(j+2)(2j+3)/6                         1/1     
+  Rem window-ind s_4(3,2)=13                                   1/1     
+  Rem window-ind s_3(3,2)=1                                    1/1     
+  Cor row example s_{5/2}(3)=7/8                               1/1     
+TOTAL FAILURES: 0

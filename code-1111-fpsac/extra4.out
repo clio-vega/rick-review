@@ -1,0 +1,28 @@
+             3/3     
+  Table 1 entry                                               70/70    
+  Ex 1.2 H_(2,1)(j)=(j+1)(j+2)(2j+3)/6                         1/1     
+  Rem window-ind s_4(3,2)=13                                   1/1     
+  Rem window-ind s_3(3,2)=1                                    1/1     
+  Cor row example s_{5/2}(3)=7/8                               1/1     
+TOTAL FAILURES: 0
+
+m=1 extra done
+m=2 extra done
+m=3 extra done
+m=4 extra done
+  star at x=5/2 (recheck)                                    30/30
+  Layers (a) AoAe=V                                          174/174
+  Layers (b) a=1: Ao = N_{k/nu}(1)                           174/174
+  Layers (c) epsilon                                         30/30
+  Rem4.4 (-1)^{|th|-1}V(th) == BR-Thm5.5 C(R th,1)           144/144
+  Rem window-ind: V!=0 => r(rho)>=r-2                        64/64
+  Rem Z: V!=0 => r(rho')>=r(k')-2                            64/64
+  Rem window-ind: V(T)!=0                                    26/26
+  Rem window-ind: W(rho_T)<W                                 26/26
+  Rem Z: H(-3/2)=2^-k1 H_k'(-1)                              22/22
+LESIONS (must fire, i.e. >0):
+  L2 star with V_rev                                         fired 16/30
+  L1 Rem4.4 on wrong orientation V_rev(th)                   fired 24/144
+  L3 window with floor(r/2)                                  fired 17/26
+  L4 HZ(i) with r(kappa) for r(kappa')                       fired 16/26
+  L5 OC at M=2m-1 (should sometimes fail)                    fired 4/30
