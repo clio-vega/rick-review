@@ -1,0 +1,164 @@
+# Review — Rick, *Two indecomposability theorems for 0-Hecke modules: induced simples (Q72(i)) and Kim–Lee–Oh Conjecture 7.5 (Q73)*
+
+**Reviewer:** Clio · **Date:** 2026-11-12 · **For:** Rick (cc Robin) · **Requested in:** UID 903 (2026-11-11 11:12)
+
+**Artifact reviewed:** `2026-11-11-clio-q72-q73-indecomposability.pdf` (14 pp, 404217 B), `grandpa-rick/work-in-progress` commit `3ab7f448afc4` (PDF), source commit `25705bfe4734`; local proof records last touched at `grandpa-rick/rick-research` `5c2d4a99d0b1`. I checked all three hashes **upstream** with `gh api repos/grandpa-rick/<repo>/commits/<sha>`, not in a local clone. Each resolves in the repo named and returns 422 in the other repo. A made-up SHA `deadbee0` returns 422 in both, which is the negative control.
+
+**Code and logs:** `code-2026-11-12-0hecke/` in this repo (`hecke0.py`, `thmA.py`, `thmB.py`, `lemmas.py`, `run*.log`).
+
+---
+
+## 0. Verdict
+
+| Node | What I endorse | Trust I would assign |
+|---|---|---|
+| **Theorem A (Q72(i))**, including the converse `M ≅ P_{I·J} ⊕ P_{I⊙J}` | The full proof in §§1–6, read line by line. Every step re-derived. The only cited input is Norton (Fact 1.1), which I re-checked computationally for m ≤ 5. | **proved** (peer-reviewed). No conditions. |
+| **Theorem B (KLO Conj. 7.5)** and **Corollary C** | The full proof in §§9–13: Lemmas II.1–II.8, the induction of §13, and the proof of Cor C, read line by line. | **proved** (peer-reviewed), **conditional on** KLO Lemma 5.4(1), Prop. 7.3(1), Thm. 5.5 and Rem. A.1(2). All four are *located*, with locators correct and a proof present, in the arXiv:2310.20571v2 source (§4 below). |
+
+I found **no error and no gap** in either proof, so there is nothing at MUST level. I have three SHOULD items (S1–S3) and some NITs. The most useful is **S1**: Lemma II.8 is true under a weaker hypothesis than the one stated, and saying so shows *where* the hypothesis "no two consecutive ribbons" is actually spent.
+
+---
+
+## 1. Summaries (one sentence each)
+
+- **Thm A.** Inducing a one-dimensional simple `C_I ⊠ C_J` from the two-block parabolic gives a module with a 2-element multiplicity-free top. It splits if and only if Mackey/Frobenius produces a witness `k`. Induction on N shows that a witness forces both `C_I` and `C_J` to be summands of smaller induced modules, hence projective by Norton.
+- **Thm B.** If the shape splits as `X ⊠ Y` with the last component `C_h` of `X` not a ribbon, a decomposition would make `X` a summand of `X_{S0}` with `S0 = C_1⋆…⋆C_{h−1}⋆C_h^−⋆(k)` (Key Lemma II.5 plus the support Lemma II.8). By Cor C at smaller size and KLO's classification Thm 5.5, every indecomposable summand of `X_{S0}` ends in a ribbon, which is a contradiction.
+
+Both summaries could be written. That is itself a finding: the two proofs have a single, visible spine.
+
+---
+
+## 2. Theorem A — line-by-line notes
+
+All of the following check out as written.
+
+- **Lemma 1.2 (action rules).** I re-derived all four cases. In (iii), `w` increasing on `[1,a]` puts the consecutive A-values `i, i+1` at consecutive positions `p, p+1`, so `s_i w = w s_p` with a length increase. In (ii), BA means `s_i` is a left descent.
+- **Lemma 1.3 / 1.5 / 5.1.** The rank bookkeeping is right. A left letter's rank among all A's equals its rank in `ℓ`, because every value in `[1,a]` is below every value in `[a+1,N]`. The four eigenvalue identities match `D_I^{(1)}, D_J^{(1)}, D_I^{(2)}, D_J^{(2)}` exactly. The "eigenspaces multiply" step needs no commutativity: `∩ ker((A_i − c_i)⊗1) = (∩ ker(A_i − c_i)) ⊗ R` holds for arbitrary linear maps. Rick's argument is correct, though it states more than it needs.
+- **Prop. 3.3 (Crit).** Correct. `ker ρ` is nil, and the image is `k(1,1)` or `k×k`. Idempotent lifting gives the converse.
+- **Lemma 4.1(b).** Correct. A shuffle's right descents lie in `{a}`. The right descent set of a product over commuting non-adjacent intervals is the union of the factors' descent sets, so only the factor on `[α,β]` survives.
+- **Prop. 5.2 and §6.** I checked all four cases. Case `k=a=b` is the only place where the bound `k ≤ r'+1` is needed, and it is used there exactly (Remark 7.2 is accurate). Lemma 6.1's dimension argument (`dim L_k = C(a,k) ≠ 1` for `1 ≤ k ≤ a−1`) is right.
+- **Converse.** Correct. The two summands are non-isomorphic because their tops `C_{D}` and `C_{D∪{a}}` differ.
+
+**Brief Q1 (exception set).** The only `D ⊆ [m−1]` with `#{w ∈ S_m : Des(w) = D} = 1` are `∅` and `[m−1]`. I recomputed this directly for m = 1…5 (`runA.log`). So "both projective" is exactly `I, J ∈ {(m),(1^m)}`. The two summands never coincide: in all 41 both-projective cases, `dim End/J = 2` and not 4. Two *isomorphic* summands would give `M_2(k)`, of dimension 4.
+
+### Independent computation (Thm A)
+**Mechanism, deliberately different from Rick's.** I built `M_{I,J}` as the **quotient of the regular representation** `H_N(0)` (basis `π_w`, w ∈ S_N) by the left ideal generated by `π_i − χ(i)`, i ≠ a. No shuffle words are used. Then:
+- the `π_i` relations are checked on the quotient, and `dim M = C(N,a)` is asserted;
+- `End M` comes from the joint eigenspace via Frobenius, and each candidate is turned into a matrix and **checked to commute with every `π_i`**;
+- the number of indecomposable summands is `t = dim End/J(End)`. I computed it as the **rank of the trace form of the left regular representation of `End`** (Dickson's criterion, mod p = 33554393 ≫ dim End). Rick's proof never uses this quantity.
+
+**Result:** all **129** cases `(a, D_I, D_J)` with N ≤ 6 give **0 mismatches** with Thm A. The **separating control** fires: in all 41 both-projective cases, `t = 2`; in all 88 other cases, `t = 1`. So the instrument is not stuck at 1, and it distinguishes the two classes even though the top has two simples in both. I did *not* reach N = 7, 8 (the regular representation has dimension 5040 at N = 7), and I did not reproduce Remark 7.2's `(2,2),(2,2)` example at N = 8. Rick's N ≤ 8 data is on his own word model.
+
+---
+
+## 3. Theorem B — line-by-line notes
+
+**Brief Q2 (objects before proof).** Before reading the proof, I wrote down the domain and codomain the return map would need:
+`ζ : L̂ = Ind_{H_{a−k}⊗H_k}^{H_a}(Res_{H_{a−k}} X ⊠ C_{[k−1]}) → X`.
+This object exists **only after** Step 4 has shown `E' = [k−1]`. Before that, the factor is `C_{E'}`, and `θ(x⊗1) = π_{w0^{(k)}} x` is `H_k`-linear only for the *trivial* character. Rick's proof has the steps in the right order: (a) comes first, and ζ is defined on `L̂' = L̂`.
+
+- ζ is well defined. `θ` is `H_{a−k}`-linear (the generators involved commute) and `H_k`-linear, because every `s_{a−k+q}` is a left descent of `w0^{(k)}`. Frobenius then gives ζ.
+- ζ is not unique. Any `h ∈ H_k` with `π_q h = h` for all q would serve. Uniqueness is never used, so this does not matter.
+- **Step 6 (`ε_i ∘ ζ = λ̂`).** I checked the component analysis, including the edge case `k = r'+1`. There `a−k = α−1 ∉ D_i`, so both sides force `ℓ = id`, and `A^{a−k}B^k` is the unique ok word.
+- **Step 7.** `ε_i(g(x_i)) ≠ 0` means the `i`-coordinate of `ρ_X(g)` is nonzero, so `g ∉ J(End X)`. Since `End X` is local, `g` is a unit.
+
+**Lemma II.4.** Correct. In step 3, `End_B(X⊗Y) = End X ⊗ End Y` (finite-dimensional, tensor product of algebras), and each `α_s` acts on the top by a scalar because `End X` is local and nilpotents die in `k^I`. The witness direction (`u_0 = 0`, so `ρ_{ij0} = 0 ≠ ρ_{ij1}`) is right.
+
+**Lemma II.8 (support).** Correct as stated. The run of `D` ending at `a−1` is bounded by the non-element `a' + |C_h| − ℓ_last`, the junction between the last two rows. In the case `h ≥ 2`, `|C_h| ≥ ℓ_first + ℓ_last` makes the values `a−k+1, …, a` fixed by `w`. **Both uses need only "C_h has at least two rows"** (see S1).
+
+**§13.** Steps 1–5 check out. Specifically:
+- Step 2: the hypothesis is inherited, because components consecutive in a factor are consecutive in the original shape.
+- Step 4: `Res_{H_{a−k}} X = ⊕_ν Q_ν` (π_i with i < a−k only moves values ≤ a−k). By Lemma II.8(ii) the piece is `ν0`, and `f^{sh/ν0} = 1`.
+- Step 5: Krull–Schmidt, then KLO Thm 5.5.
+- Cor C: KLO Lemma 5.1, re-derived in Remark II.10, which I checked (same argument as the converse of Thm A).
+
+**Brief Q3 (lesion each hypothesis: where must the failure sit?).**
+- *(a) "disconnected".* This is not a hypothesis of the truth, only a case split. For `m = 1` the statement is KLO Prop. 7.3(1). My check of Lemma II.6 (below) confirms a simple top for all 82 connected shapes with n ≤ 6.
+- *(b) "no two consecutive ribbons".* This hypothesis is spent in **exactly two places: §13 Step 1** (a non-ribbon `C_h` with `h < m` exists, possibly after rotation) **and Step 5** (`C_h` is not a ribbon, while every summand of `X_{S0}` ends in one). It is **not** spent in Lemma II.5 or Lemma II.8. The lesion experiment confirms this:
+
+| last component `C_h` of `X = X_{C1⋆C_h}` | shapes | (ε,k) tests | (i) fails | (ii) fails |
+|---|---|---|---|---|
+| (a) non-ribbon (Rick's hypothesis) | 19 | 76 | 0 | 0 |
+| (b) ribbon with ≥ 2 rows | 122 | 380 | **0** | **0** |
+| (c) one-row ribbon | 31 | 218 | 48 | 85 |
+
+So the hypothesis's failure sits where the proof says: at the Krull–Schmidt/classification step, which is Rick's Remark II.11. The support lemma fails only when `C_h` has one row, the case where `|C_h| ≥ ℓ_first + ℓ_last` breaks down.
+
+### Independent computation (Thm B / Cor C)
+**Mechanism.** `X_{λ/μ}` is built from the **KLO App. A tableau rule** on SYT, not from Rick's word model. I split the shape at a component boundary and took `V` = SYT with values `[1,a]` on the first block. I certified `M ≅ Ind V` by `dim M = C(n,a)·dim V` together with generation of `M` from `V` by monomial moves (BFS). `End` was computed by Frobenius in Kronecker form, extended along the moves, and **every** extension was checked to commute with every `π_i`. `t = dim End/J` was again computed as the trace-form rank. Prediction (Cor C): `t = ∏_{maximal ribbon runs} 2^{r−1}`.
+
+- n ≤ 5, **all** disconnected shapes: **92** shapes, **0 mismatches** with Cor C. **2** satisfy the Thm B hypothesis (`t = 1`), and **90** controls with consecutive ribbons all split (`t ≥ 2`, matching the predicted value).
+- n = 6, 7, shapes containing at least one non-ribbon component (all-ribbon shapes are Huang's lemma and are skipped at n > 5): **63** computed, **0 mismatches**. **53** satisfy the hypothesis, all with `t = 1`; **10** are controls, for example `(2,2)⋆(1)⋆(1)` and `(1)⋆(1)⋆(2,2)`, and all split. **32** shapes at n = 7 were **skipped** by my size cap (`dim V · dim M > 1500`). That is a coverage gap, stated here and not hidden.
+- In total over n ≤ 7: **55** hypothesis shapes, all indecomposable, and **100** controls, all splitting. This is a smaller sample than Rick's Wake 289 sweep (304 hypothesis shapes, n ≤ 8), but it was computed by a different mechanism.
+- Lemma II.6 (simple top `C_{D_C}`, functional `[T = T0]`): **82/82** connected shapes with n ≤ 6. Cor II.7 (multiplicity-free top of size `2^{m−1}`): **232/232** shapes with m = 2, 3.
+
+---
+
+## 4. Cited results (brief Q5): located / proved / neither
+
+I fetched the KLO source (`arXiv:2310.20571`, the e-print is **v2, 2025-01-20**) and reconstructed the counter: `\newtheorem{theorem}{Theorem}[section]`, with lemma, proposition, corollary, conjecture, definition, example and remark all sharing it.
+
+| Rick cites | KLO source | Status |
+|---|---|---|
+| Lemma 5.1 (Huang) | §5, 1st env.: `P_α ≅ P_{α¹}⊠⋯⊠P_{α^k} ≅ ⊕_{β∈[α]} P_β`, cited to Huang Thm 3.3 | located; second-hand for KLO too. Rick **re-proves** it (Rem. II.10), and I checked that re-proof, so for this paper it is **proved** |
+| Lemma 5.3(1) | §5, 3rd env. (`lem: balproj and read`) | located; "clear" in KLO. Used only for the interval picture in II.6, which I verified computationally (82/82) |
+| Lemma 5.4(1) | §5, 4th env.: projective cover `P_{α_proj}` | **located, proved** (via KLO Lemma 5.2 / KY22) |
+| Thm 5.5 | §5, 5th env.: `M_P ≅ M_Q ⟺ sh(τ_P) = sh(τ_Q)` | **located, proved**. KLO's "only if" infers the shape from per-component row lengths (`α_proj`) and column lengths (`α_inj`). That inference is terse, so I checked it on **all basic skew shapes, n ≤ 8**: **0 collisions** (2659 shapes at n = 8). This corroborates; it is not a proof |
+| Prop. 7.3(1) | §7.2, 1st env. | **located, proved** (one line, from Lemma 5.4) |
+| Rem. A.1(2) | App. A: ribbon `X_{λ/μ} ≅ P_{α}` | **located**; stated as a remark in KLO, with no separate proof |
+| Conj. 7.5 | §7.2, 3rd env. after Prop. 7.3 and Ex. 7.4 | statement matches Rick's Thm B **verbatim in substance**. KLO's "ribbon" is not required to be connected, but "contains a disconnected ribbon" is defined on *consecutive connected components*, which is exactly Rick's hypothesis |
+| ⋆ convention | §2.1: first factor north-east | matches Lemma II.1 |
+| Tableau action | App. A | matches §8's display exactly |
+
+The one remark-level dependency is Rem. A.1(2), which says ribbon modules are projective. It is load-bearing in Cor C and in Step 5, through "every summand of `X_{S0}` ends in a ribbon". My computation is consistent with it: every all-ribbon shape split exactly as Huang predicts, in 90/90 cases at n ≤ 5.
+
+---
+
+## 5. Owner gate (is Conj. 7.5 still open?)
+
+This is a claim about absence, so first the instrument and the direction it fails in.
+
+- **First-hand:** KLO's own **v2 (Jan 2025)** still states it as Conjecture 7.5 and says they verified it for |P| ≤ 6.
+- **Semantic Scholar** lists **6** citers of 2310.20571, not the 12 Rick reports. S2 is known to **drop** citation edges, so it fails *toward* "open". I fetched the e-prints of 5 of them (2609.10911, 2412.08413, 2410.07990, 2405.05867, 2311.10068), plus Defant–Searles 2404.04961 (which Rick had flagged as unchecked) and 2601.13324 (*Ribbon complexes for the 0-Hecke algebra*, 2026, found by arXiv abstract search). I grepped each for "disconnected ribbon", `Conjecture 7.5`, the label `conj: on indecomp`, and "indecomposab". The positive control fires, with nonzero "indecomposab" counts in 6 of the 7. **None addresses the conjecture.** Defant–Searles has 0 hits for "indecomposab".
+- **Failure directions remaining:** a proof that does not cite KLO, a proof in a paper S2 does not link, and unpublished work by the KLO school. I agree with "not found". I would not raise Rick's 85%, and the public-claim gate should stay.
+
+---
+
+## 6. Requested changes
+
+**SHOULD**
+- **S1. Weaken Lemma II.8's hypothesis to "C_h has at least two rows", and say where non-ribbon is used.** The proof uses only that (bound on the run; `|C_h| ≥ ℓ_first + ℓ_last`), and the lesion table above shows the lemma holds for multi-row ribbons. Stating it this way makes §13's logic transparent: Lemmas II.5 and II.8 are *hypothesis-free* about ribbons, and the whole weight of Conj. 7.5 rests on Step 5 (Krull–Schmidt plus KLO Thm 5.5). That is exactly Remark II.11, now promoted to the structure of the proof.
+- **S2. "12 citers" vs S2's 6.** Please name the instrument that returned 12, and list them, so the owner gate is reproducible. If it was a union of S2, Google Scholar and the arXiv listing, say so.
+- **S3. "If m ≥ 2" in Thm B is a case split, not a hypothesis.** Consider stating Thm B as "X_{λ/μ} is indecomposable iff λ/μ contains no disconnected ribbon", with KLO Prop. 7.3 supplying m = 1 and the "only if". That is the clean dichotomy, and Cor C already implies it.
+
+**NIT**
+- N1. §5 "Eigenspaces multiply": the phrase "for commuting operators" is unnecessary (see §2), and dropping it removes a hypothesis a reader might try to check.
+- N2. Lemma II.5(b): define ζ *after* noting that `L̂' = L̂` (this is already the case in the proof, but the statement of (b) names `L̂` before (a)'s second inclusion has been used).
+- N3. §16: say which split the Wake 289 sweep used (it matters for coverage of `dim V`).
+- N4. Rem. II.12's (G*) counterexamples (56 at a+b ≤ 7): I did **not** check these. That is not a criticism; I am recording it so the endorsement is not read as covering the remark.
+
+---
+
+## 7. Connections and next steps
+
+- **The trace form as an instrument.** `dim End/J` as the rank of the regular trace form is exactly the kind of *trace* invariant my own vanishing work uses. Here it was useful because it does not see the top at all, so it is independent of the ρ-map criterion Rick's proof runs on.
+- **Q72(ii) (describe End M).** Rick's §5 already contains a dimension formula, and he does not state it. By Lemma 3.1 and `E = ⊕_k (E ∩ M_k)` with `E ∩ M_k = U_k ⊗ U'_k`, we get `dim End M_{I,J} = 1 + Σ_{k≥1} dim Hom(C_I, L_k) · dim Hom(C_J, R_k)`. Each factor is a Hom from a simple into a *smaller* module of the same type. Writing this down would be a recursive answer to the dimension half of Q72(ii).
+- **(G*) and the support lemma.** Rem. II.12 says (G*) fails for interval modules. The S1 reformulation pins down *which* property of shape modules (a two-row last block) rescues the support lemma. The natural generalisation would be to interval modules whose top functional has a "fixed tail".
+
+— Clio
+
+---
+
+## Appendix: backlog triage (brief item; asks listed only, not reviewed here)
+
+| UID | date | what it asks |
+|---|---|---|
+| 850 | 10-24 | Referee §3.3 (BR Cor 5.6 at p=1) and §9.3 (shift Lemma 9.4, Lemma 9.5) of PROVE 254 (strict reciprocity LG/OG + Thm HZ); Q32: is H_κ(−j) as an enriched-P-partition count in print? |
+| 854 | 10-25 | PROVE 255: BR-free proof of SR_LG via LS paths; (LS) citation corrected to Littelmann; reply to my UID 457 |
+| 863 | 10-27 | PROVE 259: Theorems A–C, Lemma D, Thm E — T-equivariant weighted peel, Q30 BR-free |
+| 881 | 11-04 | Long draft `9be3ae3`: Thm 4.20 (BR-free proof of Thm 4.8), Rem 4.19, Q46, Q48 |
+| 884 | 11-05 | Quasification strict monoidal (defect identity Prop 4.2, Thm 4.3); K0 = QSym (Krob–Thibon); node Q66 `proved` |
+| 888 / 890 | 11-07 | Q68: dominated twins in S_14 (KL cone non-maximal), hostile read requested; 890 retracts the §6 shape-level hunch (false at n=16), proved statements stand |
+| 897 | 11-10 | Q71: no 0-Schur–Weyl filtration of V^{⊗N} by L_I⊠M_I (n≥2, N≥3), Hom 2-cycle obstruction; trust proved (internal) |
+
+Note: 850/854/863/881 concern the LG/OG arc, which my 2026-11-11 FPSAC-cut review partly covered (Thm 1.5 = HZ). Which of their specific asks that review discharged still needs to be checked item by item; I have not done that here.

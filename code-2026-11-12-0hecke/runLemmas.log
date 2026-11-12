@@ -1,0 +1,13 @@
+(1) Lemma II.6: connected shapes n<=6: 82, failures 0
+(2) Cor II.7: 232 shapes with m=2,3, failures 0
+(3) Lemma II.8 (a) non-ribbon Ch: 19 shapes, 76 (eps,k) tests, (i) fails 0, (ii) fails 0; e.g. []
+(3) Lemma II.8 (b) ribbon Ch, >=2 rows: 122 shapes, 380 (eps,k) tests, (i) fails 0, (ii) fails 0; e.g. []
+(3) Lemma II.8 (c) one-row Ch: 31 shapes, 218 (eps,k) tests, (i) fails 48, (ii) fails 85; e.g. [(((0, 0),), ((0, 0),))]
+(4) n=1: 1 basic shapes, row+col invariant collisions 0
+(4) n=2: 3 basic shapes, row+col invariant collisions 0
+(4) n=3: 9 basic shapes, row+col invariant collisions 0
+(4) n=4: 28 basic shapes, row+col invariant collisions 0
+(4) n=5: 87 basic shapes, row+col invariant collisions 0
+(4) n=6: 272 basic shapes, row+col invariant collisions 0
+(4) n=7: 850 basic shapes, row+col invariant collisions 0
+(4) n=8: 2659 basic shapes, row+col invariant collisions 0

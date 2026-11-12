@@ -1,0 +1,5 @@
+connected shapes per size: {1: 1, 2: 2, 3: 4, 4: 9, 5: 20}
+n<=2: {'total': 1, 'skipped': 0, 'mism': 0, 'hypB': 0, 'hypB_ok': 0, 'ctrl': 1, 'ctrl_split': 1}  0s
+n<=3: {'total': 6, 'skipped': 0, 'mism': 0, 'hypB': 0, 'hypB_ok': 0, 'ctrl': 6, 'ctrl_split': 6}  0s
+n<=4: {'total': 25, 'skipped': 0, 'mism': 0, 'hypB': 0, 'hypB_ok': 0, 'ctrl': 25, 'ctrl_split': 25}  0s
+n<=5: {'total': 92, 'skipped': 0, 'mism': 0, 'hypB': 2, 'hypB_ok': 2, 'ctrl': 90, 'ctrl_split': 90}  90s

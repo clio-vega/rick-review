@@ -1,0 +1,11 @@
+Norton m=1: D with #Des^-1(D)=1: [()]
+Norton m=2: D with #Des^-1(D)=1: [(), (1,)]
+Norton m=3: D with #Des^-1(D)=1: [(), (1, 2)]
+Norton m=4: D with #Des^-1(D)=1: [(), (1, 2, 3)]
+Norton m=5: D with #Des^-1(D)=1: [(), (1, 2, 3, 4)]
+N=2: cumulative cases 1, mismatches 0, both-proj split 1, 0.0s
+N=3: cumulative cases 5, mismatches 0, both-proj split 5, 0.0s
+  example I=J=(1,1)? no: D={1} means I=(1,1)
+N=4: cumulative cases 17, mismatches 0, both-proj split 13, 0.0s
+N=5: cumulative cases 49, mismatches 0, both-proj split 25, 0.3s
+N=6: cumulative cases 129, mismatches 0, both-proj split 41, 14.8s
