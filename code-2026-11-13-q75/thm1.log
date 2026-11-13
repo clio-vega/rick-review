@@ -1,0 +1,30 @@
+1 0 [1, 1, 1] OK
+1 1 [1, 1, 1] OK
+2 01 [1, 1, 1, 1] OK
+2 10 [1, 1, 1, 1] OK
+3 010 [1, 1, 2, 1, 1] OK
+3 101 [1, 1, 2, 1, 1] OK
+4 0101 [1, 1, 1, 1, 1, 1] OK
+4 1010 [1, 1, 1, 1, 1, 1] OK
+5 01010 [1, 1, 2, 2, 2, 1, 1] OK
+5 10101 [1, 1, 2, 2, 2, 1, 1] OK
+6 010101 [1, 1, 1, 2, 2, 1, 1, 1] OK
+6 101010 [1, 1, 1, 2, 2, 1, 1, 1] OK
+7 0101010 [1, 1, 2, 2, 3, 2, 2, 1, 1] OK
+7 1010101 [1, 1, 2, 2, 3, 2, 2, 1, 1] OK
+8 01010101 [1, 1, 1, 2, 2, 2, 2, 1, 1, 1] OK
+8 10101010 [1, 1, 1, 2, 2, 2, 2, 1, 1, 1] OK
+9 010101010 [1, 1, 2, 2, 3, 3, 3, 2, 2, 1, 1] OK
+9 101010101 [1, 1, 2, 2, 3, 3, 3, 2, 2, 1, 1] OK
+10 0101010101 [1, 1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 1] OK
+10 1010101010 [1, 1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 1] OK
+11 01010101010 [1, 1, 2, 2, 3, 3, 4, 3, 3, 2, 2, 1, 1] OK
+11 10101010101 [1, 1, 2, 2, 3, 3, 4, 3, 3, 2, 2, 1, 1] OK
+alt sweep 11.9s
+control L=2: 2/2 non-alternating s match the closed form ['00', '11']
+control L=3: 4/6 non-alternating s match the closed form ['001', '011', '100', '110']
+control L=4: 2/14 non-alternating s match the closed form ['0000', '1111']
+control L=5: 4/30 non-alternating s match the closed form ['00001', '01111', '10000', '11110']
+control L=6: 0/62 non-alternating s match the closed form []
+control L=7: 0/126 non-alternating s match the closed form []
+control L=8: 0/254 non-alternating s match the closed form []

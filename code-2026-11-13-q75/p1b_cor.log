@@ -1,0 +1,12 @@
+G-odd and G-even hold up to z-degree 1
+Key Identity (odd): 0 alpha checked, 0 bad, 0 with nonzero LHS
+Key Identity (even): 0 alpha checked, 0 bad, 0 with nonzero LHS
+L=3: M_2^perp R_s = 0 for [] ; predicted [] ; OK
+L=4: M_2^perp R_s = 0 for ['0101', '1010'] ; predicted ['0101', '1010'] ; OK
+L=5: M_2^perp R_s = 0 for [] ; predicted [] ; OK
+L=6: M_2^perp R_s = 0 for ['010101', '101010'] ; predicted ['010101', '101010'] ; OK
+L=7: M_2^perp R_s = 0 for [] ; predicted [] ; OK
+L=8: M_2^perp R_s = 0 for ['01010101', '10101010'] ; predicted ['01010101', '10101010'] ; OK
+L=9: M_2^perp R_s = 0 for [] ; predicted [] ; OK
+L=10: M_2^perp R_s = 0 for ['0101010101', '1010101010'] ; predicted ['0101010101', '1010101010'] ; OK
+L=11: M_2^perp R_s = 0 for [] ; predicted [] ; OK

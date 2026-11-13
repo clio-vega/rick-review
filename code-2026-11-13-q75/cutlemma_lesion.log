@@ -1,0 +1,7 @@
+G-odd and G-even hold up to z-degree 1
+Key Identity (odd): 0 alpha checked, 0 bad, 0 with nonzero LHS
+Key Identity (even): 0 alpha checked, 0 bad, 0 with nonzero LHS
+FAIL 1 2 {(): -1} {(): 1}
+FAIL 01 2 {} {(1,): 2}
+FAIL 01 3 {(): -1} {(): 1}
+Cut Lemma: 608 (s,m) cases, L<=9, m<=5: 309 bad, 508 nonzero

@@ -1,0 +1,3 @@
+k=3 disguised Gr: True (want True);  perturbed g+x^5: False (want False)
+k=4 disguised Gr: True (want True);  perturbed g+x^6: False (want False)
+k=5 disguised Gr: True (want True);  perturbed g+x^7: False (want False)

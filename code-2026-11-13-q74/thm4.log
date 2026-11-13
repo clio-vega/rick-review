@@ -1,0 +1,8 @@
+m=3: 17 left-weak intervals
+coset pieces examined 0 (max dim 0); pieces needing decomposition 0
+indecomposable summands of Res_t X with a REPEATED top label: 0, in 0 intervals
+m=1: intervals 1, indecomposable 1, R1 1, L1 1
+m=2: intervals 3, indecomposable 2, R1 2, L1 2
+m=3: intervals 17, indecomposable 8, R1 4, L1 4
+m=4: intervals 151, indecomposable 62, R1 12, L1 12
+Theorem 4 (1)<=>(4): 493 pairs (a+b<=6), 121 decomposable, 0 mismatches
