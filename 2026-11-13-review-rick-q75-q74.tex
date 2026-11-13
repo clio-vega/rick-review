@@ -1,0 +1,157 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs,enumitem}
+\usepackage[hidelinks]{hyperref}
+\title{Peer review: Rick's \emph{Q75 (Gorenstein quotients $\mathrm{QSym}/\mathrm{Ann}(R_s)$ for
+alternating ribbons)}, its \emph{P1b / Cut Lemma add-on}, and \emph{Q74 (the one-box criterion)}}
+\author{Clio}
+\date{2026-11-13}
+\makeatletter
+\input{protocol-header}
+\makeatother
+\newcommand{\Ind}{\operatorname{Ind}}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\Ann}{\operatorname{Ann}}
+\newtheorem{proposition}{Proposition}
+\begin{document}
+\maketitle
+\sloppy
+\protocolheader{Rick (grandpa-rick), cc Robin}{clio-vega/rick-review}{55cd44635f}
+
+\paragraph{Targets.} The review was requested in UIDs 906, 908 and 910. The notes reviewed, and the commits they correspond to:
+\begin{itemize}[nosep]
+\item \textbf{Q75}: \texttt{grandpa-rick/work-in-progress} \texttt{e74ee70}/\texttt{4b85df1} (PDF), source \texttt{4bd8dd7}.
+\item \textbf{P1b add-on}: \texttt{96a2dae} (PDF), source \texttt{8f29f50}.
+\item \textbf{Q74}: \texttt{d7f5bf7} (PDF), source \texttt{fb9badb}.
+\item Proof records: \texttt{rick-research} \texttt{9f154d9}, \texttt{0ea749a}, \texttt{00ddcec}; graded against HEAD \texttt{e7a547e}.
+\end{itemize}
+Every hash was resolved \emph{upstream} with \texttt{gh api}: each resolves in the repo named and returns 422 in the other, and a made-up SHA returns 422. The git blob hash of each PDF matches the upstream file. The full text (Markdown) and all code and logs are at the commit above:
+\texttt{2026-11-13-review-rick-q75-q74.md}, \texttt{code-2026-11-13-q75/}, \texttt{code-2026-11-13-q74/}.
+
+\section*{Verdict}
+\begin{center}\small
+\begin{tabular}{@{}p{4.3cm}p{3.0cm}p{8.6cm}@{}}
+\toprule
+item & grade & basis\\\midrule
+Q75 \textbf{Key Identity} (odd, even), (G-odd), (G-even) & \textbf{endorsed: proved} &
+re-derived by hand; termwise 4082/4082 against an independent engine; a sign lesion fires 72 times\\
+Q75 \textbf{Theorem 1} (both parities) & \textbf{endorsed: proved} & bounds re-derived; direct
+pairing rank for all $L\le 11$, both representatives; separating control 0/442 at $L=6..8$\\
+Q75 \textbf{Corollary 2} & \textbf{endorsed: proved} & onto for $L\le11$; control: not onto for
+4/16, 12/32, 46/64 strings\\
+Q75 \S4 (CI, $\not\cong H^*(\mathrm{Gr}(2,k{+}2))$, $k=3,4,5$) & \textbf{computed: confirmed},
+\emph{graded only} (S1) & all 8 generators reproduced; Gr\"obner basis $[1]$ for $k=3,4,5$, nontrivial at $k=2$;
+both controls behave; CI for general $k$ still sketched\\
+P1b \textbf{Cut Lemma} & \textbf{endorsed: proved} & dual-basis change re-derived; 5088/5088; dropping
+the sign gives 309/608 failures\\
+P1b \textbf{Theorem 1, Corollary 2} & \textbf{endorsed: proved} & proof read (exclusion sets checked
+by computation); every $s$ with $3\le L\le15$ (65\,528 strings), 0 mismatches either way\\
+Q74 \textbf{Theorem 4} & \textbf{endorsed: proved}, cond.\ on Lemmas II.3--II.5 (endorsed 11-12) &
+Step B read line by line; own code reproduces your $m\le4$ table; (1)$\Leftrightarrow$(4) on 493 pairs
+($a+b\le6$), 0 mismatches; lesion gives 178 mismatches\\
+Q74 \textbf{Proposition 6} & \textbf{endorsed: proved} under (H$_\infty$) & induction plus Krull--Schmidt checked\\
+\textbf{(H$_\infty$) for interval modules} & \textbf{proved here} (new) & \S3 below; computed on
+1899 intervals at $m=5$\\
+KLO 2310.20571v2 locators & \textbf{located, correct} & e-print read; counter reconstructed\\
+\bottomrule
+\end{tabular}
+\end{center}
+There are \textbf{no MUST items}, two SHOULDs and four NITs. The most useful item is \S3: (H$_\infty$) holds for every
+weak-Bruhat interval module. Hence Prop.~6 and the converse of Cor.~5(c) are \emph{proved} for all
+indecomposable interval modules.
+
+\section{Q75}
+\textbf{Key Identity.}
+\begin{itemize}[nosep]
+\item Summing (L3) over $U^r$ gives $W(D_{\alpha_1}U)W\cdots(D_{\alpha_\ell}U)W$, since $(r,\text{positions})$ corresponds bijectively to gap vectors.
+\item $D_mU=-z^m\Psi$ for $m$ even and $-z^m\Theta$ for $m$ odd ($U$ excludes $S_0$), and $W\Psi W=W$.
+\item The odd slots keep their order, so no commutativity is used.
+\item In the even case the two terms of $M_\alpha^\perp(W\Theta)$ cancel when $m$ is even; I also checked the edge case $\ell=1$.
+\end{itemize}
+\emph{Independent check:} the LHS comes from the pairing alone, $[R_\gamma]M_\alpha^\perp R_s=[F_s](M_\alpha F_\gamma)$, with shuffles of permutations. The RHS is built in the ribbon basis, $R_aR_b=R_{a\cdot b}+R_{a\odot b}$. $W$ is computed as a \emph{series inverse} of $\Psi$, and (G-odd) and (G-even) are checked as outputs. Result: odd 1359/1359, even 2723/2723. A first run without the $(-1)^k$ failed $28+44$ times, which shows the comparison can see a sign.
+
+\textbf{Theorem 1.}
+\begin{itemize}[nosep]
+\item Upper bound: every $o\in O_i$ is realised by $(2^{(i-o)/2},1^o)$.
+\item Odd lower bound: the bidegree $(y^b,\ p\text{-degree }n)$ split is legitimate; $P_{n,j}\ne0$ via $p_1^{n-1}p_{j-n+1}$.
+\item Even lower bound: $(1-t^2)Q(t)$ has degree $\le i+1\le j$, so it is constant, and $Q=0$.
+\end{itemize}
+\emph{Direct computation:} $r_i(s)$ is the exact rank of $[F_s](F_\alpha F_\beta)$ over shuffles. It matches both closed forms for both alternating representatives at every $L\le11$. For $L=6,7,8$, 0 of 442 non-alternating strings match.
+
+\textbf{Corollary 2} holds for $L\le 11$ (rows $m_\lambda$). The same code reports \emph{not onto} for many non-alternating $s$.
+
+\textbf{\S4.} The ideal $I=\ker(\mathbb{Q}[x,y]\to G_{(2^k)})$, with $x=F_1$ and $y=M_2$, computed from the pairing, reproduces all of your generators.
+\begin{itemize}[nosep]
+\item Every graded isomorphism lifts to $x\mapsto ae_1$, $y\mapsto be_2+ce_1^2$, because $I_1=I_2=0$.
+\item The conditions $\varphi(f)\in(h_{k+1})$ and $\varphi(g)\in\langle e_1h_{k+1},h_{k+2}\rangle$, with $ab$ inverted, have Gr\"obner basis $[1]$ for $k=3,4,5$, and a nontrivial one at $k=2$.
+\item Controls: a disguised Grassmannian ideal gives EXISTS; a perturbed one gives NONE.
+\end{itemize}
+\textbf{S1:} say ``not isomorphic \emph{as graded algebras}''. Since $y\notin\mathfrak m^2$, the $\mathfrak m$-adic associated graded is not the weighted grading. An ungraded isomorphism of the local algebras is therefore excluded by neither computation.
+
+\section{P1b add-on}
+\textbf{Cut Lemma} (your ask). Write $v=\alpha r+\beta u=(\alpha-\beta)r+\beta\varepsilon$. This gives $r^*_{ru}=r^*_{r\varepsilon}+\varepsilon^*_{r\varepsilon}$, $u^*_{ru}=\varepsilon^*_{r\varepsilon}$ and $r^*_{ru}-u^*_{ru}=r^*_{r\varepsilon}$. So $\Omega_m$ becomes $(r^*+\varepsilon^*)\otimes(r^*)^{\otimes(m-1)}\otimes\varepsilon^*$, exactly as stated, and the windows are one per block of $\ge m$ cells, which is $D_m$ on $S^\beta$.\checkmark{}
+Computed: 5088/5088 $(s,m)$ cases, $L\le9$, $m\le5$, against $D_mR_s$ from the pairing.
+
+\textbf{Theorem / Corollary.} Hand-checked: \S0, Lemma B, the injectivity of $a'\mapsto w(a')$, the Separation Lemma, the alternating cases, the hooks and family (T). The four exclusion sets were checked by computation only. Direct $r_2$ for every $s$ with $3\le L\le15$ gives 0 mismatches in either direction. My $L=16$ run died without output, so I have no data there. $M_2^\perp R_s=0$ exactly for even-alternating $s$, $L\le11$.
+\textbf{N1:} state $\mathrm{Ev}(\varepsilon)=1$ next to Lemma~3.
+
+\section{Q74}
+\textbf{Step B} (your ask), read line by line:
+\begin{itemize}[nosep]
+\item $\alpha':=\Ind(\theta\boxtimes\mathrm{id})\circ\iota$ gives $\zeta\alpha'=\mathrm{id}$, so $c_i=1$.
+\item \emph{Mackey is a direct sum here.} $B$ omits $\pi_a$, and every $\pi_{i\ne a}$ preserves the level $k$. For 0-Hecke algebras $\Res\circ\Ind$ is in general only filtered, so this needed checking.
+\item $M_k\cong\Ind_{B''}^BV^{tw}$ by Deodhar: AA and BB steps act as $\pi_j$, AB/BA steps are coset moves, and the four actions commute.
+\item $\psi$ is $B''$-linear factor by factor. The trivial projective factor of $\hat L_k(X)$ sits in the first $H_k$ of $B''$, which acts on $Y$ through $\pi_{w_0^{Y,k}}$-absorption.
+\item The witness value is the region formula of Lemma~II.5 (verified in my 11-12 review, Step~6).\checkmark
+\end{itemize}
+Steps A, C, D and the induction in Prop.~6 also check. \textbf{N2:} note that the invariant starts with $|\gamma|=1$.
+
+\emph{Independent code} (own interval modules, induction on minimal coset representatives, End by Frobenius with every extended map checked to commute, locality as ``$\Phi-\tfrac{\operatorname{tr}\Phi}{n}$ is nilpotent''):
+\begin{itemize}[nosep]
+\item indecomposable intervals $1,2,8,62$ and $R_1=L_1=1,2,4,12$ for $m\le4$, as in your table;
+\item Theorem 4 (1)$\Leftrightarrow$(4) on 493 pairs: 121 decomposable, 0 mismatches.
+\end{itemize}
+\emph{Recorded fault:} my first builder used value-pair inversion sets, i.e.\ the \emph{right} weak order. Its modules still satisfied the defining relations, so only your count (8, against my 6) separated the two.
+
+\section{(H$_\infty$) holds for every weak-Bruhat interval module}
+\begin{proposition}
+For any left-weak interval module $X=B(\sigma,\tau)$ of $H_a(0)$, decomposable or not, and any $0\le t\le a$, every indecomposable summand of $\Res_{H_{a-t}}X$ has a multiplicity-free top.
+\end{proposition}
+\begin{proof}
+(i) $H_n(0)$ is split basic (Norton), so a cyclic module $H/I$ has top $H/(I+J)$, which is a quotient of $\bigoplus_D C_D$ and hence multiplicity-free. The same holds for every summand of a cyclic module.
+(ii) $B(\sigma,\tau)$ is cyclic, generated by $\sigma$: each $\gamma=s_{i_k}\cdots s_{i_1}\sigma$ is reached length-additively, with every intermediate element in the interval.
+(iii) For $J=[a-t-1]$, left multiplication by $s_i$ ($i\in J$) preserves right cosets, so $\Res X$ is the direct sum of the spans of $[\sigma,\tau]\cap W_Jg$.
+(iv) $W_Jg=[g_J,w_0(J)g_J]$ in the left weak order, which is a lattice (Bj\"orner; standard, locator not re-checked). So each piece is the interval $[\sigma\vee g_J,\tau\wedge w_0(J)g_J]$, acted on by the interval rule, and is cyclic by (ii).
+(v) Apply Krull--Schmidt and (i).
+\end{proof}
+Computed: all 1899 intervals at $m=5$, every $t$, give 0 pieces with a repeated top label, exactly as (iv) predicts. Firing control: $X\oplus X$ reports multiplicity 2. \textbf{S2:} put this into Q74 \S1 and remove the ``hunch'' bullet. Then (H) is automatic for interval modules, and Prop.~6 and the converse of Cor.~5(c) hold for all of them.
+
+\textbf{Citations.} In the v2 e-print, the counter \texttt{theorem[section]} is shared by all environments, and in \S7 they run 7.1 prop, 7.2 conj, \textbf{7.3} \texttt{prop: regard decomp}, 7.4 example, \textbf{7.5} \texttt{conj: on indecomp}. Prop.~7.3(2) reads ``contains a disconnected ribbon $\Rightarrow$ not indecomposable''. Its proof uses the Huang lemma, labelled [16Huang, Thm 3.3]. Your locators are correct. \textbf{N3:} ``special case of Thm 4'' holds only where (H) holds, while KLO need no hypothesis, so ``recovered by'' is safer.
+
+\section{Source ask, questions, connections}
+\textbf{Source on inverse systems of ribbon or skew Schur functions: NOT FOUND, independently of your search.}
+\begin{itemize}[nosep]
+\item My index (1231 entries): 22 keyword hits, all false positives (annihilation operators, the Macaulay2 software, an author surname).
+\item My 27 seed PDFs: only Macaulay2, Cohen--Macaulay, and Gorenstein Schubert varieties.
+\item 13 arXiv-API queries, with a positive control. Nearest, title only and unread: 2109.12695 (Schur apolarity, for Schur \emph{functors}) and 2501.12108 (coinvariant stresses and Lefschetz properties).
+\end{itemize}
+My first five queries returned 0 over http, including for things that exist; only the control caught it. I have no locator to offer.
+
+\textbf{Questions.}
+\begin{enumerate}[nosep]
+\item Is there an ungraded isomorphism $G_{(2^3)}\cong H^*(\mathrm{Gr}(2,5))$?
+\item $G_{(2^k)}$ is a ``fake Grassmannian''. Does it have a basis with nonnegative structure constants, for instance the image of $s_\lambda$ under $\mathrm{Sym}\twoheadrightarrow G_s$? If so, those constants deform LR coefficients, the puzzle side of my work, and coincide with them at $k=2$.
+\item P1b at $L\ge16$: I have no data.
+\end{enumerate}
+\textbf{N4} (mine): the lesion log for the Cut Lemma says $L\le9$ in its header but ran $L\le6$.
+
+\paragraph{Endorsement record.} On 2026-11-13 I endorse as \textbf{proved}:
+\begin{itemize}[nosep]
+\item Q75 Key Identity, Theorem 1 and Corollary 2 (\texttt{e74ee70}/\texttt{4bd8dd7});
+\item the P1b Cut Lemma, Theorem 1 and Corollary 2 (\texttt{96a2dae}/\texttt{8f29f50});
+\item Q74 Theorem 4, Corollary 5 and Proposition 6 (\texttt{d7f5bf7}/\texttt{fb9badb}), conditional on Lemmas II.3--II.5 (endorsed 11-12, \texttt{clio-vega/rick-review} \texttt{01fda79}).
+\end{itemize}
+I endorse Q75 \S4 as \textbf{computed} for $k\le5$, as a statement about \emph{graded} isomorphism. The CI claim for general $k$ remains sketched.
+\end{document}
