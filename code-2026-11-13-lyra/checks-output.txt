@@ -1,0 +1,36 @@
+PASS Q1a beta=0: n_eff -> 1/c
+PASS Q1a beta=1: n_eff/N -> 1/(1+c)
+PASS Q1a beta=1/2: n_eff/N^beta -> 1/c
+PASS Q1a beta=2: n_eff/N -> 1
+PASS Q1b N-indexed mixture family (beta=2): each N is an iid mixture with rho_N=c/N^2 and Kish exact, N=2..7
+PASS Q1b family is NOT projective (N=3 member's pair marginal != N=2 member)
+PASS Q1b C1,C2 share mean and second moment
+PASS Q1b C1,C2 give identical N=2 laws (Var Theta identified)
+PASS Q1b C1,C2 give different N=4 laws (mixing law not identified)
+PASS Q1b counterexample is a probability law, exchangeable, s=1/2, rho=1/3
+PASS Q1b counterexample violates Cauchy-Schwarz E[Th]E[Th^3] >= E[Th^2]^2 (so NOT an iid mixture)
+PASS Q2(i) homogeneous: phi = rho~ = rho_sym = Var(Theta)/[s(1-s)]
+PASS Q2(ii) C has zero covariance with A and B despite sharing Theta
+   Q2(ii) marginals ['3/10', '1/2', '3/10']  cov_AB 2/25  deff 83/67  rho~ 8/67  rho_sym 20/209
+   Q2(ii) FLOAT phi_AB=0.349149 phi_AC=phi_BC=0  phibar=0.116383  rho~=0.119403  rho_sym=0.095694
+PASS Q2(ii) phibar != rho~ != rho_sym (three different numbers)
+PASS Q2(ii) pair correlations not all equal -> no single exchangeable Var(Theta) object
+PASS Q2(iii) shared latent with Var(Theta)>0 yet cov(A,D) < 0
+   Q2(iii) cov_AD = -1/25  deff = 17/21
+PASS Q2(iv) Frechet: max corr^2 = sA(1-sB)/(sB(1-sA)) = 1/9 for (1/10,1/2)
+PASS PC0 E1=E2 in {0,2}: E[E1]=1, E[E1*E2]=2
+PASS PC1 product combiner one-step mean = 5/4 > 1
+PASS PC1 joint linear bet one-step mean = 1
+   PC1 T=40: P(sup product >= 20) = 0.1794;  P(sup joint >= 20) = 0.0359
+PASS PC1 product combiner type-I > alpha (Ville fails)
+PASS PC1 joint linear bet type-I <= alpha (Ville holds)
+PASS PC2 each stratum alone: own-filtration martingale (mean factor 1)
+PASS PC2 product over a 2-step block has mean 5/4 (own-filtration validity is not enough)
+PASS PC3 deterministic common drift: product factor mean exactly 1 at every step
+   PC4 joint laws enumerated (null-satisfying): 1010;  worst product mean = 5/4
+PASS PC4 worst-case product mean = 1 + lam^2 (bound attained, never exceeded)
+PASS PC4 deflated product (1+lam X1)(1+lam X2)/(1+lam^2) is valid over the whole grid
+PASS 892 printed running-mean form is NOT a supermartingale (E[e(2)|X1=-1]=3/4 > e(1)=1/2)
+PASS 892 printed form is bounded by 1+lam <= 2 < 20, so it can never reject at alpha=0.05
+
+SUMMARY 29/29 checks passed

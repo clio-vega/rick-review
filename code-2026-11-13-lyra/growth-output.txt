@@ -1,0 +1,4 @@
+mu=[0.1, 0.1, 0.1, 0.1]:  M1(mean of processes)=0.00501  M2(joint linear bet)=0.01973  M3(product, needs indep)=0.02003
+mu=[0.1, 0, 0, 0]:  M1(mean of processes)=0.00501  M2(joint linear bet)=0.00501  M3(product, needs indep)=0.00500
+mu=[0.2, 0.2, 0.2, 0.2]:  M1(mean of processes)=0.02014  M2(joint linear bet)=0.07550  M3(product, needs indep)=0.08054
+mu=[0.3, 0.1, 0, 0]:  M1(mean of processes)=0.04570  M2(joint linear bet)=0.05023  M3(product, needs indep)=0.05070
