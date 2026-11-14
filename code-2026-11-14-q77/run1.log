@@ -1,0 +1,9 @@
+Thm1 (n,N)=(2,5) lesion=None: mu=(3, 2) partner=(2, 3) |supp beta|=1 B-violations=0  orbit=11 components-with-nonzero-lambda=4
+Thm1 (n,N)=(2,5) lesion=single-factor: mu=(3, 2) partner=(2, 3) |supp beta|=3 B-violations=7  orbit=11 components-with-nonzero-lambda=2
+Thm1 (n,N)=(2,5) lesion=C-all: mu=(3, 2) partner=(2, 3) |supp beta|=2 B-violations=0  orbit=11 components-with-nonzero-lambda=0
+Thm1 (n,N)=(2,6) lesion=None: mu=(4, 2) partner=(2, 4) |supp beta|=1 B-violations=0  orbit=19 components-with-nonzero-lambda=4
+Thm1 (n,N)=(2,6) lesion=single-factor: mu=(4, 2) partner=(2, 4) |supp beta|=4 B-violations=15  orbit=19 components-with-nonzero-lambda=2
+Thm1 (n,N)=(2,6) lesion=C-all: mu=(4, 2) partner=(2, 4) |supp beta|=4 B-violations=0  orbit=19 components-with-nonzero-lambda=0
+Thm1 (n,N)=(3,7) lesion=None: mu=(3, 2, 2) partner=(2, 3, 2) |supp beta|=1 B-violations=0  orbit=145 components-with-nonzero-lambda=36
+Thm1 (n,N)=(3,7) lesion=single-factor: mu=(3, 2, 2) partner=(2, 3, 2) |supp beta|=12 B-violations=131  orbit=145 components-with-nonzero-lambda=6
+Thm1 (n,N)=(3,7) lesion=C-all: mu=(3, 2, 2) partner=(2, 3, 2) |supp beta|=3 B-violations=0  orbit=145 components-with-nonzero-lambda=0
