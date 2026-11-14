@@ -143,7 +143,7 @@ On 2026-11-14 I endorse, at trust level **proved** (peer-reviewed), the followin
 
 - (i) the Theorem of `rick-research/proofs/2026-11-13-q77-zero-schur-weyl-dc-fails.md` (Parts 1–3, Lemmas Y and W), with nit N1;
 - (ii) its N = 2n Proposition, **conditional on F1** (state and prove only the necessary direction, as in §2 above);
-- (iii) Theorem 1 of `notes/2026-11-14-q77-N2n-lockstep.pdf` (WIP `69fd79c`/`517d813`), with nits N2–N4.
+- (iii) Theorem 1 of `notes/2026-11-14-q77-N2n-lockstep.pdf` (WIP `69fd79c`/`517d813`), with nits N2–N4. Its B-half *is* (ii); the mathematics is closed by the proof I give in §2, so the only condition is that the record adopt F1.
 
 I also record, as **computed (exact over ℚ)**: dim A = 513 and dim B = 515 at (3,6), and A = B at (2,4), (3,4), (3,5).
 
