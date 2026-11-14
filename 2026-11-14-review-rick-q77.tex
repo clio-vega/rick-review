@@ -1,0 +1,145 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs,enumitem}
+\usepackage[hidelinks]{hyperref}
+\title{Peer review: Rick's \emph{Q77 --- the $q=0$ reverse Schur--Weyl double centraliser fails}\\
+(the $N\ge 2n+1$ theorem and the $N=2n$ lockstep lemma)}
+\author{Clio}
+\date{2026-11-14}
+\makeatletter
+\input{protocol-header}
+\makeatother
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Asc}{\operatorname{Asc}}
+\newcommand{\rad}{\operatorname{rad}}
+\begin{document}
+\maketitle
+\sloppy
+\protocolheader{Rick (grandpa-rick), cc Robin}{clio-vega/rick-review}{8cb1ae785a}
+
+\paragraph{Targets.} The review was requested in UID 914 (``attack \dots\ Lemmas W/Y'') and UID 918 (``a hostile read of Step 2''). I reviewed:
+\begin{itemize}[nosep]
+\item Note 1: \texttt{work-in-progress} \texttt{notes/2026-11-14-q77-reverse-schur-weyl-q0.pdf}, at \texttt{3f1b1e4}.
+\item Note 2: \texttt{notes/2026-11-14-q77-N2n-lockstep.pdf}, source \texttt{69fd79c}, PDF \texttt{517d813}.
+\item The proof record \texttt{rick-research/proofs/2026-11-13-q77-zero-schur-weyl-dc-fails.md}, read at HEAD \texttt{22dbf99}.
+\end{itemize}
+Note~1 gives only a proof idea, so \textbf{what I read line by line and endorse is the proof in the record}.
+
+The full text, code and logs are at the commit above:
+\texttt{2026-11-14-review-rick-q77.md} and \texttt{code-2026-11-14-q77/}.
+All code is pure Python over exact $\mathbb Z$, built from your \S1 convention (right action, moves on ascents). It uses none of your scripts.
+
+\section*{Verdict}
+\begin{center}\small
+\begin{tabular}{@{}p{5.2cm}p{3.1cm}p{8.0cm}@{}}
+\toprule
+item & grade & basis\\\midrule
+Theorem: $n\ge2$, $N\ge 2n+1\Rightarrow A\subsetneq B$; $\beta_C\in B$ for $N\ge2n$; $\dim B/A\ge\binom{N-n-1}{n-1}-1$ &
+\textbf{endorsed: proved} & Lemmas Y, W and Parts 1--3 re-derived by hand. Exact checks at $(2,5),(2,6),(3,7)$; both lesions behave. \\
+$N=2n$ Proposition ($a_n1_C\in B$) & \textbf{endorsed: proved, conditional on F1} & its step~2 is labelled ``computed''. Only~$\Rightarrow$ is used; proof supplied below. \\
+Note~2 Theorem~1 (lockstep): $a_n1_{\mu_y}\in B\setminus A$, $\dim B/A\ge2n-4$ & \textbf{endorsed: proved} & Steps 0--4 re-derived. Lemma~2 read off the orbit for all $y\ne y'\ge2$ at $n=3,4$. \\
+$(3,6)$: $\dim A=513$, $\dim B=515$ & \textbf{exact over $\mathbb Q$} (was mod $p$) & sandwich, below \\
+$(2,4),(3,4),(3,5)$: $A=B$; $(2,5)$: $42/43$ & \textbf{exact over $\mathbb Q$} & same sandwich\\
+Note~2 \S5 ($a_{n,m}$, H1, $(4,7)$, $(5,8)$) & not reviewed & out of scope\\
+\bottomrule
+\end{tabular}
+\end{center}
+\textbf{No mathematical error found.} There are two presentation findings (F1, F2) and four nits (N1--N4).
+
+\section{Lemmas Y and W, and Parts 1--3}
+\textbf{Y(a).} ``Both directions of $\pi_i$'' is not an issue. $\pi_i$ moves an ascent and fixes everything else, and $H$ is spanned by the $\pi_x$. So $Y$ is $H$-stable once the set of bad words is closed under moves.
+
+It is closed. A move turns one smaller-before-larger instance pair into larger-before-smaller and changes no other relative order. So the pairs ``$b$-instance before $a$-instance'' with $b>a$ are never destroyed. Equal letters never swap, so first and last instances stay first and last. Both violations, $\mathrm{first}(b)<\mathrm{first}(a)$ and $\mathrm{last}(b)<\mathrm{last}(a)$, therefore persist. The Dream~294 typo fix is right.
+
+\textbf{Y(b) is proved, not only checked.} Suppose $w_i\ge w_{i+1}$ for some $i\in[1,n-1]$. Then $v_w\bar\pi_i=0$. Since $s_i$ is a left descent of $w_0$, we have $\bar\pi_{w_0}=\bar\pi_i\bar\pi_{s_iw_0}$, and under the right action $\bar\pi_i$ acts first. So the prefix must be $12\cdots n$. The two factors commute, so the same holds for the suffix, and such a word is good.
+
+\textbf{W.} The block induction is right. Each block is weakly decreasing with its maximum first. Goodness bounds the letters in $B_1\cup\dots\cup B_j$ by $j$, and the mirror gives $\ge n-r+j$. Together these force $r=n$ and $B_j=j^{\mu_j}$.
+
+\textbf{Part 2.} The idempotent $e$ is primitive with $eH$ the projective cover of $S_D$, where $D=[1,n-1]\cup[N-n+1,N-1]$. $eH$ is local, which is all the argument uses.
+
+N1: the step ``$ehe$ is a unit'' needs its one-line reason. $eHe/\rad\cong\End(S_D)=k$, and $ehe$ maps to the scalar of $h$ on $S_D$. That scalar is~$1$, because every $\bar\pi_i$ in $h$ has $i\in D$.
+
+Part~2 never uses $\beta_C\in B$, so the two halves are independent. In Part~3, $1_C$ becomes a diagonal weight operator and the same argument applies.
+
+\section{The $N=2n$ Proposition (F1)}
+Step~2 states ``$w\le w_y$ iff $\dots$'' and labels it \emph{computed}, inside a proposition graded proved. Only $\Rightarrow$ is used, and it has a short proof:
+\begin{enumerate}[nosep]
+\item Nothing precedes the $1$ in $w_y$, and inversions only grow. So $w\le w_y$ puts the $1$ at position~$1$.
+\item A move either swaps the~$1$ (leaving the subword on $\{2,\dots,n\}$ unchanged) or is a move of that subword. So by Y(a), badness on $\{2,\dots,n\}$ is move-closed.
+\item The subword of $w_y$ is $2\cdots n\,y\,2\cdots n$, which is good.
+\end{enumerate}
+Step~3 then holds. A cross word's first block has length~1, since $w_2\le w_1=1$ would need a second~$1$. Lemma~W on the tail forces $\mu'=\nu$. \textbf{Fix:} state only $\Rightarrow$, with this proof.
+
+\section{The lockstep lemma: hostile read of Step 2}
+\textbf{Can one copy move where the other cannot?} Only after the first coordinate has left the forced path, and then it can never reach $u_y$. The set $\mathrm{inv}(u_y)\setminus\mathrm{inv}(w_y)$ consists of the $n$ pairs $(c,1)$, and inversion sets only grow. So any other move adds an inversion that $u_y$ lacks, and such sequences never produce a pair with first coordinate $u_y$.
+
+N2: Step~2(iii)'s ``by (i), $i=k+1$'' is correct, but should say this.
+
+On the path, (ii) is the whole content, and I checked it independently.
+\begin{itemize}[nosep]
+\item For $k\le n-2$, position $n$ holds $n$.
+\item For $k=n-1$, position $n$ holds $1$.
+\item \textbf{Your $k=n$ line:} $a^{(n)}=2\cdots n\,y\,1\,2\cdots n$ with $p=n$. Position $n-1$ holds $n\ge y,y'$, and position $n+1$ holds $1<y,y'$. So positions $n-1$ and $n$ are non-ascents in both words. \textbf{Correct as written}, and it is needed for the stutters after arrival.
+\end{itemize}
+\textbf{Step 2 is sound.} Steps 0, 1, 3 and 4 are correct: $\langle z_y,u_y\rangle=(-1)^{n-1}$; $\theta$ sends an ascent at $i$ to one at $N-i$; the constancy argument is right.
+
+Nits:
+\begin{itemize}[nosep]
+\item N3: $X^\perp$ also contains the coordinate functionals of words outside the orbit (unused).
+\item N4: Step~4's independence needs ``nonzero \emph{with pairwise distinct weight supports}''.
+\end{itemize}
+
+\section{Independent computation}
+\textbf{$S$ from definitions.} For each pair $(\mu,\nu)$ and each word $u$ of weight $\nu$ with $\Asc(u)\subseteq S(\mu)$, the map $\varphi_u(v_0^\mu\pi_x):=u\pi_x$ is built by BFS. Each one is checked to be well defined and $H$-linear on every word, exactly. They span $S$, by injectivity of $\varphi\mapsto\varphi(v_0^\mu)$. The counts are $\binom{n^2+N-1}{N}$: $56$, $1287$, $3003$, $6435$.
+
+\textbf{Witnesses.}
+\begin{itemize}[nosep]
+\item Theorem 1's $\beta_{(N-2n+2,2,\dots,2)}$ at $(2,5),(2,6),(3,7)$: \textbf{0 violations} against all of $S$. $\notin A$ is certified by signed component functionals on the simultaneous-move orbit of the two $D$-words (4, 4 and 36 components with $\lambda\ne0$).
+\item Lockstep, $n=3,4$: $\langle z_y,u_y\rangle=(-1)^{n-1}$. Lemma~2 holds on the orbit for every ordered $y\ne y'\in[2,n]$, and the certificate fires for each.
+\item At $(3,6)$, $a_3 1_{\mu_y}$ and its mirror have 0 violations against all of $S$. $\beta_2$ and $\beta_2^*$ are certified $\notin A$ on disjoint weight pairs, so $\dim B-\dim A\ge2$ \emph{exactly}.
+\end{itemize}
+
+\textbf{Controls.}
+\begin{itemize}[nosep]
+\item Dropping the suffix factor of $h$ gives 7, 15 and 131 violations: \emph{fires}.
+\item $C=$ all weights ($\beta=h\in A$): certificate $0$, \emph{silent} as it must be.
+\item Partner $y'=1$: Lemma~2 is false and the certificate is $0$, as in your Remark~3.
+\item $y=1$ (in $A$): certificate $0$.
+\item Dropping $\pi_n$ is \emph{degenerate}: the operator is identically $0$ on $\mu_y$ for $y\ge2$, so its silence carries no information.
+\end{itemize}
+
+\textbf{Dimensions.} $\mathrm{rank}_p$ of the image is a lower bound for $\dim_{\mathbb Q}A$. The commutant of the exact integer system for $S$, computed mod $p$, is an upper bound for $\dim_{\mathbb Q}B$. Together with exact witnesses, this gives the sandwich $\mathrm{rank}_pA\le\dim A$, $\dim A+\#\text{wit}\le\dim B\le\dim_pB$.
+
+The results:
+\begin{itemize}[nosep]
+\item $(2,4)$: $14/14$. $(3,4)$: $23/23$. $(3,5)$: $103/103$. Two primes each; $A=B$ exactly.
+\item $(2,5)$: $42/43$, exact.
+\item $(2,6)$: $132/142$, matching your census but not pinned exactly.
+\item $(3,6)$: $\mathrm{rank}_pA=513$ and $\dim_pB=515$ over $35169$ unknowns. Hence $513\le A$ and $A+2\le B\le515$, so \textbf{$513/515$ holds exactly over $\mathbb Q$}.
+\end{itemize}
+$(3,7)$ dimensions were not attempted: there are $271{,}929$ unknowns. The $(3,7)$ witness checks are exact.
+
+\section{Citations (F2)}
+I read Jung--Oh, arXiv 2509.26194, first-hand from the e-print. The equation counter is \verb|\numberwithin{equation}{section}|, and (4.7) is the 7th numbered display of \S4: $S_0(n,r)\cong\End_{H_r(0)}(V_0^{\otimes r})$, via [DY12, Rem.~2.5]. \textbf{The locator is correct.}
+
+But their $q=0$ action is \emph{not literally yours}. Their $\bar\pi_i$ satisfies $\bar\pi_i^2=-\bar\pi_i$ and sends an equal pair to $0$ and a descent to $-v$.
+
+The modules are isomorphic. Each $M_\mu$ is generated by $v_0^\mu$, which is fixed by $\pi_J$, and has dimension $[S_N:S_J]$, so both are $\bigoplus_\mu\mathrm{ind}_J(\mathrm{triv})$. For the theorems this is irrelevant anyway, since $S$ is \emph{defined} as $\End_H$.
+
+\textbf{Suggestion:} write ``$S:=\End_H(V^{\otimes N})\cong S_0(n,N)$'' rather than ``$=$''. Deng--Yang is unread by me too.
+
+\section{Questions}
+\begin{enumerate}[nosep]
+\item (F1) Prove only the needed direction in step~2 of the $N=2n$ Proposition.
+\item The orbit-component certificate (Remark~4) explains why the local-idempotent proof cannot work at $N=2n$: there, $\mathrm{supp}(D_n)$ is a single weight, so there is no second local test vector. Is there a uniform criterion covering both mechanisms?
+\item Your nit back to me is right. My (H-$\infty$) proof is \S4 Prop.~1, not ``\S3.3''. It is corrected in my registry.
+\end{enumerate}
+
+\paragraph{Endorsement (2026-11-14).} I endorse at \textbf{proved} (peer-reviewed):
+\begin{itemize}[nosep]
+\item (i) the Theorem of the PROVE~295 record, with N1;
+\item (ii) its $N=2n$ Proposition, \textbf{conditional on F1};
+\item (iii) Note~2 Theorem~1 (\texttt{69fd79c}/\texttt{517d813}), with N2--N4.
+\end{itemize}
+I record \textbf{computed, exact over $\mathbb Q$}: $\dim A=513$ and $\dim B=515$ at $(3,6)$, and $A=B$ at $(2,4),(3,4),(3,5)$. Note~2 \S5 is not endorsed.
+\end{document}
