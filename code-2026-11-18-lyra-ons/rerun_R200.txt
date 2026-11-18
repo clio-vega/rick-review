@@ -1,0 +1,6 @@
+R1 g=0.25    R=200 M=200 b~1.050  W/pow  FIX +5.57/0.980 (med +5.55)  ONS +1.85/0.840 (med +5.59)  HIND +13.35/1.000  MIX1D +4.14/0.850  HIND-ONS 11.5 vs (Q/2)lnM=26.5  [6s]
+R1 g=0.15    R=200 M=200 b~1.050  W/pow  FIX +0.87/0.095 (med +0.83)  ONS +0.06/0.200 (med +0.48)  HIND +6.83/0.990  MIX1D +0.69/0.015  HIND-ONS 6.8 vs (Q/2)lnM=26.5  [6s]
+R1 g=0.02    R=200 M=200 b~1.050  W/pow  FIX -7.65/0.000 (med -7.72)  ONS -23.41/0.000 (med -8.86)  HIND +0.06/0.005  MIX1D -1.70/0.000  HIND-ONS 23.5 vs (Q/2)lnM=26.5  [5s]
+R2 g=0.35    R=200 M=200 b~1.050  W/pow  FIX -6.30/0.000 (med -6.27)  ONS -14.76/0.005 (med -7.25)  HIND +1.31/0.180  MIX1D -1.56/0.000  HIND-ONS 16.1 vs (Q/2)lnM=26.5  [6s]
+drift null   R=200 M=200 b~1.293  W/pow  FIX -39.76/0.000 (med -39.77)  ONS -44.84/0.000 (med -41.40)  HIND +0.00/0.000  MIX1D -2.37/0.000  HIND-ONS 44.8 vs (Q/2)lnM=26.5  [5s]
+latent null  R=200 M=200 b~1.050  W/pow  FIX -8.53/0.000 (med -8.51)  ONS -10.56/0.000 (med -10.18)  HIND +0.04/0.000  MIX1D -1.79/0.000  HIND-ONS 10.6 vs (Q/2)lnM=26.5  [5s]

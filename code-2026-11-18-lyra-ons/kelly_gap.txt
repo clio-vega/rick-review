@@ -1,0 +1,6 @@
+g=0.10 M*l*= +1.60 | Fixed cost M*D= 3.27 (obs  3.41) | ONS cost obs  4.20 | active k=4, sum/cap=1.00, (k/2)lnM=10.6 | lam*/cap range [0.000,0.574]
+g=0.15 M*l*= +5.36 | Fixed cost M*D= 4.43 (obs  4.49) | ONS cost obs  4.82 | active k=3, sum/cap=1.00, (k/2)lnM=7.9 | lam*/cap range [0.000,0.588]
+g=0.20 M*l*= +8.66 | Fixed cost M*D= 5.46 (obs  5.51) | ONS cost obs  5.57 | active k=3, sum/cap=1.00, (k/2)lnM=7.9 | lam*/cap range [0.000,0.592]
+g=0.25 M*l*=+11.40 | Fixed cost M*D= 6.30 (obs  6.30) | ONS cost obs  6.14 | active k=3, sum/cap=1.00, (k/2)lnM=7.9 | lam*/cap range [0.000,0.597]
+g=0.30 M*l*=+13.70 | Fixed cost M*D= 7.05 (obs  7.07) | ONS cost obs  6.64 | active k=3, sum/cap=1.00, (k/2)lnM=7.9 | lam*/cap range [0.000,0.611]
+g=0.35 M*l*=+15.50 | Fixed cost M*D= 7.61 (obs  7.75) | ONS cost obs  7.18 | active k=3, sum/cap=1.00, (k/2)lnM=7.9 | lam*/cap range [0.000,0.616]

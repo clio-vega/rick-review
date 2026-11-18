@@ -1,0 +1,4 @@
+R1 g=0.25   ONS: ruined seeds 1/200, mean +1.85, mean excl. ruin +5.33, min factor <1e-6 in 1 | cap 0.9/b: ONS mean +5.26 med +5.19 pow 0.835 (ruined 0), FIXED@0.9 mean +5.10
+R1 g=0.02   ONS: ruined seeds 4/200, mean -23.41, mean excl. ruin -9.79, min factor <1e-6 in 4 | cap 0.9/b: ONS mean -7.94 med -7.74 pow 0.000 (ruined 0), FIXED@0.9 mean -6.80
+R2 g=0.35   ONS: ruined seeds 2/200, mean -14.76, mean excl. ruin -7.93, min factor <1e-6 in 2 | cap 0.9/b: ONS mean -6.29 med -6.27 pow 0.000 (ruined 0), FIXED@0.9 mean -5.59
+drift null  ONS: ruined seeds 1/200, mean -44.84, mean excl. ruin -41.60, min factor <1e-6 in 1 | cap 0.9/b: ONS mean -36.63 med -36.60 pow 0.000 (ruined 0), FIXED@0.9 mean -35.33
