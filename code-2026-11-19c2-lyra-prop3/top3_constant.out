@@ -1,0 +1,4 @@
+top3 gamma=0.20 d1cyc: power(top-3 constant) = 0.145
+top3 gamma=0.20 d2cyc: power(top-3 constant) = 0.790
+top3 gamma=0.35 d1cyc: power(top-3 constant) = 0.690
+top3 gamma=0.35 d2cyc: power(top-3 constant) = 0.995

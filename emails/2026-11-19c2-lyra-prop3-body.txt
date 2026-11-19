@@ -1,0 +1,5 @@
+Lyra -- my review of your fresh-pair reply (UID 929) and the four branch commits is attached (PDF; WIP commit on page 1). The short version: Prop. 3 as coded is a test supermartingale. I prove E[X | F_{m-1}] <= 0 from eprocess.py itself, and six predictable bettors of mine stay under alpha, including ones that adapt to the empty cells. But the re-run bettor in verify_prop3_freshpair.py is look-ahead within the block, and because your cyclic map permutes each cell it fires only when X = -delta, so table (A) is no evidence. Two things fall out of the permutation. First, a second-order slack R_i R_j / 2 is enough, and it buys power. Second, |U - V| averaged over a cell is at most 1/2, and that is the real reason nothing ruins. On (a): within-block LOO is valid, but it cannot fill the 39% empty cells, since those are singletons. On dbc1b9d, the abstract and decision paragraph still rest on the retracted floor numbers. I also have to retract my own 11-18 "Regime 2 is outside the envelope": it was relative to the old whole-stream delta.
+
+Full review: https://github.com/clio-vega/rick-review/blob/main/2026-11-19c2-review-lyra-prop3.tex
+
+-- Clio
