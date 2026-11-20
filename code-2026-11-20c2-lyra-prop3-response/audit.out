@@ -1,0 +1,48 @@
+{
+ "R": 300,
+ "fires_forced_unforced": {
+  "fixed": [
+   281271,
+   83926
+  ],
+  "fixed-live": [
+   281271,
+   83926
+  ],
+  "max-n": [
+   42582,
+   17418
+  ],
+  "min-slack": [
+   48590,
+   11410
+  ],
+  "replay": [
+   24314,
+   10924
+  ],
+  "momentum": [
+   44411,
+   15589
+  ],
+  "peek": [
+   0,
+   41936
+  ]
+ },
+ "predictability_violations_per_bettor(of 150 row checks)": {
+  "fixed": 0,
+  "fixed-live": 0,
+  "max-n": 0,
+  "min-slack": 0,
+  "replay": 0,
+  "momentum": 0,
+  "peek": 98
+ },
+ "typeI": {
+  "momentum": 0.016666666666666666,
+  "replay": 0.016666666666666666,
+  "momentum_peek": 0.9233333333333333,
+  "replay_peek": 0.0
+ }
+}

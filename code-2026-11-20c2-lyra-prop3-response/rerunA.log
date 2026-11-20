@@ -1,0 +1,2 @@
+{"row": "static d2 cyclic", "res": {"fixed": 0.0, "fixed-live": 0.002, "max-n": 0.017, "min-slack": 0.032, "replay": 0.012, "momentum": 0.026, "peek": 1.0}, "sec": 99}
+{"row": "latent d2 cyclic", "res": {"fixed": 0.0, "fixed-live": 0.0, "max-n": 0.011, "min-slack": 0.039, "replay": 0.016, "momentum": 0.031, "peek": 1.0}, "sec": 195}

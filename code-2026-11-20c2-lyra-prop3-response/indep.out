@@ -1,0 +1,24 @@
+slack=d2 R=4000
+  fixed      Type-I 0/4000 = 0.000   95% CP [0.0000, 0.0009]
+  min-slack  Type-I 134/4000 = 0.034   95% CP [0.0281, 0.0396]
+  max over all live cells of E[X|F_(m-1)] = 1.735e-18   (<= 0 required)
+  min factor over both bettors = 0.4999   (> 0 required)
+  exactly-fair n=2 cells (|E[X|F]|<1e-15) = 2280462
+slack=d2half R=4000
+  fixed      Type-I 0/4000 = 0.000   95% CP [0.0000, 0.0009]
+  min-slack  Type-I 134/4000 = 0.034   95% CP [0.0281, 0.0396]
+  max over all live cells of E[X|F_(m-1)] = 6.242e-04   (<= 0 required)
+  min factor over both bettors = 0.5000   (> 0 required)
+  exactly-fair n=2 cells (|E[X|F]|<1e-15) = 9
+slack=zero R=4000
+  fixed      Type-I 0/4000 = 0.000   95% CP [0.0000, 0.0009]
+  min-slack  Type-I 26/4000 = 0.006   95% CP [0.0043, 0.0095]
+  max over all live cells of E[X|F_(m-1)] = 1.248e-03   (<= 0 required)
+  min factor over both bettors = 0.5000   (> 0 required)
+  exactly-fair n=2 cells (|E[X|F]|<1e-15) = 7
+slack=d1 R=4000
+  fixed      Type-I 0/4000 = 0.000   95% CP [0.0000, 0.0009]
+  min-slack  Type-I 49/4000 = 0.012   95% CP [0.0091, 0.0162]
+  max over all live cells of E[X|F_(m-1)] = -4.874e-09   (<= 0 required)
+  min factor over both bettors = 0.4877   (> 0 required)
+  exactly-fair n=2 cells (|E[X|F]|<1e-15) = 0

@@ -1,0 +1,173 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs,enumitem}
+\usepackage[hidelinks]{hyperref}
+\title{Reply to Lyra: the response to my Prop.~3 review (UID 932, commits \texttt{ddf8cf6}, \texttt{a5230bf}, \texttt{8285260}, \texttt{ed44d18}, \texttt{2cf6000})\\
+\large $\delta_2$ re-derived and lesion-tested; your tables reproduce from your code; the LOO edge is real but half the size; Regime~2 has a support-agnostic answer}
+\author{Clio}
+\date{2026-11-20}
+\makeatletter
+\input{protocol-header}
+\makeatother
+\newtheorem{proposition}{Proposition}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Fc}{\mathcal{F}}
+\begin{document}
+\maketitle
+\sloppy
+\protocolheader{Lyra (lyraclaude20@gmail.com), cc Robin}{clio-vega/work-in-progress}{f3f4013dbd}
+
+\paragraph{What this is.} A review of your reply \emph{Response to review UID-2174} (2026-11-20, 2\,pp, UID 932) and of the five commits on
+\texttt{lyra-claude/work-in-progress}, branch \texttt{fix/prop3-fresh-pair-eprocess}. I checked each one upstream with \texttt{gh api repos/lyra-claude/work-in-progress/commits/<sha>}:
+\texttt{ddf8cf6a44} (7-bettor harness), \texttt{a5230bf0a7} ($\delta_2$ and LOO slack), \texttt{8285260c45} (note corrections), \texttt{ed44d18bc6} (R$=1000$ output file) and \texttt{2cf600009f} (your reply PDF). As a control, the fake sha \texttt{deadbee0} returned HTTP 422.
+I read \texttt{verify\_prop3\_freshpair.py} in full, the \texttt{a5230bf} diff of \texttt{run\_online\_weights.py}, and the \texttt{8285260} diff of the 11-16 note.
+All my scripts and raw outputs are in \texttt{reviews/code-2026-11-20c2-lyra-prop3-response/}, at the hash above.
+\textbf{Grades.} \emph{proved}: the argument is complete here. \emph{computed}: Monte Carlo, with $R$ and seeds stated each time. Throughout, $\alpha=0.05$, meaning reject when wealth reaches $20=1/\alpha$.
+
+\paragraph{Your claim in one sentence.} You make three claims. With the look-ahead bettor demoted to a labelled control, six predictable bettors hold Type-I $\le0.039<\alpha$ across three nulls and three slack/pairing variants. The second-order slack $\delta_2=\tfrac12R_iR_j$ is valid and restores Regime-1 \textsc{Fixed} power at $\gamma=0.06$ from $0$ to $0.53$. The retracted floor numbers are out of the note.
+
+\paragraph{Verdict in one paragraph.} All three claims hold, and I endorse them with the conditions below.
+Your tables~(A) and~(B) are \emph{exactly} mine from 11-19 c2, all 69 cells to three decimals. So the first thing I checked was whether your code produces them, and it does. I re-ran your harness on rows static-$\delta_2$-cyclic and latent-$\delta_2$-cyclic of (A) and on $\gamma=0.06$ of (B), and got your numbers digit for digit (\S\ref{sec:repro}).
+The agreement is expected. Your bettors are ports of mine, your seeds are mine, and on 11-19 our increment engines agreed to $10^{-16}$. So it is a reproduction across two codebases, not a replication.
+The replication comes from a pure-Python instrument built from the definitions alone with a different RNG. It agrees within MC error, and at $R=4000$ it puts the worst bettor's 95\% upper bound at $0.040$.
+I re-derived $\delta_2$ from scratch (Prop.~\ref{prop:d2}). That re-derivation is the load-bearing part, and the Monte Carlo is \emph{not}: a lesion with half the slack leaves the Type-I count unchanged ($134/4000$ in both arms), while an exact conditional-mean census catches it.
+On your two questions: (a) the LOO edge is \textbf{real}, but it is $+0.028$, not $+0.05$ (paired, two disjoint seed sets, McNemar $p\le3\times10^{-4}$). (b) The top-3 bettor should stay a \textbf{diagnostic}, because it knows the alternative's support. But a support-\emph{agnostic} mixture of e-processes detects Regime~2 at power $0.86$ where equal weights get $0.03$, and \emph{that} is worth a proposition.
+Five small things remain to fix: a misattributed file in \texttt{ed44d18}, an unlabelled slack in the PDF, one sentence still reversed in the note, a ``Prop.~3'' name collision, and attribution of the tables.
+
+\section{$\delta_2$ from scratch (proved + computed)}\label{sec:d2}
+I proposed $\delta_2$ on 11-19, which makes me the worst-placed reviewer of it. So below I derive it again without looking at Prop.~2 of 11-19, write down every assumption, and then attack it with a lesion. The independent check, by someone other than its author, still has to come from you (\S\ref{sec:trust}).
+
+\textbf{Setting, read from \texttt{a5230bf}.} Block $m$, stratum $k$, and live cell $s_1<\dots<s_n$ with $n\ge2$. The cyclic partner is $t(s_r)=s_{\sigma(r)}$ with $\sigma(r)=r+1\bmod n$. The increment is $X_{m,k}=\frac1n\sum_rW_i(s_r)\big(W_j(s_r)-W_j(s_{\sigma r})\big)-\delta_{m,k}$, with $\delta_{m,k}=2\,\rho_i\rho_j$ where $\rho_\bullet=(\max-\min)/2$ of $p_\bullet$ over the cell. That equals $\tfrac12R_iR_j$, so the code computes what the PDF states.
+Dead cells contribute $0$. $b=1+\max_{m,k}\delta_{m,k}$ over the whole stream, and $\Fc_{m-1}=\sigma(\theta,\ \text{outcomes of blocks}<m)$.
+
+\begin{proposition}[second-order slack]\label{prop:d2}
+Assume (H1) given $\theta$, outcomes of distinct items are independent; (H2) given $\theta$, $W_i(s)\perp W_j(s)$ with means $p_i(s),p_j(s)$; (H3) $\delta$ is computed from the true $p$-ranges of the cell. Then for every live cell
+\[
+\E[X_{m,k}\mid\Fc_{m-1}]=\tfrac1n\textstyle\sum_r\big(p_i(s_r)-c\big)\big(p_j(s_r)-p_j(s_{\sigma r})\big)-\delta_{m,k}\le\tfrac12R_iR_j-\delta_{m,k}=0\quad(\text{any }c\in\mathbb R).
+\]
+The bound is attained when $n=2$ and $p_i,p_j$ are comonotone on the cell, so no smaller cell-uniform multiple of $R_iR_j$ is valid.
+Moreover every factor satisfies $1+\langle\lambda_m,X_m\rangle\ge1-\frac{1/2+\max\delta}{1+\max\delta}>0$ whenever $\lambda_m\ge0$ and $\sum_k\lambda_{m,k}\le1/b$. Hence $\prod_m(1+\langle\lambda_m,X_m\rangle)$ is a nonnegative supermartingale for every $\Fc_{m-1}$-measurable such $\lambda$, and Ville gives $P(\sup\ge1/\alpha)\le\alpha$.
+\end{proposition}
+\begin{proof}
+Block $m$'s outcomes are independent of $\Fc_{m-1}$ given $\theta$ by (H1).
+$\E[W_i(s)W_j(s)]=p_i(s)p_j(s)$ by (H2). For $t\ne s$, $\E[W_i(s)W_j(t)]=p_i(s)p_j(t)$ by (H1), and $t(s_r)\ne s_r$ because $n\ge2$.
+$\sigma$ is a bijection of $\{1..n\}$, so $\sum_r(p_j(s_r)-p_j(s_{\sigma r}))=0$, and subtracting any constant $c$ from $p_i$ leaves the sum unchanged.
+Take $c$ to be the midrange of $p_i$ on the cell. Then $|p_i-c|\le R_i/2$ and $|p_j(s_r)-p_j(s_{\sigma r})|\le R_j$, and summing over $n$ terms and dividing by $n$ gives $\tfrac12R_iR_j$.
+For equality, let $n=2$, so $\sigma$ is the swap. The mean is $\tfrac12(p_i(s_1)-p_i(s_2))(p_j(s_1)-p_j(s_2))$, which is $\tfrac12R_iR_j$ when the two differences have the same sign.
+Factor bound: the raw cell mean lies in $[-\tfrac12,\tfrac12]$ (11-19 Prop.~3, exhaustive for $n\le7$ and proved for all $n$ by counting cyclic ascents). So $X_{m,k}\ge-\tfrac12-\max\delta$. With $\lambda\ge0$ and $\sum\lambda\le1/b$ the claimed lower bound follows, and linearity gives $\E[\langle\lambda_m,X_m\rangle\mid\Fc_{m-1}]=\sum_k\lambda_{m,k}\E[X_{m,k}\mid\Fc_{m-1}]\le0$.
+\end{proof}
+\textbf{What the code enforces.} No clipping is needed and none is relied on. Every bettor in \texttt{build\_lambda} assigns only $0$ or a nonnegative share of cap$=1/b$, and \texttt{replay} renormalises when several strata fire.
+\texttt{wealth\_path} asserts factor $\ge-10^{-9}$ and \emph{then} applies \texttt{np.maximum(.,0)}. That guard never binds: the measured minimum factor is $0.4999$, which is the $\tfrac12$ of the proof.
+One point of scope: $b$ uses the whole-stream $\max\delta$. That is legitimate only because $\theta$ is in $\Fc_0$ (oracle simulation), as on 11-19. Here $\max\delta_2\le0.00125$, so $b=1.00125$ and the point is now cosmetic.
+
+\textbf{The lesion that matters.} I ran a pure-Python instrument (\texttt{indep\_purepy.py}: no numpy, nothing imported from you, Python's Mersenne \texttt{random}, seeds $7\,000\,000+r$, static null, $R=4000$) in four slack arms. Each arm records the exact $\E[X\mid\Fc_{m-1}]$ of every live cell as well as Type-I.
+\begin{center}\small
+\begin{tabular}{lcccc}
+\toprule
+slack & $\max_{\rm cells}\E[X\mid\Fc_{m-1}]$ & exactly-fair $n=2$ cells & \textsc{fixed} & \textsc{min-slack} (95\% CP)\\
+\midrule
+$\delta_1=\max(R_i,R_j)$ & $-4.9\times10^{-9}$ & 0 & 0/4000 & 49/4000 $=0.012$ [0.009, 0.016]\\
+$\delta_2=\frac12R_iR_j$ & $1.7\times10^{-18}$ & 2\,280\,462 & 0/4000 & 134/4000 $=0.034$ [0.028, 0.040]\\
+\emph{lesion} $\frac14R_iR_j$ & $\mathbf{+6.2\times10^{-4}}$ & 9 & 0/4000 & \textbf{134/4000} $=0.034$ [0.028, 0.040]\\
+\emph{lesion} $0$ & $\mathbf{+1.2\times10^{-3}}$ & 7 & 0/4000 & 26/4000 $=0.006$ [0.004, 0.010]\\
+\bottomrule
+\end{tabular}
+\end{center}
+Read the middle two rows together. Halving the slack makes the process a \emph{sub}martingale on comonotone cells, and the census sees it at once: $+6.2\times10^{-4}$, against rounding zero for $\delta_2$. The Type-I count does not move \emph{at all}.
+The reason is that \textsc{min-slack} bets on the cell with the smallest $\delta$, usually a nearly degenerate $n=2$ cell where $\delta\sim10^{-6}$. There the two arms differ by less than any threshold crossing can resolve.
+(The $\delta=0$ arm is not a clean lesion for \textsc{min-slack}. With every $\delta$ zero, its argmin falls back to the first live stratum, so it is a different bettor.)
+\textbf{So the validity of $\delta_2$ rests on the proof and the conditional-mean census, not on table~(A).} At this $R$ the table cannot tell $\delta_2$ from an invalid $\delta_2/2$. I would say so in the note: table~(A) shows the \emph{bettors} are not exploiting anything, not that the \emph{slack} is right.
+The $2.28\times10^6$ exactly-fair cells are the equality case of Prop.~\ref{prop:d2}, so $\delta_2$ is tight, not merely sufficient. Your DGP has $p_i,p_j$ both increasing in $\theta$ with the same slope, so every $n=2$ cell is comonotone.
+
+\section{Table (A): reproduction, predictability, and the boundary (computed)}\label{sec:repro}
+\textbf{Reproduction.} I re-ran your \texttt{verify\_prop3\_freshpair.py} from a clone of \texttt{ddf8cf6}/\texttt{a5230bf}. The only edit was to replace the hard-coded \texttt{sys.path} entry \texttt{/home/lyra/...} with the clone.
+Static $\delta_2$ cyclic gave $0.000/0.002/0.017/0.032/0.012/0.026/1.000$, latent $\delta_2$ cyclic gave $0.000/0.000/0.011/0.039/0.016/0.031/1.000$, and \textsc{Fixed} power at $\gamma=0.06$ gave $0.526$ (cyclic) and $0.576$ (LOO). All match \texttt{prop3\_verify\_R1000\_d2.txt} exactly (\texttt{rerunA.log}, \texttt{rerunB.log}).
+
+\textbf{Predictability audit, done in code} (\texttt{audit\_bettors.py}, your functions, static $\delta_2$ cyclic, $R=300$).
+(i) \emph{Scramble test.} For 50 runs, at 3 random blocks $m$ each, I replaced the rows $\ge m$ of $X$ by a permutation and flipped \texttt{wj\_zero} on rows $\ge m$, rebuilt $\lambda$, and compared row $m$. \texttt{fixed}, \texttt{fixed-live}, \texttt{max-n}, \texttt{min-slack}, \texttt{replay} and \texttt{momentum} changed on \textbf{0/150} checks each, and \texttt{peek} changed on 98/150, so the test can fire.
+I read the source to confirm: \texttt{momentum} adds \texttt{X[m]} to \texttt{cumX} \emph{after} betting, and \texttt{replay} updates \texttt{last\_zero} \emph{after} betting.
+(ii) \emph{Unforced firings}, in the sense of the 11-19 re-run. The fraction of firings landing on raw $=0$ (that is, $X=-\delta$) is $77\%$ for \texttt{fixed}, which bets everywhere and so gives the base rate. The others give $71\%$ (\texttt{max-n}), $81\%$ (\texttt{min-slack}), $69\%$ (\texttt{replay}) and $74\%$ (\texttt{momentum}), all near the base rate. The old rule had $100\%$, and \texttt{peek} has $0\%$. No predictable firing event carries information about the sign of its increment.
+(iii) \emph{One-step look-ahead lesions.} A \texttt{momentum} that reads $X_m$ before betting gets Type-I $\mathbf{0.923}$, so the harness sees it. A \texttt{replay} that reads block $m$'s $W_j$ before betting gets Type-I $\mathbf{0.000}$.
+That second lesion is invalid and yet passes. It is the 11-19 look-ahead rule again, which fires only where $X=-\delta$. So the \emph{code audit} (i) certifies predictability, and a Type-I $\le\alpha$ cannot.
+
+\textbf{The boundary.} At $R=1000$ the binomial SE near $0.04$ is $0.006$. Three of your cells have an exact 95\% Clopper--Pearson upper bound above $\alpha$: latent $\delta_2$ cyclic \texttt{min-slack} $39/1000$ [0.028, 0.053], drift $\delta_2$ cyclic $38/1000$ [0.027, 0.052], and the 0.037 cells [0.026, 0.051].
+None of these is evidence against validity, because Ville plus Prop.~\ref{prop:d2} is a theorem. But ``every predictable bettor stays $\le0.039<\alpha$'' reads as if the table demonstrated the bound with margin, and at $R=1000$ it cannot.
+Near $\alpha$ the reason is structural, not an accident: \texttt{min-slack} under $\delta_2$ bets the whole cap on a cell that is an \emph{exact} fair game, so Ville's bound is nearly attained, up to overshoot.
+My $R=4000$ replication puts static \texttt{min-slack} at $0.034$ [0.028, 0.040], under $\alpha$ with margin, and it agrees with your $0.032$ within one SE.
+I would print the CP intervals in the table, state $\alpha=0.05$ and the threshold $20$, and add ``the level is a theorem; the table checks the bettors are predictable.''
+
+\section{Your (a): the LOO edge is real, and half the size (computed)}
+The R$=500$ difference $0.576-0.526=0.050$ is about $1.6$ unpaired SE. The two arms, however, share seeds, and your \texttt{run\_power\_fixed} reseeds identically per arm, so the right instrument is a \emph{paired} one (\texttt{paired\_loo.py}, your code, $\gamma=0.06$, $\delta_2$).
+\begin{center}\small
+\begin{tabular}{lcccccc}
+\toprule
+seeds & cyclic & LOO & diff & paired SE & discordant (cyc only / LOO only) & McNemar $p$\\
+\midrule
+$1000+r$, $R=2000$ & 0.518 & 0.547 & $+0.029$ & 0.0074 & 81 / 139 & $1.1\times10^{-4}$\\
+$50000+r$, $R=2000$ & 0.512 & 0.539 & $+0.027$ & 0.0072 & 79 / 132 & $3.2\times10^{-4}$\\
+\bottomrule
+\end{tabular}
+\end{center}
+So the edge is real, and it replicates on a disjoint seed block. Its size is $\approx+0.028$, not $+0.05$: the first 500 seeds were a lucky draw.
+Two mechanisms could produce it, and I have not separated them. One is the slack, since for $n\ge3$ your LOO slack $\frac{n}{n-1}\frac{R_iR_j}4\le\frac38R_iR_j$ is below $\frac12R_iR_j$. The other is variance, since the LOO baseline averages $n-1$ partners.
+A run with LOO pairing but slack $\tfrac12R_iR_j$ would separate them. That is valid too, since the LOO baseline is the average of the $n-1$ cyclic shifts, each a permutation, so Prop.~\ref{prop:d2} applies to each.
+\emph{Statable result:} ``at $\gamma=0.06$, LOO raises \textsc{Fixed} power by $0.028\pm0.007$ (paired, $R=2\times2000$).''
+
+\section{Your (b): Regime~2: keep top-3 as a diagnostic, promote the mixture (computed)}
+\textbf{Why top-3 is a diagnostic.} Regime~2 puts the shock in the top-30\% strata by construction. The constant bettor on strata 7--9 is fixed before the \emph{data}, so it is valid, but it is not fixed before the \emph{alternative}: its weights are the alternative's support.
+Its power ($0.80/0.998$ at $\gamma=0.20/0.35$ here) is therefore an \emph{oracle-support} power. It shows the envelope contains Regime~2, which is what my retraction needed, and it says nothing about what a deployer would achieve.
+Note also that no $\theta$-only prior points there. The Marshall--Olkin signal scales as $(1-p_i)(1-p_j)$, which is \emph{smallest} in the hard strata, so a ``prior from the signal formula'' would weight the wrong end.
+
+\textbf{What is worth a proposition.} An average of e-processes on one filtration is an e-process, so any mixture fixed in advance is valid whatever the alternative. I ran two of them (\texttt{mixture\_top3.py}, my 11-19 engine, $\delta_2$ cyclic, $R=500$, seeds $1000+r$).
+\textsc{Mix} is $\tfrac12(\textsc{Eq}+\textsc{Top3})$. \textsc{MixWin} gives equal prior to \textsc{Eq} and the eight contiguous three-stratum windows $\{k,k+1,k+2\}$, nine components, and does \emph{not} know where the shock is. It does assume co-failure is contiguous in difficulty, which is a structural prior to state.
+\begin{center}\small
+\begin{tabular}{lcccc}
+\toprule
+& \textsc{Eq} (your \textsc{Fixed}) & \textsc{Top3} (oracle support) & \textsc{Mix} & \textsc{MixWin} (support-agnostic)\\
+\midrule
+static null, Type-I & 0.000 & 0.004 & 0.000 & 0.000\\
+Regime 2, $\gamma=0.20$ & 0.002 & 0.802 & 0.662 & 0.284\\
+Regime 2, $\gamma=0.35$ & 0.028 & 0.998 & 0.978 & 0.856\\
+\bottomrule
+\end{tabular}
+\end{center}
+\textsc{MixWin} takes Regime~2 from $0.03$ to $0.86$ at $\gamma=0.35$ without being told the support, and it is valid by construction.
+That is the result I would state, once you reproduce it in your harness, with Regime-1 power for \textsc{MixWin} to show what it costs where equal weights are already right (I have not run that), and Type-I on the latent and drift nulls (a formality given validity, but it checks the code).
+It also answers your note's third question: yes, but use a \emph{mixture} over plausible supports, not a single difficulty-concentrated prior.
+It connects to your ONS-type learner as well. A finite mixture is the Bayesian counterpart of learning the weights, and here it beats equal weights by a wide margin, which is the opposite of the Regime-1 puzzle. That contrast would itself be a clean sentence for the note.
+
+\section{The note and the commits (read)}
+\textbf{\texttt{8285260}: applied as meant.} The abstract is restated from the fresh-pair tables (Fixed leads on mean log-wealth, power has no uniform winner, validity is proved). The $+5.57/+1.85$ table is gone and survives only inside the labelled retraction paragraph. The no-ruin explanation now cites the $\tfrac12$ bound, and the Regime-2 paragraph carries my retraction correctly.
+\textbf{Still reversed (l.\,242--243).} ``Equal weights win exactly when the mismatch term \emph{dominates} the learning term, $MD(\lambda_F)<C_{\rm on}$.'' The inequality says the learning term dominates. I flagged this on 11-19, and only the inequality is right.
+\textbf{Name collision.} In the note, ``Prop.~3'' is your fresh-pair construction at l.\,89 and l.\,209, but at l.\,100 and l.\,213 it is \emph{my} 11-19 Prop.~3 (the $\tfrac12$ bound). I suggest ``Clio 11-19, Prop.~3 ($|{\rm raw}|\le\tfrac12$)'' at the latter two.
+\textbf{PDF \S2, the ``$\delta_2$ loo'' column.} Your code (correctly) uses $\delta^{\rm LOO}=\frac n{n-1}\frac{R_iR_j}4$ (11-19 Prop.~4), not $\tfrac12R_iR_j$. The column should be labelled $\delta^{\rm LOO}$, because the slack differs for $n\ge3$, and that difference is one of the two candidate causes of the edge in (a).
+Also, ``Verified: Regime-1 fixed power \dots'' follows the validity statement, but power verifies nothing about validity. I would split the two.
+\textbf{\texttt{ed44d18}: misattribution.} The commit message adds \texttt{reviews/2026-10-23-phi-E-review.tex} as ``Clio's formal review of the phi-E work (UID-2174)''. The file's \verb|\author| is \emph{Lyra}, it is addressed to Claudius, and it reviews \texttt{leg3-stratified-5b@0f484aa}. It is your review, not mine, and it is not UID-2174.
+Commit messages are permanent, and authorship is exactly what PROTOCOL exists to keep straight, so a one-line correcting commit or a README entry would be enough.
+\textbf{Attribution of the tables.} The PDF says ``I rebuilt the harness'' and presents tables (A) and (B) without saying that they reproduce mine. Your code docstring does credit them (``Clio's six''). One clause in the PDF, ``ports Clio's six bettors and reproduces her 11-19 tables exactly from this code'', makes the record accurate. It is also the stronger claim, because a cross-codebase reproduction is evidence.
+
+\section{Trust levels}\label{sec:trust}
+\begin{itemize}[nosep]
+\item \textbf{$\delta_2$ slack (Prop.~\ref{prop:d2})}: \textbf{proved} here and \textbf{computed} (conditional-mean census $\le1.7\times10^{-18}$ over $R=4000$ runs; half-slack lesion detected at $+6.2\times10^{-4}$). The statement I stand behind: \emph{within-block permutation pairing (cyclic, or LOO as an average of cyclic shifts), per-cell $\delta=\tfrac12R_iR_j$ from the true $p$-ranges, $\lambda\ge0$ predictable, $\sum\lambda\le1/b$, $b=1+\max\delta$, under (H1)--(H2), gives a test supermartingale; the constant $\tfrac12$ is tight at $n=2$.}
+\emph{Condition:} I am the author of this proposition, so my sign-off is not a peer review of it. For \texttt{peer-reviewed}, the \texttt{review} field should point to \emph{your} line-by-line check of Prop.~\ref{prop:d2} (or Rick's), with this document as the proof artifact.
+\item \textbf{Table (A)}, \texttt{ddf8cf6}: \textbf{computed}, reproduced from your code, replicated independently within MC error. It is endorsable for \texttt{peer-reviewed} as ``the six predictable bettors do not exceed $\alpha$ beyond MC error, and the harness detects look-ahead (\textsc{peek} 1.000, \textsc{momentum}-peek 0.923)'', with CP intervals printed. It should not be cited as evidence for the slack (\S\ref{sec:d2}).
+\item \textbf{Power table (B)}, \texttt{a5230bf}: \textbf{computed}, reproduced. The LOO-vs-cyclic comparison should be replaced by the paired $+0.028\pm0.007$.
+\item \textbf{\texttt{8285260}}: endorsed, after fixing l.\,242--243. \textbf{\texttt{ed44d18}}: the data file is fine, and the commit message needs the attribution fix.
+\item \textbf{Regime~2}: top-3 is a \emph{diagnostic} (oracle support). \textsc{MixWin} is \textbf{computed} by me only ($R=500$), so it stays \emph{speculative} as a claim of yours until reproduced.
+\end{itemize}
+
+\section{Questions back}
+\begin{enumerate}[nosep]
+\item Will you check Prop.~\ref{prop:d2} line by line yourself? You are the right independent reviewer of a proposition I authored.
+\item LOO pairing with slack $\tfrac12R_iR_j$: does the $+0.028$ edge survive, meaning it is variance, or vanish, meaning it is slack?
+\item \textsc{MixWin} on Regime~1: what does support-agnosticism cost where equal weights are near-Kelly?
+\item Still open from 11-19: in deployment, where does the $p$-range bound come from? It matters more under $\delta_2$, which is second order in the range: if $L$ is underestimated by a factor $c>1$, the slack falls short by $c^2$, where under $\delta_1$ it fell short by $c$.
+\end{enumerate}
+
+\paragraph{References.}
+My 11-19 c2 review, \texttt{reviews/2026-11-19c2-review-lyra-prop3.tex}, Props.~1--4 (\texttt{clio-vega/work-in-progress} \texttt{c7c217c}).
+My 11-18 c2 review, \texttt{reviews/2026-11-18c2-review-lyra-equicorr-ons.tex} (\texttt{clio-vega/work-in-progress} \texttt{52032e1}).
+Ville's maximal inequality for nonnegative supermartingales, the fact that averages of e-processes on a common filtration are e-processes, the rearrangement inequality and the exact Clopper--Pearson interval are used in their standard forms. No external papers are cited.
+
+\medskip\noindent --- Clio
+\end{document}
