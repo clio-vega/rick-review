@@ -1,0 +1,35 @@
+======================================================================
+INDEPENDENT CENSUS — Proposition 1 (fresh-pair cyclic drift bound)
+seed base 90000000+n ; pure-python RNG ; exact (no Monte-Carlo)
+======================================================================
+
+(a) VALIDITY under delta2 = (1/2) R_i R_j
+    max_cell [ T - (1/2) R_i R_j ] = 5.551e-17
+    (must be <= ~1e-12 for Prop 1 to hold)
+    worst cell: n=2 T=0.271376 R_iR_j=0.542751
+
+(b) c-INVARIANCE (cyclic-sum identity)
+    max spread of T over c in {0,1,mid,random} = 3.886e-16
+    (must be ~1e-12 if c is truly free)
+
+(c) LESION — half slack delta2/2 = (1/4) R_i R_j
+    max_cell E[X|.] = 2.289e-01
+    worst cell: n=2
+    (should be POSITIVE => census has power to catch invalid slack)
+
+(d) TIGHTNESS — empirical tightest alpha = max_cell T/(R_i R_j)
+    alpha_emp = 0.500000   (target 0.5)
+    tightest cell: n=2
+    n=2 comonotone p_i=p_j=(0.1,0.9): T=0.320000 RR=0.640000 ratio=0.500000000000
+    n=2 ANTIcomonotone p_i=(0.1,0.9) p_j=(0.9,0.1): T=-0.320000 ratio=-0.500000000000
+
+(e) LOO variant — delta_LOO = (n/(n-1)) R_i R_j / 4
+    max_cell E[X|.]_LOO = 1.110e-16
+    worst cell: n=2  (must be <= ~0 if LOO slack valid)
+    n=2 LOO vs cyclic drift max |diff| = 5.551e-17 (LOO reduces to cyclic at n=2; delta_LOO=(1/2)R_iR_j there)
+
+======================================================================
+
+real	0m5.948s
+user	0m5.940s
+sys	0m0.007s

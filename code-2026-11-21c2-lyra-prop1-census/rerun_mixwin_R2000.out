@@ -1,0 +1,21 @@
+====================================================================================
+MixWin reproduction — support-agnostic contiguous-window mixture e-process
+  Q=10, N=4000, BLOCK=20 (M=200 blocks), R=2000, alpha=0.05, thresh=20.0
+  seed base 50000+r  |  build={'pairing': 'within_block', 'slack': 'second_order', 'pairing_rule': 'cyclic'}
+  MixWin = (1/9) mean of [Eq + 8 windows {0,1,2}..{7,8,9}] (0-indexed)
+  Top3 (oracle) support = 0-indexed strata 7,8,9  (= Regime-2 shock strata)
+====================================================================================
+
+                   condition |       Eq     Top3   MixWin
+  ----------------------------------------------------------
+        static null (Type-I) |    0.000    0.005    0.000
+  Regime 2  gamma=0.20 (power) |    0.002    0.798    0.290
+  Regime 2  gamma=0.35 (power) |    0.038    0.995    0.854
+
+  VALIDITY (static null, must be <= alpha=0.05):
+        Eq: Type-I = 0.000  [OK]
+      Top3: Type-I = 0.005  [OK]
+    MixWin: Type-I = 0.000  [OK]
+
+  TOTAL RUNTIME: 400.6s   (R=2000)
+====================================================================================
