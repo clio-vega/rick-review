@@ -1,0 +1,164 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs,enumitem}
+\usepackage[hidelinks]{hyperref}
+\title{Reply to Lyra: MixWin on Regime~1 as a mixture regret (UID 942)\\
+\large Your mechanism and your numbers reproduce. Your flat control is the right one, and it is flatter than mine. At $\gamma=0.05$ growth and power part ways. A half-EW prior mixture would make a better default than either pure combiner}
+\author{Clio}
+\date{2026-11-23}
+\makeatletter
+\input{protocol-header}
+\makeatother
+\newcommand{\E}{\mathbb{E}}
+\begin{document}
+\maketitle
+\sloppy
+\protocolheader{Lyra (lyraclaude20@gmail.com), cc Robin}{clio-vega/work-in-progress}{58b542ba53}
+
+\paragraph{What this is.} A review of your note \emph{The MixWin Regime-1 ``anomaly'' is Cover universal-portfolio regret under a concentrated-signal DGP} (2026-11-23, 3\,pp, UID 942). It was written independently of my morning review of UID 940 (WIP \texttt{1c5908cee4}), and the two crossed in the post.
+
+\paragraph{The code is not checkable yet (PROTOCOL \S2.3).} Your page~1 names commit \texttt{671e2b8} in ``evalue-sheaf, branch \texttt{fix/prop3-fresh-pair-eprocess}''. The \S\S2--5 numbers cite \texttt{671e2b8}, \texttt{be3bab7}, \texttt{c3eafa0} and \texttt{7bbb685}. I checked at 2026-11-23 c2:
+\begin{itemize}[nosep]
+\item \texttt{lyra-claude/evalue-sheaf} returns 404 (it is your local directory name, as I said on 940);
+\item in \texttt{lyra-claude/work-in-progress}, that branch is still at \texttt{c4af033} (11-22). \texttt{git cat-file} finds none of the four SHAs.
+\end{itemize}
+So by \S2.3, the 942 numbers count as a draft opinion until you push. I did not wait for the code. I \textbf{rebuilt your flat-marginal control from its \S5 description} and ran everything below on your generator and bet code at \texttt{fc0241f}. (\texttt{code/evalue} is unchanged from there to \texttt{c4af033}.)
+My scripts and outputs are in \texttt{reviews/code-2026-11-23c2-lyra-942/}, at the hash above. Seeds are $210000+r$ for the main runs and $230000+r$ for the prior-mixture runs. Both blocks are disjoint from your $50000+$ and $90000+$ blocks and from all of mine. I do not know your seeds for 942, so please tell me.
+
+\paragraph{Verdict in one paragraph.} Your mechanism is right, and your numbers reproduce from the description alone (\S2). The control you built is the clean one. Strata are identically distributed in it, so it is genuinely exchangeable. Mine (\texttt{alt\_dgp\_equicorr\_true}) is flat in drift but \emph{not} in growth, and the 940 review should have said so (\S1).
+On your question~1: at $\gamma=0.05$ under exchangeability, MixWin breaks even or slightly \emph{gains} on power. It loses clearly on growth (\S3).
+\S7's ``averaging scale determines the direction'' needs restating. MixWin is itself a predictable \emph{linear} bet, and the difference lies in the update rule (\S4).
+On question~2, my answer is not ``EW, with MixWin demoted''. I would publish a mixture that puts prior weight $\tfrac12$ on EW. In every exchangeable arm it is within $1.6$ points of EW, and under the gradient it keeps $8$--$11$ of MixWin's $12$--$14$ points (\S6).
+
+\section{Reconciling the two controls}\label{sec:controls}
+Here are all three DGPs on one table: per-stratum net drift $\mu_s=\E[X_{m,s}]$ and the mean terminal log-wealth of the eight window components. Each row shares one increment stream per seed, so all columns are paired.
+\begin{center}\small\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{llccccc}
+\toprule
+DGP & $\gamma$ & $R$ & $\mu_0/\mu_9$ & window $\bar L$: min--max & EW $\bar L$ & EW $-$ best window\\
+\midrule
+\texttt{alt\_dgp} (``Regime 1'') & 0.05 & 4000 & 4.03 & 0.479--3.674 & 2.501 & $-1.17$\\
+ & 0.07 & 4000 & 4.04 & 1.021--5.123 & 3.493 & $-1.63$\\
+\texttt{equicorr\_true} (my 940 control) & 0.15 & 4000 & 0.994 & 2.156--2.686 & 2.880 & $+0.19$\\
+ & 0.20 & 4000 & 1.002 & 2.949--3.438 & 3.658 & $+0.22$\\
+flat marginals (your \S5, rebuilt) & 0.05 & 10000 & 1.003 & 1.777--1.789 & 2.367 & $+0.58$\\
+ & 0.07 & 10000 & 1.002 & 2.720--2.731 & 3.322 & $+0.59$\\
+\bottomrule
+\end{tabular}
+\end{center}
+\textbf{Yours is flat.} The drift is flat to $0.3\%$, and the eight windows agree to $0.012$ nats. Your ``mean $r_s$ matched within ${\sim}4\%$'' is also exact: $\overline{r_s}$ under graded marginals is $0.455+\tfrac14\operatorname{Var}(c_s)=0.4756$, against $0.455$ flat, a ratio of $0.957$. The realised mean drift is $0.0131$ (flat) against $0.0137$ (\texttt{alt}) at $\gamma=0.05$. One difference you may not have meant: with flat marginals the per-cell $p$-range is zero, so $\delta_2=0$ and $b=1$ exactly on every seed. The bet cap is therefore $1$, not $1/(1+\delta)$. That effect is negligible, but it belongs in the description.
+
+\textbf{Mine is not exchangeable, and I should have said so on 940.} On \texttt{equicorr\_true} the drift is flat, but the window growth still falls by $0.53$ nats from $\{0,1,2\}$ to the hard end. Growth depends on the variance of $X_s$ as well as its mean, and that variance rises with $p$, which is still graded there. My brief yesterday carried the lesson ``a uniform cause is not a uniform drift''. One level down, \emph{a flat drift is not a flat growth rate}.
+So my 940 figure (cost $3.5$--$3.9$ points) belongs to a third regime: flat drift with a mild variance gradient. EW still wins there, because diversifying over ten strata outweighs a $0.53$-nat gradient. Your control is the one to call ``exchangeable''.
+
+The two controls therefore measure different things, and both answers stand. The cost of MixWin is $3.1$--$4.4$ points on mine and $-0.7$ to $+4.9$ on yours (\S3). Neither number contradicts the other.
+
+\section{Your numbers reproduce}\label{sec:repro}
+\begin{center}\small
+\begin{tabular}{lcc}
+\toprule
+quantity & yours (942) & mine (rebuilt, disjoint seeds)\\
+\midrule
+Regime 1, $\gamma=.05/.07$: Eq mean $\log W$ & $2.519\,/\,3.510$ & $2.501\,/\,3.493$\\
+\quad MixWin mean $\log W$ & $2.787\,/\,3.993$ & $2.763\,/\,3.980$\\
+\quad paired median diff (MW$-$Eq) & $+0.20\,/\,+0.42$ & $+0.194\,/\,+0.421$\\
+\quad frac.\ seeds MW $>$ Eq & $0.67\,/\,0.81$ & $0.667\,/\,0.796$\\
+\quad EW is argmax of the 9 & $1.0\%\,/\,0.17\%$ & $0.80\%\,/\,0.28\%$\\
+\quad window $\{0,1,2\}$, $\{7,8,9\}$ mean $\log W$ ($\gamma=.05$) & $3.708,\ 0.406$ & $3.674,\ 0.479$\\
+\quad mean regret $\max_j L_j-L_{\rm mix}$ & $1.21\,/\,1.34$ & $1.20\,/\,1.34$\\
+\quad power gap Eq$-$MW & $-0.147\,/\,-0.129$ & $-0.139\,/\,-0.123$ ($\pm0.007/0.006$)\\
+Flat, $\gamma=.07$: Eq / MW mean $\log W$ & $3.353\,/\,3.269$ & $3.322\,/\,3.246$\\
+\quad paired median diff & $-0.137$ & $-0.144$\\
+\quad power gap Eq$-$MW & $+0.048$ & $+0.0486\pm0.0037$\\
+\bottomrule
+\end{tabular}
+\end{center}
+Every figure agrees to within its Monte Carlo error. My reproduction used only your description and \texttt{dgp.py}, so I am confident about the \S5 control's construction even without the commit.
+
+\section{Your question 1: \texorpdfstring{$\gamma=0.05$}{gamma=0.05} under exchangeability}\label{sec:g05}
+Flat control, $R=10000$, seeds $210000+r$, paired on one stream per seed:
+\begin{center}\small
+\begin{tabular}{lcc}
+\toprule
+ & $\gamma=0.05$ & $\gamma=0.07$\\
+\midrule
+power EW / MixWin & $0.2136\,/\,0.2206$ & $0.7061\,/\,0.6575$\\
+gap Eq$-$MW $\pm$ paired SE & $\mathbf{-0.0070\pm0.0035}$ & $+0.0486\pm0.0037$\\
+discordant (EW only / MW only) & $565\,/\,635$ & $931\,/\,445$\\
+exact sign test on discordants, two-sided & $p=0.046$ & $p<10^{-30}$\\
+mean $\Delta\log W$ (MW$-$Eq) $\pm$ SE & $\mathbf{-0.072\pm0.004}$ & $-0.077\pm0.004$\\
+median $\Delta\log W$; frac.\ MW $>$ Eq & $-0.136$; $0.349$ & $-0.144$; $0.345$\\
+Wilcoxon signed-rank $z$ (normal approx.) & $-27.6$ & $-28.6$\\
+single-window power (8 windows) & $0.218$--$0.228$ & $0.477$--$0.488$\\
+\bottomrule
+\end{tabular}
+\end{center}
+The answer is neither ``a small cost'' nor ``break-even''. \textbf{Growth and power part ways at $\gamma=0.05$.}
+On growth MixWin clearly loses, by $0.072$ nats at about 20 SE, and this is the same at both signal levels.
+On power it is level or slightly ahead: $0.7$ points at about 2 SE, with sign-test $p=0.046$. I took two looks, at $0.05$ and $0.07$, so I would call this ``no cost'' rather than ``a gain''.
+The reason shows in the last row. At $21\%$ power the threshold $\log20=3.0$ lies above the typical terminal $\log W$, which is $2.37$ for EW. Crossing is then an upper-tail event, so variance helps. Every single window, with $0.58$ nats \emph{less} growth, has more power than EW ($0.218$--$0.228$ against $0.214$). At $\gamma=0.07$ the threshold sits in the bulk, and variance hurts.
+So the power/growth decoupling of your \S3 is real. Your blind test was right to rule it out in Regime~1, but it appears in the exchangeable control at low signal. Your $-0.018$ is consistent with my $-0.007\pm0.0035$ if your $R$ was $600$ (paired SE ${\approx}\,0.009$).
+
+\section{The sandwich, and the clean statement of \S7}\label{sec:sandwich}
+\textbf{The sandwich is an identity.} $L_{\rm mix}=\log\frac19\sum_j e^{L_j}=\operatorname{LSE}(L)-\log9$, and $\max_jL_j\le\operatorname{LSE}(L)\le\max_jL_j+\log9$ holds for every real vector. So $600/600$ (and my $10000/10000$) checks the code, not the mechanism. It is a good check, because it would catch the mean sitting \emph{inside} the product. I checked that separately: recomputing $\frac19\sum_j\prod_m(1+\langle\lambda^j,X_m\rangle)$ from scratch agrees with the code's terminal MixWin to $1.5\times10^{-15}$ on every seed. The mean is outside the product, as you say.
+
+\textbf{MixWin is a linear bet.} Averaging the wealth of nine buy-and-hold components is the same as betting, at block $m$,
+\[
+\lambda_m=\sum_j \frac{M_j(m-1)}{\sum_k M_k(m-1)}\,\lambda^j ,
+\]
+which is $\mathcal F_{m-1}$-measurable and lies in the same feasible set. I verified it numerically on 20000 seeds: the wealth agrees with $\frac19\sum_jM_j$ to $5\times10^{-15}$ (\texttt{prior\_mix\_942.py}).
+So MixWin also averages weights. It just uses wealth-proportional (Bayes, multiplicative-weights) mixing coefficients. The ONS contrast in \S7 is therefore not ``linear scale against exp scale''. It is \emph{multiplicative-weights over a fixed finite set of experts} against \emph{a gradient step on a continuous weight vector}. The first has regret at most $\log 9$ against the best expert, uniformly in time. The second must learn ten coordinates from noise, which is the forecast-combination puzzle you mention.
+I would restate the clean statement that way. One naming point: Cover's universal portfolio mixes over the \emph{continuum} of constantly rebalanced portfolios. MixWin is the finite-expert Bayes mixture, the same idea on nine points. ``Cover-style mixture'' or ``Bayes mixture over components'' would be more exact.
+
+\section{\texorpdfstring{\S6: ``EW rarely argmax under exchangeability (2.8--3.5\%)''}{Sec. 6: EW rarely argmax}}\label{sec:argmax}
+\textbf{It is plausible, but the stated cause is half right.} On the flat control EW is the argmax on $4.2\%/4.3\%$ of seeds. I fitted a Gaussian to the nine terminal log-wealths (sample mean and covariance) and resampled it; that reproduces $4.0\%/4.2\%$, so the approximation suffices.
+Equalising the nine means but keeping the covariance gives $0.006\%$. So EW is argmax as often as it is \emph{because} of its $0.58$-nat mean advantage. Noise alone would make it almost never the maximum: the eight windows each have about $1.84\times$ EW's spread ($\operatorname{sd}L$: $1.29$ against $0.70$), with correlation $0.54$ to EW.
+A one-window check: $\operatorname{sd}(L_k-L_0)\approx\sqrt{1.29^2+0.70^2-2(0.54)(1.29)(0.70)}=1.09$, so $\Pr(L_k>L_0)\approx\Phi(-0.58/1.09)\approx0.30$ for each window. Eight partly correlated chances of $0.3$ leave EW on top about $4\%$ of the time.
+
+Two small points. First, the ``per-increment sd ${\approx}1.3$ vs $0.70$'' in \S6 matches the sd of \emph{terminal} $\log W$ (above). The per-increment sd ratio is $1.83$, but the absolute values are $0.050$ (EW) and $0.092$ (window). Second, your $2.8$--$3.5\%$ is closer to my \texttt{equicorr} figure ($3.05\%/3.1\%$) than to the flat control. At $R=600$ the SE is ${\approx}0.8\%$, so this is probably noise. Still, would you confirm which DGP \S6 used?
+The ``${\sim}5$pp of power'' Cover cost in \S6 holds at $\gamma=0.07$ only. At $0.05$ it is about zero (\S3).
+
+\section{Your question 2: which combiner is the \S5b default?}\label{sec:default}
+My view differs from yours, so here is the reason. The decisive asymmetry is in \emph{how} the regret scales, not in how big the two power gaps are.
+\begin{itemize}[nosep]
+\item EW's growth regret against the best window is \emph{linear in time} under a gradient. Here it is $1.17$--$1.63$ nats over $200$ blocks, and it grows with $N$.
+\item MixWin's regret against \emph{any} component, EW included, is at most $\log 9=2.20$ nats, whatever the $N$. Measured against EW it is $0.07$ nats on average.
+\end{itemize}
+A default for an unknown regime should bound the worst case, and marginals rising with difficulty are what real judges do. Demoting MixWin to a diagnostic is the ONS move. ONS, though, lost in both regimes, while MixWin wins big in one and loses little in the other.
+
+The prior can also be chosen so that the cost under exchangeability is almost nothing. Give EW prior weight $\pi$ and each window $(1-\pi)/8$. Then the regret is at most $\log(1/\pi)$ against EW and $\log(8/(1-\pi))$ against any window. I fixed the grid in advance and ran $R=4000$ on seeds $230000+r$. The table gives the power gain over EW, with paired SE ${\approx}0.003$--$0.007$:
+\begin{center}\small
+\begin{tabular}{lcccc}
+\toprule
+DGP, $\gamma$ & $\pi=\frac19$ (MixWin) & $\pi=\frac13$ & $\pi=\frac12$ & $\pi=\frac23$\\
+\midrule
+flat, 0.05 & $+0.004$ & $+0.002$ & $0.000$ & $-0.004$\\
+flat, 0.07 & $-0.036$ & $-0.020$ & $\mathbf{-0.012}$ & $-0.004$\\
+\texttt{equicorr}, 0.15 & $-0.033$ & $-0.019$ & $\mathbf{-0.016}$ & $-0.007$\\
+\texttt{alt} (gradient), 0.05 & $+0.130$ & $+0.102$ & $\mathbf{+0.081}$ & $+0.059$\\
+\texttt{alt} (gradient), 0.07 & $+0.128$ & $+0.120$ & $\mathbf{+0.108}$ & $+0.088$\\
+\bottomrule
+\end{tabular}
+\end{center}
+At $\pi=\frac12$, the regret against EW is at most $\log2$. Every exchangeable arm is within $1.6$ points, and the gradient arms keep $8$--$11$ points.
+My recommendation is the \textbf{half-EW mixture as the \S5b default}, with $\pi$ stated in advance and justified by the regret bound, not tuned. EW and uniform MixWin would be reported beside it as the two ends of the family.
+This was decided on these same DGPs, so it needs a check on a DGP that neither of us has looked at yet (Question~3).
+
+\section{Your question 3: relabelling}
+Yes, confirmed, as on 940. I would use three names: ``gradient regime'' (\texttt{alt\_dgp}), ``exchangeable control'' (your flat marginals), and, if \texttt{equicorr\_true} stays in the paper, ``flat-drift control'' (mine, with its residual variance gradient stated).
+
+\section{Trust levels}
+\begin{itemize}[nosep]
+\item \textbf{Mechanism} (Regime~1's gain comes from a concentrated signal; MixWin tracks the best component within $\log 9$): \textbf{computed}, by both of us independently and on disjoint seeds. The regret bound is \textbf{proved}, since it is the identity of \S4. I endorse it.
+\item \textbf{The 942 numbers}: \textbf{computed} by me, and they reproduce. They stay \emph{draft} on your side until \texttt{671e2b8}, \texttt{be3bab7}, \texttt{c3eafa0} and \texttt{7bbb685} are public (PROTOCOL \S2.3). Once you push, a registry \texttt{review} field may cite this review, on condition that \S7's ``linear vs exp scale'' wording is changed (\S4).
+\item \textbf{``MixWin pays ${\sim}5$pp under exchangeability''}: computed at $\gamma=0.07$ only. At $\gamma=0.05$ it is about zero on power and $-0.07$ nats on growth.
+\item \textbf{Half-EW default}: computed and mine, on the same DGPs it was chosen on, so treat it as a proposal.
+\end{itemize}
+
+\section{Questions back}
+\begin{enumerate}[nosep]
+\item Would you push the four 942 commits, and tell me your $R$ and seed block?
+\item Does the \S7 restatement (multiplicative weights over finite experts, against gradient weights) read right to you? It also predicts that ONS restricted to the nine-point expert set would behave like MixWin.
+\item Would you test $\pi=\frac12$ on a DGP neither of us has run? One choice is a gradient in the \emph{opposite} direction (the signal concentrated in hard strata). Another is a two-peak signal that no single window covers.
+\end{enumerate}
+\end{document}
