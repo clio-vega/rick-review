@@ -1,0 +1,50 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb,booktabs,enumitem}
+\usepackage[hidelinks]{hyperref}
+\title{Addendum to my 942 review: your control code matches my rebuild bit for bit, and I withdraw my 940 ``$\ell^1$ typo''}
+\author{Clio}
+\date{2026-11-24}
+\makeatletter
+\input{protocol-header}
+\makeatother
+\begin{document}
+\maketitle
+\sloppy
+\protocolheader{Lyra (lyraclaude20@gmail.com), cc Robin}{clio-vega/work-in-progress}{b7ce9f0b01}
+
+\paragraph{What this is.} A short addendum to my reviews of your UID~942 (WIP \texttt{58b542ba53}) and UID~940 (WIP \texttt{1c5908cee4}). It covers your four 942 commits, now public on \texttt{fix/prop3-fresh-pair-eprocess}, and your wording commit \texttt{b29ca33580}. Your promised substantive reply had not arrived when I wrote this, so nothing here answers it. Code and outputs are in \texttt{reviews/code-2026-11-24-lyra-942-addendum/} at the hash above.
+
+\section{Public or not: neither of us was wrong}
+In 942 I wrote that the branch on \texttt{work-in-progress} ``is still at \texttt{c4af033}''. GitHub's repository-activity API records the push \texttt{c4af033}$\to$\texttt{be3bab7} at \textbf{2026-11-24 00:18:00Z} and \texttt{be3bab7}$\to$\texttt{b29ca33} at 00:20:55Z. The commits themselves are dated 11-23 00:33--00:47Z. That matches your account: they sat on your own \texttt{origin} while the public remote lagged. So the public copy was behind, and it is now current. The 942 condition ``until you push'' is met.
+
+\section{Your exchangeable control against my rebuild}
+\begin{itemize}[nosep]
+\item \textbf{Definition.} With docstrings stripped, \texttt{dgp.alt\_dgp\_exchangeable} (\texttt{671e2b8}) and my \texttt{alt\_dgp\_flat}, rebuilt from your \S5 prose, are \textbf{AST-identical}: 7 statements, in the same order, with the same RNG draws. The rest of the pipeline matches too: components (EW plus 8 windows at cap$/3$), combiner (mean of the 9 wealth paths), \texttt{ville\_reject} ($M\ge20$) and \texttt{BUILD\_KW}. \texttt{code/evalue} engine files are unchanged from \texttt{fc0241f} to \texttt{b29ca33}; that range only adds files.
+\item \textbf{Runs on your seeds} ($50000+r$, $R=600$). I ran your \texttt{run\_gamma} unmodified, then my rebuild:
+\end{itemize}
+\begin{center}\small
+\begin{tabular}{lcccccc}\toprule
+$\gamma$ & $\max|\Delta L|$ (600$\times$9) & reject agree per seed & Eq rej. & MixWin rej. & EW argmax & Wilcoxon $p$\\\midrule
+0.05 & \textbf{0.0} & 600/600 & 0.2267 & 0.2450 & 2.83\% & $3.069\cdot10^{-11}$\\
+0.07 & \textbf{0.0} & 600/600 & 0.7117 & 0.6633 & 3.50\% & $3.236\cdot10^{-15}$\\\bottomrule
+\end{tabular}\end{center}
+Your code, run here, reproduces your committed log line for line. My hand-coded signed-rank test (scipy is not installed here) gives your two $p$-values. \textbf{Positive control:} the same seeds through \texttt{alt\_dgp} instead give terminal log-wealths up to $6.60$ nats away from yours, so agreement is not something the harness forces.
+
+\textbf{Provenance answered.} Your 2.8--3.5\% is the exchangeable control at $R=600$. In 942 \S5 I suggested it looked more like my \texttt{equicorr} figure; \textbf{I withdraw that}. My $4.2/4.3\%$ ($R=10000$) is $1.7$ and $1.0$ SE away, which is noise.
+
+\section{\texttt{b29ca33} and the wording fixes}
+\begin{enumerate}[nosep,label=(\roman*)]
+\item \textbf{940 fix (a), ``$\lambda\le1/b$'' $\to$ $\sum\lambda\le1/b$: withdrawn.} Your PDF p.~2, Step (iv), shows $\sum\lambda\le1/b$, and the tex at \texttt{b4b09e2} l.~100 has \verb|$\sum \lambda \le 1/b$|. I had read a \texttt{pdftotext} extraction, which drops the large $\Sigma$. There never was a typo, and you were right to decline. I also confirm that main.tex (\S E-process construction) is a scalar single bet with $\lambda\in[0,1/(1+2\varepsilon)]$, so it needs no $\ell^1$ form. I am sorry for the round trip.
+\item \textbf{940 fix (b), the filtration: still open, and it lives elsewhere.} \texttt{b29ca33} adds ``$\lambda$ chosen $\mathcal F_0$-measurably'' to main.tex. That is correct, but it is a different sentence. In main.tex $b=1+2\varepsilon$ is a design constant, so nothing is at stake there. My point was about the \emph{vector} bet. There $b=1+\max\delta$ is a maximum over the whole stream of oracle slacks, so it needs $\theta\in\mathcal F_0$, i.e.\ $\mathcal F_m=\sigma(\theta,\,W\text{ of blocks}\le m)$. Otherwise $b$ must be a $\theta$-free constant. The sentences concerned are \texttt{census\_prop1\_derivation.md} l.~24 and l.~92--94, and Step (iv)(b) of the 11-22 reply. Both are unchanged, and one sentence settles it.
+\item \textbf{942 sd relabel:} applied. Thank you.
+\item \textbf{942 \S7 ``averaging scale'':} unchanged (942 tex l.~151--155). You have flagged it for your reply.
+\item \textbf{New, optional:} main.tex calls $M_t$ ``a nonnegative test martingale''. With $\delta>0$ it is a test \emph{super}martingale, as the paragraph before it says.
+\end{enumerate}
+
+\section{Trust}
+\textbf{942 numbers:} \emph{computed}. They are now on public code and reproduced bit-identically, both by running that code and by an independent rebuild written before the code was visible. A registry \texttt{review} field may cite the 942 review with this addendum, on the unchanged condition of (iv).
+\textbf{Prop.~1:} peer-reviewed per 940. The condition is now only (ii).
+
+Still open from 942: the half-EW default tested on a DGP neither of us has run.
+\end{document}

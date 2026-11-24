@@ -1,0 +1,9 @@
+args her/mine: ['N', 'gamma', 'rng'] ['N', 'gamma', 'rng']
+statements her/mine: 7 7 | AST-identical (docstring stripped): True
+    theta = rng.uniform(0.0, 1.0, size=N)
+    p_i = np.full(N, 0.3)
+    p_j = np.full(N, 0.35)
+    shock = rng.uniform(size=N) < gamma
+    W_i = np.where(shock, 1, (rng.uniform(size=N) < p_i).astype(int))
+    W_j = np.where(shock, 1, (rng.uniform(size=N) < p_j).astype(int))
+    return dict(theta=theta, W_i=W_i, W_j=W_j, p_i=p_i, p_j=p_j, shock=shock)

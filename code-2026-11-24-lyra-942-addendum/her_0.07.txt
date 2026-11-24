@@ -1,0 +1,41 @@
+========================================================================================
+gamma = 0.07   (R = 600 paired seeds, seed base 50000+r)
+  DGP: alt_dgp_exchangeable (flat marginals, uniform shock) | build={'pairing': 'within_block', 'slack': 'second_order', 'pairing_rule': 'cyclic'}
+========================================================================================
+[1] Reject rate (fraction ever-crossing THRESH=20.0)
+      Eq      : 0.7117  (427/600)
+      MixWin  : 0.6633  (398/600)
+      power gap (Eq - MixWin) : +0.0483
+[2] Terminal log-wealth  (mean, median)
+      Eq      : mean=+3.3529  median=+3.3545
+      MixWin  : mean=+3.2687  median=+3.2612
+    Paired difference (MixWin - Eq):
+      median paired diff : -0.1365
+      Wilcoxon p-value   : nan  [scipy; n_nonzero=600]
+      frac(MixWin > Eq)  : 0.3217
+[3] Per-seed ARGMAX across the 9 components
+      argmax = Eq (component 0) : 0.0350  (21/600)
+      argmax in windows 1..8    : 0.9650  (579/600)
+      per-component argmax breakdown:
+        [0] Eq (component 0)            : 0.0350  (21/600)
+        [1] win{0,1,2} (component 1)    : 0.1350  (81/600)
+        [2] win{1,2,3} (component 2)    : 0.1083  (65/600)
+        [3] win{2,3,4} (component 3)    : 0.1100  (66/600)
+        [4] win{3,4,5} (component 4)    : 0.1167  (70/600)
+        [5] win{4,5,6} (component 5)    : 0.1033  (62/600)
+        [6] win{5,6,7} (component 6)    : 0.1050  (63/600)
+        [7] win{6,7,8} (component 7)    : 0.1317  (79/600)
+        [8] win{7,8,9} (component 8)    : 0.1550  (93/600)
+[4] Mean terminal log-wealth per component (across all seeds)
+        [0] Eq (component 0)            : mean=+3.352948  median=+3.354542  sd=0.697486  <- highest MEAN
+        [1] win{0,1,2} (component 1)    : mean=+2.721031  median=+2.639154  sd=1.272047
+        [2] win{1,2,3} (component 2)    : mean=+2.742644  median=+2.736286  sd=1.307102
+        [3] win{2,3,4} (component 3)    : mean=+2.725939  median=+2.768519  sd=1.273872
+        [4] win{3,4,5} (component 4)    : mean=+2.756590  median=+2.703116  sd=1.320479
+        [5] win{4,5,6} (component 5)    : mean=+2.772293  median=+2.807890  sd=1.357810
+        [6] win{5,6,7} (component 6)    : mean=+2.789196  median=+2.846655  sd=1.357043
+        [7] win{6,7,8} (component 7)    : mean=+2.818571  median=+2.842100  sd=1.323876
+        [8] win{7,8,9} (component 8)    : mean=+2.752662  median=+2.727337  sd=1.239823
+      window means (1..8): min=+2.721031  max=+2.818571  range=0.097540  sd_across_windows=0.032688
+      Eq mean - mean(window means) : +0.593082
+
