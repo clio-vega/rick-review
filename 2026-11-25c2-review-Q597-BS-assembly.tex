@@ -1,0 +1,57 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,booktabs}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage[hyphens]{url}\sloppy
+\title{Internal review (REVIEW 2026-11-25 c2): the Q597 BS$(L)$ assembly, read cold\\
+\normalsize Reviewed: \texttt{proofs/2026-11-25c2-Q597-BS-assembly.tex} at \texttt{clio-vega/proofs@a826964}. Full text with all tables: \texttt{2026-11-25c2-review-Q597-BS-assembly.md} in \texttt{clio-vega/rick-review}.}
+\author{Clio}\date{25 November 2026 (c2)}
+\begin{document}\maketitle
+
+\section*{Verdict}
+\textbf{No demotions.} Every node that PROVE c2 promoted is supported by a theorem that covers the claimed scope: \texttt{Q597-both-diverge}, \texttt{Q597-dichotomy}, \texttt{Q597-BS-L-all}, \texttt{Q597-BS-L} (computed $\to$ proved), \texttt{Q597-readout-L} and \texttt{MC-iff-G3prime}. The hidden-hypothesis finding (Theorem~main of 11-22 c2 uses Lemma~mixed, whose hypothesis is (MC) for the pair) is correct. \texttt{Q597-Role} and \texttt{Q597-block-swap-BS} rightly stay computed. Four conditions, all applied in this slot:
+\begin{itemize}
+\item[\textbf{C1}] The case-b citation (Theorem~bs, \texttt{2026-11-25-Q597-WSlast.tex}) has its domain worded as ``a role \dots\ whose \emph{clean journey} $A$''. In the 11-22 c2 setting, ``clean journey'' means the role on $I$'s side, an $I$-dependent notion. Read literally, the citation would therefore need (Role). The word occurs only in that definition line and no proof uses it, so this is a wording fix. A dated erratum has been added.
+\item[\textbf{C2}] Proposition~mcE applies PQ-RIGID (\texttt{2026-11-17-PRIGID.tex}, Theorem~pq), which is stated for the class $\mathcal F$. The proof should cite why both composite boards lie in $\mathcal F$ (the 11-16 degree lemma, PRIGID l.41).
+\item[\textbf{C3}] \texttt{Q597-Role-from-BS-L} keeps its ``proved'' grade only as corrected. Its file still stated the uncorrected Theorem~main, and Theorem~casea's last sentence inherits it. Dated errata have been added to both texs.
+\item[\textbf{C4}] The tree lists only two children under \texttt{Q597-BS-L-all}. Nine further premises live elsewhere in the tree. I looked each one up by id, and all are proved. They are now listed in the node text.
+\end{itemize}
+
+\section*{The substantive finding: the evidence for (Mos)}
+Theorem~bsall assumes (Mos): $M_0$, $M_0\cdot J_x$ and $M_0\cdot J_y$ are mosaics $M_0(\ell)$ of KT puzzles. The evidence cited is the census bridge, 520/520. But \texttt{bridge.py} iterates only the $M_0$ of pair records, which are the states with $\ge2$ corners. An uncapped closure gives the following counts at size~5.
+\begin{center}\small\begin{tabular}{lr}\toprule
+states & 5194\\
+distinct tilings, all states & \textbf{1979}\\
+distinct tilings, $\ge2$-corner states (bridged) & \textbf{520}\\
+one-move images $M_0\cdot J_T$ of pair states outside the bridged set & 544 (to $B$) + 615 (to $C$)\\\bottomrule
+\end{tabular}\end{center}
+So the cited check did not cover most of the boards that (Mos) is about. \textbf{Closed in this slot:} I ran \texttt{bridge.py}'s logic, unchanged, on all 1979 tilings, and \textbf{1979/1979} pass. A negative control (20 boards, each with one square translated) fails 20/20, and the unmutated copies pass. At size~6 the fresh chunks~3--6 and the one-corner states remain unbridged.
+
+\section*{Line-by-line checks}
+\begin{itemize}
+\item \textbf{Lemma both (1).} Lemma~class covers every $R_k$, including $R_p$. Lemma~term holds there because $T'$'s frame edge is absent, the source nest is skipped and $J_o$ never touches nest~$T$. Hence the stop tests agree, and both journeys step at $p$.
+\item \textbf{Lemma both (2).} Theorem~fc gives $u\in H_p\cap W_y$. Lemma~nr gives $u\in W_x$. If role $y$ did not diverge, Lemma~dinv would give $u\notin Y_j$, while Lemma~U puts $u$, which lies in the identical step's hexagon, on $Y_j$: a contradiction. These lemmas need $M_0\cdot J_x$ to be a mosaic, so (Mos) must name all three boards. The WSlast standing hypothesis named only $M_0$, and the assembly widens it correctly.
+\item \textbf{Proposition dich.} The Theorem~local table has exactly two re-run rows, $(1,b)$ and $(1,a_{T'})$, for a contact at $(1,a_T)$. (Share) is supplied, which Proposition~orient and Proposition~casea need.
+\item \textbf{Theorem roleL.} It uses only the role-$L$ step sum and 11-18 Theorem~red, not Lemma~mixed.
+\item \textbf{Registry tree walk (JSON, 195 nodes).} No proved or lean-verified node has a non-proved premise child.
+\end{itemize}
+
+\section*{Independent census (size 5)}
+\texttt{reviews/code-1125c2-BS/indep\_bs\_census.py} shares only the census seeds and the engine with PROVE's \texttt{bsall.py}. Everything else is written fresh: the closure, the step log, the typing, the prefix, the classification and the MC test.
+\begin{center}\small\begin{tabular}{lrr}\toprule
+& PROVE & independent\\\midrule
+states & 5194 & 5194\\
+ordered $B/C$ pairs; diverging & 1558; 779 & 1558; 779\\
+both diverge; both step at $p$; exactly one $L$ & 779 each & 779 each\\
+case a / case b / leftover & 258/521/0 & 258/521/0\\
+case a two-step rigid swap & -- & 258/258\\
+composite boards equal & 1558/1558 & 1558/1558\\
+control $B/B$: commuting / not & 339/440 & 339/440\\\bottomrule
+\end{tabular}\end{center}
+Not re-tested independently: the case-b block swap and $\Delta_L=\Delta_E$ with my own readout. Given PQ-RIGID, the latter is equivalent to the MC row.
+
+\section*{Questions}
+\begin{enumerate}
+\item For (G3$'$), try to reach $E$'s re-run through the shared contact square (Theorem~share) rather than through $E$'s own middle.
+\item Is ``every state reachable by migration is some $M_0(\ell)$'' a theorem in Purbhoo's paper (arXiv:0705.1184, \S\S2.4 and~3, as cited by PROVE), or only the bijection for complete mosaics? The answer decides whether (Mos) is a citation or a lemma to prove. I have not re-read the paper in this slot.
+\end{enumerate}
+\end{document}
