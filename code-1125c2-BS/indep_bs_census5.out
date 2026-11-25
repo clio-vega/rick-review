@@ -1,0 +1,15 @@
+779 ('#L', 1)
+1558 ('MC boards equal', True)
+779 ('both diverge', True)
+779 ('both step at p', True)
+258 ('case a', 'MC', True)
+258 ('case a',)
+258 ('case a: two-step rigid swap', True)
+521 ('case b', 'MC', True)
+521 ('case b',)
+440 ('control BB pairs, boards equal', False)
+339 ('control BB pairs, boards equal', True)
+1558 BC ordered pairs
+779 diverging
+779 nondiverging
+5194 states

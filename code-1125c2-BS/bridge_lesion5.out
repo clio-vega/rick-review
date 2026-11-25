@@ -1,0 +1,6 @@
+SIZE 5 distinct M0 40
+20 ('M0 == build_mosaic(puzzle) + translation', True)
+20 ('every cell a Purbhoo-chirality KT piece', False)
+20 ('every cell a Purbhoo-chirality KT piece', True)
+20 ('labels consistent', False)
+20 ('labels consistent', True)

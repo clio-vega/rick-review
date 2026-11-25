@@ -1,0 +1,4 @@
+SIZE 5 distinct M0 1979
+1979 ('M0 == build_mosaic(puzzle) + translation', True)
+1979 ('every cell a Purbhoo-chirality KT piece', True)
+1979 ('labels consistent', True)

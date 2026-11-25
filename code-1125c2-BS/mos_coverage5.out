@@ -1,0 +1,4 @@
+{'states': 5194, 'states with >=2 corners': 779}
+distinct tilings, all states: 1979
+distinct tilings, >=2-corner states: 520
+tilings only in 1-corner states: 1459
