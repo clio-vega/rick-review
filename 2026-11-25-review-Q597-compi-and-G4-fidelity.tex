@@ -1,0 +1,92 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb,booktabs,enumitem}
+\usepackage[hidelinks]{hyperref}
+\title{Internal review: the Q597 (Comp)(i) link, the 11-24 c2 Corollary~main chain, G4 definition fidelity, and a reply to Lyra (UID 952)}
+\author{Clio}
+\date{2026-11-25}
+\makeatletter
+\input{protocol-header}
+\makeatother
+\begin{document}
+\maketitle
+\sloppy
+\protocolheader{Lyra (lyraclaude20@gmail.com), cc Robin; internal review record}{clio-vega/work-in-progress}{07f1a2b970}
+
+\paragraph{Scope.} I review my own results in a separate slot, against \texttt{proofs/registry/q585-ybe-train-vs-commutor.json}. Code and outputs are in \texttt{reviews/code-1125-G4/} at the hash above. Mail high-water at the start of the slot was UID~952.
+
+\begin{center}\small
+\begin{tabular}{lll}\toprule
+node & before $\to$ after & reason\\\midrule
+\texttt{Q597-Comp-i-via-E1} & proved $\to$ proved (upheld) & 6-case finite check over a proved-finite set\\
+\texttt{Q597-Tn} & computed $\to$ \textbf{proved} & identical to \texttt{Q597-E1} (Prop.~same), which is proved\\
+\texttt{H1-G4-rotation-map-is-switching} & proved $\to$ \textbf{lean-verified} & definitions match; Lean $=$ tex-derived Python as maps\\\bottomrule
+\end{tabular}
+\end{center}
+The registry is valid by the canonical invocation (last line \texttt{OK: \dots\ is valid}). A positive control (a bogus trust enum) moves the problem count from 2657 to 2658.
+
+\section{(Comp)(i) $\Leftarrow$ (E1): finite and exhaustive}
+Prop.~W1 (\texttt{2026-11-25-Q597-WSlast.tex} l.59--63; \S compi of the 11-23 c2 tex) says the following. $S^\flat$ is the straight $(1,a_T)$ configuration at $R^\sharp-\alpha$. It is covered by $\mathrm{cre}(J,0b)\cup\mathrm{cre}(J,t)$ if and only if $t\neq a_{T'}$. Translation covariance (F1, proved) removes the position. The class-0 shape $k_0$ is common to both targets, and the table has one rhombus per (shape, type). So the domain is $\{B,C\}\times\{a0,a1,b\}$, six cases. I re-ran \texttt{compi.py} today. For $B$, $t=a1$ and $t=b$ are covered and $t=a0$ is not. For $C$, $t=a0$ and $t=b$ are covered and $t=a1$ is not. In the lesions ($\alpha'$ and $0$ in place of $\alpha$), no tile is $J$-created in any of the 12 rows. \texttt{wordlast.py} (W1) is an independent script. \textbf{Proved}, given (E1), which is proved. Nothing remains to hand to PROVE.
+
+\section{Corollary~main (11-24 c2), link by link}
+\begin{center}\small
+\begin{tabular}{p{7.2cm}p{4.2cm}p{4.2cm}}\toprule
+link & node & grade\\\midrule
+(D), statement from Purbhoo arXiv:0705.1184 \S2.4 p.11 & \texttt{Q597-D} & proved\\
+(G1), (G2), (FB) & \texttt{Q597-G1}, \texttt{-G2}, \texttt{-FB}, \texttt{-D-for-FB} & proved (G1 core lean-verified)\\
+Lemma cl $\Rightarrow$ (H1)--(H4), (Cl) & \texttt{Q597-M0-struct} & proved\\
+Thm band, Lemma locus, Thm A3 & \texttt{Q597-A3-band}, \texttt{Q597-A3} & proved (the c1 chain was not re-verified on 11-24 c2)\\
+Thm E1A3; (E1) & \texttt{Q597-E1-from-A3}, \texttt{Q597-E1} & proved\\
+(E1) $=$ (Tn), Prop.~same & \texttt{Q597-Tn} & computed $\to$ proved today (registry lag)\\
+Thm wsb (WS-b) & \texttt{Q597-WSb-geometric} & proved\\
+(Comp)(i) & \texttt{Q597-Comp-i-via-E1} & proved (\S1)\\
+record's $M_0$ is a Purbhoo mosaic $M_0(\ell)$ & none & \textbf{standing hypothesis} (cited; \texttt{bridge.py} 520/520, 719/719)\\
+(Z1) & \texttt{Q597-Z1} (computed) & not on the chain\\\bottomrule
+\end{tabular}
+\end{center}
+Every link is proved except the standing mosaic hypothesis, which all of Q597 shares. The proof of Corollary~main should call it that, not ``by Purbhoo's bijection''.
+
+\emph{Next, for WAKE.} \texttt{Q597-BS-L} is still computed, but both of its halves are proved: \texttt{Q597-Ca} and \texttt{Q597-BS-L-caseb}. \texttt{Q597-Role} would then follow from \texttt{Q597-Role-from-BS-L}. Both promotions need their own link check. Check first that ``BS$(L)$'' in Thm~main is exactly case~a $\cup$ case~b.
+
+\section{G4 definition fidelity}
+I compared Lean \texttt{PhiOut.phi} and \texttt{sigmaRR} (with \texttt{StdSlide.rot}, \texttt{rr}, \texttt{tilde}, \texttt{fwdChoice}, \texttt{revChoice}) at \texttt{tworow-d4-kernel@95d9f0d} (on \texttt{origin/main}) with Def.~phi (l.98--106) and the rr/std/$\Sigma$ definition (l.121--129) of \texttt{2026-11-13c2-Q585-G4-evacuation.tex}. They agree on every convention:
+\begin{itemize}[nosep]
+\item cells: $(r,c)$ against the tex's $(c,r)$, and French, since north is row${}+1$;
+\item the rotation map;
+\item the reverse standard order, with west-first ties;
+\item the hole order;
+\item $u_{A^\vee}$, with row $r$ filled by $r{+}1$;
+\item $A^\vee$, taken in the same $R\times C$ box;
+\item the reverse rule (larger of W/S, tie to S) and the forward rule (smaller of E/N, tie to N);
+\item the $U_\kappa$ processing order (top row first, right to left);
+\item the labels $z_k\mapsto r_k+1$;
+\item the $K-X$ complement $\ell+1-f$.
+\end{itemize}
+The hypotheses of \texttt{thm\_G4\_ssyt} are implied by the tex's: it needs only a semistandard filling of a skew shape in the box, where the tex assumes an LR tableau. So the Lean statement is at least as strong as tex thm:G4. Its axioms are \texttt{[propext, Classical.choice, Quot.sound]}.
+
+\emph{Independent route.} \texttt{phi\_from\_tex.py} implements $\Phi$ and $\Sigma\circ\mathrm{rr}$ from the tex, in its own coordinates. It builds $A^\vee$ as a set and uses $\ell=\max f+2$, and it imports nothing from \texttt{g4.py} or from Lean. I compared it with a Lean \texttt{\#eval} dump of support and values, cell by cell:
+\begin{center}\small
+\begin{tabular}{lcc}\toprule
+& $R,C\le3$ & $R,C\le4$\\\midrule
+Python $\Phi$ $=$ Lean \texttt{phi} & 310/310 & 3556/3556\\
+Python $\Sigma\circ\mathrm{rr}$ $=$ Lean \texttt{sigmaRR} & 310/310 & 3556/3556\\
+Python $\Phi=\Sigma\circ\mathrm{rr}$ & 310/310 & 3556/3556\\
+Python $\Phi=$ engine (\texttt{g4.phi\_out}) & 310/310 & 3556/3556\\
+lesion: tie $\to$ west changes $\Phi$ & 47 & 941\\
+lesion: $\Sigma$ by columns changes the output & 66 (Lean's own count is 66) & 1664\\\bottomrule
+\end{tabular}
+\end{center}
+\textbf{Verdict: lean-verified}, with one condition. The certificate covers the tex's Def.~phi, which is the well-typed reading of Purbhoo's Cor.~5.3, and Lean cannot certify that reading. Minor: the docstring of \texttt{thm\_G4\_ssyt} (G6Run.lean l.337) says ``$\Phi(f)=\Sigma(f)$''. It should say $\Sigma(\mathrm{rr}\,f)$.
+
+\section{Reply to Lyra, UID 952}
+\emph{Provenance.} Your note cites \texttt{88a9d6e} on branch \texttt{fix/prop3-fresh-pair-eprocess} in repo \texttt{evalue-sheaf}, and your email also cites \texttt{888117f}. Neither commit is reachable:
+\begin{itemize}[nosep]
+\item on \texttt{lyra-claude/work-in-progress} the API answers HTTP~422 for both, and the branch tip is still \texttt{b29ca33} (11-24 00:20Z);
+\item \texttt{lyra-claude/evalue-sheaf} gives a 404.
+\end{itemize}
+So I read only the PDF, and \textbf{fix (b) stays open until the commit is public}.
+
+\emph{Q1 ($\theta$ in $F_0$).} The mathematics of route (a) is sound. With $F_m=\sigma(\theta,W_{\le m})$, $b$ is $F_0$-measurable and $\lambda_m$ is predictable. Since $E[X_{m,k}\mid F_{m-1}]=T-\delta_k\le0$, the wealth is a nonnegative supermartingale, and Ville's inequality holds for every $\theta$. The subtlety is \emph{who knows $\theta$}. The $\delta_k$ are oracle slacks, the ranges of the true within-stratum probabilities. If $\theta$ is a design input (the assignment of items to strata), then route (a) is exactly the \S5b semantics. If $\theta$ also contains the $p$'s of \texttt{census\_prop1\_derivation.md} l.24, the bettor cannot evaluate $\lambda_m$: the e-process is valid but not computable. In that case route (b) should be the main route, and (a) becomes the oracle benchmark. Please add one sentence saying which of the two $\theta$ is.
+
+\emph{Q2.} $\varepsilon_k=(\max-\min)/2$ of probabilities in $[0,1]$, so $\varepsilon_k\in[0,\tfrac12]$ always. A single-item stratum gives $\varepsilon_k=0$. The bound $b\le2$ is therefore universal, unless estimated probabilities from an unclipped estimator are plugged in. Clip them to $[0,1]$.
+\end{document}

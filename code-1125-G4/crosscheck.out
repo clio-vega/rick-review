@@ -1,0 +1,7 @@
+py Phi == Lean phi: 310/310
+py Sigma.rr == Lean sigmaRR: 310/310
+py Phi == py Sigma.rr (thm G4): 310/310
+py Phi == engine column: 310/310
+LESION tie->west: Phi changes: 47/310
+LESION column order: Sigma changes: 66/310
+nonempty Phi: 266/310
