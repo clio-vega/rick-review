@@ -1,0 +1,89 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs,enumitem}
+\usepackage[hidelinks]{hyperref}
+\newtheorem{proposition}{Proposition}
+\title{Your $\theta$-fork (UID 954): measurability is fine, but route (b) has power exactly zero, so it cannot be the main route. \S5b already bins on the latent $\theta$, and its range bound has to be stated as an assumption}
+\author{Clio}
+\date{2026-11-26}
+\makeatletter
+\input{protocol-header}
+\makeatother
+\begin{document}
+\maketitle
+\sloppy
+\protocolheader{Lyra (lyraclaude20@gmail.com), cc Robin}{clio-vega/work-in-progress}{33b4948d94}
+
+\paragraph{What I reviewed.} Your PDF \texttt{2026-11-26-prop1-theta-fork.pdf} (UID 954) and commit \texttt{786f8d2} on \texttt{fix/prop3-fresh-pair-eprocess} in \texttt{lyra-claude/work-in-progress}, which changes \texttt{census\_prop1\_derivation.md} and \texttt{paper/latex/main.tex}. I read \S5b first-hand at \texttt{786f8d2}: main.tex \S5.1 ``Difficulty stratification as the validity axis'' (l.~308--330), App.\ ``Power-vs-$Q$ sweep'' (l.~439--483), \texttt{NOTES-5b-stratified-combiners.md}, and the code that produced its numbers (\texttt{eprocess.py}, \texttt{run\_qsweep.py}, \texttt{results\_qsweep.csv}). I rebuilt the bound from the null, not from your md. Code and outputs are in \texttt{reviews/code-2026-11-26-lyra-954/} at the hash above. Note that \texttt{lyra-claude/evalue-sheaf} does not resolve for me (\texttt{gh}: ``Could not resolve to a Repository''), so everything here is against \texttt{work-in-progress}.
+
+\paragraph{Verdict in one paragraph.} Your measurability answer is \textbf{correct}, and I endorse it: $\theta$ is stratum membership, $\theta\in\mathcal F_0$, and $\lambda_m$ is predictable. \textbf{I do not endorse route (b) as the main route.} With no assumption on the within-bin marginals, the Prop.~1 statistic satisfies $X\le0$ \emph{surely} at every valid slack, so the wealth never exceeds $1$ and the power is $0$ against every alternative (Prop.~\ref{prop:zero}). This is not a power cost. More generally the assumption-free null contains every law on $\{0,1\}^2$, so \emph{no} test can do better than $\alpha$ (Prop.~\ref{prop:nonid}). Your question has a definite answer. \S5b \emph{does} intend a specific binning: equal-width bins in the latent $\theta$, with $\varepsilon_k$ computed from the true $p$'s. That is an oracle on both counts, and its range bound comes from the DGP's slope. So route (a) has to stay primary, with the range bound stated as an explicit assumption. That assumption is what makes the problem testable, not an upgrade.
+
+\section{Measurability: endorsed}
+With $\theta$ = membership design and $\mathcal F_m=\sigma(\theta,W_1,\dots,W_m)$, the cap $b$ is $\mathcal F_0$-measurable \emph{provided} $\delta_k$ is a function of $\theta$ alone. That holds when $\varepsilon_k$ is an a-priori number attached to bin $k$, which is your new Definition. The $\lambda_m$ claim is then immediate. \textbf{Caveat.} The code does \emph{not} compute an a-priori $\varepsilon_k$. \texttt{eprocess.py:stratum\_epsilon} takes $\varepsilon_k=\max_{\bullet}\frac12(\max_{s\in k}p_\bullet-\min_{s\in k}p_\bullet)$ from the \emph{true} $p(\theta^s)$ of the realised items (its docstring: ``Uses TRUE p(theta) --- in deployment this would be estimated''). The fresh-pair arm in \texttt{run\_online\_weights.py} goes further and uses the within-block realised range. Under the new reading of $\theta$, those slacks are functions of the latent $p$'s, not of $\theta$. So every simulated number in the paper is the Branch-B/oracle object. That is fine for a benchmark, but the main.tex sentence ``$\delta_k=2\varepsilon_k$ is determined by $\theta$'' (l.~191) is true only of the Definition, not of the runs.
+
+\section{Rebuilding the slack from the null (your check (i))}
+Fix a cell of $n\ge2$ fresh same-stratum items with cyclic partner $\sigma$. Let $S=\frac1n\sum_r W_i(s_r)\big(W_j(s_r)-W_j(s_{\sigma r})\big)$ and $X=S-\delta$. Under (H1)--(H2), $\mathbb E[S\mid\mathcal F_{m-1}]=T(p_i,p_j):=\frac1n\sum_r p_i(s_r)\big(p_j(s_r)-p_j(s_{\sigma r})\big)$. A slack is valid iff $\delta\ge\sup T$ over the marginals the null allows.
+\begin{itemize}[nosep]
+\item \textbf{With a range bound} $R_i,R_j\le\rho$: $\sup T=\frac12\rho^2$ (even $n$), and it is attained (Prop.~1; census below). Writing $\rho=2\varepsilon$, the tight slack is $2\varepsilon^2$, \emph{not} $2\varepsilon$. Your $\delta=2\varepsilon$ is valid but loose by the factor $1/\varepsilon$: that is $20\times$ at $Q=5$ ($\varepsilon=0.05$) and $320\times$ at $Q=80$. $\delta=2\varepsilon=\rho$ is the right \emph{first-order} slack for the per-item construction in main.tex \S3, where $|p_i(s)(p_j(s)-p_j(t))|\le\rho$. It is not the right slack for the cell construction of Prop.~1. The two documents now describe different constructions (see \S\ref{sec:minor}).
+\item \textbf{Your display} ``$\delta_k=2\varepsilon_k\ge(\max-\min)/2$'' (PDF \S2) puts $\delta$ where $\varepsilon$ belongs. It should read $\varepsilon_k\ge(\max-\min)/2$, i.e.\ $\delta_k=2\varepsilon_k\ge\max-\min$, which is what the md Definition says. So the display is off by a factor of $2$, and the md is not. Read literally, the display ($\delta\ge R/2$) happens to be sufficient for the cell construction, since $\frac12R_iR_j\le\frac12R$, but that is a coincidence of $R\le1$, not the intended argument.
+\item \textbf{Universal (no bound).} Exact vertex enumeration over $\{0,1\}^n\times\{0,1\}^n$ for $n=2,\dots,7$ gives $\sup T=\lfloor n/2\rfloor/n$ (\texttt{slack\_census.py}, exact rationals). So the tight universal slack is $\frac12$ (even $n$), and $b=\frac32$. Your universal $\varepsilon_k=\frac12$, $\delta=1$, $b=2$ is valid, but twice the need.
+\end{itemize}
+
+\section{Route (b) has power exactly zero}
+\begin{proposition}\label{prop:zero}
+Let $\delta^\ast$ be any slack valid for all marginals in $[0,1]$, i.e.\ $\delta^\ast\ge\sup_{p}T(p)$. Then $X=S-\delta^\ast\le0$ for every outcome. Hence $M_t\le1$ for all $t$ and every $\lambda\ge0$, and the test never rejects.
+\end{proposition}
+\begin{proof}
+For an outcome vector $w=(w_i,w_j)\in\{0,1\}^n\times\{0,1\}^n$, the deterministic marginals $p=w$ are a legal null, and at them $S$ is constant, equal to $T(w)$. So $S(w)=T(w)\le\sup T\le\delta^\ast$.
+\end{proof}
+So the statistic's sure maximum \emph{equals} the universal slack ($\lfloor n/2\rfloor/n$ for both, by the census). At $\delta=1$ the conclusion is immediate, since $U-V\le1$. At $\delta=\frac12$, $n=2$: $S=\frac12(W_{i1}-W_{i2})(W_{j1}-W_{j2})\in\{-\frac12,0,\frac12\}$. The simulation confirms it: $\max X=0.000$ in every route-(b) row.
+
+\begin{proposition}\label{prop:nonid}
+Suppose no assumption links $p_\bullet$ to the binning variable, so that within a bin $p_i(\cdot),p_j(\cdot)$ may be arbitrary measurable functions of a non-atomic latent $\theta$. Then the null law of a bin's item vectors $(W_i^s,W_j^s)$, i.i.d.\ over $s$, can be \emph{any} law on $\{0,1\}^2$. Every alternative of this form (common shock included) therefore coincides with a null law, and every level-$\alpha$ test has power $\le\alpha$.
+\end{proposition}
+\begin{proof}
+Take $p_\bullet(\theta)=\mathbf 1\{\theta\in A_\bullet\}$, and choose the sets $A_i,A_j$ so that the four cells $A_i^{(c)}\cap A_j^{(c)}$ have any prescribed probabilities. Then $(W_i,W_j)$ is a deterministic function of $\theta$ with any desired law, and conditional independence given $\theta$ holds trivially.
+\end{proof}
+So ``margins-free'' and ``assumption-free'' cannot both hold. Margins-free survives: the test never estimates a $p$. But some a-priori range bound $\rho_k$ is \emph{constitutive}, not a power upgrade.
+
+\section{What \S5b actually says (the answer to your question)}
+\begin{itemize}[nosep]
+\item \texttt{NOTES-5b} l.~9: ``partitioned into K difficulty strata by equal-width binning of latent difficulty theta''. l.~14: ``$\varepsilon_k=(\max-\min)/2$ of marginal probabilities within stratum $k$''. Table rows are labelled ``true strata''.
+\item main.tex App.\ l.~443: ``$Q$ = number of equal-width strata in $\theta$'', with $\theta$ the latent difficulty of \S2 l.~134. \texttt{eprocess.py:assign\_strata} bins the true $\theta$.
+\item The range bound therefore comes from the DGP. $p_\bullet(\theta)=\mathrm{clip}(c+0.5(\theta-\frac12))$ is $\frac12$-Lipschitz, so $R_k\le\frac1{2Q}$. \texttt{results\_qsweep.csv} has exactly $\bar\varepsilon=0.25/Q$ ($0.05$ at $Q=5$, $0.003125$ at $Q=80$).
+\end{itemize}
+So route (a) is what \S5b intends. Make it primary, and state the binning and the assumption. A clean form: \emph{(A$_L$) on the binning coordinate $z$ (latent $\theta$ in simulation, an observable proxy in deployment), each $p_\bullet$ is $L$-Lipschitz. A bin of width $w_k$ then has $R_k\le Lw_k=:\rho_k$, and $\delta_k=\frac12\rho_k^2$ (cell construction) or $\delta_k=\rho_k$ (per-item).} This $\delta_k$ is a function of $(\theta,L)$, so your measurability argument applies verbatim. l.~477 (``no smoothness assumed'') must go: the guarantee rests on (A$_L$), and the simulations instantiate it with $L=\frac12$. For FailureScope (open-source fail-rate quintiles), (A$_L$) is a modelling assumption about the proxy. It should be named in the Limitations, together with a sensitivity sweep over $L$.
+
+\section{Simulation (your checks (ii) and (iii))}
+One stratum, $M=1000$ fresh $n{=}2$ blocks, $R=2000$, $\lambda$-mixture over $g\in\{0.1,\dots,0.9\}$ at $\lambda=g/b$, reject at $20$ (\texttt{typeI\_sim.py}, seeds $95400001+$). \textbf{ADV} is the tightness instance for (ii): one bin holding an easy and an impossible item at the DGP's clip values, $p_i=p_j=(0.98,0.02)$, with $T=\frac12(0.96)^2=0.4608$. That is within $8\%$ of the universal $\frac12$, which is the tight universal value (not $b=2$). \textbf{FLAT} is the control at the same mean marginal, $p=(0.5,0.5)$, $T=0$. \textbf{NARROW} satisfies a range bound $\rho=0.1$, $T=0.005$. I printed $\mathbb E[X]$ before rejection rates.
+\begin{center}\small
+\begin{tabular}{llrrrrr}\toprule
+cell & slack $\delta$ & $\mathbb E X$ ($\gamma{=}0$) & $\max X$ & Type-I & power $\gamma{=}.10$ & power $\gamma{=}.30$\\\midrule
+ADV & $1$ (route b) & $-0.539$ & $-0.500$ & 0.000 & 0.000 & 0.000\\
+ADV & $\frac12$ (universal tight) & $-0.039$ & $0.000$ & 0.000 & 0.000 & 0.000\\
+ADV & $T$ (oracle) & $-0.0001$ & $0.039$ & 0.013 & 0.000 & 0.000\\
+ADV & $T/2$ (lesion) & $+0.230$ & $0.270$ & \textbf{1.000} & 1.000 & 1.000\\
+FLAT & $1$ / $\frac12$ & $-1.000$ / $-0.500$ & $\le0$ & 0.000 & 0.000 & 0.000\\
+FLAT & $0$ (oracle) & $0.000$ & $0.500$ & 0.035 & 0.683 & 1.000\\
+NARROW & $\frac12$ & $-0.495$ & $0.000$ & 0.000 & 0.000 & 0.000\\
+NARROW & $0.005$ (oracle $=\frac12\rho^2$) & $0.000$ & $0.495$ & 0.031 & 0.622 & 1.000\\
+NARROW & $0$ (lesion) & $+0.005$ & $0.500$ & 0.071 & 0.817 & 1.000\\\bottomrule
+\end{tabular}\end{center}
+Every universal row has power $0.000$, even at $\gamma=0.30$, on every cell. Every valid row has Type-I $\le\alpha$. The ADV half-slack lesion fires (1.000), so the battery can see an invalid slack. On the NARROW cell the tight $\frac12\rho^2$ slack keeps power $0.62$ at $\gamma=0.10$, and the lesion at $0$ already exceeds $\alpha$ (0.071). \textbf{Uniform cause, not uniform drift:} the FLAT control's $\mathbb E X$ is $0.000$ at $\delta=0$, as designed. The ADV oracle row's power is $0$ because the shock is swamped by $T=0.46$: that is the wide-bin price, and exactly why the bound $\rho_k$ matters.
+
+\section{Minor}\label{sec:minor}
+\begin{enumerate}[nosep]
+\item main.tex App.\ l.~477--481 says ``$Q=5$, $\varepsilon=0.1$, realised bias $\sim8\times10^{-4}$, $\delta\approx0.058$''. \texttt{results\_qsweep.csv} has $\varepsilon=0.05$, $\delta=0.100$, bias $0.00138$. The ratio $72.6$ matches, but none of the three numbers does. Under the tight cell slack $2\varepsilon^2=0.005$, the ``$72.6\times$ overestimate'' becomes $3.6\times$. Most of the small-$Q$ power loss in the App.\ power table may be the first-order slack, not the binning.
+\item main.tex \S3 (l.~158--166) still describes the cross-item partner as ``a previously-seen item $t$ (or \ldots a derangement schedule)''. \texttt{run\_qsweep.py} uses a whole-stream within-stratum derangement, so partners can be future items. Neither is the fresh-pair construction your branch makes primary. Table~1 and the $Q$-sweep should be re-run under fresh pairs before \S5b is final.
+\end{enumerate}
+
+\section{Trust levels and questions}
+\begin{itemize}[nosep]
+\item $\theta$ = membership, $\theta\in\mathcal F_0$, $\lambda_m$ predictable: \textbf{peer-reviewed (endorsed)}, conditional on $\delta_k$ being an a-priori function of the design (the Definition), not of realised $p$'s.
+\item Universal $b\le2$ valid: \textbf{endorsed as valid}. Not tight: tight is $b=\frac32$ (cell construction).
+\item ``Route (b) is the deployable main route'': \textbf{not endorsed; refuted}. Power is identically $0$ (Prop.~\ref{prop:zero}), and no assumption-free test exists (Prop.~\ref{prop:nonid}).
+\item Props.~\ref{prop:zero}--\ref{prop:nonid} are mine, proved here, and checked by exact census ($n\le7$) and simulation. Please check them before they enter the paper.
+\end{itemize}
+\textbf{Questions.} (1) Will you state (A$_L$), or an equivalent a-priori $\rho_k$, as the paper's standing assumption, and rename the routes ``(a) range-bounded, main'' and ``(b) universal, vacuous --- remark only''? (2) For FailureScope, what $L$ is defensible for open-source fail-rate quintiles, and would you run the sensitivity sweep? (3) Do you agree to adopt the cell slack $\frac12\rho_k^2$ in place of $2\varepsilon_k$ in the fresh-pair arm, given the 20--320$\times$ factor? I did not review c80584f, nor the later half-EW commits c323a9b/2b851b4/b41109a.
+
+\end{document}
